@@ -1,0 +1,39 @@
+name: Deploy to DreamHost
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH folder
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+      - name: Add SSH key
+        run: |
+          echo "${{ secrets.DH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Add SSH config
+        run: |
+          echo "${{ secrets.DH_HOST }}" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+      - name: Add DreamHost to known_hosts
+        run: |
+          ssh-keyscan iad1-shared-e1-32.dreamhost.com >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            ./ \
+            dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
