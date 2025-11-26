@@ -1,0 +1,421 @@
+<style>
+    /* ==========================================================================
+       Footer
+       ========================================================================== */
+
+    .footer {
+        background: var(--bg-primary);
+        padding: var(--space-4xl) 0 var(--space-2xl);
+        border-top: 1px solid var(--border-light);
+        margin-top: auto;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+        transition: background var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    [data-theme="dark"] .footer {
+        background: hsl(240, 60%, 12%);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+        border-top: 1px solid var(--border-medium);
+    }
+
+    .footer__container {
+        max-width: var(--container-xl);
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+    }
+
+    .footer__content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: var(--space-3xl);
+        margin-bottom: var(--space-3xl);
+    }
+
+    .footer__section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+
+    .footer__brand {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .footer__logo {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--primary-600);
+        text-decoration: none;
+        transition: opacity var(--transition-fast);
+    }
+
+    .footer__logo:hover {
+        opacity: 0.8;
+    }
+
+    .footer__logo:focus-visible {
+        outline: 2px solid var(--primary-600);
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+    }
+
+    .footer__logo-text {
+        color: var(--text-primary);
+    }
+
+    .footer__title {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+        margin-bottom: var(--space-xs);
+    }
+
+    .footer__description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-size: var(--font-size-sm);
+    }
+
+    .footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer__link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: var(--font-size-sm);
+        transition: color var(--transition-fast);
+        padding: var(--space-xs) 0;
+        display: inline-block;
+    }
+
+    .footer__link:hover,
+    .footer__link:focus {
+        color: var(--primary-600);
+    }
+
+    .footer__link:focus-visible {
+        outline: 2px solid var(--primary-600);
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+    }
+
+    .footer__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: var(--space-2xl);
+        border-top: 1px solid var(--border-light);
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+    }
+
+    .footer__bottom-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+        width: 100%;
+    }
+
+    .footer__copyright {
+        width: 100%;
+        text-align: center;
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--border-light);
+    }
+
+    .footer__copyright p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+    }
+
+    .footer__legal {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        font-size: var(--font-size-sm);
+    }
+
+    .footer__legal p {
+        margin: 0;
+        color: var(--text-secondary);
+    }
+
+    .footer__legal-links {
+        display: flex;
+        gap: var(--space-xl);
+        flex-wrap: wrap;
+    }
+
+    .footer__social {
+        display: flex;
+        gap: var(--space-md);
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 44px;
+        min-height: 44px;
+        border-radius: var(--radius-full);
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+        transition: all var(--transition-fast);
+        text-decoration: none;
+    }
+
+    .social-link:hover {
+        background-color: var(--primary-600);
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .social-link:focus-visible {
+        outline: 2px solid var(--primary-600);
+        outline-offset: 2px;
+    }
+
+    /* ==========================================================================
+       Theme Toggle
+       ========================================================================== */
+
+    .theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+    }
+
+    .theme-toggle__label {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--text-secondary);
+    }
+
+    .theme-toggle__icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        color: var(--text-secondary);
+        opacity: 0.8;
+    }
+
+    .theme-toggle__icons img {
+        width: 100%;
+        height: 100%;
+        filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg);
+    }
+
+    [data-theme="dark"] .theme-toggle__icons img {
+        filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg);
+    }
+
+    .theme-toggle__switch {
+        position: relative;
+        width: 52px;
+        height: 28px;
+        min-width: 52px;
+        min-height: 28px;
+        background-color: var(--primary-600);
+        border-radius: var(--radius-full);
+        cursor: pointer;
+        transition: background-color var(--transition-normal);
+        border: 2px solid var(--primary-500);
+        display: inline-block;
+    }
+
+    .theme-toggle__switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+
+    .theme-toggle__switch:focus {
+        outline: 2px solid var(--primary-600);
+        outline-offset: 2px;
+    }
+
+    .theme-toggle__switch:hover {
+        background-color: var(--primary-700);
+    }
+
+    .theme-toggle__slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: transparent;
+        transition: var(--transition-normal);
+        border-radius: var(--radius-full);
+        pointer-events: none;
+    }
+
+    .theme-toggle__slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        top: 2px;
+        background-color: #fff;
+        transition: var(--transition-normal);
+        border-radius: var(--radius-full);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-toggle__switch input:checked + .theme-toggle__slider:before {
+        transform: translateX(24px);
+    }
+
+    .theme-toggle__switch input:focus-visible + .theme-toggle__slider {
+        outline: 2px solid var(--primary-600);
+        outline-offset: 2px;
+    }
+
+    /* Dark theme overrides */
+    [data-theme="dark"] .theme-toggle__switch {
+        background-color: #6b6b6b;
+        border-color: #5a5a5a;
+    }
+
+    [data-theme="dark"] .theme-toggle__switch:hover {
+        background-color: #7a7a7a;
+    }
+
+    [data-theme="dark"] .theme-toggle__slider:before {
+        background-color: #ffffff;
+    }
+
+    /* Responsive Footer */
+    @media (max-width: 1023px) {
+        .footer__content {
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+        }
+
+        .footer__brand {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .footer {
+            padding: var(--space-2xl) 0 var(--space-lg);
+        }
+
+        .footer__content {
+            grid-template-columns: 1fr;
+            gap: var(--space-xl);
+        }
+
+        .footer__bottom-content {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .footer__legal-links {
+            flex-direction: column;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+    }
+</style>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__container">
+        <div class="footer__content">
+            <div class="footer__section">
+                <div class="footer__brand">
+                    <a href="/" class="footer__logo" aria-label="On Seguros - Volver al inicio">
+                        <span class="footer__logo-text">OnSeguros</span>
+                    </a>
+                    <p class="footer__description">
+                        Protegiendo tu futuro con soluciones de seguros confiables por más de 25 años.
+                    </p>
+                </div>
+            </div>
+            
+            <nav class="footer__section" aria-labelledby="footer-services-heading">
+                <h3 id="footer-services-heading" class="footer__title">Servicios</h3>
+                <ul class="footer__links">
+                    <li><a href="/#servicios" class="footer__link">Seguros Agrícolas</a></li>
+                    <li><a href="/#servicios" class="footer__link">Seguro de Granizo</a></li>
+                    <li><a href="/#servicios" class="footer__link">ART para el Agro</a></li>
+                    <li><a href="/#servicios" class="footer__link">Seguros Patrimoniales</a></li>
+                </ul>
+            </nav>
+            
+            <nav class="footer__section" aria-labelledby="footer-company-heading">
+                <h3 id="footer-company-heading" class="footer__title">Empresa</h3>
+                <ul class="footer__links">
+                    <li><a href="/#nosotros" class="footer__link">Sobre Nosotros</a></li>
+                    <li><a href="/#testimonios" class="footer__link">Testimonios</a></li>
+                    <li><a href="/#contacto" class="footer__link">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <nav class="footer__section" aria-labelledby="footer-support-heading">
+                <h3 id="footer-support-heading" class="footer__title">Soporte</h3>
+                <ul class="footer__links">
+                    <li><a href="https://wa.me/543584122566" target="_blank" rel="noopener noreferrer" class="footer__link">WhatsApp</a></li>
+                    <li><a href="mailto:mariano@onseguros.net" class="footer__link">Email</a></li>
+                    <li><a href="tel:+543584122566" class="footer__link" aria-label="Llamar al teléfono de soporte">Soporte 24/7</a></li>
+                    <li><a href="/faq/faq.html" class="footer__link">Preguntas Frecuentes</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="footer__bottom">
+            <div class="footer__bottom-content">
+                <nav class="footer__legal-links" aria-label="Enlaces legales">
+                    <a href="/legal/privacidad.html" class="footer__link">Política de Privacidad</a>
+                    <a href="/legal/terminos.html" class="footer__link">Términos de Servicio</a>
+                    <a href="/legal/accesibilidad.html" class="footer__link">Declaración de Accesibilidad</a>
+                </nav>
+                <div class="theme-toggle" role="group" aria-label="Selector de tema">
+                    <span class="theme-toggle__label" id="theme-label">Tema:</span>
+                    <div class="theme-toggle__icons" aria-hidden="true">
+                        <img src="/assets/icons/sun.svg" width="15" alt="sun icon">
+                    </div>
+                    <label class="theme-toggle__switch">
+                        <input type="checkbox" 
+                               id="theme-toggle-checkbox" 
+                               aria-labelledby="theme-label">
+                        <span class="theme-toggle__slider" aria-hidden="true"></span>
+                    </label>
+                    <div class="theme-toggle__icons" aria-hidden="true">
+                        <img src="/assets/icons/moon.svg" width="15" alt="moon icon">
+                    </div>
+                </div>
+            </div>
+            <div class="footer__copyright">
+                <p>&copy; 2025 OnSeguros. Todos los derechos reservados.</p>
+                <p style="margin-top: var(--space-sm); font-size: var(--font-size-xs); opacity: 0.7;">
+                    Diseñado y desarrollado por <a href="https://juani.me" target="_blank" rel="noopener noreferrer" style="color: var(--primary-600); text-decoration: none; transition: opacity var(--transition-fast);" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Juani Villanueva</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

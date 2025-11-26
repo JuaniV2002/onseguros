@@ -1,0 +1,33 @@
+# robots.txt para On Seguros Río Cuarto
+# https://www.onseguros.net/robots.txt
+
+User-agent: *
+Allow: /
+
+# Páginas principales - permitir indexación
+Allow: /index.html
+Allow: /faq/
+Allow: /assets/
+
+# Páginas legales - permitir crawling pero no indexar (noindex en meta tags)
+Allow: /legal/
+
+# Archivos y directorios a excluir
+Disallow: /script.js
+Disallow: /style.css
+
+# Sitemap (actualizar con la URL real cuando esté disponible)
+Sitemap: https://www.onseguros.net/sitemap.xml
+
+# Configuración específica para bots comunes
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+User-agent: Bingbot
+Allow: /
+
+# Tiempo de espera entre requests (en segundos)
+Crawl-delay: 1

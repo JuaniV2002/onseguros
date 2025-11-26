@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Accordion Component
+   ========================================================================== */
+
+/* Accordion List */
+.accordion-list {
+    margin-bottom: var(--space-4xl);
+}
+
+/* Accordion Items */
+.accordion-item {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.accordion-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.accordion-item.active {
+    border-color: var(--primary-600);
+}
+
+/* Accordion Question Button */
+.accordion-question {
+    width: 100%;
+    padding: var(--space-xl);
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    transition: color var(--transition-normal);
+}
+
+.accordion-question:hover {
+    color: var(--primary-600);
+}
+
+.accordion-question img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    transition: transform var(--transition-normal);
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .accordion-question img {
+    filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg);
+}
+
+.accordion-item.active .accordion-question img {
+    transform: rotate(180deg);
+}
+
+/* Accordion Answer */
+.accordion-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-normal);
+}
+
+.accordion-item.active .accordion-answer {
+    max-height: 1000px;
+}
+
+.accordion-answer__content {
+    padding: 0 var(--space-xl) var(--space-xl);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .accordion-question {
+        font-size: var(--font-size-base);
+        padding: var(--space-lg);
+    }
+
+    .accordion-answer__content {
+        padding: 0 var(--space-lg) var(--space-lg);
+    }
+}
