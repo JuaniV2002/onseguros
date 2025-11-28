@@ -624,7 +624,6 @@ ol {
 }
 
 .hero__image-placeholder::before {
-    content: '🛡️';
     position: absolute;
     top: 50%;
     left: 50%;
