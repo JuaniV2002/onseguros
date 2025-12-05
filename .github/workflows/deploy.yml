@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+# Prevent multiple deployments running at once
+concurrency:
+  group: deploy-dreamhost
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -12,6 +17,36 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Validate HTML files before deploying
+      - name: Validate HTML
+        run: |
+          echo "✓ Checking HTML files exist..."
+          if [ ! -f "index.html" ]; then
+            echo "❌ Error: index.html not found"
+            exit 1
+          fi
+          echo "✓ HTML validation passed"
+
+      # Check for common issues
+      - name: Pre-deployment checks
+        run: |
+          echo "📋 Running pre-deployment checks..."
+          
+          # Check for TODO or FIXME comments
+          if grep -r "TODO\|FIXME" *.html *.js *.css 2>/dev/null; then
+            echo "⚠️  Warning: Found TODO/FIXME comments"
+          fi
+          
+          # Verify critical files exist
+          files=("index.html" "style.css" "script.js" "robots.txt" "sitemap.xml")
+          for file in "${files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✓ Found $file"
+            else
+              echo "⚠️  Warning: $file not found"
+            fi
+          done
 
       - name: Set up SSH folder
         run: |
@@ -34,6 +69,30 @@ jobs:
 
       - name: Deploy via rsync
         run: |
+          echo "🚀 Starting deployment..."
           rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.gitignore' \
+            --exclude '.DS_Store' \
+            --exclude 'README.md' \
+            --exclude '*.md' \
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
+          echo "✅ Deployment completed successfully!"
+
+      - name: Deployment Summary
+        if: always()
+        run: |
+          echo "## 📦 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Site URL**: https://www.onseguros.net" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed! Check the logs above for details."
+          exit 1
