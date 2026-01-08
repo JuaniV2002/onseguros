@@ -964,6 +964,12 @@ ol {
     transform: scaleX(1);
 }
 
+.service-card__icons {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
 .service-card__icon {
     width: 64px;
     height: 64px;
@@ -973,7 +979,6 @@ ol {
     align-items: center;
     justify-content: center;
     color: var(--primary-600);
-    margin-bottom: var(--space-lg);
     transition: all var(--transition-normal);
     box-shadow: var(--shadow-inset-subtle);
     position: relative;
