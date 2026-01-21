@@ -49,6 +49,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-md);
+        height: 100%;
     }
 
     .footer__logo {
@@ -148,6 +149,35 @@
         margin: 0;
         color: var(--text-secondary);
         font-size: var(--font-size-sm);
+    }
+
+    .footer__safety {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: var(--space-sm);
+        margin-top: auto;
+        color: var(--primary-600);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+    }
+
+    .footer__safety-icons {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    .footer__safety-icon {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0) saturate(100%) invert(46%) sepia(88%) saturate(2618%) hue-rotate(207deg) brightness(99%) contrast(93%);
+        opacity: 0.9;
+        transition: opacity var(--transition-fast);
+    }
+
+    .footer__safety:hover .footer__safety-icon {
+        opacity: 1;
     }
 
     .footer__legal {
@@ -362,6 +392,13 @@
                     <p class="footer__description">
                         Protegiendo tu futuro con soluciones de seguros confiables por más de 25 años.
                     </p>
+                    <div class="footer__safety">
+                        <div class="footer__safety-icons">
+                            <img src="/assets/icons/helmet.svg" alt="Casco" class="footer__safety-icon">
+                            <img src="/assets/icons/seatbelt.svg" alt="Cinturón de seguridad" class="footer__safety-icon">
+                        </div>
+                        <span>Usalos siempre</span>
+                    </div>
                 </div>
             </div>
             
