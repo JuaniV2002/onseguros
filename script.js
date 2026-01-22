@@ -198,7 +198,7 @@ const Utils = {
             return;
         }
 
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 120;
         const startPosition = window.pageYOffset;
         const distance = targetPosition - startPosition;
         let startTime = null;
