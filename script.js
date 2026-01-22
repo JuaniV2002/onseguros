@@ -982,11 +982,32 @@ class HeroAnimations {
         
         // Move visual cards with parallax effect
         this.visualCards.forEach((card, index) => {
-            const depth = (index + 1) * 10;
-            const moveX = x * depth;
-            const moveY = y * depth;
+            const cardRect = card.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const cardCenterY = cardRect.top + cardRect.height / 2;
             
-            card.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            // Calculate distance from mouse to card center
+            const deltaX = e.clientX - cardCenterX;
+            const deltaY = e.clientY - cardCenterY;
+            
+            // Base depth for general parallax
+            const depth = (index + 1) * 10;
+            const baseX = x * depth;
+            const baseY = y * depth;
+            
+            // Add magnetic effect when hovering near the card
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxDistance = 300; // pixels within which the effect is active
+            
+            if (distance < maxDistance) {
+                const strength = 1 - (distance / maxDistance); // 1 at center, 0 at maxDistance
+                const magneticX = (deltaX / distance) * strength * 20; // 20px max movement
+                const magneticY = (deltaY / distance) * strength * 20;
+                
+                card.style.transform = `translate(${baseX + magneticX}px, ${baseY + magneticY}px)`;
+            } else {
+                card.style.transform = `translate(${baseX}px, ${baseY}px)`;
+            }
         });
     }
 
