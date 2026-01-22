@@ -37,10 +37,10 @@
     
     <!-- Preload critical resources -->
     <link rel="preload" href="style.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style">
     
     <!-- Stylesheets -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
     <!-- Structured Data - Insurance Agency -->
@@ -204,27 +204,63 @@
     <main id="main-content">
         <!-- Hero Section -->
         <section class="hero" id="inicio" aria-labelledby="hero-heading" itemscope itemtype="https://schema.org/Service">
+            <div class="hero__background"></div>
             <div class="hero__container">
                 <div class="hero__content">
+                    <div class="hero__badge">
+                        <span class="hero__badge-icon">🛡️</span>
+                        <span class="hero__badge-text">25+ años protegiendo lo que más importa</span>
+                    </div>
                     <h1 id="hero-heading" class="hero__title" itemprop="name">
-                        Bienvenido a 
-                        <span class="hero__title-highlight">OnSeguros</span>
+                        Tu tranquilidad,<br>
+                        <span class="hero__title-highlight">nuestra misión</span><br>
                     </h1>
                     <p class="hero__description" itemprop="description">
-                        Soy Mariano Villanueva, Licenciado en Publicidad y Productor Asesor de Seguros con más de 25 años de experiencia. OnSeguros es mi nuevo proyecto, dónde brindo asesoramiento personalizado en seguros patrimoniales, ART y granizo, con aseguradoras de trayectoria, para cuidar lo que más valorás con tranquilidad.
+                        Protegemos tus cosechas, tu empresa y tu patrimonio con asesoramiento personalizado y aseguradoras de trayectoria en Argentina.
                     </p>
                     <div class="hero__actions" role="group" aria-label="Acciones principales">
-                        <a href="#cotizacion" class="btn btn--primary" aria-label="Solicitar cotización de seguro agrícola">
-                            Cotizar Seguro
+                        <a href="#cotizacion" class="btn btn--primary btn--hero" aria-label="Solicitar cotización de seguro agrícola">
+                            <span class="btn__text">Cotizar Seguro</span>
+                            <span class="btn__icon">→</span>
                         </a>
-                        <a href="#servicios" class="btn btn--secondary" aria-label="Ver todas las coberturas disponibles">
-                            Ver Coberturas
+                        <a href="#servicios" class="btn btn--secondary btn--hero" aria-label="Ver todas las coberturas disponibles">
+                            <span class="btn__text">Ver Coberturas</span>
                         </a>
                     </div>
                 </div>
-                <div class="hero__image" role="img" aria-label="Representación visual de protección y seguridad familiar">
-                    <div class="hero__image-placeholder">
-                        <!-- <img src="assets/mariano_oficina.jpeg" alt="Mariano Villanueva en su oficina"> -->
+                <div class="hero__visual" role="img" aria-label="Representación visual de protección y seguridad para tu campo, empresa y familia">
+                    <div class="hero__visual-card hero__visual-card--1">
+                        <div class="hero__visual-icon">🌾</div>
+                        <div class="hero__visual-label">Seguros Agrícolas</div>
+                    </div>
+                    <div class="hero__visual-card hero__visual-card--2">
+                        <div class="hero__visual-icon">🏢</div>
+                        <div class="hero__visual-label">ART Empresarial</div>
+                    </div>
+                    <div class="hero__visual-card hero__visual-card--3">
+                        <div class="hero__visual-icon">🏠</div>
+                        <div class="hero__visual-label">Patrimoniales</div>
+                    </div>
+                    <div class="hero__visual-glow"></div>
+                </div>
+            </div>
+
+            <!-- Logo Carousel -->
+            <div class="logo-carousel" aria-label="Compañías aseguradoras asociadas">
+                <div class="logo-carousel__container">
+                    <div class="logo-carousel__track">
+                        <div class="logo-carousel__item">
+                            <img src="assets/logos/allianz-logo.png" alt="Allianz" class="logo-carousel__logo">
+                        </div>
+                        <div class="logo-carousel__item">
+                            <img src="assets/logos/experta-logo.png" alt="Experta" class="logo-carousel__logo">
+                        </div>
+                        <div class="logo-carousel__item">
+                            <img src="assets/logos/parana-logo.png" alt="Paraná" class="logo-carousel__logo">
+                        </div>
+                        <div class="logo-carousel__item">
+                            <img src="assets/logos/sancor-logo.png" alt="Sancor" class="logo-carousel__logo">
+                        </div>
                     </div>
                 </div>
             </div>

@@ -951,6 +951,86 @@ class ServiceWorkerManager {
 // Application Initialization
 // ==========================================================================
 
+class HeroAnimations {
+    constructor() {
+        this.hero = document.querySelector('.hero');
+        this.heroBackground = document.querySelector('.hero__background');
+        this.visualCards = document.querySelectorAll('.hero__visual-card');
+        
+        if (!this.hero) return;
+        
+        this.init();
+    }
+
+    init() {
+        // Add parallax effect on mouse move for desktop
+        if (window.innerWidth >= 1024) {
+            this.hero.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        }
+
+        // Add scroll-based parallax for background
+        window.addEventListener('scroll', Utils.throttle(() => this.handleScroll(), 50));
+        
+        // Pause/resume animations based on visibility
+        this.setupIntersectionObserver();
+    }
+
+    handleMouseMove(e) {
+        const rect = this.hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        // Move visual cards with parallax effect
+        this.visualCards.forEach((card, index) => {
+            const depth = (index + 1) * 10;
+            const moveX = x * depth;
+            const moveY = y * depth;
+            
+            card.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    }
+
+    handleScroll() {
+        if (!this.heroBackground) return;
+        
+        const scrolled = window.scrollY;
+        const heroHeight = this.hero.offsetHeight;
+        
+        // Only apply parallax while hero is visible
+        if (scrolled < heroHeight) {
+            const parallaxAmount = scrolled * 0.5;
+            this.heroBackground.style.transform = `translateY(${parallaxAmount}px)`;
+        }
+    }
+
+    setupIntersectionObserver() {
+        const options = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Resume animations when hero is visible
+                    this.visualCards.forEach(card => {
+                        card.style.animationPlayState = 'running';
+                    });
+                } else {
+                    // Pause animations when hero is not visible (performance optimization)
+                    this.visualCards.forEach(card => {
+                        card.style.animationPlayState = 'paused';
+                    });
+                }
+            });
+        }, options);
+
+        if (this.hero) {
+            observer.observe(this.hero);
+        }
+    }
+}
+
 class SecureGuardApp {
     constructor() {
         this.components = [];
@@ -979,6 +1059,7 @@ class SecureGuardApp {
             // Initialize all components
             this.components.push(new ThemeToggle());
             this.components.push(new Navigation());
+            this.components.push(new HeroAnimations());
             this.components.push(new FormValidator('.contact__form'));
             this.components.push(new ScrollAnimations());
             this.components.push(new AccessibilityEnhancements());
