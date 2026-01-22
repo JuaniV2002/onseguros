@@ -22,42 +22,40 @@ class ThemeToggle {
     }
 
     init() {
-        // Check for saved theme preference or use system preference
-        const savedTheme = localStorage.getItem(this.storageKey);
+        // Always use system preference
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            this.enableDarkMode();
+        if (systemPrefersDark) {
+            this.enableDarkMode(false); // false = don't save to localStorage
         } else {
-            this.enableLightMode();
+            this.enableLightMode(false);
         }
 
-        // Listen for toggle changes
+        // Listen for toggle changes (optional - you can remove this if you don't want manual toggle)
         this.toggle.addEventListener('change', () => {
             if (this.toggle.checked) {
-                this.enableDarkMode();
+                this.enableDarkMode(false);
             } else {
-                this.enableLightMode();
+                this.enableLightMode(false);
             }
         });
 
-        // Listen for system theme changes
+        // Listen for system theme changes and automatically switch
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            // Only auto-switch if user hasn't manually set a preference
-            if (!localStorage.getItem(this.storageKey)) {
-                if (e.matches) {
-                    this.enableDarkMode();
-                } else {
-                    this.enableLightMode();
-                }
+            if (e.matches) {
+                this.enableDarkMode(false);
+            } else {
+                this.enableLightMode(false);
             }
         });
     }
 
-    enableDarkMode() {
+    enableDarkMode(saveToStorage = false) {
         document.documentElement.setAttribute('data-theme', 'dark');
         this.toggle.checked = true;
-        localStorage.setItem(this.storageKey, 'dark');
+        if (saveToStorage) {
+            localStorage.setItem(this.storageKey, 'dark');
+        }
         this.updateIcons(true);
         
         // Update header background
@@ -67,10 +65,12 @@ class ThemeToggle {
         this.announceThemeChange('Modo oscuro activado');
     }
 
-    enableLightMode() {
+    enableLightMode(saveToStorage = false) {
         document.documentElement.setAttribute('data-theme', 'light');
         this.toggle.checked = false;
-        localStorage.setItem(this.storageKey, 'light');
+        if (saveToStorage) {
+            localStorage.setItem(this.storageKey, 'light');
+        }
         this.updateIcons(false);
         
         // Update header background
