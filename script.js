@@ -1052,6 +1052,98 @@ class HeroAnimations {
     }
 }
 
+// ==========================================================================
+// Insurance Type Pre-selector
+// ==========================================================================
+
+class InsuranceTypePreSelector {
+    constructor() {
+        this.serviceLinks = document.querySelectorAll('.service-card__link[data-insurance-type]');
+        this.insuranceSelect = document.getElementById('insurance-type');
+        
+        if (!this.insuranceSelect || this.serviceLinks.length === 0) return;
+        
+        this.init();
+    }
+
+    init() {
+        this.serviceLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const insuranceType = link.getAttribute('data-insurance-type');
+                
+                if (insuranceType) {
+                    // Small delay to allow smooth scroll to complete
+                    setTimeout(() => {
+                        this.selectInsuranceType(insuranceType);
+                    }, 300);
+                }
+            });
+        });
+    }
+
+    selectInsuranceType(type) {
+        // Find and select the matching option
+        const options = this.insuranceSelect.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === type) {
+                this.insuranceSelect.value = type;
+                
+                // Trigger change event for validation and visual feedback
+                const changeEvent = new Event('change', { bubbles: true });
+                this.insuranceSelect.dispatchEvent(changeEvent);
+                
+                // Add visual highlight
+                this.highlightField();
+                
+                // Focus on the select for accessibility
+                this.insuranceSelect.focus();
+                
+                // Announce to screen readers
+                this.announceSelection(type);
+                
+                break;
+            }
+        }
+    }
+
+    highlightField() {
+        const formGroup = this.insuranceSelect.closest('.form-group');
+        if (!formGroup) return;
+
+        // Add highlight animation
+        formGroup.style.transition = 'background-color 0.3s ease';
+        formGroup.style.backgroundColor = 'var(--primary-50, rgba(46, 126, 246, 0.1))';
+        formGroup.style.borderRadius = 'var(--radius-md, 0.5rem)';
+        formGroup.style.padding = 'var(--space-sm, 0.5rem)';
+        formGroup.style.margin = 'calc(var(--space-lg, 1.5rem) * -1) calc(var(--space-sm, 0.5rem) * -1) var(--space-lg, 1.5rem)';
+        formGroup.style.paddingBottom = 'var(--space-lg, 1.5rem)';
+
+        // Remove highlight after 2 seconds
+        setTimeout(() => {
+            formGroup.style.backgroundColor = '';
+            setTimeout(() => {
+                formGroup.style.transition = '';
+                formGroup.style.padding = '';
+                formGroup.style.margin = '';
+            }, 300);
+        }, 2000);
+    }
+
+    announceSelection(type) {
+        const announcement = document.createElement('div');
+        announcement.className = 'sr-only';
+        announcement.setAttribute('role', 'status');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.textContent = `Tipo de seguro seleccionado: ${type}`;
+        
+        document.body.appendChild(announcement);
+        
+        setTimeout(() => {
+            document.body.removeChild(announcement);
+        }, 1000);
+    }
+}
+
 class SecureGuardApp {
     constructor() {
         this.components = [];
@@ -1082,6 +1174,7 @@ class SecureGuardApp {
             this.components.push(new Navigation());
             this.components.push(new HeroAnimations());
             this.components.push(new FormValidator('.contact__form'));
+            this.components.push(new InsuranceTypePreSelector());
             this.components.push(new ScrollAnimations());
             this.components.push(new AccessibilityEnhancements());
             this.components.push(new LazyLoader());
