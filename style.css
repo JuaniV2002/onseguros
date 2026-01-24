@@ -1001,7 +1001,7 @@ ol {
     
     .logo-carousel__track {
         justify-content: flex-start;
-        animation: scrollLogos 20s linear infinite;
+        animation: scrollLogos 15s linear infinite;
         gap: clamp(2rem, 4vw, 3rem);
     }
     
@@ -1714,6 +1714,21 @@ ol {
 @media (min-width: 768px) {
     .testimonials__title {
         font-size: var(--font-size-4xl);
+    }
+}
+
+@media (max-width: 767px) {
+    .testimonials__container {
+        padding: 0 var(--space-md);
+    }
+    
+    .testimonials__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+    
+    .testimonial-card {
+        padding: var(--space-xl);
     }
 }
 
