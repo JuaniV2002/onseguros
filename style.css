@@ -828,6 +828,23 @@ ol {
     color: var(--primary-300);
 }
 
+/* Mobile responsive styles for badge */
+@media (max-width: 768px) {
+    .hero__badge {
+        padding: var(--space-xs) var(--space-md);
+        gap: var(--space-xs);
+        margin-bottom: var(--space-lg);
+    }
+    
+    .hero__badge-icon {
+        font-size: 1rem;
+    }
+    
+    .hero__badge-text {
+        font-size: var(--font-size-xs);
+    }
+}
+
 .hero__title {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-size: clamp(2.5rem, 8vw, 4.5rem);
@@ -973,6 +990,59 @@ ol {
     .logo-carousel__item:nth-child(2) .logo-carousel__logo,
     .logo-carousel__item:nth-child(3) .logo-carousel__logo {
         height: 120px;
+    }
+}
+
+/* Mobile carousel animation - only on small screens */
+@media (max-width: 767px) {
+    .logo-carousel__container {
+        padding: 0 var(--space-sm);
+    }
+    
+    .logo-carousel__track {
+        justify-content: flex-start;
+        animation: scrollLogos 20s linear infinite;
+        gap: clamp(2rem, 4vw, 3rem);
+    }
+    
+    .logo-carousel__item {
+        animation: none;
+        opacity: 1;
+    }
+    
+    .logo-carousel__logo {
+        height: 50px;
+    }
+    
+    /* Adjusted sizing for specific logos on mobile */
+    .logo-carousel__item:nth-child(1) .logo-carousel__logo,
+    .logo-carousel__item:nth-child(2) .logo-carousel__logo,
+    .logo-carousel__item:nth-child(3) .logo-carousel__logo,
+    .logo-carousel__item:nth-child(5) .logo-carousel__logo,
+    .logo-carousel__item:nth-child(6) .logo-carousel__logo,
+    .logo-carousel__item:nth-child(7) .logo-carousel__logo {
+        height: 65px;
+    }
+    
+    /* Hide duplicate logos on larger screens */
+    .logo-carousel__item--duplicate {
+        display: flex;
+    }
+}
+
+/* Hide duplicate logos on larger screens */
+@media (min-width: 768px) {
+    .logo-carousel__item--duplicate {
+        display: none;
+    }
+}
+
+@keyframes scrollLogos {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
     }
 }
 
@@ -1252,37 +1322,7 @@ ol {
     }
 
     .hero__visual {
-        height: 400px;
-    }
-
-    .hero__visual-card {
-        padding: var(--space-lg) var(--space-md);
-    }
-
-    .hero__visual-card--1 {
-        width: 140px;
-        top: 5%;
-        left: 5%;
-    }
-
-    .hero__visual-card--2 {
-        width: 150px;
-        top: 45%;
-        right: 0;
-    }
-
-    .hero__visual-card--3 {
-        width: 145px;
-        bottom: 10%;
-        left: 10%;
-    }
-
-    .hero__visual-icon {
-        font-size: 2rem;
-    }
-
-    .hero__visual-label {
-        font-size: var(--font-size-sm);
+        display: none;
     }
 
     .hero__trust-signals {
