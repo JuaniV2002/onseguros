@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "OnSeguros - Seguros Integrales, ART y Agrícolas website",
   "scripts": {
-    "sitemap": "node generate-sitemap.js"
+    "sitemap": "node scripts/generate-sitemap.js"
   },
   "keywords": [
     "seguros",

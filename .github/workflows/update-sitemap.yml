@@ -42,7 +42,7 @@ jobs:
           fi
       
       - name: 🗺️ Generate Sitemap
-        run: node generate-sitemap.js
+        run: node scripts/generate-sitemap.js
       
       - name: 📊 Check for Changes
         id: git-check
