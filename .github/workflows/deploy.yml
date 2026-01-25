@@ -100,7 +100,8 @@ jobs:
             echo "posts_changed=true" >> $GITHUB_OUTPUT
             
             # Extract the newest post (first in the array after sorting by date)
-            NEWEST_POST=$(cat blog/data/posts.json | jq -r '.posts | sort_by(.publishDate) | reverse | .[0]')
+            # Use -c flag to output compact JSON on a single line
+            NEWEST_POST=$(cat blog/data/posts.json | jq -c '.posts | sort_by(.publishDate) | reverse | .[0]')
             echo "newest_post=$NEWEST_POST" >> $GITHUB_OUTPUT
             echo "📰 Newest post: $(echo $NEWEST_POST | jq -r '.title')"
           else
