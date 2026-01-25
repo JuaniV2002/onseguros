@@ -1,3 +1,11 @@
 {
-    "posts": []
+    "posts": [
+        {
+            "slug": "probamos-el-unsubscribe",
+            "title": "probamos el unsubscribe",
+            "description": "espero que funcione bien o me voy a tirar de un puente",
+            "publishDate": "2026-01-25",
+            "markdownFile": "probamos-el-unsubscribe.md"
+        }
+    ]
 }
