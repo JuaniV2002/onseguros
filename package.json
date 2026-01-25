@@ -11,5 +11,6 @@
     "argentina"
   ],
   "author": "OnSeguros",
-  "license": "ISC",
-  "devDependencies
+    "license": "ISC",
+    "devDependencies": {}
+  }
