@@ -7,6 +7,7 @@ Allow: /
 # Páginas principales - permitir indexación
 Allow: /index.html
 Allow: /faq/
+Allow: /blog/
 Allow: /assets/
 
 # Páginas legales - permitir crawling pero no indexar (noindex en meta tags)

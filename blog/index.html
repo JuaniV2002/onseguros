@@ -14,7 +14,7 @@
     <!-- Primary Meta Tags -->
     <title>Blog | OnSeguros - Noticias y Consejos sobre Seguros</title>
     <meta name="title" content="Blog | OnSeguros - Noticias y Consejos sobre Seguros">
-    <meta name="description" content="Mantente informado con las últimas noticias, consejos y guías sobre seguros. Aprende a proteger tu patrimonio con OnSeguros.">
+    <meta name="description" content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro para tu auto, hogar, empresa y más. Información de expertos con +25 años de experiencia.">
     <meta name="keywords" content="blog seguros, consejos seguros, noticias seguros, guías seguros, OnSeguros, seguros Río Cuarto, tips seguros">
     <meta name="author" content="Mariano Villanueva - OnSeguros">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -29,7 +29,7 @@
     <meta property="og:locale" content="es_AR">
     <meta property="og:site_name" content="OnSeguros">
     <meta property="og:title" content="Blog | OnSeguros - Noticias y Consejos sobre Seguros">
-    <meta property="og:description" content="Mantente informado con las últimas noticias, consejos y guías sobre seguros. Aprende a proteger tu patrimonio con OnSeguros.">
+    <meta property="og:description" content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro con información de expertos.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.onseguros.net/blog/">
     <meta property="og:image" content="https://www.onseguros.net/assets/og-image.png">
@@ -40,7 +40,7 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Blog | OnSeguros - Noticias y Consejos sobre Seguros">
-    <meta name="twitter:description" content="Mantente informado con las últimas noticias, consejos y guías sobre seguros. Aprende a proteger tu patrimonio con OnSeguros.">
+    <meta name="twitter:description" content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro con información de expertos.">
     <meta name="twitter:image" content="https://www.onseguros.net/assets/og-image.png">
     <meta name="twitter:image:alt" content="OnSeguros Blog - Noticias y Consejos sobre Seguros">
 
@@ -57,12 +57,24 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "Blog | OnSeguros",
-        "description": "Mantente informado con las últimas noticias, consejos y guías sobre seguros.",
+        "@type": "Blog",
+        "@id": "https://www.onseguros.net/blog/#blog",
+        "name": "Blog OnSeguros - Consejos y Guías sobre Seguros",
+        "description": "Mantente informado con las últimas noticias, consejos prácticos y guías completas sobre seguros en Argentina. Aprende a proteger tu patrimonio con información de expertos.",
         "url": "https://www.onseguros.net/blog/",
+        "inLanguage": "es-AR",
+        "publisher": {
+            "@type": "InsuranceAgency",
+            "name": "OnSeguros",
+            "url": "https://www.onseguros.net/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.onseguros.net/assets/logo.svg"
+            }
+        },
         "isPartOf": {
             "@type": "WebSite",
+            "@id": "https://www.onseguros.net/#website",
             "name": "OnSeguros",
             "url": "https://www.onseguros.net/"
         },
@@ -82,10 +94,64 @@
                     "item": "https://www.onseguros.net/blog/"
                 }
             ]
-        }
+        },
+        "blogPost": [
+            {
+                "@type": "BlogPosting",
+                "headline": "Guía Completa de Seguro de Auto para Principiantes",
+                "description": "Todo lo que necesitas saber antes de contratar tu primer seguro de auto: coberturas, precios y consejos útiles.",
+                "url": "https://www.onseguros.net/blog/post.html?post=guia-seguro-auto-principiantes",
+                "datePublished": "2026-01-24",
+                "author": {
+                    "@type": "Person",
+                    "name": "Mariano Villanueva"
+                }
+            },
+            {
+                "@type": "BlogPosting",
+                "headline": "5 Errores Comunes al Contratar un Seguro de Hogar",
+                "description": "Evita estos errores frecuentes y asegúrate de tener la protección adecuada para tu vivienda.",
+                "url": "https://www.onseguros.net/blog/post.html?post=errores-comunes-seguro-hogar",
+                "datePublished": "2026-01-22",
+                "author": {
+                    "@type": "Person",
+                    "name": "Mariano Villanueva"
+                }
+            }
+        ]
     }
     </script>
-</head>
+    <!-- Newsletter Subscription Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Blog OnSeguros",
+        "url": "https://www.onseguros.net/blog/",
+        "potentialAction": {
+            "@type": "SubscribeAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.onseguros.net/blog/#newsletter",
+                "actionPlatform": [
+                    "http://schema.org/DesktopWebPlatform",
+                    "http://schema.org/MobileWebPlatform"
+                ]
+            },
+            "object": {
+                "@type": "Product",
+                "name": "Newsletter OnSeguros",
+                "description": "Recibí cada viernes consejos sobre seguros, novedades del sector y contenido exclusivo directo en tu correo."
+            },
+            "expectsAcceptanceOf": {
+                "@type": "Offer",
+                "category": "Newsletter gratuito",
+                "price": "0",
+                "priceCurrency": "ARS"
+            }
+        }
+    }
+    </script></head>
 <body>
     <!-- Header Component -->
     <div id="header-placeholder"></div>
@@ -139,7 +205,7 @@
                 </div>
 
                 <!-- Newsletter Section -->
-                <section class="newsletter" aria-labelledby="newsletter-heading">
+                <section id="newsletter" class="newsletter" aria-labelledby="newsletter-heading">
                     <div class="newsletter__container">
                         <div class="newsletter__content">
                             <h2 id="newsletter-heading" class="newsletter__title">

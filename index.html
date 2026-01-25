@@ -153,6 +153,31 @@
     }
     </script>
     
+    <!-- Structured Data - WebSite with SiteLinks SearchBox -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://www.onseguros.net/#website",
+        "name": "OnSeguros - Seguros Integrales, ART y Agrícolas",
+        "alternateName": "OnSeguros Río Cuarto",
+        "url": "https://www.onseguros.net",
+        "description": "Asesoramiento en seguros patrimoniales, ART y granizo con atención personalizada. Más de 25 años de experiencia.",
+        "inLanguage": "es-AR",
+        "publisher": {
+            "@id": "https://www.onseguros.net/#organization"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.onseguros.net/blog/?s={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
     <!-- Structured Data - Breadcrumb -->
     <script type="application/ld+json">
     {
@@ -199,6 +224,39 @@
             "addressRegion": "Córdoba",
             "postalCode": "5800",
             "addressCountry": "AR"
+        }
+    }
+    </script>
+
+    <!-- Newsletter Subscription Action Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NewsletterAction",
+        "@id": "https://www.onseguros.net/#newsletter",
+        "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.onseguros.net/blog/#newsletter",
+            "actionPlatform": [
+                "http://schema.org/DesktopWebPlatform",
+                "http://schema.org/MobileWebPlatform"
+            ]
+        },
+        "object": {
+            "@type": "DigitalDocument",
+            "name": "Newsletter OnSeguros - Consejos Semanales sobre Seguros",
+            "description": "Newsletter semanal con consejos pr\u00e1cticos, guías y novedades sobre seguros en Argentina. Enviado cada viernes.",
+            "about": {
+                "@type": "Thing",
+                "name": "Seguros y Protecci\u00f3n Patrimonial"
+            }
+        },
+        "agent": {
+            "@id": "https://www.onseguros.net/#organization"
+        },
+        "result": {
+            "@type": "EmailMessage",
+            "description": "Recib\u00ed contenido exclusivo sobre seguros cada viernes"
         }
     }
     </script>
