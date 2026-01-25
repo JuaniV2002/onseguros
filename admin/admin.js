@@ -382,12 +382,13 @@ async function deletePost() {
 }
 
 // Cancel edit
-function cancelEdit() {
+async function cancelEdit() {
     if (currentEditingPost) {
         const confirmCancel = confirm('¿Querés cancelar la edición? Los cambios no guardados se perderán.');
         if (!confirmCancel) return;
     }
     currentEditingPost = null;
+    await loadPosts();
     showPostsManagement();
 }
 
@@ -665,9 +666,10 @@ function hideError() {
     elements.errorModal.style.display = 'none';
 }
 
-function handleNewPost() {
+async function handleNewPost() {
     hideSuccess();
     currentEditingPost = null;
+    await loadPosts();
     showPostsManagement();
 }
 
