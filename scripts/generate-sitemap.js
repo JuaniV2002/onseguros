@@ -27,11 +27,12 @@ const CONFIG = {
         { loc: '/#testimonios', priority: '0.7', changefreq: 'monthly' },
         { loc: '/#contacto', priority: '0.8', changefreq: 'monthly' },
         { loc: '/#cotizacion', priority: '0.9', changefreq: 'monthly' },
-        { loc: '/faq/faq.html', priority: '0.8', changefreq: 'monthly' },
+        { loc: '/faq/', priority: '0.8', changefreq: 'monthly' },
         { loc: '/blog/', priority: '0.8', changefreq: 'weekly' },
-        { loc: '/legal/privacidad.html', priority: '0.3', changefreq: 'yearly' },
-        { loc: '/legal/terminos.html', priority: '0.3', changefreq: 'yearly' },
-        { loc: '/legal/accesibilidad.html', priority: '0.3', changefreq: 'yearly' }
+        { loc: '/legal/', priority: '0.4', changefreq: 'yearly' },
+        { loc: '/legal/privacidad/', priority: '0.3', changefreq: 'yearly' },
+        { loc: '/legal/terminos/', priority: '0.3', changefreq: 'yearly' },
+        { loc: '/legal/accesibilidad/', priority: '0.3', changefreq: 'yearly' }
     ]
 };
 

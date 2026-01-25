@@ -8,7 +8,7 @@ const CONFIG = {
     SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDMwNDgsImV4cCI6MjA4NDg3OTA0OH0.iipq27bUMQTlhLfYB2Ldi3VqgtTEG6tVqa2B4jDcsqk',
     // The Netlify function URL for publishing posts
     PUBLISH_API_URL: 'https://onseguros-newsletter.netlify.app/api/publish-post',
-    BLOG_BASE_URL: 'https://www.onseguros.com.ar/blog/post.html'
+    BLOG_BASE_URL: 'https://www.onseguros.net/blog/post.html'
 };
 
 // Initialize Supabase client

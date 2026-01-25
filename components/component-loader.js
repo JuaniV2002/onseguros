@@ -85,8 +85,11 @@ function initComponents() {
     let basePath = 'components/';
     
     // Adjust path for pages in subdirectories
-    if (currentPath.includes('/legal')) {
-        basePath = '../components/';
+    // For deeper nested paths (e.g., /legal/privacidad/)
+    if (currentPath.match(/\/legal\/[^/]+\//)) {
+        basePath = '/components/';
+    } else if (currentPath.includes('/legal')) {
+        basePath = '/components/';
     } else if (currentPath.includes('/faq')) {
         basePath = '../components/';
     } else if (currentPath.includes('/blog')) {

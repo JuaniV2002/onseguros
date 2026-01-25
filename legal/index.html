@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <script>
+        // Prevent flash of wrong theme - runs before CSS loads
+        (function() {
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentos legales de OnSeguros - Políticas de privacidad, términos de servicio y declaración de accesibilidad.">
+    <meta name="keywords" content="legal OnSeguros, privacidad, términos de servicio, accesibilidad web">
+    <meta name="author" content="Mariano Villanueva - OnSeguros">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://www.onseguros.net/legal/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    
+    <title>Documentos Legales | OnSeguros</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/assets/css/style.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    
+    <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/legal/legal.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="legal-main">
+        <div class="legal-container">
+            <header class="legal-header">
+                <h1>Documentos Legales</h1>
+                <p class="legal-subtitle">Información sobre nuestras políticas y términos de servicio</p>
+            </header>
+
+            <div class="legal-grid">
+                <article class="legal-card">
+                    <div class="legal-card__icon">
+                        <img src="../assets/icons/lock.svg" alt="padlock icon" width="32" height="32">
+                    </div>
+                    <h2 class="legal-card__title">Política de Privacidad</h2>
+                    <p class="legal-card__description">
+                        Conocé cómo protegemos y manejamos tus datos personales según la Ley 25.326 de Protección de Datos Personales de Argentina.
+                    </p>
+                    <a href="/legal/privacidad/" class="legal-card__link">
+                        Leer documento
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+
+                <article class="legal-card">
+                    <div class="legal-card__icon">
+                        <img src="../assets/icons/file-text.svg" alt="file text icon" width="32" height="32">
+                    </div>
+                    <h2 class="legal-card__title">Términos de Servicio</h2>
+                    <p class="legal-card__description">
+                        Condiciones de uso de nuestros servicios de seguros integrales, ART, agrícolas y de vehículos. Información sobre nuestro registro como productor asesor habilitado.
+                    </p>
+                    <a href="/legal/terminos/" class="legal-card__link">
+                        Leer documento
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+
+                <article class="legal-card">
+                    <div class="legal-card__icon">
+                        <img src="../assets/icons/info.svg" alt="information icon" width="32" height="32">
+                    </div>
+                    <h2 class="legal-card__title">Declaración de Accesibilidad</h2>
+                    <p class="legal-card__description">
+                        Nuestro compromiso con la accesibilidad web siguiendo las pautas WCAG 2.1 nivel AA para garantizar el acceso universal a nuestros servicios.
+                    </p>
+                    <a href="/legal/accesibilidad/" class="legal-card__link">
+                        Leer documento
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+            </div>
+
+            <div class="legal-contact">
+                <h2>¿Tenés alguna consulta legal?</h2>
+                <p>Si tenés preguntas sobre nuestros documentos legales o necesitás más información, no dudes en contactarnos.</p>
+                <a href="/#contacto" class="btn-primary">Contactar</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="/components/component-loader.js?v=2"></script>
+    <script src="/assets/js/script.js"></script>
+</body>
+</html>

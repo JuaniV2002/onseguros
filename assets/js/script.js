@@ -649,6 +649,132 @@ class FormValidator {
 }
 
 // ==========================================================================
+// Newsletter Form Validator
+// ==========================================================================
+
+class NewsletterFormValidator {
+    constructor(formSelector) {
+        this.form = document.querySelector(formSelector);
+        if (!this.form) return;
+
+        this.emailField = this.form.querySelector('#newsletter-email');
+        this.errorElement = this.form.querySelector('#newsletter-error');
+        this.successElement = this.form.querySelector('#newsletter-success');
+
+        this.init();
+    }
+
+    init() {
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        
+        // Real-time validation
+        if (this.emailField) {
+            this.emailField.addEventListener('blur', () => this.validateEmail());
+            this.emailField.addEventListener('input', Utils.debounce(() => this.validateEmail(), 300));
+        }
+    }
+
+    validateEmail() {
+        if (!this.emailField || !this.errorElement) return true;
+
+        this.clearError();
+
+        const email = this.emailField.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email) {
+            this.showError('La dirección de email es requerida');
+            return false;
+        }
+
+        if (!emailRegex.test(email)) {
+            this.showError('Por favor ingresa una dirección de email válida');
+            return false;
+        }
+
+        return true;
+    }
+
+    showError(message) {
+        if (this.emailField && this.errorElement) {
+            this.emailField.classList.add('error');
+            this.emailField.setAttribute('aria-invalid', 'true');
+            this.errorElement.textContent = message;
+            this.errorElement.style.display = 'block';
+        }
+    }
+
+    clearError() {
+        if (this.emailField && this.errorElement) {
+            this.emailField.classList.remove('error');
+            this.emailField.setAttribute('aria-invalid', 'false');
+            this.errorElement.textContent = '';
+            this.errorElement.style.display = 'none';
+        }
+    }
+
+    showSuccess() {
+        if (this.successElement) {
+            this.successElement.textContent = '✓ ¡Gracias! Te has suscrito al newsletter exitosamente.';
+            this.successElement.style.display = 'block';
+            
+            setTimeout(() => {
+                this.successElement.style.display = 'none';
+            }, 5000);
+        }
+    }
+
+    async handleSubmit(e) {
+        e.preventDefault();
+
+        this.clearError();
+
+        if (!this.validateEmail()) {
+            this.emailField.focus();
+            return;
+        }
+
+        // Show loading state
+        const submitButton = this.form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Enviando...';
+        submitButton.disabled = true;
+
+        try {
+            // Submit form to Formspree
+            const formData = new FormData(this.form);
+            
+            const response = await fetch(this.form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Submission failed');
+            }
+
+            // Show success message
+            this.showSuccess();
+            
+            // Reset form
+            setTimeout(() => {
+                this.form.reset();
+            }, 1000);
+            
+        } catch (error) {
+            this.showError('Hubo un error al suscribirte. Por favor intenta nuevamente.');
+        } finally {
+            // Reset button state
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    }
+}
+
+// ==========================================================================
 // Scroll Animations Component
 // ==========================================================================
 
@@ -1174,6 +1300,7 @@ class SecureGuardApp {
             this.components.push(new Navigation());
             this.components.push(new HeroAnimations());
             this.components.push(new FormValidator('.contact__form'));
+            this.components.push(new NewsletterFormValidator('#newsletter-form'));
             this.components.push(new InsuranceTypePreSelector());
             this.components.push(new ScrollAnimations());
             this.components.push(new AccessibilityEnhancements());
