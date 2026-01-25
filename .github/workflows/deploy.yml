@@ -81,7 +81,7 @@ jobs:
             --exclude '.gitignore' \
             --exclude '.DS_Store' \
             --exclude 'README.md' \
-            --exclude '*.md' \
+            --exclude '/admin/SETUP.md' \
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
           echo "✅ Deployment completed successfully!"
