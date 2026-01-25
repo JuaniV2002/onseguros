@@ -498,9 +498,22 @@
     font-family: 'Space Grotesk', 'Inter', sans-serif;
 }
 
+.blog-post__author {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--space-md);
+    font-family: 'Inter', sans-serif;
+}
+
 @media (min-width: 768px) {
     .blog-post__title {
         font-size: var(--font-size-4xl);
+    }
+    
+    .blog-post__author {
+        font-size: var(--font-size-lg);
+        margin-top: var(--space-lg);
     }
 }
 
