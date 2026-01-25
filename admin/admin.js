@@ -8,6 +8,9 @@ const CONFIG = {
     SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDMwNDgsImV4cCI6MjA4NDg3OTA0OH0.iipq27bUMQTlhLfYB2Ldi3VqgtTEG6tVqa2B4jDcsqk',
     // The Netlify function URL for publishing posts
     PUBLISH_API_URL: 'https://onseguros-newsletter.netlify.app/api/publish-post',
+    UPDATE_API_URL: 'https://onseguros-newsletter.netlify.app/api/update-post',
+    DELETE_API_URL: 'https://onseguros-newsletter.netlify.app/api/delete-post',
+    POSTS_JSON_URL: '/blog/data/posts.json',
     BLOG_BASE_URL: 'https://www.onseguros.net/blog/post.html'
 };
 
@@ -31,12 +34,24 @@ const elements = {
     userEmail: document.getElementById('user-email'),
     logoutBtn: document.getElementById('logout-btn'),
     
+    // Posts Management
+    postsManagement: document.getElementById('posts-management'),
+    postsList: document.getElementById('posts-list'),
+    postsLoading: document.getElementById('posts-loading'),
+    postsEmpty: document.getElementById('posts-empty'),
+    newPostToggleBtn: document.getElementById('new-post-toggle-btn'),
+    editorContainer: document.getElementById('editor-container'),
+    editorTitle: document.getElementById('editor-title'),
+    cancelEditBtn: document.getElementById('cancel-edit-btn'),
+    
     // Post Form
     postForm: document.getElementById('post-form'),
     postTitle: document.getElementById('post-title'),
     postDescription: document.getElementById('post-description'),
     postContent: document.getElementById('post-content'),
     publishBtn: document.getElementById('publish-btn'),
+    publishBtnText: document.getElementById('publish-btn-text'),
+    publishLoadingText: document.getElementById('publish-loading-text'),
     clearBtn: document.getElementById('clear-btn'),
     
     // Character counts
@@ -55,8 +70,17 @@ const elements = {
     errorMessage: document.getElementById('error-message'),
     viewPostLink: document.getElementById('view-post-link'),
     newPostBtn: document.getElementById('new-post-btn'),
-    closeErrorBtn: document.getElementById('close-error-btn')
+    closeErrorBtn: document.getElementById('close-error-btn'),
+    deleteModal: document.getElementById('delete-modal'),
+    deleteMessage: document.getElementById('delete-message'),
+    deletePostTitle: document.getElementById('delete-post-title'),
+    cancelDeleteBtn: document.getElementById('cancel-delete-btn'),
+    confirmDeleteBtn: document.getElementById('confirm-delete-btn')
 };
+
+// State
+let currentEditingPost = null;
+let allPosts = [];
 
 /* =====================================================
    Authentication
@@ -96,6 +120,8 @@ function showAdminScreen(user) {
     elements.adminScreen.style.display = 'block';
     elements.userEmail.textContent = user.email;
     updatePreviewDate();
+    loadPosts(); // Load existing posts
+    showPostsManagement(); // Show posts list by default
 }
 
 // Handle login
@@ -159,6 +185,232 @@ function getAuthErrorMessage(error) {
 }
 
 /* =====================================================
+   Posts Management
+   ===================================================== */
+
+// Load all posts from posts.json
+async function loadPosts() {
+    elements.postsLoading.style.display = 'flex';
+    elements.postsList.innerHTML = '';
+    elements.postsEmpty.style.display = 'none';
+    
+    try {
+        const response = await fetch(CONFIG.POSTS_JSON_URL + '?t=' + Date.now());
+        
+        if (!response.ok) {
+            throw new Error('Failed to load posts');
+        }
+        
+        const data = await response.json();
+        allPosts = data.posts || [];
+        
+        // Sort posts by date (newest first)
+        allPosts.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+        
+        elements.postsLoading.style.display = 'none';
+        
+        if (allPosts.length === 0) {
+            elements.postsEmpty.style.display = 'flex';
+            return;
+        }
+        
+        renderPosts();
+    } catch (error) {
+        console.error('Error loading posts:', error);
+        elements.postsLoading.style.display = 'none';
+        elements.postsEmpty.style.display = 'flex';
+    }
+}
+
+// Render posts list
+function renderPosts() {
+    elements.postsList.innerHTML = allPosts.map(post => `
+        <div class="post-item" data-slug="${post.slug}">
+            <div class="post-item-content">
+                <h3 class="post-item-title">${escapeHtml(post.title)}</h3>
+                <p class="post-item-description">${escapeHtml(post.description)}</p>
+                <div class="post-item-meta">
+                    <span class="post-item-date">${formatDate(post.publishDate)}</span>
+                    <span>•</span>
+                    <span class="post-item-slug">${post.slug}</span>
+                </div>
+            </div>
+            <div class="post-item-actions">
+                <a href="${CONFIG.BLOG_BASE_URL}?slug=${post.slug}" target="_blank" class="btn btn-sm btn-secondary" title="Ver artículo">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Ver
+                </a>
+                <button class="btn btn-sm btn-primary" onclick="editPost('${post.slug}')" title="Editar artículo">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    Editar
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="confirmDelete('${post.slug}')" title="Eliminar artículo">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Show posts management section
+function showPostsManagement() {
+    elements.postsManagement.style.display = 'block';
+    elements.editorContainer.style.display = 'none';
+    currentEditingPost = null;
+}
+
+// Show editor section
+function showEditor(isEdit = false) {
+    elements.postsManagement.style.display = 'none';
+    elements.editorContainer.style.display = 'grid';
+    
+    if (isEdit) {
+        elements.editorTitle.textContent = 'Editar Artículo';
+        elements.cancelEditBtn.style.display = 'inline-block';
+        elements.publishBtnText.textContent = 'Actualizar Artículo';
+        elements.publishLoadingText.textContent = 'Actualizando...';
+    } else {
+        elements.editorTitle.textContent = 'Nuevo Artículo';
+        elements.cancelEditBtn.style.display = 'none';
+        elements.publishBtnText.textContent = 'Publicar Artículo';
+        elements.publishLoadingText.textContent = 'Publicando...';
+        clearForm(false); // Clear without confirmation
+    }
+}
+
+// Edit post
+async function editPost(slug) {
+    const post = allPosts.find(p => p.slug === slug);
+    if (!post) {
+        showError('No se encontró el artículo');
+        return;
+    }
+    
+    currentEditingPost = post;
+    showEditor(true);
+    
+    // Load post data into form
+    elements.postTitle.value = post.title;
+    elements.postDescription.value = post.description;
+    
+    // Load markdown content
+    try {
+        const response = await fetch(`/blog/posts/${post.markdownFile}?t=${Date.now()}`);
+        if (response.ok) {
+            const content = await response.text();
+            elements.postContent.value = content;
+        } else {
+            elements.postContent.value = '';
+            showError('No se pudo cargar el contenido del artículo');
+        }
+    } catch (error) {
+        console.error('Error loading post content:', error);
+        elements.postContent.value = '';
+    }
+    
+    // Update character counts and preview
+    updateCharCount(elements.postTitle, elements.titleCount, 100);
+    updateCharCount(elements.postDescription, elements.descCount, 160);
+    updatePreview();
+}
+
+// Confirm delete
+function confirmDelete(slug) {
+    const post = allPosts.find(p => p.slug === slug);
+    if (!post) return;
+    
+    currentEditingPost = post;
+    elements.deletePostTitle.textContent = `"${post.title}"`;
+    elements.deleteModal.style.display = 'flex';
+}
+
+// Delete post
+async function deletePost() {
+    if (!currentEditingPost) return;
+    
+    setDeleteLoading(true);
+    
+    try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        
+        if (!session) {
+            throw new Error('No estás autenticado');
+        }
+        
+        const response = await fetch(CONFIG.DELETE_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({ slug: currentEditingPost.slug })
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(result.error || 'Error al eliminar el artículo');
+        }
+        
+        hideDeleteModal();
+        await loadPosts(); // Reload posts
+        showSuccess(null, '¡Artículo eliminado exitosamente!');
+        
+    } catch (error) {
+        console.error('Delete error:', error);
+        hideDeleteModal();
+        showError(error.message || 'Error al eliminar el artículo. Intentá de nuevo.');
+    } finally {
+        setDeleteLoading(false);
+    }
+}
+
+// Cancel edit
+function cancelEdit() {
+    if (currentEditingPost) {
+        const confirmCancel = confirm('¿Querés cancelar la edición? Los cambios no guardados se perderán.');
+        if (!confirmCancel) return;
+    }
+    currentEditingPost = null;
+    showPostsManagement();
+}
+
+// Helper functions
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('es-AR', options);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function setDeleteLoading(loading) {
+    elements.confirmDeleteBtn.disabled = loading;
+    elements.cancelDeleteBtn.disabled = loading;
+    elements.confirmDeleteBtn.querySelector('.btn-text').style.display = loading ? 'none' : 'inline';
+    elements.confirmDeleteBtn.querySelector('.btn-loading').style.display = loading ? 'inline-flex' : 'none';
+}
+
+function hideDeleteModal() {
+    elements.deleteModal.style.display = 'none';
+    currentEditingPost = null;
+}
+
+/* =====================================================
    Post Editor
    ===================================================== */
 
@@ -206,12 +458,19 @@ function generateSlug(title) {
 }
 
 // Clear form
-function clearForm() {
-    if (confirm('¿Estás seguro de que querés limpiar el formulario?')) {
+function clearForm(confirm = true) {
+    if (confirm && window.confirm('¿Estás seguro de que querés limpiar el formulario?')) {
         elements.postForm.reset();
         updatePreview();
         updateCharCount(elements.postTitle, elements.titleCount, 100);
         updateCharCount(elements.postDescription, elements.descCount, 160);
+        currentEditingPost = null;
+    } else if (!confirm) {
+        elements.postForm.reset();
+        updatePreview();
+        updateCharCount(elements.postTitle, elements.titleCount, 100);
+        updateCharCount(elements.postDescription, elements.descCount, 160);
+        currentEditingPost = null;
     }
 }
 
@@ -314,8 +573,9 @@ async function handlePublish(e) {
             throw new Error('No estás autenticado');
         }
         
-        const slug = generateSlug(title);
-        const publishDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const isEditing = currentEditingPost !== null;
+        const slug = isEditing ? currentEditingPost.slug : generateSlug(title);
+        const publishDate = isEditing ? currentEditingPost.publishDate : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         
         const postData = {
             title,
@@ -326,8 +586,10 @@ async function handlePublish(e) {
             markdownFile: `${slug}.md`
         };
         
-        // Call the publish API
-        const response = await fetch(CONFIG.PUBLISH_API_URL, {
+        // Call the appropriate API (update or publish)
+        const apiUrl = isEditing ? CONFIG.UPDATE_API_URL : CONFIG.PUBLISH_API_URL;
+        
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -339,15 +601,16 @@ async function handlePublish(e) {
         const result = await response.json();
         
         if (!response.ok) {
-            throw new Error(result.error || 'Error al publicar el artículo');
+            throw new Error(result.error || `Error al ${isEditing ? 'actualizar' : 'publicar'} el artículo`);
         }
         
         // Success!
-        showSuccess(slug);
+        await loadPosts(); // Reload posts list
+        showSuccess(slug, isEditing ? '¡Artículo actualizado exitosamente!' : '¡Artículo publicado exitosamente!');
         
     } catch (error) {
         console.error('Publish error:', error);
-        showError(error.message || 'Error al publicar el artículo. Intentá de nuevo.');
+        showError(error.message || `Error al ${currentEditingPost ? 'actualizar' : 'publicar'} el artículo. Intentá de nuevo.`);
     } finally {
         setPublishLoading(false);
     }
@@ -365,8 +628,21 @@ function setPublishLoading(loading) {
    Modals
    ===================================================== */
 
-function showSuccess(slug) {
-    elements.viewPostLink.href = `${CONFIG.BLOG_BASE_URL}?slug=${slug}`;
+function showSuccess(slug, customMessage = null) {
+    if (slug) {
+        elements.viewPostLink.href = `${CONFIG.BLOG_BASE_URL}?slug=${slug}`;
+        elements.viewPostLink.style.display = 'inline-block';
+    } else {
+        elements.viewPostLink.style.display = 'none';
+    }
+    
+    // Update success message if provided
+    if (customMessage) {
+        const successModal = elements.successModal;
+        const messageElement = successModal.querySelector('p');
+        messageElement.textContent = customMessage;
+    }
+    
     elements.successModal.style.display = 'flex';
 }
 
@@ -385,10 +661,8 @@ function hideError() {
 
 function handleNewPost() {
     hideSuccess();
-    elements.postForm.reset();
-    updatePreview();
-    updateCharCount(elements.postTitle, elements.titleCount, 100);
-    updateCharCount(elements.postDescription, elements.descCount, 160);
+    currentEditingPost = null;
+    showPostsManagement();
 }
 
 /* =====================================================
@@ -398,6 +672,17 @@ function handleNewPost() {
 // Auth
 elements.loginForm.addEventListener('submit', handleLogin);
 elements.logoutBtn.addEventListener('click', handleLogout);
+
+// Posts Management
+elements.newPostToggleBtn.addEventListener('click', () => showEditor(false));
+elements.cancelEditBtn.addEventListener('click', cancelEdit);
+
+// Handle "new post" triggers from empty state
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('new-post-trigger')) {
+        showEditor(false);
+    }
+});
 
 // Form inputs
 elements.postTitle.addEventListener('input', () => {
@@ -442,6 +727,8 @@ elements.postContent.addEventListener('keydown', (e) => {
 // Modal buttons
 elements.newPostBtn.addEventListener('click', handleNewPost);
 elements.closeErrorBtn.addEventListener('click', hideError);
+elements.cancelDeleteBtn.addEventListener('click', hideDeleteModal);
+elements.confirmDeleteBtn.addEventListener('click', deletePost);
 
 // Close modals on backdrop click
 elements.successModal.addEventListener('click', (e) => {
@@ -452,8 +739,16 @@ elements.errorModal.addEventListener('click', (e) => {
     if (e.target === elements.errorModal) hideError();
 });
 
+elements.deleteModal.addEventListener('click', (e) => {
+    if (e.target === elements.deleteModal) hideDeleteModal();
+});
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     checkAuth();
     updatePreviewDate();
 });
+
+// Expose functions to global scope for onclick handlers
+window.editPost = editPost;
+window.confirmDelete = confirmDelete;
