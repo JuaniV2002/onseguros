@@ -5,14 +5,14 @@
 // Configuration
 const CONFIG = {
     SUPABASE_URL: 'https://tgokvwuiiglioegxgcpu.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcxMzIxMDcsImV4cCI6MjA1MjcwODEwN30.GJfptLVMbxWV4WNsIhMJBPJlz2X3xIYRuSflg9oHR-c',
+    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDMwNDgsImV4cCI6MjA4NDg3OTA0OH0.iipq27bUMQTlhLfYB2Ldi3VqgtTEG6tVqa2B4jDcsqk',
     // The Netlify function URL for publishing posts
     PUBLISH_API_URL: 'https://onseguros-newsletter.netlify.app/api/publish-post',
     BLOG_BASE_URL: 'https://www.onseguros.com.ar/blog/post.html'
 };
 
 // Initialize Supabase client
-const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
 
 // DOM Elements
 const elements = {
@@ -64,7 +64,7 @@ const elements = {
 
 // Check auth state on page load
 async function checkAuth() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
     
     if (session) {
         showAdminScreen(session.user);
@@ -74,7 +74,7 @@ async function checkAuth() {
 }
 
 // Listen for auth state changes
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN' && session) {
         showAdminScreen(session.user);
     } else if (event === 'SIGNED_OUT') {
@@ -109,7 +109,7 @@ async function handleLogin(e) {
     hideLoginError();
     
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email,
             password
         });
@@ -126,7 +126,7 @@ async function handleLogin(e) {
 
 // Handle logout
 async function handleLogout() {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 }
 
 // Login loading state
@@ -308,7 +308,7 @@ async function handlePublish(e) {
     
     try {
         // Get current session for auth
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session } } = await supabaseClient.auth.getSession();
         
         if (!session) {
             throw new Error('No estás autenticado');
