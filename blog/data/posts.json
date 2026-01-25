@@ -1,0 +1,39 @@
+{
+    "posts": [
+        {
+            "slug": "guia-seguro-auto-principiantes",
+            "title": "Guía Completa de Seguro de Auto para Principiantes",
+            "description": "Todo lo que necesitas saber antes de contratar tu primer seguro de auto: coberturas, precios y consejos útiles.",
+            "publishDate": "2026-01-24",
+            "markdownFile": "mi-articulo.md"
+        },
+        {
+            "slug": "errores-comunes-seguro-hogar",
+            "title": "5 Errores Comunes al Contratar un Seguro de Hogar",
+            "description": "Evita estos errores frecuentes y asegúrate de tener la protección adecuada para tu vivienda.",
+            "publishDate": "2026-01-22",
+            "markdownFile": "mi-articulo2.md"
+        },
+        {
+            "slug": "diferencias-seguro-vida-termino-permanente",
+            "title": "Seguro de Vida: ¿A Término o Permanente?",
+            "description": "Conoce las diferencias entre estos dos tipos de seguros de vida y cuál es mejor para tu situación.",
+            "publishDate": "2026-01-18",
+            "markdownFile": "mi-articulo3.md"
+        },
+        {
+            "slug": "como-reducir-prima-seguro",
+            "title": "10 Formas de Reducir la Prima de tu Seguro",
+            "description": "Consejos prácticos para ahorrar dinero en tus seguros sin sacrificar cobertura.",
+            "publishDate": "2026-01-15",
+            "markdownFile": "mi-articulo4.md"
+        },
+        {
+            "slug": "que-hacer-accidente-transito",
+            "title": "¿Qué Hacer en Caso de Accidente de Tránsito?",
+            "description": "Pasos a seguir después de un accidente: desde la escena hasta el reclamo al seguro.",
+            "publishDate": "2026-01-10",
+            "markdownFile": "mi-articulo5.md"
+        }
+    ]
+}

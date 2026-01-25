@@ -96,6 +96,8 @@ function initComponents() {
         basePath = '../components/';
     } else if (currentPath.includes('/faq/')) {
         basePath = '../components/';
+    } else if (currentPath.includes('/blog/')) {
+        basePath = '../components/';
     }
     
     console.log('Using basePath:', basePath);

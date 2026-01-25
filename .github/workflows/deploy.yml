@@ -17,6 +17,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need history to detect changed files
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
 
       # Validate HTML files before deploying
       - name: Validate HTML
@@ -80,6 +85,57 @@ jobs:
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
           echo "✅ Deployment completed successfully!"
+
+      # Check if posts.json changed and send newsletter
+      - name: Check for new blog posts
+        id: check-posts
+        run: |
+          echo "📝 Checking for new blog posts..."
+          
+          # Get the list of changed files in this push
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+          
+          if echo "$CHANGED_FILES" | grep -q "blog/data/posts.json"; then
+            echo "✓ posts.json was modified"
+            echo "posts_changed=true" >> $GITHUB_OUTPUT
+            
+            # Extract the newest post (first in the array after sorting by date)
+            NEWEST_POST=$(cat blog/data/posts.json | jq -r '.posts | sort_by(.publishDate) | reverse | .[0]')
+            echo "newest_post=$NEWEST_POST" >> $GITHUB_OUTPUT
+            echo "📰 Newest post: $(echo $NEWEST_POST | jq -r '.title')"
+          else
+            echo "ℹ️  posts.json was not modified"
+            echo "posts_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send newsletter notification
+        if: steps.check-posts.outputs.posts_changed == 'true'
+        run: |
+          echo "📧 Sending newsletter notification..."
+          
+          NEWEST_POST='${{ steps.check-posts.outputs.newest_post }}'
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://onseguros-newsletter.netlify.app/api/send-newsletter" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"secret\": \"${{ secrets.NEWSLETTER_WEBHOOK_SECRET }}\",
+              \"post\": $NEWEST_POST
+            }")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          echo "Response: $BODY"
+          echo "HTTP Code: $HTTP_CODE"
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ Newsletter sent successfully!"
+            echo "- **Newsletter**: ✅ Sent to subscribers" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Newsletter sending failed (non-critical)"
+            echo "- **Newsletter**: ⚠️ Failed to send" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Deployment Summary
         if: always()

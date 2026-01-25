@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin - OnSeguros Blog</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="icon" type="image/png" href="../assets/logos/onseguros-icon.png">
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Marked.js for Markdown preview -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="../assets/logos/onseguros-icon.png" alt="OnSeguros" class="login-logo">
+                <h1>Panel de Administración</h1>
+                <p>Ingresá tus credenciales para acceder</p>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" id="login-btn">
+                    <span class="btn-text">Iniciar Sesión</span>
+                    <span class="btn-loading" style="display: none;">
+                        <svg class="spinner" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </button>
+                <div id="login-error" class="error-message" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-screen" class="screen" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <img src="../assets/logos/onseguros-icon.png" alt="OnSeguros" class="header-logo">
+                <h1>Editor de Blog</h1>
+            </div>
+            <div class="header-right">
+                <span id="user-email" class="user-email"></span>
+                <button id="logout-btn" class="btn btn-secondary btn-sm">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="editor-container">
+                <!-- Editor Panel -->
+                <div class="editor-panel">
+                    <h2>Nuevo Artículo</h2>
+                    <form id="post-form" class="post-form">
+                        <div class="form-group">
+                            <label for="post-title">Título del artículo *</label>
+                            <input 
+                                type="text" 
+                                id="post-title" 
+                                name="title" 
+                                required 
+                                placeholder="Ej: Guía completa para elegir tu seguro de auto"
+                                maxlength="100"
+                            >
+                            <span class="char-count"><span id="title-count">0</span>/100</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="post-description">Descripción corta (SEO) *</label>
+                            <textarea 
+                                id="post-description" 
+                                name="description" 
+                                required 
+                                placeholder="Una descripción breve que aparecerá en Google y en las tarjetas del blog (máximo 160 caracteres)"
+                                maxlength="160"
+                                rows="3"
+                            ></textarea>
+                            <span class="char-count"><span id="desc-count">0</span>/160</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="post-content">Contenido del artículo (Markdown) *</label>
+                            <div class="markdown-toolbar">
+                                <button type="button" class="toolbar-btn" data-action="h2" title="Título H2">H2</button>
+                                <button type="button" class="toolbar-btn" data-action="h3" title="Título H3">H3</button>
+                                <span class="toolbar-divider"></span>
+                                <button type="button" class="toolbar-btn" data-action="bold" title="Negrita (Ctrl+B)">
+                                    <strong>B</strong>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-action="italic" title="Cursiva (Ctrl+I)">
+                                    <em>I</em>
+                                </button>
+                                <span class="toolbar-divider"></span>
+                                <button type="button" class="toolbar-btn" data-action="ul" title="Lista con viñetas">• Lista</button>
+                                <button type="button" class="toolbar-btn" data-action="ol" title="Lista numerada">1. Lista</button>
+                                <span class="toolbar-divider"></span>
+                                <button type="button" class="toolbar-btn" data-action="link" title="Enlace">🔗</button>
+                                <button type="button" class="toolbar-btn" data-action="hr" title="Línea horizontal">―</button>
+                            </div>
+                            <textarea 
+                                id="post-content" 
+                                name="content" 
+                                required 
+                                placeholder="Escribí el contenido de tu artículo usando Markdown...
+
+Ejemplo:
+## Introducción
+Este es el primer párrafo de mi artículo.
+
+## Sección principal
+- Punto uno
+- Punto dos
+- Punto tres
+
+### Subsección
+Más contenido aquí..."
+                                rows="20"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="clear-btn" class="btn btn-secondary">Limpiar</button>
+                            <button type="submit" id="publish-btn" class="btn btn-primary">
+                                <span class="btn-text">Publicar Artículo</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                                    </svg>
+                                    Publicando...
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="preview-panel">
+                    <div class="preview-header">
+                        <h2>Vista Previa</h2>
+                        <span class="preview-badge">En vivo</span>
+                    </div>
+                    <div class="preview-content">
+                        <article class="preview-article">
+                            <h1 id="preview-title" class="preview-title">Tu título aparecerá aquí</h1>
+                            <p id="preview-description" class="preview-description">La descripción aparecerá aquí...</p>
+                            <div class="preview-meta">
+                                <span id="preview-date"></span>
+                                <span>•</span>
+                                <span>Mariano Villanueva</span>
+                            </div>
+                            <hr>
+                            <div id="preview-body" class="preview-body">
+                                <p class="placeholder-text">El contenido de tu artículo se mostrará aquí mientras escribís...</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Success Modal -->
+        <div id="success-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-icon success">✓</div>
+                <h2>¡Artículo Publicado!</h2>
+                <p>Tu artículo fue publicado exitosamente. En unos minutos estará disponible en el blog.</p>
+                <div class="modal-actions">
+                    <a id="view-post-link" href="#" target="_blank" class="btn btn-primary">Ver Artículo</a>
+                    <button id="new-post-btn" class="btn btn-secondary">Escribir Otro</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="error-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-icon error">✕</div>
+                <h2>Error al Publicar</h2>
+                <p id="error-message">Ocurrió un error inesperado. Por favor, intentá de nuevo.</p>
+                <div class="modal-actions">
+                    <button id="close-error-btn" class="btn btn-primary">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
