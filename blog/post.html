@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="es-AR" style="background-color:#0f0f0f">
+<html lang="es-AR">
 <head>
+    <script>
+        // Prevent flash of wrong theme - runs before CSS loads
+        (function() {
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>html,body{background-color:#0f0f0f;color:#f5f5f5}</style>
     
     <!-- Primary Meta Tags (dynamically updated by JS) -->
     <title>Cargando... | Blog OnSeguros</title>
@@ -178,7 +184,7 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="../components/component-loader.js?v=2"></script>
+    <script src="../components/component-loader.js"></script>
     <script src="../script.js"></script>
     <script src="blog.js"></script>
 </body>
