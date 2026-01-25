@@ -1,6 +1,13 @@
 {
     "posts": [
         {
+            "slug": "este-es-un-blog-de-prueba",
+            "title": "Este es un blog de prueba",
+            "description": "esta descripcion breve aparecera en el seo de la pagina",
+            "publishDate": "2026-01-25",
+            "markdownFile": "este-es-un-blog-de-prueba.md"
+        },
+        {
             "slug": "guia-seguro-auto-principiantes",
             "title": "Guía Completa de Seguro de Auto para Principiantes",
             "description": "Todo lo que necesitas saber antes de contratar tu primer seguro de auto: coberturas, precios y consejos útiles.",
