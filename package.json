@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "OnSeguros - Seguros Integrales, ART y Agrícolas website",
   "scripts": {
-    "sitemap": "node generate-sitemap.js",
-    "sitemap:watch": "nodemon --watch blog/data/posts.json --exec 'node generate-sitemap.js'"
+    "sitemap": "node generate-sitemap.js"
   },
   "keywords": [
     "seguros",
@@ -13,7 +12,4 @@
   ],
   "author": "OnSeguros",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^3.0.0"
-  }
-}
+  "devDependencies
