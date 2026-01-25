@@ -86,17 +86,22 @@ if (document.readyState === 'loading') {
 function initComponents() {
     console.log('Initializing components...');
     console.log('Current path:', window.location.pathname);
+    console.log('Current href:', window.location.href);
     
     // Determine base path based on current page location
     const currentPath = window.location.pathname;
+    const currentHref = window.location.href;
     let basePath = 'components/';
     
     // Adjust path for pages in subdirectories
-    if (currentPath.includes('/legal/')) {
+    // Check both pathname and full href to handle different server configs
+    if (currentPath.includes('/legal') || currentHref.includes('/legal')) {
         basePath = '../components/';
-    } else if (currentPath.includes('/faq/')) {
+    } else if (currentPath.includes('/faq') || currentHref.includes('/faq')) {
         basePath = '../components/';
-    } else if (currentPath.includes('/blog/')) {
+    } else if (currentPath.includes('/blog') || currentHref.includes('/blog')) {
+        basePath = '../components/';
+    } else if (currentPath.includes('/admin') || currentHref.includes('/admin')) {
         basePath = '../components/';
     }
     
