@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Critical inline styles to prevent flash of white -->
+    <style>html, body { background-color: #0f0f0f; } body { opacity: 0; transition: opacity 0.15s ease-in; } body.loaded { opacity: 1; }</style>
     
     <!-- Primary Meta Tags (dynamically updated by JS) -->
     <title>Cargando... | Blog OnSeguros</title>
@@ -180,5 +182,6 @@
     <script src="../components/component-loader.js?v=2"></script>
     <script src="../script.js"></script>
     <script src="blog.js"></script>
+    <script>document.body.classList.add('loaded');</script>
 </body>
 </html>

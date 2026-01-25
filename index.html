@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Critical inline styles to prevent flash of white -->
+    <style>
+        html, body { background-color: #0f0f0f; }
+        body { opacity: 0; transition: opacity 0.15s ease-in; }
+        body.loaded { opacity: 1; }
+    </style>
     <meta name="description" content="Seguros patrimoniales, ART y granizo. 25+ años de experiencia. Asesoramiento personalizado con aseguradoras de trayectoria en Argentina.">
     <meta name="keywords" content="seguros integrales Argentina, seguros ART, productor asesor de seguros, OnSeguros Argentina, seguros patrimoniales, seguros hogar comercio edificio, seguros agrícolas, Mariano Villanueva productor de seguros, seguros vehículos, vida colectivo, seguros empresas">
     <meta name="author" content="Mariano Villanueva - OnSeguros">
@@ -690,5 +696,6 @@
     <!-- Scripts -->
     <script src="components/component-loader.js?v=2"></script>
     <script src="script.js"></script>
+    <script>document.body.classList.add('loaded');</script>
 </body>
 </html>
