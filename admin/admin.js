@@ -195,7 +195,13 @@ async function loadPosts() {
     elements.postsEmpty.style.display = 'none';
     
     try {
-        const response = await fetch(CONFIG.POSTS_JSON_URL + '?t=' + Date.now());
+        const response = await fetch(CONFIG.POSTS_JSON_URL + '?t=' + Date.now(), {
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache'
+            }
+        });
         
         if (!response.ok) {
             throw new Error('Failed to load posts');
