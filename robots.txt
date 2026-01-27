@@ -4,31 +4,10 @@
 User-agent: *
 Allow: /
 
-# Páginas principales - permitir indexación
-Allow: /index.html
-Allow: /faq/
-Allow: /blog/
-Allow: /assets/
+# Archivos y directorios a excluir del crawling
+Disallow: /admin/
+Disallow: /*.js$
+Disallow: /*.css$
 
-# Páginas legales - permitir crawling pero no indexar (noindex en meta tags)
-Allow: /legal/
-
-# Archivos y directorios a excluir
-Disallow: /script.js
-Disallow: /style.css
-
-# Sitemap (actualizar con la URL real cuando esté disponible)
+# Sitemap
 Sitemap: https://www.onseguros.net/sitemap.xml
-
-# Configuración específica para bots comunes
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /assets/
-
-User-agent: Bingbot
-Allow: /
-
-# Tiempo de espera entre requests (en segundos)
-Crawl-delay: 1

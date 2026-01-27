@@ -313,11 +313,11 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .theme-toggle__switch input:checked + .theme-toggle__slider:before {
+    .theme-toggle__switch input:checked+.theme-toggle__slider:before {
         transform: translateX(24px);
     }
 
-    .theme-toggle__switch input:focus-visible + .theme-toggle__slider {
+    .theme-toggle__switch input:focus-visible+.theme-toggle__slider {
         outline: 2px solid var(--primary-600);
         outline-offset: 2px;
     }
@@ -391,14 +391,16 @@
                     </p>
                     <div class="footer__safety">
                         <div class="footer__safety-icons">
-                            <img src="../assets/icons/helmet.svg" alt="Casco" class="footer__safety-icon">
-                            <img src="../assets/icons/seatbelt.svg" alt="Cinturón de seguridad" class="footer__safety-icon">
+                            <img src="../assets/icons/helmet.svg" alt="Casco" class="footer__safety-icon" width="20"
+                                height="20">
+                            <img src="../assets/icons/seatbelt.svg" alt="Cinturón de seguridad"
+                                class="footer__safety-icon" width="20" height="20">
                         </div>
                         <span>Usalos siempre</span>
                     </div>
                 </div>
             </div>
-            
+
             <nav class="footer__section" aria-labelledby="footer-services-heading">
                 <h3 id="footer-services-heading" class="footer__title">Servicios</h3>
                 <ul class="footer__links">
@@ -407,7 +409,7 @@
                     <li><a href="../index.html#servicios" class="footer__link">Seguros Agrícolas</a></li>
                 </ul>
             </nav>
-            
+
             <nav class="footer__section" aria-labelledby="footer-company-heading">
                 <h3 id="footer-company-heading" class="footer__title">Empresa</h3>
                 <ul class="footer__links">
@@ -416,17 +418,18 @@
                     <li><a href="../index.html#contacto" class="footer__link">Contacto</a></li>
                 </ul>
             </nav>
-            
+
             <nav class="footer__section" aria-labelledby="footer-support-heading">
                 <h3 id="footer-support-heading" class="footer__title">Soporte</h3>
                 <ul class="footer__links">
-                    <li><a href="https://wa.me/543584122566" target="_blank" rel="noopener noreferrer" class="footer__link">WhatsApp</a></li>
+                    <li><a href="https://wa.me/543584122566" target="_blank" rel="noopener noreferrer"
+                            class="footer__link">WhatsApp</a></li>
                     <!-- <li><a href="../blog/index.html" class="footer__link">Blog</a></li> -->
                     <li><a href="../faq/index.html" class="footer__link">Preguntas Frecuentes</a></li>
                 </ul>
             </nav>
         </div>
-        
+
         <div class="footer__bottom">
             <div class="footer__bottom-content">
                 <nav class="footer__legal-links" aria-label="Enlaces legales">
@@ -435,23 +438,23 @@
                 <div class="theme-toggle" role="group" aria-label="Selector de tema">
                     <span class="theme-toggle__label" id="theme-label">Tema:</span>
                     <div class="theme-toggle__icons" aria-hidden="true">
-                        <img src="../assets/icons/sun.svg" width="15" alt="sun icon">
+                        <img src="../assets/icons/sun.svg" width="15" height="15" alt="sun icon">
                     </div>
                     <label class="theme-toggle__switch">
-                        <input type="checkbox" 
-                               id="theme-toggle-checkbox" 
-                               aria-labelledby="theme-label">
+                        <input type="checkbox" id="theme-toggle-checkbox" aria-labelledby="theme-label">
                         <span class="theme-toggle__slider" aria-hidden="true"></span>
                     </label>
                     <div class="theme-toggle__icons" aria-hidden="true">
-                        <img src="../assets/icons/moon.svg" width="15" alt="moon icon">
+                        <img src="../assets/icons/moon.svg" width="15" height="15" alt="moon icon">
                     </div>
                 </div>
             </div>
             <div class="footer__copyright">
                 <p>&copy; 2026 OnSeguros. Todos los derechos reservados.</p>
                 <p style="margin-top: var(--space-sm); font-size: var(--font-size-xs); opacity: 0.7;">
-                    Diseñado y desarrollado por <a href="https://juani.me" target="_blank" rel="noopener noreferrer" style="color: var(--primary-600); text-decoration: none; transition: opacity var(--transition-fast);" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Juani Villanueva</a>
+                    Diseñado y desarrollado por <a href="https://juani.me" target="_blank" rel="noopener noreferrer"
+                        style="color: var(--primary-600); text-decoration: none; transition: opacity var(--transition-fast);"
+                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Juani Villanueva</a>
                 </p>
             </div>
         </div>
