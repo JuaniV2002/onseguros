@@ -6,11 +6,12 @@
 const CONFIG = {
     SUPABASE_URL: 'https://tgokvwuiiglioegxgcpu.supabase.co',
     SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDMwNDgsImV4cCI6MjA4NDg3OTA0OH0.iipq27bUMQTlhLfYB2Ldi3VqgtTEG6tVqa2B4jDcsqk',
-    // The Netlify function URL for publishing posts
+    // The Netlify function URLs
+    GET_POSTS_API_URL: 'https://onseguros-newsletter.netlify.app/api/get-posts',
+    GET_POST_API_URL: 'https://onseguros-newsletter.netlify.app/api/get-post',
     PUBLISH_API_URL: 'https://onseguros-newsletter.netlify.app/api/publish-post',
     UPDATE_API_URL: 'https://onseguros-newsletter.netlify.app/api/update-post',
     DELETE_API_URL: 'https://onseguros-newsletter.netlify.app/api/delete-post',
-    POSTS_JSON_URL: '/blog/data/posts.json',
     BLOG_BASE_URL: 'https://www.onseguros.net/blog/post.html'
 };
 
@@ -195,11 +196,11 @@ async function loadPosts() {
     elements.postsEmpty.style.display = 'none';
     
     try {
-        const response = await fetch(CONFIG.POSTS_JSON_URL + '?t=' + Date.now(), {
-            cache: 'no-store',
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        
+        const response = await fetch(CONFIG.GET_POSTS_API_URL, {
             headers: {
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache'
+                'Authorization': `Bearer ${session?.access_token}`
             }
         });
         
@@ -210,8 +211,7 @@ async function loadPosts() {
         const data = await response.json();
         allPosts = data.posts || [];
         
-        // Sort posts by date (newest first)
-        allPosts.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+        // Posts are already sorted by publish_date DESC from API
         
         elements.postsLoading.style.display = 'none';
         
@@ -236,7 +236,7 @@ function renderPosts() {
                 <h3 class="post-item-title">${escapeHtml(post.title)}</h3>
                 <p class="post-item-description">${escapeHtml(post.description)}</p>
                 <div class="post-item-meta">
-                    <span class="post-item-date">${formatDate(post.publishDate)}</span>
+                    <span class="post-item-date">${formatDate(post.publish_date)}</span>
                     <span>•</span>
                     <span class="post-item-slug">${post.slug}</span>
                 </div>
@@ -305,24 +305,10 @@ async function editPost(slug) {
     currentEditingPost = post;
     showEditor(true);
     
-    // Load post data into form
+    // Load post data into form (content is already in the post object from API)
     elements.postTitle.value = post.title;
     elements.postDescription.value = post.description;
-    
-    // Load markdown content
-    try {
-        const response = await fetch(`/blog/posts/${post.markdownFile}?t=${Date.now()}`);
-        if (response.ok) {
-            const content = await response.text();
-            elements.postContent.value = content;
-        } else {
-            elements.postContent.value = '';
-            showError('No se pudo cargar el contenido del artículo');
-        }
-    } catch (error) {
-        console.error('Error loading post content:', error);
-        elements.postContent.value = '';
-    }
+    elements.postContent.value = post.content || '';
     
     // Update character counts and preview
     updateCharCount(elements.postTitle, elements.titleCount, 100);
@@ -582,15 +568,14 @@ async function handlePublish(e) {
         
         const isEditing = currentEditingPost !== null;
         const slug = isEditing ? currentEditingPost.slug : generateSlug(title);
-        const publishDate = isEditing ? currentEditingPost.publishDate : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const publishDate = isEditing ? currentEditingPost.publish_date : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         
         const postData = {
             title,
             description,
             content,
             slug,
-            publishDate,
-            markdownFile: `${slug}.md`
+            publishDate
         };
         
         // Call the appropriate API (update or publish)

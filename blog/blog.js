@@ -5,8 +5,7 @@
 
 class Blog {
     constructor() {
-        this.postsDataPath = '/blog/data/posts.json';
-        this.postsMarkdownPath = '/blog/posts/';
+        this.apiBaseUrl = 'https://onseguros-newsletter.netlify.app/api';
         this.blogGrid = document.getElementById('blog-grid');
         this.blogEmpty = document.getElementById('blog-empty');
         this.blogSearch = document.getElementById('blog-search');
@@ -33,7 +32,7 @@ class Blog {
      */
     async loadPosts() {
         try {
-            const response = await fetch(this.postsDataPath);
+            const response = await fetch(`${this.apiBaseUrl}/get-posts`);
             
             if (!response.ok) {
                 throw new Error('Failed to load posts');
@@ -42,8 +41,7 @@ class Blog {
             const data = await response.json();
             this.posts = data.posts || [];
             
-            // Sort posts by date (newest first)
-            this.posts.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+            // Posts are already sorted by publish_date DESC from the API
             
             if (this.posts.length === 0) {
                 this.showEmptyState();
@@ -126,14 +124,14 @@ class Blog {
      * @param {boolean} isNewest - Whether this is the newest post
      */
     createPostCard(post, isNewest = false) {
-        const formattedDate = this.formatDate(post.publishDate);
+        const formattedDate = this.formatDate(post.publish_date);
         const postUrl = `/blog/post.html?slug=${post.slug}`;
         const badgeHtml = isNewest ? '<span class="blog-card__badge" aria-label="Artículo nuevo">¡Nuevo!</span>' : '';
         
         return `
             <a href="${postUrl}" class="blog-card" aria-label="Leer artículo: ${post.title}">
                 ${badgeHtml}
-                <time class="blog-card__date" datetime="${post.publishDate}">${formattedDate}</time>
+                <time class="blog-card__date" datetime="${post.publish_date}">${formattedDate}</time>
                 <h2 class="blog-card__title">${post.title}</h2>
                 <p class="blog-card__description">${post.description}</p>
                 <span class="blog-card__read-more">
@@ -172,32 +170,27 @@ class Blog {
         }
 
         try {
-            // Load posts metadata
-            const response = await fetch(this.postsDataPath);
+            // Load post from API
+            const response = await fetch(`${this.apiBaseUrl}/get-post/${slug}`);
             
             if (!response.ok) {
-                throw new Error('Failed to load posts data');
+                if (response.status === 404) {
+                    this.showPostNotFound();
+                    return;
+                }
+                throw new Error('Failed to load post');
             }
             
             const data = await response.json();
-            const post = data.posts.find(p => p.slug === slug);
+            const post = data.post;
             
             if (!post) {
                 this.showPostNotFound();
                 return;
             }
             
-            // Load markdown content
-            const markdownResponse = await fetch(`${this.postsMarkdownPath}${post.markdownFile}`);
-            
-            if (!markdownResponse.ok) {
-                throw new Error('Failed to load post content');
-            }
-            
-            const markdownContent = await markdownResponse.text();
-            
-            // Render the post
-            this.renderPost(post, markdownContent);
+            // Render the post with content from the database
+            this.renderPost(post, post.content);
             
         } catch (error) {
             console.error('Error loading post:', error);
@@ -230,8 +223,8 @@ class Blog {
         }
         
         if (postDate) {
-            postDate.textContent = this.formatDate(post.publishDate);
-            postDate.setAttribute('datetime', post.publishDate);
+            postDate.textContent = this.formatDate(post.publish_date);
+            postDate.setAttribute('datetime', post.publish_date);
         }
         
         // Render markdown content
@@ -296,8 +289,8 @@ class Blog {
             "@type": "BlogPosting",
             "headline": post.title,
             "description": post.description,
-            "datePublished": post.publishDate,
-            "dateModified": post.modifiedDate || post.publishDate,
+            "datePublished": post.publish_date,
+            "dateModified": post.updated_at || post.publish_date,
             "author": {
                 "@type": "Person",
                 "name": "Mariano Villanueva",
