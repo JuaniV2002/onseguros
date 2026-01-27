@@ -2,6 +2,8 @@
    OnSeguros Admin Panel - JavaScript
    ===================================================== */
 
+console.log('🚀 Admin.js loaded!');
+
 // Configuration
 const CONFIG = {
     SUPABASE_URL: 'https://tgokvwuiiglioegxgcpu.supabase.co',
@@ -89,6 +91,7 @@ let allPosts = [];
 
 // Check auth state on page load
 async function checkAuth() {
+    console.log('🔐 checkAuth() called');
     const { data: { session } } = await supabaseClient.auth.getSession();
     
     if (session) {
@@ -117,10 +120,12 @@ function showLoginScreen() {
 
 // Show admin screen
 function showAdminScreen(user) {
+    console.log('📱 showAdminScreen() called for:', user.email);
     elements.loginScreen.style.display = 'none';
     elements.adminScreen.style.display = 'block';
     elements.userEmail.textContent = user.email;
     updatePreviewDate();
+    console.log('🔄 About to call loadPosts()');
     loadPosts(); // Load existing posts
     showPostsManagement(); // Show posts list by default
 }
