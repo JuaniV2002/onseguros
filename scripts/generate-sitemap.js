@@ -1,6 +1,6 @@
 /**
  * Dynamic Sitemap Generator for OnSeguros
- * Reads blog posts from posts.json and generates sitemap.xml
+ * Fetches blog posts from Supabase API and generates sitemap.xml
  * 
  * Usage: node generate-sitemap.js
  * 
@@ -12,12 +12,13 @@
 
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 // Configuration
 const CONFIG = {
     baseUrl: 'https://www.onseguros.net',
-    postsJsonPath: path.join(__dirname, 'blog/data/posts.json'),
-    sitemapPath: path.join(__dirname, 'sitemap.xml'),
+    apiUrl: 'https://onseguros-newsletter.netlify.app/api/get-posts',
+    sitemapPath: path.join(__dirname, '..', 'sitemap.xml'),
     staticPages: [
         { loc: '/', priority: '1.0', changefreq: 'weekly' },
         { loc: '/index.html', priority: '1.0', changefreq: 'weekly' },
@@ -64,24 +65,43 @@ function generateUrlEntry(loc, lastmod, changefreq, priority) {
 }
 
 /**
- * Read blog posts from posts.json
+ * Fetch blog posts from Supabase API
  */
-function readBlogPosts() {
-    try {
-        const data = fs.readFileSync(CONFIG.postsJsonPath, 'utf8');
-        const json = JSON.parse(data);
-        return json.posts || [];
-    } catch (error) {
-        console.error('Error reading posts.json:', error.message);
-        return [];
-    }
+async function fetchBlogPosts() {
+    return new Promise((resolve, reject) => {
+        https.get(CONFIG.apiUrl, (res) => {
+            let data = '';
+            
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+            
+            res.on('end', () => {
+                try {
+                    if (res.statusCode !== 200) {
+                        console.error('API request failed with status:', res.statusCode);
+                        resolve([]);
+                        return;
+                    }
+                    const json = JSON.parse(data);
+                    resolve(json.posts || []);
+                } catch (error) {
+                    console.error('Error parsing API response:', error.message);
+                    resolve([]);
+                }
+            });
+        }).on('error', (error) => {
+            console.error('Error fetching posts from API:', error.message);
+            resolve([]);
+        });
+    });
 }
 
 /**
  * Generate complete sitemap XML
  */
-function generateSitemap() {
-    const posts = readBlogPosts();
+async function generateSitemap() {
+    const posts = await fetchBlogPosts();
     
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -103,8 +123,8 @@ function generateSitemap() {
         xml += '\n    <!-- Blog Posts -->\n';
         
         posts.forEach(post => {
-            const postUrl = `/blog/post.html?post=${post.slug}`;
-            const lastmod = formatDate(post.publishDate);
+            const postUrl = `/blog/post.html?slug=${post.slug}`;
+            const lastmod = formatDate(post.publish_date);
             xml += generateUrlEntry(postUrl, lastmod, 'monthly', '0.7') + '\n';
         });
     }
@@ -117,18 +137,18 @@ function generateSitemap() {
 /**
  * Write sitemap to file
  */
-function writeSitemap(xml) {
+async function writeSitemap(xml) {
     try {
         fs.writeFileSync(CONFIG.sitemapPath, xml, 'utf8');
-        console.log('✅ Sitemap generated successfully!');
-        console.log(`📍 Location: ${CONFIG.sitemapPath}`);
+        console.log('Sitemap generated successfully!');
+        console.log(`Location: ${CONFIG.sitemapPath}`);
         
-        const posts = readBlogPosts();
-        console.log(`📝 Total URLs: ${CONFIG.staticPages.length + posts.length}`);
+        const posts = await fetchBlogPosts();
+        console.log(`Total URLs: ${CONFIG.staticPages.length + posts.length}`);
         console.log(`   - Static pages: ${CONFIG.staticPages.length}`);
         console.log(`   - Blog posts: ${posts.length}`);
     } catch (error) {
-        console.error('❌ Error writing sitemap:', error.message);
+        console.error('Error writing sitemap:', error.message);
         process.exit(1);
     }
 }
@@ -136,11 +156,11 @@ function writeSitemap(xml) {
 /**
  * Main execution
  */
-function main() {
-    console.log('🚀 Generating sitemap...\n');
+async function main() {
+    console.log('Generating sitemap...\n');
     
-    const sitemap = generateSitemap();
-    writeSitemap(sitemap);
+    const sitemap = await generateSitemap();
+    await writeSitemap(sitemap);
     
     console.log('\n✨ Done!');
 }
