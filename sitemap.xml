@@ -55,77 +55,39 @@
     </url>
     <url>
         <loc>https://www.onseguros.net/faq/</loc>
-        <lastmod>2026-01-25</lastmod>
+        <lastmod>2025-11-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://www.onseguros.net/blog/</loc>
-        <lastmod>2026-01-25</lastmod>
+        <lastmod>2026-01-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://www.onseguros.net/legal/</loc>
-        <lastmod>2026-01-25</lastmod>
+        <lastmod>2025-11-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://www.onseguros.net/legal/privacidad/</loc>
-        <lastmod>2026-01-25</lastmod>
+        <lastmod>2025-11-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://www.onseguros.net/legal/terminos/</loc>
-        <lastmod>2026-01-25</lastmod>
+        <lastmod>2025-11-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://www.onseguros.net/legal/accesibilidad/</loc>
-        <lastmod>2026-01-25</lastmod>
+        <lastmod>2025-11-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
-    </url>
-
-    <!-- Blog Posts -->
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?post=este-es-un-blog-de-prueba</loc>
-        <lastmod>2026-01-25</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?post=guia-seguro-auto-principiantes</loc>
-        <lastmod>2026-01-24</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?post=errores-comunes-seguro-hogar</loc>
-        <lastmod>2026-01-22</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?post=diferencias-seguro-vida-termino-permanente</loc>
-        <lastmod>2026-01-18</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?post=como-reducir-prima-seguro</loc>
-        <lastmod>2026-01-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?post=que-hacer-accidente-transito</loc>
-        <lastmod>2026-01-10</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
     </url>
 
 </urlset>
