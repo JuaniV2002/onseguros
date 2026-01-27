@@ -191,12 +191,15 @@ function getAuthErrorMessage(error) {
 
 // Load all posts from posts.json
 async function loadPosts() {
+    console.log('loadPosts() called');
     elements.postsLoading.style.display = 'flex';
     elements.postsList.innerHTML = '';
     elements.postsEmpty.style.display = 'none';
     
     try {
         const { data: { session } } = await supabaseClient.auth.getSession();
+        console.log('Session:', session ? 'Found' : 'Not found');
+        console.log('Fetching from:', CONFIG.GET_POSTS_API_URL);
         
         const response = await fetch(CONFIG.GET_POSTS_API_URL, {
             headers: {
@@ -204,11 +207,14 @@ async function loadPosts() {
             }
         });
         
+        console.log('Response status:', response.status);
+        
         if (!response.ok) {
             throw new Error('Failed to load posts');
         }
         
         const data = await response.json();
+        console.log('Posts data:', data);
         allPosts = data.posts || [];
         
         // Posts are already sorted by publish_date DESC from API
@@ -216,10 +222,12 @@ async function loadPosts() {
         elements.postsLoading.style.display = 'none';
         
         if (allPosts.length === 0) {
+            console.log('No posts found, showing empty state');
             elements.postsEmpty.style.display = 'flex';
             return;
         }
         
+        console.log('Rendering', allPosts.length, 'posts');
         renderPosts();
     } catch (error) {
         console.error('Error loading posts:', error);
@@ -667,8 +675,12 @@ elements.loginForm.addEventListener('submit', handleLogin);
 elements.logoutBtn.addEventListener('click', handleLogout);
 
 // Posts Management
-elements.newPostToggleBtn.addEventListener('click', () => showEditor(false));
-elements.cancelEditBtn.addEventListener('click', cancelEdit);
+if (elements.newPostToggleBtn) {
+    elements.newPostToggleBtn.addEventListener('click', () => showEditor(false));
+}
+if (elements.cancelEditBtn) {
+    elements.cancelEditBtn.addEventListener('click', cancelEdit);
+}
 
 // Handle "new post" triggers from empty state
 document.addEventListener('click', (e) => {
