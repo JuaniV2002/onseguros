@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+
+<head>
+    <script>
+        // Prevent flash of wrong theme - runs before CSS loads
+        (function () {
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Mapa del sitio de OnSeguros. Encuentra fácilmente toda la información sobre seguros integrales, ART, agrícolas y más.">
+    <title>Mapa del Sitio | OnSeguros</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <!-- Stylesheets -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .sitemap-page {
+            padding: calc(120px + var(--space-4xl)) var(--space-lg) var(--space-4xl);
+            min-height: 60vh;
+            background: var(--bg-primary);
+        }
+
+        .sitemap-container {
+            max-width: var(--container-xl);
+            margin: 0 auto;
+        }
+
+        .sitemap-header {
+            margin-bottom: var(--space-3xl);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: var(--space-xl);
+        }
+
+        .sitemap-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-2xl);
+        }
+
+        .sitemap-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .sitemap-section-title {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .sitemap-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .sitemap-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: var(--font-size-md);
+            transition: color var(--transition-fast);
+        }
+
+        .sitemap-link:hover {
+            color: var(--primary-600);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1024px) {
+            .sitemap-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-xl);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .sitemap-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sitemap-page {
+                padding-top: 120px;
+                /* Account for fixed header */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <section class="sitemap-page">
+            <div class="sitemap-container">
+                <header class="sitemap-header">
+                    <h1 class="sitemap-title">Mapa del Sitio</h1>
+                </header>
+
+                <div class="sitemap-grid">
+                    <!-- General -->
+                    <div class="sitemap-section">
+                        <h2 class="sitemap-section-title">General</h2>
+                        <ul class="sitemap-list">
+                            <li><a href="/" class="sitemap-link">Inicio</a></li>
+                            <li><a href="/index.html#nosotros" class="sitemap-link">Sobre Nosotros</a></li>
+                            <li><a href="/index.html#testimonios" class="sitemap-link">Testimonios</a></li>
+                            <li><a href="/index.html#contacto" class="sitemap-link">Contacto</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Servicios -->
+                    <div class="sitemap-section">
+                        <h2 class="sitemap-section-title">Servicios</h2>
+                        <ul class="sitemap-list">
+                            <li><a href="/index.html#servicios" class="sitemap-link">Todos los Servicios</a></li>
+                            <li><a href="/index.html#servicios" class="sitemap-link">Seguros Integrales</a></li>
+                            <li><a href="/index.html#servicios" class="sitemap-link">ART y Vida Colectivo</a></li>
+                            <li><a href="/index.html#servicios" class="sitemap-link">Seguros Agrícolas</a></li>
+                            <li><a href="/index.html#servicios" class="sitemap-link">Seguros de Vehículos</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Asistencia -->
+                    <div class="sitemap-section">
+                        <h2 class="sitemap-section-title">Asistencia</h2>
+                        <ul class="sitemap-list">
+                            <li><a href="/faq/" class="sitemap-link">Preguntas Frecuentes</a></li>
+                            <!-- <li><a href="/blog/" class="sitemap-link">Blog de Novedades</a></li> -->
+                            <li><a href="https://wa.me/543584122566" target="_blank" class="sitemap-link">Soporte por
+                                    WhatsApp</a></li>
+                            <li><a href="mailto:mariano.pas@onseguros.net" class="sitemap-link">Contacto por Email</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Legal -->
+                    <div class="sitemap-section">
+                        <h2 class="sitemap-section-title">Legal</h2>
+                        <ul class="sitemap-list">
+                            <li><a href="/legal/" class="sitemap-link">Índice Legal</a></li>
+                            <li><a href="/legal/privacidad/" class="sitemap-link">Política de Privacidad</a></li>
+                            <!-- Terms not explicitly mentioned but good to have placeholders if they exist, otherwise just link to main legal -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Component -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script defer src="components/component-loader.js?v=2"></script>
+    <script defer src="assets/js/script.js"></script>
+</body>
+
+</html>
