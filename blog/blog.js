@@ -5,7 +5,7 @@
 
 class Blog {
     constructor() {
-        this.apiBaseUrl = 'https://onseguros-newsletter.netlify.app/api';
+        this.apiBaseUrl = window.envConfig.get('API_BASE_URL');
         this.blogGrid = document.getElementById('blog-grid');
         this.blogEmpty = document.getElementById('blog-empty');
         this.blogSearch = document.getElementById('blog-search');
