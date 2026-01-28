@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Página no encontrada - OnSeguros</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/assets/favicon.png" type="image/png">
+
+    <style>
+        :root {
+            --primary-600: #2563eb;
+            --primary-700: #1d4ed8;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 2.5rem;
+            --space-4xl: 4rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-xl: 1.25rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-5xl: 3rem;
+            --radius-lg: 0.75rem;
+            --transition-fast: 150ms ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+        }
+
+        .error-container {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4xl) var(--space-2xl);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-code {
+            font-size: var(--font-size-5xl);
+            font-weight: 700;
+            color: var(--primary-600);
+            margin-bottom: var(--space-md);
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .error-description {
+            font-size: var(--font-size-base);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2xl);
+            line-height: 1.6;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-600);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-700);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+            transform: translateY(-2px);
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        @media (max-width: 640px) {
+            .error-code {
+                font-size: 3rem;
+            }
+
+            .error-title {
+                font-size: 1.5rem;
+            }
+
+            .error-container {
+                padding: var(--space-2xl) var(--space-lg);
+            }
+
+            .error-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="error-container">
+        <div class="error-icon">🔍</div>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Página no encontrada</h2>
+        <p class="error-description">
+            Lo sentimos, la página que estás buscando no existe o ha sido movida.
+            Podés volver al inicio o contactarnos si necesitás ayuda.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">Volver al Inicio</a>
+            <a href="/#contacto" class="btn btn-secondary">Contactar</a>
+        </div>
+    </div>
+
+    <script>
+        // Log the attempted URL for debugging (optional)
+        console.log('404 Error - Attempted URL:', window.location.href);
+
+        // Optional: Auto-redirect after 10 seconds
+        // setTimeout(() => {
+        //     window.location.href = '/';
+        // }, 10000);
+    </script>
+</body>
+
+</html>
