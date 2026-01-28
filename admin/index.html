@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <!-- Marked.js for Markdown preview -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
     <!-- Login Screen -->
     <div id="login-screen" class="screen">
@@ -34,7 +36,8 @@
                     <span class="btn-text">Iniciar Sesión</span>
                     <span class="btn-loading" style="display: none;">
                         <svg class="spinner" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"
+                                stroke-dasharray="31.4 31.4" stroke-linecap="round" />
                         </svg>
                     </span>
                 </button>
@@ -65,10 +68,11 @@
                     <h2>Artículos Publicados</h2>
                     <button id="new-post-toggle-btn" class="btn btn-primary btn-sm">+ Nuevo Artículo</button>
                 </div>
-                
+
                 <div id="posts-loading" class="posts-loading" style="display: none;">
                     <svg class="spinner" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"
+                            stroke-dasharray="31.4 31.4" stroke-linecap="round" />
                     </svg>
                     <p>Cargando artículos...</p>
                 </div>
@@ -86,32 +90,22 @@
                 <div class="editor-panel">
                     <div class="editor-header">
                         <h2 id="editor-title">Nuevo Artículo</h2>
-                        <button id="cancel-edit-btn" class="btn btn-secondary btn-sm" style="display: none;">Cancelar</button>
+                        <button id="cancel-edit-btn" class="btn btn-secondary btn-sm"
+                            style="display: none;">Cancelar</button>
                     </div>
                     <form id="post-form" class="post-form">
                         <div class="form-group">
                             <label for="post-title">Título del artículo *</label>
-                            <input 
-                                type="text" 
-                                id="post-title" 
-                                name="title" 
-                                required 
-                                placeholder="Ej: Guía completa para elegir tu seguro de auto"
-                                maxlength="100"
-                            >
+                            <input type="text" id="post-title" name="title" required
+                                placeholder="Ej: Guía completa para elegir tu seguro de auto" maxlength="100">
                             <span class="char-count"><span id="title-count">0</span>/100</span>
                         </div>
 
                         <div class="form-group">
                             <label for="post-description">Descripción corta (SEO) *</label>
-                            <textarea 
-                                id="post-description" 
-                                name="description" 
-                                required 
+                            <textarea id="post-description" name="description" required
                                 placeholder="Una descripción breve que aparecerá en Google y en las tarjetas del blog (máximo 160 caracteres)"
-                                maxlength="160"
-                                rows="3"
-                            ></textarea>
+                                maxlength="160" rows="3"></textarea>
                             <span class="char-count"><span id="desc-count">0</span>/160</span>
                         </div>
 
@@ -128,17 +122,16 @@
                                     <em>I</em>
                                 </button>
                                 <span class="toolbar-divider"></span>
-                                <button type="button" class="toolbar-btn" data-action="ul" title="Lista con viñetas">• Lista</button>
-                                <button type="button" class="toolbar-btn" data-action="ol" title="Lista numerada">1. Lista</button>
+                                <button type="button" class="toolbar-btn" data-action="ul" title="Lista con viñetas">•
+                                    Lista</button>
+                                <button type="button" class="toolbar-btn" data-action="ol" title="Lista numerada">1.
+                                    Lista</button>
                                 <span class="toolbar-divider"></span>
                                 <button type="button" class="toolbar-btn" data-action="link" title="Enlace">🔗</button>
-                                <button type="button" class="toolbar-btn" data-action="hr" title="Línea horizontal">―</button>
+                                <button type="button" class="toolbar-btn" data-action="hr"
+                                    title="Línea horizontal">―</button>
                             </div>
-                            <textarea 
-                                id="post-content" 
-                                name="content" 
-                                required 
-                                placeholder="Escribí el contenido de tu artículo usando Markdown...
+                            <textarea id="post-content" name="content" required placeholder="Escribí el contenido de tu artículo usando Markdown...
 
 Ejemplo:
 ## Introducción
@@ -150,9 +143,7 @@ Este es el primer párrafo de mi artículo.
 - Punto tres
 
 ### Subsección
-Más contenido aquí..."
-                                rows="20"
-                            ></textarea>
+Más contenido aquí..." rows="20"></textarea>
                         </div>
 
                         <div class="form-actions">
@@ -161,7 +152,8 @@ Más contenido aquí..."
                                 <span class="btn-text" id="publish-btn-text">Publicar Artículo</span>
                                 <span class="btn-loading" style="display: none;">
                                     <svg class="spinner" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"
+                                            fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round" />
                                     </svg>
                                     <span id="publish-loading-text">Publicando...</span>
                                 </span>
@@ -187,7 +179,8 @@ Más contenido aquí..."
                             </div>
                             <hr>
                             <div id="preview-body" class="preview-body">
-                                <p class="placeholder-text">El contenido de tu artículo se mostrará aquí mientras escribís...</p>
+                                <p class="placeholder-text">El contenido de tu artículo se mostrará aquí mientras
+                                    escribís...</p>
                             </div>
                         </article>
                     </div>
@@ -225,7 +218,8 @@ Más contenido aquí..."
             <div class="modal-content">
                 <div class="modal-icon warning">⚠</div>
                 <h2>¿Eliminar Artículo?</h2>
-                <p id="delete-message">¿Estás seguro de que querés eliminar este artículo? Esta acción no se puede deshacer.</p>
+                <p id="delete-message">¿Estás seguro de que querés eliminar este artículo? Esta acción no se puede
+                    deshacer.</p>
                 <p id="delete-post-title" class="delete-post-title"></p>
                 <div class="modal-actions">
                     <button id="cancel-delete-btn" class="btn btn-secondary">Cancelar</button>
@@ -233,7 +227,8 @@ Más contenido aquí..."
                         <span class="btn-text">Eliminar</span>
                         <span class="btn-loading" style="display: none;">
                             <svg class="spinner" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"
+                                    stroke-dasharray="31.4 31.4" stroke-linecap="round" />
                             </svg>
                             Eliminando...
                         </span>
@@ -243,6 +238,8 @@ Más contenido aquí..."
         </div>
     </div>
 
+    <script src="../assets/js/env-config.js"></script>
     <script src="admin.js?v=3"></script>
 </body>
+
 </html>

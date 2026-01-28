@@ -72,6 +72,26 @@ jobs:
         run: |
           ssh-keyscan iad1-shared-e1-32.dreamhost.com >> ~/.ssh/known_hosts
 
+      - name: Create .env file from secrets
+        run: |
+          echo "🔐 Creating .env file from GitHub secrets..."
+          cat > .env << EOF
+          # Supabase Configuration
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+
+          # Netlify API URLs
+          GET_POSTS_API_URL=${{ secrets.GET_POSTS_API_URL }}
+          GET_POST_API_URL=${{ secrets.GET_POST_API_URL }}
+          PUBLISH_API_URL=${{ secrets.PUBLISH_API_URL }}
+          UPDATE_API_URL=${{ secrets.UPDATE_API_URL }}
+          DELETE_API_URL=${{ secrets.DELETE_API_URL }}
+
+          # Blog Configuration
+          BLOG_BASE_URL=${{ secrets.BLOG_BASE_URL }}
+          EOF
+          echo "✅ .env file created successfully"
+
       - name: Deploy via rsync
         run: |
           echo "🚀 Starting deployment..."

@@ -12,7 +12,7 @@ class Blog {
         this.blogNoResults = document.getElementById('blog-no-results');
         this.isPostPage = window.location.pathname.includes('post.html');
         this.posts = []; // Store posts for search filtering
-        
+
         this.init();
     }
 
@@ -23,7 +23,7 @@ class Blog {
             await this.loadPosts();
             this.initSearch();
         }
-        
+
         this.initNewsletter();
     }
 
@@ -33,21 +33,21 @@ class Blog {
     async loadPosts() {
         try {
             const response = await fetch(`${this.apiBaseUrl}/get-posts`);
-            
+
             if (!response.ok) {
                 throw new Error('Failed to load posts');
             }
-            
+
             const data = await response.json();
             this.posts = data.posts || [];
-            
+
             // Posts are already sorted by publish_date DESC from the API
-            
+
             if (this.posts.length === 0) {
                 this.showEmptyState();
                 return;
             }
-            
+
             this.renderPosts(this.posts);
         } catch (error) {
             console.error('Error loading posts:', error);
@@ -60,7 +60,7 @@ class Blog {
      */
     initSearch() {
         if (!this.blogSearch) return;
-        
+
         this.blogSearch.addEventListener('input', () => this.handleSearch());
     }
 
@@ -69,7 +69,7 @@ class Blog {
      */
     handleSearch() {
         const searchTerm = this.blogSearch.value.toLowerCase().trim();
-        
+
         if (!searchTerm) {
             // Show all posts if search is empty
             this.renderPosts(this.posts);
@@ -81,14 +81,14 @@ class Blog {
             }
             return;
         }
-        
+
         // Filter posts by title and description
         const filteredPosts = this.posts.filter(post => {
             const titleMatch = post.title.toLowerCase().includes(searchTerm);
             const descriptionMatch = post.description.toLowerCase().includes(searchTerm);
             return titleMatch || descriptionMatch;
         });
-        
+
         if (filteredPosts.length === 0) {
             // Show no results message
             if (this.blogGrid) {
@@ -114,7 +114,7 @@ class Blog {
      */
     renderPosts(posts) {
         if (!this.blogGrid) return;
-        
+
         this.blogGrid.innerHTML = posts.map((post, index) => this.createPostCard(post, index === 0)).join('');
     }
 
@@ -127,7 +127,7 @@ class Blog {
         const formattedDate = this.formatDate(post.publish_date);
         const postUrl = `/blog/post.html?slug=${post.slug}`;
         const badgeHtml = isNewest ? '<span class="blog-card__badge" aria-label="Artículo nuevo">¡Nuevo!</span>' : '';
-        
+
         return `
             <a href="${postUrl}" class="blog-card" aria-label="Leer artículo: ${post.title}">
                 ${badgeHtml}
@@ -163,7 +163,7 @@ class Blog {
     async loadPost() {
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
-        
+
         if (!slug) {
             this.showPostNotFound();
             return;
@@ -172,7 +172,7 @@ class Blog {
         try {
             // Load post from API
             const response = await fetch(`${this.apiBaseUrl}/get-post/${slug}`);
-            
+
             if (!response.ok) {
                 if (response.status === 404) {
                     this.showPostNotFound();
@@ -180,18 +180,18 @@ class Blog {
                 }
                 throw new Error('Failed to load post');
             }
-            
+
             const data = await response.json();
             const post = data.post;
-            
+
             if (!post) {
                 this.showPostNotFound();
                 return;
             }
-            
+
             // Render the post with content from the database
             this.renderPost(post, post.content);
-            
+
         } catch (error) {
             console.error('Error loading post:', error);
             this.showPostNotFound();
@@ -206,27 +206,27 @@ class Blog {
         const postDate = document.getElementById('post-date');
         const postContent = document.getElementById('post-content');
         const breadcrumbTitle = document.getElementById('breadcrumb-title');
-        
+
         // Update page title and meta tags
         document.title = `${post.title} | Blog OnSeguros`;
         this.updateMetaTags(post);
         this.updateStructuredData(post);
-        
+
         // Update breadcrumb
         if (breadcrumbTitle) {
             breadcrumbTitle.textContent = post.title;
         }
-        
+
         // Update post header
         if (postTitle) {
             postTitle.textContent = post.title;
         }
-        
+
         if (postDate) {
             postDate.textContent = this.formatDate(post.publish_date);
             postDate.setAttribute('datetime', post.publish_date);
         }
-        
+
         // Render markdown content
         if (postContent && typeof marked !== 'undefined') {
             // Configure marked for security
@@ -236,10 +236,10 @@ class Blog {
                 headerIds: true,
                 mangle: false
             });
-            
+
             postContent.innerHTML = marked.parse(markdownContent);
         }
-        
+
         // Update canonical URL
         const canonical = document.querySelector('link[rel="canonical"]');
         if (canonical) {
@@ -254,25 +254,25 @@ class Blog {
         // Update title meta
         const titleMeta = document.querySelector('meta[name="title"]');
         if (titleMeta) titleMeta.content = `${post.title} | Blog OnSeguros`;
-        
+
         // Update description meta
         const descMeta = document.querySelector('meta[name="description"]');
         if (descMeta) descMeta.content = post.description;
-        
+
         // Update Open Graph
         const ogTitle = document.querySelector('meta[property="og:title"]');
         if (ogTitle) ogTitle.content = `${post.title} | Blog OnSeguros`;
-        
+
         const ogDesc = document.querySelector('meta[property="og:description"]');
         if (ogDesc) ogDesc.content = post.description;
-        
+
         const ogUrl = document.querySelector('meta[property="og:url"]');
         if (ogUrl) ogUrl.content = `https://www.onseguros.net/blog/post.html?slug=${post.slug}`;
-        
+
         // Update Twitter
         const twitterTitle = document.querySelector('meta[name="twitter:title"]');
         if (twitterTitle) twitterTitle.content = `${post.title} | Blog OnSeguros`;
-        
+
         const twitterDesc = document.querySelector('meta[name="twitter:description"]');
         if (twitterDesc) twitterDesc.content = post.description;
     }
@@ -283,7 +283,7 @@ class Blog {
     updateStructuredData(post) {
         const schemaScript = document.getElementById('post-schema');
         if (!schemaScript) return;
-        
+
         const schema = {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
@@ -310,7 +310,7 @@ class Blog {
                 "@id": `https://www.onseguros.net/blog/post.html?slug=${post.slug}`
             }
         };
-        
+
         schemaScript.textContent = JSON.stringify(schema);
     }
 
@@ -323,13 +323,13 @@ class Blog {
         const postHeader = document.querySelector('.blog-post__header');
         const postBack = document.querySelector('.blog-post__back');
         const newsletter = document.querySelector('.newsletter');
-        
+
         if (postContent) postContent.style.display = 'none';
         if (postHeader) postHeader.style.display = 'none';
         if (postBack) postBack.style.display = 'none';
         if (newsletter) newsletter.style.display = 'none';
         if (postNotFound) postNotFound.style.display = 'block';
-        
+
         document.title = 'Artículo no encontrado | Blog OnSeguros';
     }
 
@@ -351,7 +351,7 @@ class Blog {
     initNewsletter() {
         const form = document.getElementById('newsletter-form');
         if (!form) return;
-        
+
         form.addEventListener('submit', (e) => this.handleNewsletterSubmit(e));
     }
 
@@ -360,43 +360,43 @@ class Blog {
      */
     async handleNewsletterSubmit(e) {
         e.preventDefault();
-        
+
         const form = e.target;
         const emailInput = form.querySelector('#newsletter-email');
         const submitButton = form.querySelector('button[type="submit"]');
         const errorDiv = document.getElementById('newsletter-error');
         const successDiv = document.getElementById('newsletter-success');
-        
+
         // Clear previous messages
         if (errorDiv) errorDiv.textContent = '';
         if (successDiv) successDiv.style.display = 'none';
-        
+
         // Validate email
         const email = emailInput.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
+
         if (!email) {
             if (errorDiv) errorDiv.textContent = 'Por favor ingresá tu email.';
             emailInput.focus();
             return;
         }
-        
+
         if (!emailRegex.test(email)) {
             if (errorDiv) errorDiv.textContent = 'Por favor ingresá un email válido.';
             emailInput.focus();
             return;
         }
-        
+
         // Show loading state
         const originalText = submitButton.textContent;
         submitButton.textContent = 'Enviando...';
         submitButton.disabled = true;
-        
+
         try {
-            // Supabase configuration
-            const SUPABASE_URL = 'https://tgokvwuiiglioegxgcpu.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDMwNDgsImV4cCI6MjA4NDg3OTA0OH0.iipq27bUMQTlhLfYB2Ldi3VqgtTEG6tVqa2B4jDcsqk';
-            
+            // Load Supabase configuration from environment
+            const SUPABASE_URL = window.envConfig.get('SUPABASE_URL');
+            const SUPABASE_ANON_KEY = window.envConfig.get('SUPABASE_ANON_KEY');
+
             const response = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
                 method: 'POST',
                 headers: {
@@ -407,7 +407,7 @@ class Blog {
                 },
                 body: JSON.stringify({ email: email })
             });
-            
+
             if (response.status === 409 || response.status === 400) {
                 // Email already exists (unique constraint violation)
                 if (errorDiv) {
@@ -415,20 +415,20 @@ class Blog {
                 }
                 return;
             }
-            
+
             if (!response.ok) {
                 throw new Error('Subscription failed');
             }
-            
+
             // Show success message
             if (successDiv) {
                 successDiv.textContent = '✓ ¡Gracias por suscribirte! Recibirás nuestro newsletter cada viernes.';
                 successDiv.style.display = 'block';
             }
-            
+
             // Reset form
             form.reset();
-            
+
         } catch (error) {
             console.error('Newsletter subscription error:', error);
             if (errorDiv) {
@@ -443,7 +443,14 @@ class Blog {
 
 // Initialize blog when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new Blog());
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Load environment configuration first
+        await window.envConfig.load();
+        new Blog();
+    });
 } else {
-    new Blog();
+    // Load config and initialize blog
+    window.envConfig.load().then(() => {
+        new Blog();
+    });
 }

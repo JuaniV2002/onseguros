@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="es-AR">
+
 <head>
     <script>
         // Prevent flash of wrong theme - runs before CSS loads
-        (function() {
+        (function () {
             var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
         })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Primary Meta Tags -->
     <title>Blog | OnSeguros - Noticias y Consejos sobre Seguros</title>
     <meta name="title" content="Blog | OnSeguros - Noticias y Consejos sobre Seguros">
-    <meta name="description" content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro para tu auto, hogar, empresa y más. Información de expertos con +25 años de experiencia.">
-    <meta name="keywords" content="blog seguros, consejos seguros, noticias seguros, guías seguros, OnSeguros, seguros Río Cuarto, tips seguros">
+    <meta name="description"
+        content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro para tu auto, hogar, empresa y más. Información de expertos con +25 años de experiencia.">
+    <meta name="keywords"
+        content="blog seguros, consejos seguros, noticias seguros, guías seguros, OnSeguros, seguros Río Cuarto, tips seguros">
     <meta name="author" content="Mariano Villanueva - OnSeguros">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://www.onseguros.net/blog/">
@@ -29,7 +32,8 @@
     <meta property="og:locale" content="es_AR">
     <meta property="og:site_name" content="OnSeguros">
     <meta property="og:title" content="Blog | OnSeguros - Noticias y Consejos sobre Seguros">
-    <meta property="og:description" content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro con información de expertos.">
+    <meta property="og:description"
+        content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro con información de expertos.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.onseguros.net/blog/">
     <meta property="og:image" content="https://www.onseguros.net/assets/og-image.png">
@@ -40,14 +44,17 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Blog | OnSeguros - Noticias y Consejos sobre Seguros">
-    <meta name="twitter:description" content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro con información de expertos.">
+    <meta name="twitter:description"
+        content="Consejos prácticos, guías completas y noticias sobre seguros en Argentina. Aprende a elegir el mejor seguro con información de expertos.">
     <meta name="twitter:image" content="https://www.onseguros.net/assets/og-image.png">
     <meta name="twitter:image:alt" content="OnSeguros Blog - Noticias y Consejos sobre Seguros">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -151,7 +158,9 @@
             }
         }
     }
-    </script></head>
+    </script>
+</head>
+
 <body>
     <!-- Header Component -->
     <div id="header-placeholder"></div>
@@ -170,11 +179,8 @@
                 <!-- Blog Search -->
                 <div class="blog-search">
                     <img src="/assets/icons/search.svg" alt="" aria-hidden="true">
-                    <input type="search" 
-                           class="blog-search__input" 
-                           id="blog-search" 
-                           placeholder="Buscar un artículo..." 
-                           aria-label="Buscar artículos del blog">
+                    <input type="search" class="blog-search__input" id="blog-search" placeholder="Buscar un artículo..."
+                        aria-label="Buscar artículos del blog">
                 </div>
 
                 <!-- No Results Message -->
@@ -191,7 +197,8 @@
                 <div class="blog-empty" id="blog-empty" style="display: none;" aria-live="polite">
                     <h2 class="blog-empty__title">No hay publicaciones por el momento</h2>
                     <p class="blog-empty__description">
-                        Estamos trabajando en contenido de calidad para vos. ¡Suscribite al newsletter para ser el primero en enterarte cuando publiquemos nuevos artículos!
+                        Estamos trabajando en contenido de calidad para vos. ¡Suscribite al newsletter para ser el
+                        primero en enterarte cuando publiquemos nuevos artículos!
                     </p>
                 </div>
 
@@ -203,31 +210,26 @@
                                 Suscribite al Newsletter
                             </h2>
                             <p class="newsletter__description">
-                                Recibí cada viernes consejos sobre seguros, novedades del sector y contenido exclusivo directo en tu correo.
+                                Recibí cada viernes consejos sobre seguros, novedades del sector y contenido exclusivo
+                                directo en tu correo.
                             </p>
                         </div>
-                        <form class="newsletter__form" 
-                              id="newsletter-form"
-                              aria-labelledby="newsletter-heading">
+                        <form class="newsletter__form" id="newsletter-form" aria-labelledby="newsletter-heading">
                             <div class="newsletter__form-group">
                                 <label class="sr-only" for="newsletter-email">Tu dirección de email</label>
-                                <input 
-                                    type="email" 
-                                    id="newsletter-email" 
-                                    name="Email Newsletter"
-                                    class="newsletter__input" 
-                                    placeholder="Tu email"
-                                    required
-                                    aria-required="true"
+                                <input type="email" id="newsletter-email" name="Email Newsletter"
+                                    class="newsletter__input" placeholder="Tu email" required aria-required="true"
                                     aria-describedby="newsletter-consent newsletter-error">
                                 <button type="submit" class="newsletter__button btn btn--primary">
                                     Suscribirme
                                 </button>
                             </div>
                             <div id="newsletter-error" class="newsletter__error" role="alert" aria-live="polite"></div>
-                            <div id="newsletter-success" class="newsletter__success" role="status" aria-live="polite" style="display: none;"></div>
+                            <div id="newsletter-success" class="newsletter__success" role="status" aria-live="polite"
+                                style="display: none;"></div>
                             <p class="newsletter__consent" id="newsletter-consent">
-                                Al suscribirte aceptás nuestra <a href="/legal/privacidad/">política de privacidad</a>. Enviamos emails los viernes.
+                                Al suscribirte aceptás nuestra <a href="/legal/privacidad/">política de privacidad</a>.
+                                Enviamos emails los viernes.
                             </p>
                         </form>
                     </div>
@@ -242,6 +244,8 @@
     <!-- Scripts -->
     <script src="../components/component-loader.js?v=2"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/env-config.js"></script>
     <script src="blog.js?v=20250127"></script>
 </body>
+
 </html>

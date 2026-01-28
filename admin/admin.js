@@ -2,39 +2,63 @@
    OnSeguros Admin Panel - JavaScript
    ===================================================== */
 
-// Configuration
-const CONFIG = {
-    SUPABASE_URL: 'https://tgokvwuiiglioegxgcpu.supabase.co',
-    SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRnb2t2d3VpaWdsaW9lZ3hnY3B1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDMwNDgsImV4cCI6MjA4NDg3OTA0OH0.iipq27bUMQTlhLfYB2Ldi3VqgtTEG6tVqa2B4jDcsqk',
-    // The Netlify function URLs
-    GET_POSTS_API_URL: 'https://onseguros-newsletter.netlify.app/api/get-posts',
-    GET_POST_API_URL: 'https://onseguros-newsletter.netlify.app/api/get-post',
-    PUBLISH_API_URL: 'https://onseguros-newsletter.netlify.app/api/publish-post',
-    UPDATE_API_URL: 'https://onseguros-newsletter.netlify.app/api/update-post',
-    DELETE_API_URL: 'https://onseguros-newsletter.netlify.app/api/delete-post',
-    BLOG_BASE_URL: 'https://www.onseguros.net/blog/post.html'
-};
+// Configuration - will be loaded from environment variables
+let CONFIG = null;
+let supabaseClient = null;
 
-// Initialize Supabase client
-const supabaseClient = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+// Load configuration from .env file
+async function loadConfig() {
+    try {
+        await window.envConfig.load();
+
+        CONFIG = {
+            SUPABASE_URL: window.envConfig.get('SUPABASE_URL'),
+            SUPABASE_ANON_KEY: window.envConfig.get('SUPABASE_ANON_KEY'),
+            GET_POSTS_API_URL: window.envConfig.get('GET_POSTS_API_URL'),
+            GET_POST_API_URL: window.envConfig.get('GET_POST_API_URL'),
+            PUBLISH_API_URL: window.envConfig.get('PUBLISH_API_URL'),
+            UPDATE_API_URL: window.envConfig.get('UPDATE_API_URL'),
+            DELETE_API_URL: window.envConfig.get('DELETE_API_URL'),
+            BLOG_BASE_URL: window.envConfig.get('BLOG_BASE_URL')
+        };
+
+        // Initialize Supabase client after config is loaded
+        supabaseClient = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+
+        // Set up auth state listener after client is initialized
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' && session) {
+                showAdminScreen(session.user);
+            } else if (event === 'SIGNED_OUT') {
+                showLoginScreen();
+            }
+        });
+
+        return true;
+    } catch (error) {
+        console.error('Failed to load configuration:', error);
+        alert('Error al cargar la configuración. Por favor, recargá la página.');
+        return false;
+    }
+}
 
 // DOM Elements
 const elements = {
     // Screens
     loginScreen: document.getElementById('login-screen'),
     adminScreen: document.getElementById('admin-screen'),
-    
+
     // Login
     loginForm: document.getElementById('login-form'),
     emailInput: document.getElementById('email'),
     passwordInput: document.getElementById('password'),
     loginBtn: document.getElementById('login-btn'),
     loginError: document.getElementById('login-error'),
-    
+
     // Admin
     userEmail: document.getElementById('user-email'),
     logoutBtn: document.getElementById('logout-btn'),
-    
+
     // Posts Management
     postsManagement: document.getElementById('posts-management'),
     postsList: document.getElementById('posts-list'),
@@ -44,7 +68,7 @@ const elements = {
     editorContainer: document.getElementById('editor-container'),
     editorTitle: document.getElementById('editor-title'),
     cancelEditBtn: document.getElementById('cancel-edit-btn'),
-    
+
     // Post Form
     postForm: document.getElementById('post-form'),
     postTitle: document.getElementById('post-title'),
@@ -54,17 +78,17 @@ const elements = {
     publishBtnText: document.getElementById('publish-btn-text'),
     publishLoadingText: document.getElementById('publish-loading-text'),
     clearBtn: document.getElementById('clear-btn'),
-    
+
     // Character counts
     titleCount: document.getElementById('title-count'),
     descCount: document.getElementById('desc-count'),
-    
+
     // Preview
     previewTitle: document.getElementById('preview-title'),
     previewDescription: document.getElementById('preview-description'),
     previewDate: document.getElementById('preview-date'),
     previewBody: document.getElementById('preview-body'),
-    
+
     // Modals
     successModal: document.getElementById('success-modal'),
     errorModal: document.getElementById('error-modal'),
@@ -90,22 +114,13 @@ let allPosts = [];
 // Check auth state on page load
 async function checkAuth() {
     const { data: { session } } = await supabaseClient.auth.getSession();
-    
+
     if (session) {
         showAdminScreen(session.user);
     } else {
         showLoginScreen();
     }
 }
-
-// Listen for auth state changes
-supabaseClient.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-        showAdminScreen(session.user);
-    } else if (event === 'SIGNED_OUT') {
-        showLoginScreen();
-    }
-});
 
 // Show login screen
 function showLoginScreen() {
@@ -128,21 +143,21 @@ function showAdminScreen(user) {
 // Handle login
 async function handleLogin(e) {
     e.preventDefault();
-    
+
     const email = elements.emailInput.value.trim();
     const password = elements.passwordInput.value;
-    
+
     setLoginLoading(true);
     hideLoginError();
-    
+
     try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({
             email,
             password
         });
-        
+
         if (error) throw error;
-        
+
     } catch (error) {
         console.error('Login error:', error);
         showLoginError(getAuthErrorMessage(error));
@@ -195,38 +210,38 @@ async function loadPosts() {
     elements.postsLoading.style.display = 'flex';
     elements.postsList.innerHTML = '';
     elements.postsEmpty.style.display = 'none';
-    
+
     try {
         const { data: { session } } = await supabaseClient.auth.getSession();
         console.log('Session:', session ? 'Found' : 'Not found');
         console.log('Fetching from:', CONFIG.GET_POSTS_API_URL);
-        
+
         const response = await fetch(CONFIG.GET_POSTS_API_URL, {
             headers: {
                 'Authorization': `Bearer ${session?.access_token}`
             }
         });
-        
+
         console.log('Response status:', response.status);
-        
+
         if (!response.ok) {
             throw new Error('Failed to load posts');
         }
-        
+
         const data = await response.json();
         console.log('Posts data:', data);
         allPosts = data.posts || [];
-        
+
         // Posts are already sorted by publish_date DESC from API
-        
+
         elements.postsLoading.style.display = 'none';
-        
+
         if (allPosts.length === 0) {
             console.log('No posts found, showing empty state');
             elements.postsEmpty.style.display = 'flex';
             return;
         }
-        
+
         console.log('Rendering', allPosts.length, 'posts');
         renderPosts();
     } catch (error) {
@@ -287,7 +302,7 @@ function showPostsManagement() {
 function showEditor(isEdit = false) {
     elements.postsManagement.style.display = 'none';
     elements.editorContainer.style.display = 'grid';
-    
+
     if (isEdit) {
         elements.editorTitle.textContent = 'Editar Artículo';
         elements.cancelEditBtn.style.display = 'inline-block';
@@ -309,15 +324,15 @@ async function editPost(slug) {
         showError('No se encontró el artículo');
         return;
     }
-    
+
     currentEditingPost = post;
     showEditor(true);
-    
+
     // Load post data into form (content is already in the post object from API)
     elements.postTitle.value = post.title;
     elements.postDescription.value = post.description;
     elements.postContent.value = post.content || '';
-    
+
     // Update character counts and preview
     updateCharCount(elements.postTitle, elements.titleCount, 100);
     updateCharCount(elements.postDescription, elements.descCount, 160);
@@ -328,7 +343,7 @@ async function editPost(slug) {
 function confirmDelete(slug) {
     const post = allPosts.find(p => p.slug === slug);
     if (!post) return;
-    
+
     currentEditingPost = post;
     elements.deletePostTitle.textContent = `"${post.title}"`;
     elements.deleteModal.style.display = 'flex';
@@ -337,16 +352,16 @@ function confirmDelete(slug) {
 // Delete post
 async function deletePost() {
     if (!currentEditingPost) return;
-    
+
     setDeleteLoading(true);
-    
+
     try {
         const { data: { session } } = await supabaseClient.auth.getSession();
-        
+
         if (!session) {
             throw new Error('No estás autenticado');
         }
-        
+
         const response = await fetch(CONFIG.DELETE_API_URL, {
             method: 'POST',
             headers: {
@@ -355,17 +370,17 @@ async function deletePost() {
             },
             body: JSON.stringify({ slug: currentEditingPost.slug })
         });
-        
+
         const result = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(result.error || 'Error al eliminar el artículo');
         }
-        
+
         hideDeleteModal();
         await loadPosts(); // Reload posts
         showSuccess(null, '¡Artículo eliminado exitosamente!');
-        
+
     } catch (error) {
         console.error('Delete error:', error);
         hideDeleteModal();
@@ -427,10 +442,10 @@ function updatePreview() {
     const title = elements.postTitle.value.trim() || 'Tu título aparecerá aquí';
     const description = elements.postDescription.value.trim() || 'La descripción aparecerá aquí...';
     const content = elements.postContent.value.trim();
-    
+
     elements.previewTitle.textContent = title;
     elements.previewDescription.textContent = description;
-    
+
     if (content) {
         elements.previewBody.innerHTML = marked.parse(content);
     } else {
@@ -484,10 +499,10 @@ function insertMarkdown(action) {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
-    
+
     let insertion = '';
     let cursorOffset = 0;
-    
+
     switch (action) {
         case 'h2':
             insertion = `\n## ${selectedText || 'Título'}`;
@@ -522,13 +537,13 @@ function insertMarkdown(action) {
             cursorOffset = insertion.length;
             break;
     }
-    
+
     textarea.value = textarea.value.substring(0, start) + insertion + textarea.value.substring(end);
     textarea.focus();
-    
+
     const newPos = start + cursorOffset;
     textarea.setSelectionRange(newPos, newPos);
-    
+
     updatePreview();
 }
 
@@ -538,46 +553,46 @@ function insertMarkdown(action) {
 
 async function handlePublish(e) {
     e.preventDefault();
-    
+
     const title = elements.postTitle.value.trim();
     const description = elements.postDescription.value.trim();
     const content = elements.postContent.value.trim();
-    
+
     // Validation
     if (!title || !description || !content) {
         showError('Por favor, completá todos los campos.');
         return;
     }
-    
+
     if (title.length < 10) {
         showError('El título debe tener al menos 10 caracteres.');
         return;
     }
-    
+
     if (description.length < 50) {
         showError('La descripción debe tener al menos 50 caracteres.');
         return;
     }
-    
+
     if (content.length < 100) {
         showError('El contenido debe tener al menos 100 caracteres.');
         return;
     }
-    
+
     setPublishLoading(true);
-    
+
     try {
         // Get current session for auth
         const { data: { session } } = await supabaseClient.auth.getSession();
-        
+
         if (!session) {
             throw new Error('No estás autenticado');
         }
-        
+
         const isEditing = currentEditingPost !== null;
         const slug = isEditing ? currentEditingPost.slug : generateSlug(title);
         const publishDate = isEditing ? currentEditingPost.publish_date : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        
+
         const postData = {
             title,
             description,
@@ -585,10 +600,10 @@ async function handlePublish(e) {
             slug,
             publishDate
         };
-        
+
         // Call the appropriate API (update or publish)
         const apiUrl = isEditing ? CONFIG.UPDATE_API_URL : CONFIG.PUBLISH_API_URL;
-        
+
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
@@ -597,17 +612,17 @@ async function handlePublish(e) {
             },
             body: JSON.stringify(postData)
         });
-        
+
         const result = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(result.error || `Error al ${isEditing ? 'actualizar' : 'publicar'} el artículo`);
         }
-        
+
         // Success!
         await loadPosts(); // Reload posts list
         showSuccess(slug, isEditing ? '¡Artículo actualizado exitosamente!' : '¡Artículo publicado exitosamente!');
-        
+
     } catch (error) {
         console.error('Publish error:', error);
         showError(error.message || `Error al ${currentEditingPost ? 'actualizar' : 'publicar'} el artículo. Intentá de nuevo.`);
@@ -635,14 +650,14 @@ function showSuccess(slug, customMessage = null) {
     } else {
         elements.viewPostLink.style.display = 'none';
     }
-    
+
     // Update success message if provided
     if (customMessage) {
         const successModal = elements.successModal;
         const messageElement = successModal.querySelector('p');
         messageElement.textContent = customMessage;
     }
-    
+
     elements.successModal.style.display = 'flex';
 }
 
@@ -749,7 +764,14 @@ elements.deleteModal.addEventListener('click', (e) => {
 });
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load configuration first
+    const configLoaded = await loadConfig();
+    if (!configLoaded) {
+        return; // Stop if config failed to load
+    }
+
+    // Then proceed with auth check
     checkAuth();
     updatePreviewDate();
 });
