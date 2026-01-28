@@ -556,16 +556,33 @@ h6 {
 .markdown-toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
-    padding: 8px;
+    gap: 8px;
+    padding: 10px;
     background: var(--gray-50);
     border: 1px solid var(--gray-200);
     border-bottom: none;
     border-radius: var(--radius) var(--radius) 0 0;
+    position: sticky;
+    top: 73px;
+    /* Below the main header */
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    background: rgba(251, 251, 254, 0.95);
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 4px;
+    align-items: center;
 }
 
 .toolbar-btn {
-    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     font-size: 14px;
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -718,6 +735,71 @@ h6 {
     font-size: 16px;
     line-height: 1.8;
     color: var(--gray-700);
+}
+
+.preview-body blockquote {
+    margin: 24px 0;
+    padding: 12px 24px;
+    border-left: 4px solid var(--primary);
+    background-color: var(--gray-100);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--gray-600);
+}
+
+.preview-body blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.preview-body code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background-color: var(--gray-100);
+    border-radius: 4px;
+    color: var(--primary);
+}
+
+.preview-body pre {
+    margin: 24px 0;
+    padding: 24px;
+    background-color: var(--gray-50);
+    border-radius: 12px;
+    overflow-x: auto;
+    border: 1px solid var(--gray-200);
+}
+
+.preview-body pre code {
+    padding: 0;
+    background: none;
+    font-size: 13px;
+    color: var(--gray-800);
+}
+
+.preview-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0;
+}
+
+.preview-body table {
+    width: 100%;
+    margin: 24px 0;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.preview-body th,
+.preview-body td {
+    padding: 12px 16px;
+    border: 1px solid var(--gray-200);
+    text-align: left;
+}
+
+.preview-body th {
+    background-color: var(--gray-100);
+    font-weight: 600;
 }
 
 .preview-body h2 {

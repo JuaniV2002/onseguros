@@ -631,12 +631,16 @@ function insertMarkdown(action) {
     let cursorOffset = 0;
 
     switch (action) {
+        case 'h1':
+            insertion = `\n# ${selectedText || 'Título Principal'}`;
+            cursorOffset = selectedText ? insertion.length : 3;
+            break;
         case 'h2':
-            insertion = `\n## ${selectedText || 'Título'}`;
+            insertion = `\n## ${selectedText || 'Subtítulo'}`;
             cursorOffset = selectedText ? insertion.length : 4;
             break;
         case 'h3':
-            insertion = `\n### ${selectedText || 'Subtítulo'}`;
+            insertion = `\n### ${selectedText || 'Sección'}`;
             cursorOffset = selectedText ? insertion.length : 5;
             break;
         case 'bold':
@@ -647,6 +651,23 @@ function insertMarkdown(action) {
             insertion = `*${selectedText || 'texto en cursiva'}*`;
             cursorOffset = selectedText ? insertion.length : 1;
             break;
+        case 'strikethrough':
+            insertion = `~~${selectedText || 'texto tachado'}~~`;
+            cursorOffset = selectedText ? insertion.length : 2;
+            break;
+        case 'quote':
+            insertion = `\n> ${selectedText || 'Cita de texto...'}`;
+            cursorOffset = selectedText ? insertion.length : 3;
+            break;
+        case 'code':
+            if (selectedText.includes('\n')) {
+                insertion = `\n\`\`\`\n${selectedText}\n\`\`\`\n`;
+                cursorOffset = 5; // After first ```
+            } else {
+                insertion = `\n\`\`\`\n${selectedText || 'código'}\n\`\`\`\n`;
+                cursorOffset = selectedText ? insertion.length - 4 : 5;
+            }
+            break;
         case 'ul':
             insertion = `\n- ${selectedText || 'Elemento de lista'}`;
             cursorOffset = selectedText ? insertion.length : 3;
@@ -655,9 +676,21 @@ function insertMarkdown(action) {
             insertion = `\n1. ${selectedText || 'Elemento numerado'}`;
             cursorOffset = selectedText ? insertion.length : 4;
             break;
+        case 'checklist':
+            insertion = `\n- [ ] ${selectedText || 'Tarea pendiente'}`;
+            cursorOffset = selectedText ? insertion.length : 7;
+            break;
         case 'link':
             insertion = `[${selectedText || 'texto del enlace'}](url)`;
             cursorOffset = selectedText ? insertion.length - 4 : 1;
+            break;
+        case 'image':
+            insertion = `![${selectedText || 'texto alternativo'}](url-imagen)`;
+            cursorOffset = selectedText ? insertion.length - 11 : 2;
+            break;
+        case 'table':
+            insertion = `\n| Encabezado 1 | Encabezado 2 |\n| ------------ | ------------ |\n| Celda 1      | Celda 2      |\n`;
+            cursorOffset = insertion.length;
             break;
         case 'hr':
             insertion = '\n\n---\n\n';
