@@ -433,6 +433,20 @@
     padding: 0 var(--space-lg);
 }
 
+/* Reading Progress Bar */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: var(--primary-600);
+    background: linear-gradient(90deg, var(--primary-600) 0%, var(--primary-400) 100%);
+    z-index: 9999;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px rgba(46, 126, 246, 0.5);
+}
+
 /* Post Breadcrumb */
 .blog-post__breadcrumb {
     margin-bottom: var(--space-xl);

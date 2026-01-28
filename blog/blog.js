@@ -10,6 +10,7 @@ class Blog {
         this.blogEmpty = document.getElementById('blog-empty');
         this.blogSearch = document.getElementById('blog-search');
         this.blogNoResults = document.getElementById('blog-no-results');
+        this.progressBar = document.getElementById('reading-progress');
         this.isPostPage = window.location.pathname.includes('post.html');
         this.posts = []; // Store posts for search filtering
 
@@ -19,6 +20,7 @@ class Blog {
     async init() {
         if (this.isPostPage) {
             await this.loadPost();
+            this.initProgressBar();
         } else if (this.blogGrid) {
             await this.loadPosts();
             this.initSearch();
@@ -438,6 +440,25 @@ class Blog {
             submitButton.textContent = originalText;
             submitButton.disabled = false;
         }
+    }
+
+    /**
+     * Initialize reading progress bar
+     */
+    initProgressBar() {
+        if (!this.progressBar || !this.isPostPage) return;
+
+        const updateProgress = () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollHeight > 0) ? (scrollTop / scrollHeight) * 100 : 0;
+
+            this.progressBar.style.width = `${scrollPercent}%`;
+        };
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        window.addEventListener('resize', updateProgress, { passive: true });
+        updateProgress();
     }
 }
 

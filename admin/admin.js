@@ -37,7 +37,7 @@ async function loadConfig() {
         return true;
     } catch (error) {
         console.error('Failed to load configuration:', error);
-        alert('Error al cargar la configuración. Por favor, recargá la página.');
+        Toast.error('Error al cargar la configuración. Por favor, recargá la página.', 'Error Crítico');
         return false;
     }
 }
@@ -100,12 +100,131 @@ const elements = {
     deleteMessage: document.getElementById('delete-message'),
     deletePostTitle: document.getElementById('delete-post-title'),
     cancelDeleteBtn: document.getElementById('cancel-delete-btn'),
-    confirmDeleteBtn: document.getElementById('confirm-delete-btn')
+    confirmDeleteBtn: document.getElementById('confirm-delete-btn'),
+
+    // Confirmation Modal
+    confirmModal: document.getElementById('confirm-modal'),
+    confirmTitle: document.getElementById('confirm-title'),
+    confirmMessage: document.getElementById('confirm-message'),
+    confirmOkBtn: document.getElementById('confirm-ok-btn'),
+    confirmCancelBtn: document.getElementById('confirm-cancel-btn'),
+
+    // Toasts
+    toastContainer: document.getElementById('toast-container')
 };
 
 // State
 let currentEditingPost = null;
 let allPosts = [];
+
+/* =====================================================
+   Toast Manager
+   ===================================================== */
+class ToastManager {
+    constructor() {
+        this.container = document.getElementById('toast-container');
+    }
+
+    show(message, type = 'info', title = null) {
+        if (!this.container) return; // Guard
+
+        const toast = document.createElement('div');
+        toast.className = `toast toast--${type}`;
+
+        const iconMap = {
+            success: '✓',
+            error: '✕',
+            info: 'ℹ'
+        };
+
+        const defaultTitles = {
+            success: 'Éxito',
+            error: 'Error',
+            info: 'Información'
+        };
+
+        const displayTitle = title || defaultTitles[type] || '';
+
+        toast.innerHTML = `
+            <div class="toast-icon">${iconMap[type] || '•'}</div>
+            <div class="toast-content">
+                <div class="toast-title">${displayTitle}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">✕</button>
+        `;
+
+        // Close button behavior
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            this.remove(toast);
+        });
+
+        this.container.appendChild(toast);
+
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+
+        // Auto dismiss
+        setTimeout(() => {
+            this.remove(toast);
+        }, 5000);
+    }
+
+    remove(toast) {
+        toast.classList.remove('show');
+        toast.addEventListener('transitionend', () => {
+            if (toast.parentNode) toast.remove();
+        });
+    }
+
+    success(message, title) { this.show(message, 'success', title); }
+    error(message, title) { this.show(message, 'error', title); }
+    info(message, title) { this.show(message, 'info', title); }
+}
+
+const Toast = new ToastManager();
+
+/* =====================================================
+   Confirmation Manager
+   ===================================================== */
+function confirmAction(title, message, onConfirm) {
+    if (!elements.confirmModal) return;
+
+    elements.confirmTitle.textContent = title;
+    elements.confirmMessage.textContent = message;
+
+    // Reset listeners (clone node)
+    const newOkBtn = elements.confirmOkBtn.cloneNode(true);
+    const newCancelBtn = elements.confirmCancelBtn.cloneNode(true);
+
+    elements.confirmOkBtn.parentNode.replaceChild(newOkBtn, elements.confirmOkBtn);
+    elements.confirmCancelBtn.parentNode.replaceChild(newCancelBtn, elements.confirmCancelBtn);
+
+    elements.confirmOkBtn = newOkBtn;
+    elements.confirmCancelBtn = newCancelBtn;
+
+    elements.confirmOkBtn.addEventListener('click', () => {
+        elements.confirmModal.style.display = 'none';
+        if (onConfirm) onConfirm();
+    });
+
+    elements.confirmCancelBtn.addEventListener('click', () => {
+        elements.confirmModal.style.display = 'none';
+    });
+
+    // Close on backdrop click (once)
+    const backdropHandler = (e) => {
+        if (e.target === elements.confirmModal) {
+            elements.confirmModal.style.display = 'none';
+            elements.confirmModal.removeEventListener('click', backdropHandler);
+        }
+    };
+    elements.confirmModal.addEventListener('click', backdropHandler);
+
+    elements.confirmModal.style.display = 'flex';
+}
 
 /* =====================================================
    Authentication
@@ -321,7 +440,7 @@ function showEditor(isEdit = false) {
 async function editPost(slug) {
     const post = allPosts.find(p => p.slug === slug);
     if (!post) {
-        showError('No se encontró el artículo');
+        Toast.error('No se encontró el artículo', 'Error');
         return;
     }
 
@@ -379,26 +498,30 @@ async function deletePost() {
 
         hideDeleteModal();
         await loadPosts(); // Reload posts
-        showSuccess(null, '¡Artículo eliminado exitosamente!');
+        Toast.success('¡Artículo eliminado exitosamente!', 'Eliminado');
 
     } catch (error) {
         console.error('Delete error:', error);
         hideDeleteModal();
-        showError(error.message || 'Error al eliminar el artículo. Intentá de nuevo.');
+        Toast.error(error.message || 'Error al eliminar el artículo. Intentá de nuevo.');
     } finally {
         setDeleteLoading(false);
     }
 }
 
 // Cancel edit
+// Cancel edit
 async function cancelEdit() {
     if (currentEditingPost) {
-        const confirmCancel = confirm('¿Querés cancelar la edición? Los cambios no guardados se perderán.');
-        if (!confirmCancel) return;
+        confirmAction('¿Descartar cambios?', '¿Querés cancelar la edición? Los cambios no guardados se perderán.', async () => {
+            currentEditingPost = null;
+            await loadPosts();
+            showPostsManagement();
+        });
+    } else {
+        currentEditingPost = null;
+        showPostsManagement();
     }
-    currentEditingPost = null;
-    await loadPosts();
-    showPostsManagement();
 }
 
 // Helper functions
@@ -474,19 +597,23 @@ function generateSlug(title) {
 }
 
 // Clear form
+// Clear form
 function clearForm(confirm = true) {
-    if (confirm && window.confirm('¿Estás seguro de que querés limpiar el formulario?')) {
+    const doClear = () => {
         elements.postForm.reset();
         updatePreview();
         updateCharCount(elements.postTitle, elements.titleCount, 100);
         updateCharCount(elements.postDescription, elements.descCount, 160);
         currentEditingPost = null;
-    } else if (!confirm) {
-        elements.postForm.reset();
-        updatePreview();
-        updateCharCount(elements.postTitle, elements.titleCount, 100);
-        updateCharCount(elements.postDescription, elements.descCount, 160);
-        currentEditingPost = null;
+    };
+
+    if (confirm) {
+        confirmAction('¿Limpiar formulario?', '¿Estás seguro de que querés borrar todo el contenido?', () => {
+            doClear();
+            Toast.info('Formulario limpiado');
+        });
+    } else {
+        doClear();
     }
 }
 
@@ -560,22 +687,22 @@ async function handlePublish(e) {
 
     // Validation
     if (!title || !description || !content) {
-        showError('Por favor, completá todos los campos.');
+        Toast.error('Por favor, completá todos los campos.', 'Datos incompletos');
         return;
     }
 
     if (title.length < 10) {
-        showError('El título debe tener al menos 10 caracteres.');
+        Toast.error('El título debe tener al menos 10 caracteres.', 'Título muy corto');
         return;
     }
 
     if (description.length < 50) {
-        showError('La descripción debe tener al menos 50 caracteres.');
+        Toast.error('La descripción debe tener al menos 50 caracteres.', 'Descripción muy corta');
         return;
     }
 
     if (content.length < 100) {
-        showError('El contenido debe tener al menos 100 caracteres.');
+        Toast.error('El contenido debe tener al menos 100 caracteres.', 'Contenido muy corto');
         return;
     }
 
@@ -621,11 +748,12 @@ async function handlePublish(e) {
 
         // Success!
         await loadPosts(); // Reload posts list
-        showSuccess(slug, isEditing ? '¡Artículo actualizado exitosamente!' : '¡Artículo publicado exitosamente!');
+        showPostsManagement();
+        Toast.success(isEditing ? '¡Artículo actualizado exitosamente!' : '¡Artículo publicado exitosamente!', isEditing ? 'Actualizado' : 'Publicado');
 
     } catch (error) {
         console.error('Publish error:', error);
-        showError(error.message || `Error al ${currentEditingPost ? 'actualizar' : 'publicar'} el artículo. Intentá de nuevo.`);
+        Toast.error(error.message || `Error al ${currentEditingPost ? 'actualizar' : 'publicar'} el artículo. Intentá de nuevo.`);
     } finally {
         setPublishLoading(false);
     }
