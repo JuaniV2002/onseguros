@@ -1,6 +1,7 @@
 /**
  * Environment Configuration Loader
- * Loads environment variables from .env file for client-side use
+ * Loads environment variables from config.json file
+ * Note: Using config.json instead of .env because web servers block access to dotfiles
  */
 
 class EnvConfig {
@@ -10,7 +11,7 @@ class EnvConfig {
     }
 
     /**
-     * Load environment variables from .env file
+     * Load environment variables from config.json file
      */
     async load() {
         if (this.loaded) {
@@ -18,47 +19,20 @@ class EnvConfig {
         }
 
         try {
-            const response = await fetch('/.env');
+            const response = await fetch('/config.json');
 
             if (!response.ok) {
-                throw new Error('Failed to load .env file');
+                throw new Error(`Failed to load config.json: ${response.status} ${response.statusText}`);
             }
 
-            const envText = await response.text();
-            this.parseEnv(envText);
+            this.config = await response.json();
             this.loaded = true;
 
+            console.log('✅ Environment configuration loaded successfully');
             return this.config;
         } catch (error) {
-            console.error('Error loading environment variables:', error);
+            console.error('❌ Error loading environment variables:', error);
             throw error;
-        }
-    }
-
-    /**
-     * Parse .env file content
-     */
-    parseEnv(envText) {
-        const lines = envText.split('\n');
-
-        for (const line of lines) {
-            // Skip empty lines and comments
-            if (!line.trim() || line.trim().startsWith('#')) {
-                continue;
-            }
-
-            // Parse KEY=VALUE
-            const equalIndex = line.indexOf('=');
-            if (equalIndex === -1) {
-                continue;
-            }
-
-            const key = line.substring(0, equalIndex).trim();
-            const value = line.substring(equalIndex + 1).trim();
-
-            if (key) {
-                this.config[key] = value;
-            }
         }
     }
 
@@ -67,7 +41,7 @@ class EnvConfig {
      */
     get(key) {
         if (!this.loaded) {
-            console.warn('Environment variables not loaded yet. Call load() first.');
+            console.warn('⚠️ Environment variables not loaded yet. Call load() first.');
             return undefined;
         }
         return this.config[key];
