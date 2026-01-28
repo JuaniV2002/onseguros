@@ -176,9 +176,12 @@
 }
 
 @keyframes pulse-badge {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
     }
@@ -510,7 +513,7 @@
     .blog-post__title {
         font-size: var(--font-size-4xl);
     }
-    
+
     .blog-post__author {
         font-size: var(--font-size-lg);
         margin-top: var(--space-lg);
@@ -820,6 +823,7 @@
 }
 
 @media (max-width: 480px) {
+
     .blog-page__container,
     .blog-post__container {
         padding: 0 var(--space-md);
@@ -832,4 +836,140 @@
     .newsletter--compact {
         padding: var(--space-lg);
     }
+}
+
+/* ==========================================================================
+   Skeleton Loading
+   ========================================================================== */
+
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--bg-tertiary) 25%,
+            var(--border-light) 50%,
+            var(--bg-tertiary) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(90deg,
+            var(--surface-overlay) 25%,
+            var(--surface-raised) 50%,
+            var(--surface-overlay) 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Skeleton Card (Blog Grid) */
+.skeleton-card {
+    background: var(--surface-raised);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.skeleton-date {
+    height: 14px;
+    width: 100px;
+    margin-bottom: var(--space-md);
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 90%;
+    margin-bottom: var(--space-xs);
+    border-radius: var(--radius-md);
+}
+
+.skeleton-title-2 {
+    height: 24px;
+    width: 60%;
+    margin-bottom: var(--space-lg);
+    border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+    height: 16px;
+    width: 100%;
+    margin-bottom: var(--space-sm);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-text-last {
+    height: 16px;
+    width: 80%;
+    margin-bottom: var(--space-xl);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-link {
+    height: 16px;
+    width: 120px;
+    border-radius: var(--radius-sm);
+    margin-top: auto;
+}
+
+/* Skeleton Post (Single Post) */
+.skeleton-post-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.skeleton-crumb {
+    height: 14px;
+    width: 200px;
+    margin-bottom: var(--space-xl);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-meta {
+    height: 14px;
+    width: 150px;
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-h1 {
+    height: 40px;
+    width: 90%;
+    margin-bottom: var(--space-sm);
+    border-radius: var(--radius-md);
+}
+
+.skeleton-h1-2 {
+    height: 40px;
+    width: 60%;
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius-md);
+}
+
+.skeleton-author {
+    height: 16px;
+    width: 180px;
+    margin-top: var(--space-md);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-content-block {
+    margin-bottom: var(--space-xl);
+}
+
+.skeleton-p {
+    height: 16px;
+    width: 100%;
+    margin-bottom: var(--space-sm);
+    border-radius: var(--radius-sm);
 }
