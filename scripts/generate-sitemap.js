@@ -71,11 +71,11 @@ async function fetchBlogPosts() {
     return new Promise((resolve, reject) => {
         https.get(CONFIG.apiUrl, (res) => {
             let data = '';
-            
+
             res.on('data', (chunk) => {
                 data += chunk;
             });
-            
+
             res.on('end', () => {
                 try {
                     if (res.statusCode !== 200) {
@@ -102,7 +102,7 @@ async function fetchBlogPosts() {
  */
 async function generateSitemap() {
     const posts = await fetchBlogPosts();
-    
+
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -121,7 +121,7 @@ async function generateSitemap() {
     // Add blog posts
     if (posts.length > 0) {
         xml += '\n    <!-- Blog Posts -->\n';
-        
+
         posts.forEach(post => {
             const postUrl = `/blog/post.html?slug=${post.slug}`;
             const lastmod = formatDate(post.publish_date);
@@ -130,7 +130,7 @@ async function generateSitemap() {
     }
 
     xml += '\n</urlset>';
-    
+
     return xml;
 }
 
@@ -142,7 +142,7 @@ async function writeSitemap(xml) {
         fs.writeFileSync(CONFIG.sitemapPath, xml, 'utf8');
         console.log('Sitemap generated successfully!');
         console.log(`Location: ${CONFIG.sitemapPath}`);
-        
+
         const posts = await fetchBlogPosts();
         console.log(`Total URLs: ${CONFIG.staticPages.length + posts.length}`);
         console.log(`   - Static pages: ${CONFIG.staticPages.length}`);
@@ -158,11 +158,11 @@ async function writeSitemap(xml) {
  */
 async function main() {
     console.log('Generating sitemap...\n');
-    
+
     const sitemap = await generateSitemap();
     await writeSitemap(sitemap);
-    
-    console.log('\n✨ Done!');
+
+    console.log('\nDone');
 }
 
 // Run if executed directly

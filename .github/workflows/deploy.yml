@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "✓ Checking HTML files exist..."
           if [ ! -f "index.html" ]; then
-            echo "❌ Error: index.html not found"
+            echo "Error: index.html not found"
             exit 1
           fi
           echo "✓ HTML validation passed"
@@ -36,20 +36,20 @@ jobs:
       # Check for common issues
       - name: Pre-deployment checks
         run: |
-          echo "📋 Running pre-deployment checks..."
+          echo "Running pre-deployment checks..."
           
           # Check for TODO or FIXME comments
           if grep -r "TODO\|FIXME" *.html *.js *.css 2>/dev/null; then
-            echo "⚠️  Warning: Found TODO/FIXME comments"
+            echo "Warning: Found TODO/FIXME comments"
           fi
           
           # Verify critical files exist
           files=("index.html" "style.css" "script.js" "robots.txt" "sitemap.xml")
           for file in "${files[@]}"; do
             if [ -f "$file" ]; then
-              echo "✓ Found $file"
+              echo "Found $file"
             else
-              echo "⚠️  Warning: $file not found"
+              echo "Warning: $file not found"
             fi
           done
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Create config.json from secrets
         run: |
-          echo "🔐 Creating config.json from GitHub secrets..."
+          echo "Creating config.json from GitHub secrets..."
           cat > config.json << 'EOF'
           {
             "SUPABASE_URL": "${{ secrets.SUPABASE_URL }}",
@@ -87,11 +87,11 @@ jobs:
             "BLOG_BASE_URL": "${{ secrets.BLOG_BASE_URL }}"
           }
           EOF
-          echo "✅ config.json created successfully"
+          echo "config.json created successfully"
 
       - name: Deploy via rsync
         run: |
-          echo "🚀 Starting deployment..."
+          echo "Starting deployment..."
           rsync -avz --delete \
             --exclude '.git' \
             --exclude '.github' \
@@ -101,12 +101,12 @@ jobs:
             --exclude '/admin/SETUP.md' \
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
-          echo "✅ Deployment completed successfully!"
+          echo "Deployment completed successfully!"
 
       - name: Deployment Summary
         if: always()
         run: |
-          echo "## 📦 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
@@ -116,5 +116,5 @@ jobs:
       - name: Notify on failure
         if: failure()
         run: |
-          echo "❌ Deployment failed! Check the logs above for details."
+          echo "Deployment failed! Check the logs above for details."
           exit 1
