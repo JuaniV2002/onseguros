@@ -14,8 +14,12 @@ jobs:
     name: Generate and Update Sitemap
     runs-on: ubuntu-latest
     
+    # Grant write permissions to push changes
+    permissions:
+      contents: write
+    
     steps:
-      - name: 📥 Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           # Fetch full history for accurate commits
@@ -24,35 +28,35 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       
       
-      - name: 🔧 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
       
-      - name: 🗺️ Generate Sitemap
+      - name: Generate Sitemap
         run: node scripts/generate-sitemap.js
       
-      - name: 📊 Check for Changes
+      - name: Check for Changes
         id: git-check
         run: |
           git diff --exit-code sitemap.xml || echo "changed=true" >> $GITHUB_OUTPUT
       
-      - name: 💾 Commit and Push Sitemap
+      - name: Commit and Push Sitemap
         if: steps.git-check.outputs.changed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add sitemap.xml
-          git commit -m "🗺️ Auto-update sitemap.xml - $(date +'%Y-%m-%d %H:%M')" -m "Triggered by changes to blog/data/posts.json" -m "[skip ci]"
+          git commit -m "Auto-update sitemap.xml - $(date +'%Y-%m-%d %H:%M')" -m "Triggered by changes to blog/data/posts.json" -m "[skip ci]"
           git push
       
-      - name: ✅ Success Notification
+      - name: Success Notification
         if: steps.git-check.outputs.changed == 'true'
         run: |
           echo "::notice::Sitemap successfully updated and committed!"
-          echo "📝 Sitemap now includes $(grep -c '<url>' sitemap.xml) URLs"
+          echo "Sitemap now includes $(grep -c '<url>' sitemap.xml) URLs"
       
-      - name: ℹ️ No Changes
+      - name: No Changes
         if: steps.git-check.outputs.changed != 'true'
         run: |
           echo "::notice::Sitemap is already up to date. No changes needed."
