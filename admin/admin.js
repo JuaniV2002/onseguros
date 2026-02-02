@@ -7,6 +7,35 @@ let CONFIG = null;
 let supabaseClient = null;
 let isAuthenticated = false;
 
+// Cache clearing utilities
+function clearBlogCache() {
+    try {
+        // Clear blog posts list cache
+        sessionStorage.removeItem('blog-posts');
+        
+        // Clear individual blog post caches
+        const keys = Object.keys(sessionStorage);
+        keys.forEach(key => {
+            if (key.startsWith('blog-post-')) {
+                sessionStorage.removeItem(key);
+            }
+        });
+        
+        console.log('Blog cache cleared');
+    } catch (error) {
+        console.error('Error clearing blog cache:', error);
+    }
+}
+
+function clearFAQCache() {
+    try {
+        sessionStorage.removeItem('faq-data');
+        console.log('FAQ cache cleared');
+    } catch (error) {
+        console.error('Error clearing FAQ cache:', error);
+    }
+}
+
 // Load configuration from .env file
 async function loadConfig() {
     try {
@@ -89,6 +118,7 @@ const elements = {
     // Character counts
     titleCount: document.getElementById('title-count'),
     descCount: document.getElementById('desc-count'),
+    contentCount: document.getElementById('content-count'),
 
     // Preview
     previewTitle: document.getElementById('preview-title'),
@@ -133,8 +163,8 @@ const elements = {
     faqForm: document.getElementById('faq-form'),
     faqQuestion: document.getElementById('faq-question'),
     faqCategory: document.getElementById('faq-category'),
-    faqOrder: document.getElementById('faq-order'),
     faqAnswer: document.getElementById('faq-answer'),
+    answerCount: document.getElementById('answer-count'),
     saveFaqBtn: document.getElementById('save-faq-btn'),
     clearFaqBtn: document.getElementById('clear-faq-btn'),
     questionCount: document.getElementById('question-count'),
@@ -369,15 +399,12 @@ function getAuthErrorMessage(error) {
 
 // Load all posts from posts.json
 async function loadPosts() {
-    console.log('loadPosts() called');
     elements.postsLoading.style.display = 'flex';
     elements.postsList.innerHTML = '';
     elements.postsEmpty.style.display = 'none';
 
     try {
         const { data: { session } } = await supabaseClient.auth.getSession();
-        console.log('Session:', session ? 'Found' : 'Not found');
-        console.log('Fetching from:', CONFIG.GET_POSTS_API_URL);
 
         const response = await fetch(CONFIG.GET_POSTS_API_URL, {
             headers: {
@@ -392,7 +419,6 @@ async function loadPosts() {
         }
 
         const data = await response.json();
-        console.log('Posts data:', data);
         allPosts = data.posts || [];
 
         // Posts are already sorted by publish_date DESC from API
@@ -400,15 +426,12 @@ async function loadPosts() {
         elements.postsLoading.style.display = 'none';
 
         if (allPosts.length === 0) {
-            console.log('No posts found, showing empty state');
             elements.postsEmpty.style.display = 'flex';
             return;
         }
 
-        console.log('Rendering', allPosts.length, 'posts');
         renderPosts();
     } catch (error) {
-        console.error('Error loading posts:', error);
         elements.postsLoading.style.display = 'none';
         elements.postsEmpty.style.display = 'flex';
     }
@@ -429,24 +452,15 @@ function renderPosts() {
             </div>
             <div class="post-item-actions">
                 <a href="${CONFIG.BLOG_BASE_URL}?slug=${post.slug}" target="_blank" class="btn btn-sm btn-secondary" title="Ver artículo">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+                    <img src="../assets/icons/eye.svg" width="16" height="16" alt="">
                     Ver
                 </a>
                 <button class="btn btn-sm btn-primary" onclick="editPost('${post.slug}')" title="Editar artículo">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
+                    <img src="../assets/icons/square-pen.svg" width="16" height="16" alt="">
                     Editar
                 </button>
                 <button class="btn btn-sm btn-danger" onclick="confirmDelete('${post.slug}')" title="Eliminar artículo">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
+                    <img src="../assets/icons/trash-2.svg" width="16" height="16" alt="">
                     Eliminar
                 </button>
             </div>
@@ -458,6 +472,7 @@ function renderPosts() {
 function showPostsManagement() {
     elements.postsManagement.style.display = 'block';
     elements.editorContainer.style.display = 'none';
+    document.querySelector('.admin-nav').style.display = 'flex';
     currentEditingPost = null;
 }
 
@@ -465,15 +480,14 @@ function showPostsManagement() {
 function showEditor(isEdit = false) {
     elements.postsManagement.style.display = 'none';
     elements.editorContainer.style.display = 'grid';
+    document.querySelector('.admin-nav').style.display = 'none';
 
     if (isEdit) {
         elements.editorTitle.textContent = 'Editar Artículo';
-        elements.cancelEditBtn.style.display = 'inline-block';
         elements.publishBtnText.textContent = 'Actualizar Artículo';
         elements.publishLoadingText.textContent = 'Actualizando...';
     } else {
         elements.editorTitle.textContent = 'Nuevo Artículo';
-        elements.cancelEditBtn.style.display = 'none';
         elements.publishBtnText.textContent = 'Publicar Artículo';
         elements.publishLoadingText.textContent = 'Publicando...';
         clearForm(false); // Clear without confirmation
@@ -497,8 +511,9 @@ async function editPost(slug) {
     elements.postContent.value = post.content || '';
 
     // Update character counts and preview
-    updateCharCount(elements.postTitle, elements.titleCount, 100);
-    updateCharCount(elements.postDescription, elements.descCount, 160);
+    updateCharCount(elements.postTitle, elements.titleCount, 10, 100);
+    updateCharCount(elements.postDescription, elements.descCount, 50, 160);
+    updateCharCount(elements.postContent, elements.contentCount, 100, null);
     updatePreview();
 }
 
@@ -508,6 +523,12 @@ function confirmDelete(slug) {
     if (!post) return;
 
     currentEditingPost = post;
+    
+    // Update modal for blog post deletion
+    const deleteModal = elements.deleteModal;
+    const titleElement = deleteModal.querySelector('h2');
+    titleElement.textContent = '¿Eliminar Artículo?';
+    elements.deleteMessage.textContent = '¿Estás seguro de que querés eliminar este artículo? Esta acción no se puede deshacer.';
     elements.deletePostTitle.textContent = `"${post.title}"`;
     elements.deleteModal.style.display = 'flex';
 }
@@ -540,6 +561,8 @@ async function deletePost() {
             throw new Error(result.error || 'Error al eliminar el artículo');
         }
 
+        // Clear the blog cache
+        clearBlogCache();
         hideDeleteModal();
         await loadPosts(); // Reload posts
         Toast.success('¡Artículo eliminado exitosamente!', 'Eliminado');
@@ -565,6 +588,20 @@ async function cancelEdit() {
     } else {
         currentEditingPost = null;
         showPostsManagement();
+    }
+}
+
+// Cancel FAQ edit
+async function cancelFAQEdit() {
+    if (currentEditingFaq) {
+        confirmAction('¿Descartar cambios?', '¿Querés cancelar la edición? Los cambios no guardados se perderán.', async () => {
+            currentEditingFaq = null;
+            await loadFAQs();
+            showFAQManagement();
+        });
+    } else {
+        currentEditingFaq = null;
+        showFAQManagement();
     }
 }
 
@@ -598,10 +635,19 @@ function hideDeleteModal() {
    ===================================================== */
 
 // Update character counts
-function updateCharCount(input, countElement, max) {
+function updateCharCount(input, countElement, min, max) {
     const count = input.value.length;
+    const parent = countElement.closest('.char-count');
+    
+    // Update the count number
     countElement.textContent = count;
-    countElement.style.color = count > max * 0.9 ? 'var(--warning)' : 'var(--gray-400)';
+    
+    // Turn green when minimum is reached, otherwise gray
+    if (min && count >= min) {
+        parent.style.color = 'var(--success)';
+    } else {
+        parent.style.color = 'var(--gray-400)';
+    }
 }
 
 // Update live preview
@@ -646,8 +692,9 @@ function clearForm(confirm = true) {
     const doClear = () => {
         elements.postForm.reset();
         updatePreview();
-        updateCharCount(elements.postTitle, elements.titleCount, 100);
-        updateCharCount(elements.postDescription, elements.descCount, 160);
+        updateCharCount(elements.postTitle, elements.titleCount, 10, 100);
+        updateCharCount(elements.postDescription, elements.descCount, 50, 160);
+        updateCharCount(elements.postContent, elements.contentCount, 100, null);
         currentEditingPost = null;
     };
 
@@ -823,7 +870,8 @@ async function handlePublish(e) {
             throw new Error(result.error || `Error al ${isEditing ? 'actualizar' : 'publicar'} el artículo`);
         }
 
-        // Success!
+        // Success! Clear the blog cache
+        clearBlogCache();
         await loadPosts(); // Reload posts list
         showPostsManagement();
         Toast.success(isEditing ? '¡Artículo actualizado exitosamente!' : '¡Artículo publicado exitosamente!', isEditing ? 'Actualizado' : 'Publicado');
@@ -848,19 +896,29 @@ function setPublishLoading(loading) {
    Modals
    ===================================================== */
 
-function showSuccess(slug, customMessage = null) {
-    if (slug) {
-        elements.viewPostLink.href = `${CONFIG.BLOG_BASE_URL}?slug=${slug}`;
-        elements.viewPostLink.style.display = 'inline-block';
-    } else {
-        elements.viewPostLink.style.display = 'none';
-    }
+function showSuccess(slug, customMessage = null, type = 'blog') {
+    const successModal = elements.successModal;
+    const titleElement = successModal.querySelector('h2');
+    const messageElement = successModal.querySelector('p');
+    const viewLinkElement = elements.viewPostLink;
+    const newActionBtn = successModal.querySelector('button');
 
-    // Update success message if provided
-    if (customMessage) {
-        const successModal = elements.successModal;
-        const messageElement = successModal.querySelector('p');
-        messageElement.textContent = customMessage;
+    // Update title and messages based on type
+    if (type === 'faq') {
+        titleElement.textContent = '¡Pregunta Guardada!';
+        messageElement.textContent = customMessage || 'Tu pregunta fue guardada exitosamente y ya está disponible en el sitio.';
+        viewLinkElement.style.display = 'none';
+        newActionBtn.textContent = 'Crear Otra';
+    } else {
+        titleElement.textContent = '¡Artículo Publicado!';
+        messageElement.textContent = customMessage || 'Tu artículo fue publicado exitosamente. En unos minutos estará disponible en el blog.';
+        if (slug) {
+            viewLinkElement.href = `${CONFIG.BLOG_BASE_URL}?slug=${slug}`;
+            viewLinkElement.style.display = 'inline-block';
+        } else {
+            viewLinkElement.style.display = 'none';
+        }
+        newActionBtn.textContent = 'Escribir Otro';
     }
 
     elements.successModal.style.display = 'flex';
@@ -870,7 +928,17 @@ function hideSuccess() {
     elements.successModal.style.display = 'none';
 }
 
-function showError(message) {
+function showError(message, type = 'blog') {
+    const errorModal = elements.errorModal;
+    const titleElement = errorModal.querySelector('h2');
+    
+    // Update title based on type
+    if (type === 'faq') {
+        titleElement.textContent = 'Error al Guardar';
+    } else {
+        titleElement.textContent = 'Error al Publicar';
+    }
+    
     elements.errorMessage.textContent = message;
     elements.errorModal.style.display = 'flex';
 }
@@ -907,20 +975,26 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('new-post-trigger')) {
         showEditor(false);
     }
+    if (e.target.classList.contains('new-faq-trigger')) {
+        showFAQEditor(false);
+    }
 });
 
 // Form inputs
 elements.postTitle.addEventListener('input', () => {
-    updateCharCount(elements.postTitle, elements.titleCount, 100);
+    updateCharCount(elements.postTitle, elements.titleCount, 10, 100);
     updatePreview();
 });
 
 elements.postDescription.addEventListener('input', () => {
-    updateCharCount(elements.postDescription, elements.descCount, 160);
+    updateCharCount(elements.postDescription, elements.descCount, 50, 160);
     updatePreview();
 });
 
-elements.postContent.addEventListener('input', updatePreview);
+elements.postContent.addEventListener('input', () => {
+    updateCharCount(elements.postContent, elements.contentCount, 100, null);
+    updatePreview();
+});
 
 // Form actions
 elements.postForm.addEventListener('submit', handlePublish);
@@ -955,20 +1029,27 @@ elements.postContent.addEventListener('keydown', (e) => {
 
 // Load all FAQs
 async function loadFAQs() {
-    console.log('loadFAQs() called');
     elements.faqLoading.style.display = 'block';
     elements.faqList.style.display = 'none';
     elements.faqEmpty.style.display = 'none';
 
     try {
-        const response = await fetch(CONFIG.GET_FAQS_API_URL);
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        
+        const headers = {};
+        if (session) {
+            headers['Authorization'] = `Bearer ${CONFIG.SUPABASE_ANON_KEY}`;
+        } else {
+            headers['Authorization'] = `Bearer ${session.access_token}`;
+        }
+
+        const response = await fetch(CONFIG.GET_FAQS_API_URL, { headers });
         
         if (!response.ok) {
             throw new Error('Failed to fetch FAQs');
         }
 
         allFaqs = await response.json();
-        console.log('FAQs loaded:', allFaqs.length);
 
         elements.faqLoading.style.display = 'none';
 
@@ -998,23 +1079,23 @@ function renderFAQsList() {
             <div class="faq-item-content">
                 <div class="faq-item-question">
                     <span class="faq-item-drag-handle" title="Arrastrá para reordenar">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
+                        <img src="../assets/icons/grip-vertical.svg" width="16" height="16" alt="">
                     </span>
                     <span>${escapeHtml(faq.question)}</span>
                 </div>
                 <div class="faq-item-meta">
                     <span class="faq-item-category-badge category-${faq.category}">${getCategoryLabel(faq.category)}</span>
-                    <span>•</span>
-                    <span class="faq-item-order">Orden: ${faq.order_number}</span>
                 </div>
             </div>
             <div class="faq-item-actions">
-                <button class="btn btn-sm btn-primary" onclick="editFAQ('${faq.id}')">Editar</button>
-                <button class="btn btn-sm btn-danger" onclick="confirmDeleteFAQ('${faq.id}', \`${escapeHtml(faq.question)}\`)">Eliminar</button>
+                <button class="btn btn-sm btn-primary" onclick="editFAQ('${faq.id}')" title="Editar pregunta">
+                    <img src="../assets/icons/square-pen.svg" width="16" height="16" alt="">
+                    Editar
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="confirmDeleteFAQ('${faq.id}', \`${escapeHtml(faq.question)}\`)" title="Eliminar pregunta">
+                    <img src="../assets/icons/trash-2.svg" width="16" height="16" alt="">
+                    Eliminar
+                </button>
             </div>
         </div>
     `).join('');
@@ -1113,16 +1194,10 @@ function handleFAQDrop(e) {
 // Update FAQ order in backend
 async function updateFAQOrder(faq) {
     try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        if (!session) {
-            throw new Error('No session found');
-        }
-
         await fetch(CONFIG.UPDATE_FAQ_API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.access_token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 id: faq.id,
@@ -1132,6 +1207,9 @@ async function updateFAQOrder(faq) {
                 order_number: faq.order_number
             })
         });
+        
+        // Clear the FAQ cache when order changes
+        clearFAQCache();
     } catch (error) {
         console.error('Error updating FAQ order:', error);
     }
@@ -1143,17 +1221,22 @@ function showFAQManagement() {
     elements.editorContainer.style.display = 'none';
     elements.faqManagement.style.display = 'block';
     elements.faqEditorContainer.style.display = 'none';
+    document.querySelector('.admin-nav').style.display = 'flex';
     currentEditingFaq = null;
 
     // Update navigation
     elements.showBlogBtn.classList.remove('active');
     elements.showFaqBtn.classList.add('active');
+    
+    // Reload FAQs to ensure proper state
+    loadFAQs();
 }
 
 // Show FAQ editor
 function showFAQEditor(isEdit = false) {
     elements.faqManagement.style.display = 'none';
     elements.faqEditorContainer.style.display = 'grid';
+    document.querySelector('.admin-nav').style.display = 'none';
 
     if (isEdit) {
         elements.faqEditorTitle.textContent = 'Editar Pregunta';
@@ -1163,6 +1246,8 @@ function showFAQEditor(isEdit = false) {
         elements.saveFaqBtn.querySelector('.btn-text').textContent = 'Guardar Pregunta';
         elements.faqForm.reset();
         currentEditingFaq = null;
+        updateCharCount(elements.faqQuestion, elements.questionCount, 10, 200);
+        updateCharCount(elements.faqAnswer, elements.answerCount, 20, null);
         updateFAQPreview();
     }
 
@@ -1184,11 +1269,11 @@ async function editFAQ(faqId) {
     // Populate form
     elements.faqQuestion.value = faq.question;
     elements.faqCategory.value = faq.category;
-    elements.faqOrder.value = faq.order_number;
     elements.faqAnswer.value = faq.answer;
 
     // Update character counts and preview
-    updateQuestionCount();
+    updateCharCount(elements.faqQuestion, elements.questionCount, 10, 200);
+    updateCharCount(elements.faqAnswer, elements.answerCount, 20, null);
     updateFAQPreview();
 }
 
@@ -1198,8 +1283,10 @@ async function saveFAQ(e) {
 
     const question = elements.faqQuestion.value.trim();
     const category = elements.faqCategory.value;
-    const order_number = parseInt(elements.faqOrder.value) || 0;
     const answer = elements.faqAnswer.value.trim();
+
+    // Auto-assign order_number based on existing FAQs count
+    const order_number = currentEditingFaq ? currentEditingFaq.order_number : allFaqs.length;
 
     // Validation
     if (!question || !category || !answer) {
@@ -1220,31 +1307,33 @@ async function saveFAQ(e) {
     setSaveFAQLoading(true);
 
     try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        if (!session) {
-            throw new Error('No session found');
-        }
-
         const apiUrl = currentEditingFaq ? CONFIG.UPDATE_FAQ_API_URL : CONFIG.CREATE_FAQ_API_URL;
         const payload = currentEditingFaq
             ? { id: currentEditingFaq.id, question, answer, category, order_number }
             : { question, answer, category, order_number };
 
+        console.log('Calling:', apiUrl, 'with payload:', payload);
+
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.access_token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         });
 
+        console.log('Response status:', response.status);
+
         if (!response.ok) {
             const errorData = await response.json();
+            console.error('Error response:', errorData);
             throw new Error(errorData.error || 'Error al guardar');
         }
 
         const savedFaq = await response.json();
+
+        // Clear the FAQ cache
+        clearFAQCache();
 
         Toast.success(
             currentEditingFaq ? '¡Pregunta actualizada exitosamente!' : '¡Pregunta creada exitosamente!',
@@ -1270,16 +1359,10 @@ async function deleteFAQ() {
     setDeleteLoading(true);
 
     try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        if (!session) {
-            throw new Error('No session found');
-        }
-
         const response = await fetch(CONFIG.DELETE_FAQ_API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.access_token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ id: currentEditingFaq.id })
         });
@@ -1287,6 +1370,9 @@ async function deleteFAQ() {
         if (!response.ok) {
             throw new Error('Error al eliminar');
         }
+
+        // Clear the FAQ cache
+        clearFAQCache();
 
         Toast.success('Pregunta eliminada correctamente', 'Eliminada');
         hideDeleteModal();
@@ -1310,6 +1396,11 @@ function confirmDeleteFAQ(faqId, question) {
     if (!faq) return;
 
     currentEditingFaq = faq;
+    
+    // Update modal for FAQ deletion
+    const deleteModal = elements.deleteModal;
+    const titleElement = deleteModal.querySelector('h2');
+    titleElement.textContent = '¿Eliminar Pregunta?';
     elements.deleteMessage.textContent = '¿Estás seguro de que querés eliminar esta pregunta? Esta acción no se puede deshacer.';
     elements.deletePostTitle.textContent = question;
     elements.deleteModal.style.display = 'flex';
@@ -1321,12 +1412,6 @@ function setSaveFAQLoading(loading) {
     elements.clearFaqBtn.disabled = loading;
     elements.saveFaqBtn.querySelector('.btn-text').style.display = loading ? 'none' : 'inline';
     elements.saveFaqBtn.querySelector('.btn-loading').style.display = loading ? 'inline-flex' : 'none';
-}
-
-// Update question character count
-function updateQuestionCount() {
-    const length = elements.faqQuestion.value.length;
-    elements.questionCount.textContent = length;
 }
 
 // Update FAQ preview
@@ -1423,7 +1508,14 @@ function setupNavigation() {
 elements.newPostBtn.addEventListener('click', handleNewPost);
 elements.closeErrorBtn.addEventListener('click', hideError);
 elements.cancelDeleteBtn.addEventListener('click', hideDeleteModal);
-elements.confirmDeleteBtn.addEventListener('click', deletePost);
+elements.confirmDeleteBtn.addEventListener('click', () => {
+    // Check if we're deleting a FAQ or a post
+    if (currentEditingFaq) {
+        deleteFAQ();
+    } else {
+        deletePost();
+    }
+});
 
 // Close modals on backdrop click
 elements.successModal.addEventListener('click', (e) => {
@@ -1453,12 +1545,14 @@ if (elements.newFaqToggleBtn) {
 }
 
 if (elements.cancelFaqEditBtn) {
-    elements.cancelFaqEditBtn.addEventListener('click', showFAQManagement);
+    elements.cancelFaqEditBtn.addEventListener('click', cancelFAQEdit);
 }
 
 if (elements.clearFaqBtn) {
     elements.clearFaqBtn.addEventListener('click', () => {
         if (elements.faqForm) elements.faqForm.reset();
+        updateCharCount(elements.faqQuestion, elements.questionCount, 10, 200);
+        updateCharCount(elements.faqAnswer, elements.answerCount, 20, null);
         updateFAQPreview();
     });
 }
@@ -1466,7 +1560,7 @@ if (elements.clearFaqBtn) {
 // FAQ live preview updates
 if (elements.faqQuestion) {
     elements.faqQuestion.addEventListener('input', () => {
-        updateQuestionCount();
+        updateCharCount(elements.faqQuestion, elements.questionCount, 10, 200);
         updateFAQPreview();
     });
 }
@@ -1476,7 +1570,10 @@ if (elements.faqCategory) {
 }
 
 if (elements.faqAnswer) {
-    elements.faqAnswer.addEventListener('input', updateFAQPreview);
+    elements.faqAnswer.addEventListener('input', () => {
+        updateCharCount(elements.faqAnswer, elements.answerCount, 20, null);
+        updateFAQPreview();
+    });
 }
 
 // Initialize on page load

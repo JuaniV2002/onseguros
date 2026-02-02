@@ -13,6 +13,7 @@ class Blog {
         this.progressBar = document.getElementById('reading-progress');
         this.isPostPage = window.location.pathname.includes('post.html');
         this.posts = []; // Store posts for search filtering
+        this.cacheTTL = 5 * 60 * 1000; // Cache for 5 minutes
 
         this.init();
     }
@@ -34,6 +35,14 @@ class Blog {
      */
     async loadPosts() {
         try {
+            // Check cache first
+            const cachedData = this.getCachedData('blog-posts');
+            if (cachedData) {
+                this.posts = cachedData;
+                this.renderPosts(this.posts);
+                return;
+            }
+
             const response = await fetch(`${this.apiBaseUrl}/get-posts`);
 
             if (!response.ok) {
@@ -42,6 +51,9 @@ class Blog {
 
             const data = await response.json();
             this.posts = data.posts || [];
+
+            // Cache the posts data
+            this.setCachedData('blog-posts', this.posts);
 
             // Posts are already sorted by publish_date DESC from the API
 
@@ -64,6 +76,49 @@ class Blog {
         if (!this.blogSearch) return;
 
         this.blogSearch.addEventListener('input', () => this.handleSearch());
+    }
+
+    /**
+     * Get cached data from sessionStorage
+     * @param {string} key - The cache key
+     * @returns {any|null} - The cached data or null if not found/expired
+     */
+    getCachedData(key) {
+        try {
+            const cached = sessionStorage.getItem(key);
+            if (!cached) return null;
+
+            const { data, timestamp } = JSON.parse(cached);
+            const now = Date.now();
+
+            // Check if cache has expired
+            if (now - timestamp > this.cacheTTL) {
+                sessionStorage.removeItem(key);
+                return null;
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Error reading cache:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Set data in cache with timestamp
+     * @param {string} key - The cache key
+     * @param {any} data - The data to cache
+     */
+    setCachedData(key, data) {
+        try {
+            const cacheObject = {
+                data,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(key, JSON.stringify(cacheObject));
+        } catch (error) {
+            console.error('Error setting cache:', error);
+        }
     }
 
     /**
@@ -172,6 +227,14 @@ class Blog {
         }
 
         try {
+            // Check cache first
+            const cacheKey = `blog-post-${slug}`;
+            const cachedPost = this.getCachedData(cacheKey);
+            if (cachedPost) {
+                this.renderPost(cachedPost, cachedPost.content);
+                return;
+            }
+
             // Load post from API
             const response = await fetch(`${this.apiBaseUrl}/get-post/${slug}`);
 
@@ -190,6 +253,9 @@ class Blog {
                 this.showPostNotFound();
                 return;
             }
+
+            // Cache the post data
+            this.setCachedData(cacheKey, post);
 
             // Render the post with content from the database
             this.renderPost(post, post.content);

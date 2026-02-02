@@ -818,86 +818,6 @@ class ScrollAnimations {
 }
 
 // ==========================================================================
-// Performance Monitoring
-// ==========================================================================
-
-class PerformanceMonitor {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        // Monitor Core Web Vitals
-        this.measureCLS();
-        this.measureFID();
-        this.measureLCP();
-        
-        // Log performance metrics
-        window.addEventListener('load', () => {
-            setTimeout(() => this.logPerformanceMetrics(), 0);
-        });
-    }
-
-    measureCLS() {
-        let clsValue = 0;
-        let clsEntries = [];
-
-        const observer = new PerformanceObserver((list) => {
-            for (const entry of list.getEntries()) {
-                if (!entry.hadRecentInput) {
-                    clsEntries.push(entry);
-                    clsValue += entry.value;
-                }
-            }
-        });
-
-        observer.observe({ type: 'layout-shift', buffered: true });
-
-        // Log CLS on page hide
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') {
-                console.log('CLS:', clsValue);
-            }
-        });
-    }
-
-    measureFID() {
-        const observer = new PerformanceObserver((list) => {
-            for (const entry of list.getEntries()) {
-                console.log('FID:', entry.processingStart - entry.startTime);
-            }
-        });
-
-        observer.observe({ type: 'first-input', buffered: true });
-    }
-
-    measureLCP() {
-        const observer = new PerformanceObserver((list) => {
-            const entries = list.getEntries();
-            const lastEntry = entries[entries.length - 1];
-            console.log('LCP:', lastEntry.startTime);
-        });
-
-        observer.observe({ type: 'largest-contentful-paint', buffered: true });
-    }
-
-    logPerformanceMetrics() {
-        if (performance.getEntriesByType) {
-            const navigation = performance.getEntriesByType('navigation')[0];
-            if (navigation) {
-                console.log('Page Load Performance:', {
-                    'DNS Lookup': navigation.domainLookupEnd - navigation.domainLookupStart,
-                    'TCP Connection': navigation.connectEnd - navigation.connectStart,
-                    'Request + Response': navigation.responseEnd - navigation.requestStart,
-                    'DOM Content Loaded': navigation.domContentLoadedEventEnd - navigation.navigationStart,
-                    'Load Complete': navigation.loadEventEnd - navigation.navigationStart
-                });
-            }
-        }
-    }
-}
-
-// ==========================================================================
 // Accessibility Enhancements
 // ==========================================================================
 
@@ -1305,13 +1225,11 @@ class SecureGuardApp {
             this.components.push(new ScrollAnimations());
             this.components.push(new AccessibilityEnhancements());
             this.components.push(new LazyLoader());
-            this.components.push(new PerformanceMonitor());
             this.components.push(new ServiceWorkerManager());
 
             // Set up error boundaries
             this.setupErrorHandling();
 
-            console.log('Sitio web de OnSeguros inicializado correctamente');
         } catch (error) {
             console.error('Error initializing components:', error);
         }

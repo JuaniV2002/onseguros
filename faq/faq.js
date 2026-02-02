@@ -51,6 +51,18 @@ async function loadFAQs() {
     
     if (!faqListContainer) return;
 
+    // Check cache first
+    const cachedFaqs = getCachedFAQs();
+    if (cachedFaqs) {
+        allFaqs = cachedFaqs;
+        renderFAQs();
+        // Initialize accordion component if available
+        if (window.Accordion) {
+            new window.Accordion('.accordion-list');
+        }
+        return;
+    }
+
     // Show skeletal loading
     showFAQSkeleton();
 
@@ -58,6 +70,7 @@ async function loadFAQs() {
         // Load environment config first
         await window.envConfig.load();
         const apiUrl = window.envConfig.get('GET_FAQS_API_URL');
+        const anonKey = window.envConfig.get('SUPABASE_ANON_KEY');
 
         if (!apiUrl) {
             console.error('FAQ API URL not configured');
@@ -65,7 +78,11 @@ async function loadFAQs() {
             return;
         }
 
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${anonKey}`
+            }
+        });
         
         if (!response.ok) {
             throw new Error('Failed to fetch FAQs');
@@ -75,6 +92,9 @@ async function loadFAQs() {
         
         // Sort FAQs by order_number
         allFaqs.sort((a, b) => a.order_number - b.order_number);
+
+        // Cache the FAQs data
+        setCachedFAQs(allFaqs);
 
         // Render FAQs
         renderFAQs();
@@ -153,4 +173,49 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// Cache management
+const FAQ_CACHE_KEY = 'faq-data';
+const FAQ_CACHE_TTL = 5 * 60 * 1000; // Cache for 5 minutes
+
+/**
+ * Get cached FAQs from sessionStorage
+ * @returns {Array|null} - The cached FAQs or null if not found/expired
+ */
+function getCachedFAQs() {
+    try {
+        const cached = sessionStorage.getItem(FAQ_CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const now = Date.now();
+
+        // Check if cache has expired
+        if (now - timestamp > FAQ_CACHE_TTL) {
+            sessionStorage.removeItem(FAQ_CACHE_KEY);
+            return null;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error reading FAQ cache:', error);
+        return null;
+    }
+}
+
+/**
+ * Set FAQs in cache with timestamp
+ * @param {Array} faqs - The FAQs data to cache
+ */
+function setCachedFAQs(faqs) {
+    try {
+        const cacheObject = {
+            data: faqs,
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem(FAQ_CACHE_KEY, JSON.stringify(cacheObject));
+    } catch (error) {
+        console.error('Error setting FAQ cache:', error);
+    }
 }

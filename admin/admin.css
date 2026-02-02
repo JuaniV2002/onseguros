@@ -142,6 +142,11 @@ h6 {
     box-shadow: var(--btn-shadow-hover);
 }
 
+.btn-primary img,
+.btn-danger img {
+    filter: brightness(0) invert(1);
+}
+
 .btn-secondary {
     background-color: var(--white);
     color: var(--gray-700);
@@ -171,6 +176,12 @@ h6 {
 .btn-sm {
     padding: 8px 16px;
     font-size: 14px;
+}
+
+#logout-btn:hover:not(:disabled) {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border-color: #fecaca;
 }
 
 .spinner {
@@ -208,7 +219,8 @@ h6 {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 14px 16px;
     font-size: 15px;
@@ -221,7 +233,8 @@ h6 {
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--primary);
     background-color: var(--white);
@@ -544,12 +557,19 @@ h6 {
     border: 1px solid var(--gray-100);
 }
 
-.editor-panel h2 {
-    font-size: 24px;
-    color: var(--gray-800);
+.editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 24px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--gray-200);
+}
+
+.editor-panel h2 {
+    font-size: 24px;
+    color: var(--gray-800);
+    margin: 0;
 }
 
 /* Markdown Toolbar */
@@ -1270,7 +1290,7 @@ h6 {
     transform: translateY(-4px);
     box-shadow: var(--effect-raised-hover);
     border-left-color: var(--primary);
-    border-left-width: 4px;
+    border-left-width: 2px;
 }
 
 .faq-item.dragging {
@@ -1291,6 +1311,7 @@ h6 {
 .faq-item-question {
     font-size: 1.1rem;
     font-weight: 600;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--gray-800);
     margin-bottom: 0.5rem;
     display: flex;
@@ -1304,10 +1325,12 @@ h6 {
     display: flex;
     align-items: center;
     padding: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
 }
 
-.faq-item-drag-handle:hover {
-    color: var(--gray-600);
+.faq-item:hover .faq-item-drag-handle {
+    opacity: 1;
 }
 
 .faq-item-category-badge {
@@ -1379,6 +1402,14 @@ h6 {
     background: var(--primary);
     color: var(--white);
     font-weight: 600;
+}
+
+.nav-btn img {
+    filter: brightness(0);
+}
+
+.nav-btn.active img {
+    filter: brightness(0) invert(1);
 }
 
 /* Category Badge Colors */

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Admin - OnSeguros Blog</title>
-    <link rel="stylesheet" href="admin.css?v=5">
+    <link rel="stylesheet" href="admin.css?v=7">
     <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
         <div class="login-container">
             <div class="login-header">
                 <img src="../assets/icons/favicon.png" alt="OnSeguros" class="login-logo">
-                <h1>Editor de Blog</h1>
+                <h1>Editor de Contenido</h1>
                 <p>Ingresá tus credenciales para acceder</p>
             </div>
             <form id="login-form" class="login-form">
@@ -57,7 +57,7 @@
         <header class="admin-header">
             <div class="header-left">
                 <img src="../assets/icons/favicon.png" alt="OnSeguros" class="header-logo">
-                <h1>Editor de Blog</h1>
+                <h1>Editor de Contenido</h1>
             </div>
             <div class="header-right">
                 <span id="user-email" class="user-email"></span>
@@ -122,8 +122,7 @@
                 <div class="editor-panel">
                     <div class="editor-header">
                         <h2 id="editor-title">Nuevo Artículo</h2>
-                        <button id="cancel-edit-btn" class="btn btn-secondary btn-sm"
-                            style="display: none;">Cancelar</button>
+                        <button id="cancel-edit-btn" class="btn btn-secondary btn-sm">← Volver</button>
                     </div>
                     <form id="post-form" class="post-form">
                         <div class="form-group">
@@ -261,6 +260,7 @@ Este es el primer párrafo de mi artículo.
 
 ### Subsección
 Más contenido aquí..." rows="20"></textarea>
+                            <span class="char-count"><span id="content-count">0</span>/∞</span>
                         </div>
 
                         <div class="form-actions">
@@ -347,13 +347,8 @@ Más contenido aquí..." rows="20"></textarea>
                 </div>
 
                 <div id="faq-empty" class="posts-empty" style="display: none;">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                    <h3>No hay preguntas frecuentes</h3>
-                    <p>Creá tu primera pregunta para comenzar</p>
+                    <p>No hay preguntas frecuentes todavía.</p>
+                    <button class="btn btn-primary new-faq-trigger">Crear Primera Pregunta</button>
                 </div>
 
                 <div id="faq-list" class="posts-list"></div>
@@ -361,119 +356,115 @@ Más contenido aquí..." rows="20"></textarea>
 
             <!-- FAQ Editor Section -->
             <div class="editor-container" id="faq-editor-container" style="display: none;">
-                <div class="editor-header">
-                    <h2 id="faq-editor-title">Nueva Pregunta</h2>
-                    <button id="cancel-faq-edit-btn" class="btn btn-secondary btn-sm">← Volver a la Lista</button>
+                <!-- Editor Panel -->
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h2 id="faq-editor-title">Nueva Pregunta</h2>
+                        <button id="cancel-faq-edit-btn" class="btn btn-secondary btn-sm">← Volver</button>
+                    </div>
+
+                    <form id="faq-form" class="post-form">
+                        <div class="form-group">
+                            <label for="faq-question">Pregunta <span class="required">*</span></label>
+                            <div class="input-with-count">
+                                <input type="text" id="faq-question" name="question" placeholder="¿Cómo...?" required maxlength="200">
+                                <span class="char-count"><span id="question-count">0</span>/200</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faq-category">Categoría <span class="required">*</span></label>
+                            <select id="faq-category" name="category" required>
+                                <option value="">Seleccioná una categoría</option>
+                                <option value="general">General</option>
+                                <option value="cobertura">Coberturas</option>
+                                <option value="cotizacion">Cotización</option>
+                                <option value="art">ART</option>
+                                <option value="siniestro">Siniestros</option>
+                                <option value="vehiculos">Vehículos</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faq-answer">Respuesta <span class="required">*</span></label>
+                            
+                            <!-- Simple Formatting Toolbar -->
+                            <div class="faq-toolbar">
+                                <div class="toolbar-group">
+                                    <button type="button" class="toolbar-btn" data-action="bold" title="Negrita">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                            <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="toolbar-btn" data-action="italic" title="Cursiva">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="19" y1="4" x2="10" y2="4"></line>
+                                            <line x1="14" y1="20" x2="5" y2="20"></line>
+                                            <line x1="15" y1="4" x2="9" y2="20"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <span class="toolbar-divider"></span>
+                                <div class="toolbar-group">
+                                    <button type="button" class="toolbar-btn" data-action="ul" title="Lista">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="toolbar-btn" data-action="ol" title="Lista numerada">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="10" y1="6" x2="21" y2="6"></line>
+                                            <line x1="10" y1="12" x2="21" y2="12"></line>
+                                            <line x1="10" y1="18" x2="21" y2="18"></line>
+                                            <path d="M4 10h2"></path>
+                                            <path d="M4 6h1v4"></path>
+                                            <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <span class="toolbar-divider"></span>
+                                <div class="toolbar-group">
+                                    <button type="button" class="toolbar-btn" data-action="link" title="Insertar enlace">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="toolbar-btn" data-action="p" title="Párrafo">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="4" y1="7" x2="20" y2="7"></line>
+                                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                                            <line x1="4" y1="17" x2="12" y2="17"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <textarea id="faq-answer" name="answer" rows="12" placeholder="Escribí la respuesta aquí." required></textarea>
+                            <span class="char-count"><span id="answer-count">0</span>/∞</span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="clear-faq-btn" class="btn btn-secondary">Limpiar</button>
+                            <button type="submit" id="save-faq-btn" class="btn btn-primary">
+                                <span class="btn-text">Guardar Pregunta</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"
+                                            stroke-dasharray="31.4 31.4" stroke-linecap="round" />
+                                    </svg>
+                                    <span id="save-loading-text">Guardando...</span>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                <form id="faq-form" class="post-form">
-                    <div class="form-group">
-                        <label for="faq-question">Pregunta <span class="required">*</span></label>
-                        <div class="input-with-count">
-                            <input type="text" id="faq-question" name="question" placeholder="¿Cómo...?" required maxlength="200">
-                            <span class="char-count"><span id="question-count">0</span>/200</span>
-                        </div>
-                        <p class="form-help">Redactá una pregunta clara y concisa</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="faq-category">Categoría <span class="required">*</span></label>
-                        <select id="faq-category" name="category" required>
-                            <option value="">Seleccioná una categoría</option>
-                            <option value="general">General</option>
-                            <option value="cobertura">Coberturas</option>
-                            <option value="cotizacion">Cotización</option>
-                            <option value="art">ART</option>
-                            <option value="siniestro">Siniestros</option>
-                            <option value="vehiculos">Vehículos</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="faq-order">Orden de Visualización</label>
-                        <input type="number" id="faq-order" name="order" min="0" value="0" placeholder="0">
-                        <p class="form-help">Las preguntas se ordenan automáticamente. Podés ajustar el orden manualmente si es necesario.</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="faq-answer">Respuesta <span class="required">*</span></label>
-                        
-                        <!-- Simple Formatting Toolbar -->
-                        <div class="faq-toolbar">
-                            <div class="toolbar-group">
-                                <button type="button" class="toolbar-btn" data-action="bold" title="Negrita">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                        <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                    </svg>
-                                </button>
-                                <button type="button" class="toolbar-btn" data-action="italic" title="Cursiva">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="19" y1="4" x2="10" y2="4"></line>
-                                        <line x1="14" y1="20" x2="5" y2="20"></line>
-                                        <line x1="15" y1="4" x2="9" y2="20"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                            <span class="toolbar-divider"></span>
-                            <div class="toolbar-group">
-                                <button type="button" class="toolbar-btn" data-action="ul" title="Lista">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                    </svg>
-                                </button>
-                                <button type="button" class="toolbar-btn" data-action="ol" title="Lista numerada">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="10" y1="6" x2="21" y2="6"></line>
-                                        <line x1="10" y1="12" x2="21" y2="12"></line>
-                                        <line x1="10" y1="18" x2="21" y2="18"></line>
-                                        <path d="M4 10h2"></path>
-                                        <path d="M4 6h1v4"></path>
-                                        <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <span class="toolbar-divider"></span>
-                            <div class="toolbar-group">
-                                <button type="button" class="toolbar-btn" data-action="link" title="Insertar enlace">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                                    </svg>
-                                </button>
-                                <button type="button" class="toolbar-btn" data-action="p" title="Párrafo">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="4" y1="7" x2="20" y2="7"></line>
-                                        <line x1="4" y1="12" x2="20" y2="12"></line>
-                                        <line x1="4" y1="17" x2="12" y2="17"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <textarea id="faq-answer" name="answer" rows="12" placeholder="Escribí la respuesta aquí. Podés usar HTML básico..." required></textarea>
-                        <p class="form-help">Usá el toolbar para formatear la respuesta. Soporta HTML básico (párrafos, listas, enlaces, negritas).</p>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" id="clear-faq-btn" class="btn btn-secondary">Limpiar</button>
-                        <button type="submit" id="save-faq-btn" class="btn btn-primary">
-                            <span class="btn-text">Guardar Pregunta</span>
-                            <span class="btn-loading" style="display: none;">
-                                <svg class="spinner" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"
-                                        stroke-dasharray="31.4 31.4" stroke-linecap="round" />
-                                </svg>
-                                <span id="save-loading-text">Guardando...</span>
-                            </span>
-                        </button>
-                    </div>
-                </form>
 
                 <!-- FAQ Preview Panel -->
                 <div class="preview-panel faq-preview">
@@ -497,8 +488,8 @@ Más contenido aquí..." rows="20"></textarea>
 
             <!-- Navigation Toggle -->
             <div class="admin-nav">
-                <button id="show-blog-btn" class="nav-btn active">📝 Blog</button>
-                <button id="show-faq-btn" class="nav-btn">❓ FAQ</button>
+                <button id="show-blog-btn" class="nav-btn active"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Blog</button>
+                <button id="show-faq-btn" class="nav-btn"><img src="../assets/icons/message-circle-question-mark.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> FAQ</button>
             </div>
         </main>
 
@@ -569,7 +560,7 @@ Más contenido aquí..." rows="20"></textarea>
     <div id="toast-container" class="toast-container"></div>
 
     <script src="../assets/js/env-config.js?v=2"></script>
-    <script src="admin.js?v=5"></script>
+    <script src="admin.js?v=17"></script>
 </body>
 
 </html>

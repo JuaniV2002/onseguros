@@ -28,10 +28,8 @@ class EnvConfig {
             this.config = await response.json();
             this.loaded = true;
 
-            console.log('✅ Environment configuration loaded successfully');
             return this.config;
         } catch (error) {
-            console.error('❌ Error loading environment variables:', error);
             throw error;
         }
     }
@@ -41,7 +39,6 @@ class EnvConfig {
      */
     get(key) {
         if (!this.loaded) {
-            console.warn('⚠️ Environment variables not loaded yet. Call load() first.');
             return undefined;
         }
         return this.config[key];
