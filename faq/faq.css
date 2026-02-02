@@ -82,6 +82,178 @@
     pointer-events: none;
 }
 
+/* FAQ Category Filter Chips */
+.faq-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-3xl);
+}
+
+.faq-category-chip {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+}
+
+.faq-category-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.faq-category-chip.active {
+    border-color: var(--primary-600);
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+    font-weight: var(--font-weight-semibold);
+}
+
+[data-theme="dark"] .faq-category-chip.active {
+    background-color: rgba(var(--color-primary-rgb), 0.15);
+    color: var(--primary-400);
+}
+
+/* Category-specific colors */
+.faq-category-chip.category-general {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+[data-theme="dark"] .faq-category-chip.category-general {
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+}
+
+.faq-category-chip.category-general.active {
+    border-color: #4338ca;
+    background: #c7d2fe;
+    color: #3730a3;
+}
+
+[data-theme="dark"] .faq-category-chip.category-general.active {
+    border-color: #818cf8;
+    background: rgba(99, 102, 241, 0.25);
+    color: #c7d2fe;
+}
+
+.faq-category-chip.category-cobertura {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+[data-theme="dark"] .faq-category-chip.category-cobertura {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+.faq-category-chip.category-cobertura.active {
+    border-color: #1d4ed8;
+    background: #bfdbfe;
+    color: #1e40af;
+}
+
+[data-theme="dark"] .faq-category-chip.category-cobertura.active {
+    border-color: #60a5fa;
+    background: rgba(59, 130, 246, 0.25);
+    color: #bfdbfe;
+}
+
+.faq-category-chip.category-cotizacion {
+    background: #d1fae5;
+    color: #059669;
+}
+
+[data-theme="dark"] .faq-category-chip.category-cotizacion {
+    background: rgba(16, 185, 129, 0.15);
+    color: #6ee7b7;
+}
+
+.faq-category-chip.category-cotizacion.active {
+    border-color: #059669;
+    background: #a7f3d0;
+    color: #047857;
+}
+
+[data-theme="dark"] .faq-category-chip.category-cotizacion.active {
+    border-color: #34d399;
+    background: rgba(16, 185, 129, 0.25);
+    color: #a7f3d0;
+}
+
+.faq-category-chip.category-art {
+    background: #fce7f3;
+    color: #be185d;
+}
+
+[data-theme="dark"] .faq-category-chip.category-art {
+    background: rgba(236, 72, 153, 0.15);
+    color: #f9a8d4;
+}
+
+.faq-category-chip.category-art.active {
+    border-color: #be185d;
+    background: #fbcfe8;
+    color: #9f1239;
+}
+
+[data-theme="dark"] .faq-category-chip.category-art.active {
+    border-color: #f472b6;
+    background: rgba(236, 72, 153, 0.25);
+    color: #fbcfe8;
+}
+
+.faq-category-chip.category-siniestro {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+[data-theme="dark"] .faq-category-chip.category-siniestro {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}
+
+.faq-category-chip.category-siniestro.active {
+    border-color: #dc2626;
+    background: #fecaca;
+    color: #b91c1c;
+}
+
+[data-theme="dark"] .faq-category-chip.category-siniestro.active {
+    border-color: #f87171;
+    background: rgba(239, 68, 68, 0.25);
+    color: #fecaca;
+}
+
+.faq-category-chip.category-vehiculos {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+[data-theme="dark"] .faq-category-chip.category-vehiculos {
+    background: rgba(251, 146, 60, 0.15);
+    color: #fcd34d;
+}
+
+.faq-category-chip.category-vehiculos.active {
+    border-color: #d97706;
+    background: #fde68a;
+    color: #b45309;
+}
+
+[data-theme="dark"] .faq-category-chip.category-vehiculos.active {
+    border-color: #fb923c;
+    background: rgba(251, 146, 60, 0.25);
+    color: #fde68a;
+}
+
 /* FAQ List */
 .faq-list {
     margin-bottom: var(--space-4xl);
@@ -174,6 +346,15 @@
     .faq-search__input {
         font-size: var(--font-size-base);
         padding: var(--space-md) var(--space-lg) var(--space-md) var(--space-4xl);
+    }
+
+    .faq-categories {
+        padding: var(--space-md);
+    }
+
+    .faq-category-chip {
+        font-size: var(--font-size-xs);
+        padding: var(--space-xs) var(--space-md);
     }
 
     .faq-question {

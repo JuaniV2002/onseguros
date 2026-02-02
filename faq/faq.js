@@ -4,46 +4,82 @@
  */
 
 let allFaqs = [];
+let currentCategory = 'all';
 
 document.addEventListener('DOMContentLoaded', async function() {
     const faqListContainer = document.getElementById('faq-list');
     const searchInput = document.getElementById('faq-search');
     const noResults = document.getElementById('no-results');
+    const categoryChips = document.querySelectorAll('.faq-category-chip');
 
     // Load FAQs from Supabase
     await loadFAQs();
 
+    // Category filter functionality
+    categoryChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            // Update active state
+            categoryChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Store current category
+            currentCategory = this.dataset.category;
+            
+            // Clear search input
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            
+            // Apply filter
+            filterFAQs();
+        });
+    });
+
     // Search functionality
     if (searchInput) {
         searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            const accordionItems = document.querySelectorAll('.accordion-item');
-            let hasResults = false;
-
-            accordionItems.forEach(item => {
-                const questionText = item.querySelector('.accordion-question span').textContent.toLowerCase();
-                const answerText = item.querySelector('.accordion-answer__content').textContent.toLowerCase();
-                
-                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
-                    item.style.display = 'block';
-                    hasResults = true;
-                } else {
-                    item.style.display = 'none';
-                    item.classList.remove('active');
-                }
-            });
-
-            // Show/hide no results message
-            if (noResults) {
-                if (searchTerm && !hasResults) {
-                    noResults.classList.add('visible');
-                } else {
-                    noResults.classList.remove('visible');
-                }
-            }
+            filterFAQs();
         });
     }
 });
+
+// Filter FAQs based on search and category
+function filterFAQs() {
+    const searchInput = document.getElementById('faq-search');
+    const noResults = document.getElementById('no-results');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    let hasResults = false;
+
+    accordionItems.forEach(item => {
+        const category = item.dataset.category;
+        const questionText = item.querySelector('.accordion-question span').textContent.toLowerCase();
+        const answerText = item.querySelector('.accordion-answer__content').textContent.toLowerCase();
+        
+        // Check category filter
+        const categoryMatch = currentCategory === 'all' || category === currentCategory;
+        
+        // Check search filter
+        const searchMatch = !searchTerm || questionText.includes(searchTerm) || answerText.includes(searchTerm);
+        
+        if (categoryMatch && searchMatch) {
+            item.style.display = 'block';
+            hasResults = true;
+        } else {
+            item.style.display = 'none';
+            item.classList.remove('active');
+        }
+    });
+
+    // Show/hide no results message
+    if (noResults) {
+        if (!hasResults) {
+            noResults.classList.add('visible');
+        } else {
+            noResults.classList.remove('visible');
+        }
+    }
+}
 
 // Load FAQs from Supabase
 async function loadFAQs() {
