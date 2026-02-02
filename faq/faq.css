@@ -189,3 +189,62 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   FAQ Skeletal Loading
+   ========================================================================== */
+
+.faq-skeleton-loading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.faq-skeleton-item {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-subtle);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-skeleton-question {
+    height: 24px;
+    background: linear-gradient(
+        90deg,
+        var(--border-subtle) 25%,
+        var(--border-muted) 50%,
+        var(--border-subtle) 75%
+    );
+    background-size: 200% 100%;
+    animation: faq-skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+    width: 70%;
+}
+
+@keyframes faq-skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Dark mode skeletal loading adjustments */
+[data-theme="dark"] .faq-skeleton-item {
+    background: var(--bg-secondary);
+    border-color: var(--border-muted);
+}
+
+[data-theme="dark"] .faq-skeleton-question {
+    background: linear-gradient(
+        90deg,
+        var(--border-muted) 25%,
+        var(--border-subtle) 50%,
+        var(--border-muted) 75%
+    );
+    background-size: 200% 100%;
+}
+

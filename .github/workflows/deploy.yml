@@ -85,7 +85,12 @@ jobs:
             "PUBLISH_API_URL": "${{ secrets.PUBLISH_API_URL }}",
             "UPDATE_API_URL": "${{ secrets.UPDATE_API_URL }}",
             "DELETE_API_URL": "${{ secrets.DELETE_API_URL }}",
-            "BLOG_BASE_URL": "${{ secrets.BLOG_BASE_URL }}"
+            "BLOG_BASE_URL": "${{ secrets.BLOG_BASE_URL }}",
+            "GET_FAQS_API_URL": "${{ secrets.GET_FAQS_API_URL }}",
+            "GET_FAQ_API_URL": "${{ secrets.GET_FAQ_API_URL }}",
+            "CREATE_FAQ_API_URL": "${{ secrets.CREATE_FAQ_API_URL }}",
+            "UPDATE_FAQ_API_URL": "${{ secrets.UPDATE_FAQ_API_URL }}",
+            "DELETE_FAQ_API_URL": "${{ secrets.DELETE_FAQ_API_URL }}"
           }
           EOF
           echo "config.json created successfully"
