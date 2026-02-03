@@ -632,11 +632,14 @@ async function deletePost() {
     setDeleteLoading(true);
 
     try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
 
-        if (!session) {
-            throw new Error('No estás autenticado');
+        if (sessionError || !session || !session.access_token) {
+            console.error('Session error:', sessionError);
+            throw new Error('No estás autenticado. Por favor, volvé a iniciar sesión.');
         }
+
+        console.log('Deleting with user:', session.user.email);
 
         const response = await fetch(CONFIG.DELETE_API_URL, {
             method: 'POST',
@@ -926,11 +929,12 @@ async function handlePublish(e) {
 
     try {
         // Get current session for auth
-        const { data: { session } } = await supabaseClient.auth.getSession();
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
 
-        if (!session) {
-            throw new Error('No estás autenticado');
+        if (sessionError || !session || !session.access_token) {
+            throw new Error('No estás autenticado. Por favor, volvé a iniciar sesión.');
         }
+
 
         const isEditing = currentEditingPost !== null;
         const slug = isEditing ? currentEditingPost.slug : generateSlug(title);
