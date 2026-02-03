@@ -271,6 +271,47 @@
     display: block;
 }
 
+/* Empty State */
+.faq-empty {
+    text-align: center;
+    padding: var(--space-4xl) var(--space-lg);
+    background: var(--surface-raised);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+    margin-bottom: var(--space-4xl);
+    display: none;
+}
+
+.faq-empty.visible {
+    display: block;
+}
+
+.faq-empty__icon {
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-lg);
+}
+
+.faq-empty__icon svg {
+    width: 64px;
+    height: 64px;
+}
+
+.faq-empty__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.faq-empty__description {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
 /* FAQ Contact Cards */
 .faq-contact {
     display: grid;

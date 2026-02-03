@@ -702,7 +702,11 @@ async function cancelFAQEdit() {
 
 // Helper functions
 function formatDate(dateString) {
-    const date = new Date(dateString);
+    // Parse the date string as a local date (not UTC)
+    // Handle both "YYYY-MM-DD" and full ISO format
+    const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
+    const date = new Date(year, month - 1, day); // month is 0-indexed in Date constructor
+    
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('es-AR', options);
 }

@@ -15,6 +15,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Load FAQs from Supabase
     await loadFAQs();
 
+    // Refresh FAQs when page becomes visible (user returns to tab)
+    document.addEventListener('visibilitychange', async function() {
+        if (!document.hidden) {
+            // Page is now visible - refresh FAQs to get latest data
+            clearFAQCache();
+            await loadFAQs();
+        }
+    });
+
     // Category filter functionality
     categoryChips.forEach(chip => {
         chip.addEventListener('click', function() {
@@ -91,6 +100,10 @@ async function loadFAQs() {
     const cachedFaqs = getCachedFAQs();
     if (cachedFaqs) {
         allFaqs = cachedFaqs;
+        // Generate JSON-LD structured data from cache
+        if (typeof generateFAQStructuredData === 'function') {
+            generateFAQStructuredData(cachedFaqs);
+        }
         renderFAQs();
         return;
     }
@@ -131,19 +144,45 @@ async function loadFAQs() {
         // Hide skeleton
         hideFAQSkeleton();
 
+        // Generate JSON-LD structured data
+        if (typeof generateFAQStructuredData === 'function') {
+            generateFAQStructuredData(allFaqs);
+        }
+
         // Render FAQs (which also initializes accordion)
         renderFAQs();
 
     } catch (error) {
         console.error('Error loading FAQs:', error);
         hideFAQSkeleton();
+        // Show empty state on error
+        renderFAQs();
     }
 }
 
 // Render FAQs into the list
 function renderFAQs() {
     const faqListContainer = document.getElementById('faq-list');
-    if (!faqListContainer || allFaqs.length === 0) return;
+    const faqSearch = document.querySelector('.faq-search');
+    const faqCategories = document.querySelector('.faq-categories');
+    
+    if (!faqListContainer) return;
+    
+    // Check if FAQs are empty
+    if (allFaqs.length === 0) {
+        // Show empty state
+        showEmptyState();
+        // Hide search and categories
+        if (faqSearch) faqSearch.style.display = 'none';
+        if (faqCategories) faqCategories.style.display = 'none';
+        return;
+    }
+
+    // Show search and categories if FAQs are available
+    if (faqSearch) faqSearch.style.display = 'block';
+    if (faqCategories) faqCategories.style.display = 'flex';
+    // Hide empty state if visible
+    hideEmptyState();
 
     faqListContainer.innerHTML = allFaqs.map(faq => `
         <div class="accordion-item" data-category="${escapeHtml(faq.category)}">
@@ -199,6 +238,29 @@ function hideFAQSkeleton() {
     }
 }
 
+// Show empty state
+function showEmptyState() {
+    const faqEmptyContainer = document.getElementById('faq-empty');
+    if (!faqEmptyContainer) return;
+
+    faqEmptyContainer.classList.add('visible');
+    faqEmptyContainer.innerHTML = `
+        <h2 class="faq-empty__title">No hay preguntas frecuentes disponibles</h2>
+        <p class="faq-empty__description">
+            Estamos trabajando en contenido de calidad para vos. Por favor, contactanos directamente si tienes alguna pregunta.
+        </p>
+    `;
+}
+
+// Hide empty state
+function hideEmptyState() {
+    const faqEmptyContainer = document.getElementById('faq-empty');
+    if (faqEmptyContainer) {
+        faqEmptyContainer.classList.remove('visible');
+        faqEmptyContainer.innerHTML = '';
+    }
+}
+
 // Escape HTML to prevent XSS
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -209,6 +271,17 @@ function escapeHtml(text) {
 // Cache management
 const FAQ_CACHE_KEY = 'faq-data';
 const FAQ_CACHE_TTL = 5 * 60 * 1000; // Cache for 5 minutes
+
+/**
+ * Clear FAQ cache from sessionStorage
+ */
+function clearFAQCache() {
+    try {
+        sessionStorage.removeItem(FAQ_CACHE_KEY);
+    } catch (error) {
+        console.error('Error clearing FAQ cache:', error);
+    }
+}
 
 /**
  * Get cached FAQs from sessionStorage
@@ -247,6 +320,61 @@ function setCachedFAQs(faqs) {
         };
         sessionStorage.setItem(FAQ_CACHE_KEY, JSON.stringify(cacheObject));
     } catch (error) {
-        console.error('Error setting FAQ cache:', error);
+ 
+
+/**
+ * Generate and inject JSON-LD structured data for FAQPage schema
+ * This makes dynamically loaded FAQs visible to search engines
+ * @param {Array} faqs - Array of FAQ objects from Supabase
+ */
+function generateFAQStructuredData(faqs) {
+    if (!faqs || faqs.length === 0) return;
+
+    // Remove existing dynamic FAQ structured data if present
+    const existingScript = document.getElementById('faq-dynamic-schema');
+    if (existingScript) {
+        existingScript.remove();
+    }
+
+    // Create mainEntity array with all FAQs
+    const mainEntity = faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": stripHtmlTags(faq.answer) // Remove any HTML tags from answer
+        }
+    }));
+
+    // Create FAQPage schema
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": mainEntity
+    };
+
+    // Create script element
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-dynamic-schema';
+    script.textContent = JSON.stringify(faqSchema);
+
+    // Inject into head
+    document.head.appendChild(script);
+
+    console.log(`Generated FAQ schema with ${faqs.length} questions`);
+}
+
+/**
+ * Strip HTML tags from text while preserving content
+ * @param {string} html - HTML string to clean
+ * @returns {string} - Plain text without HTML tags
+ */
+function stripHtmlTags(html) {
+    if (!html) return '';
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+}       console.error('Error setting FAQ cache:', error);
     }
 }

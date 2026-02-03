@@ -43,7 +43,7 @@ class Blog {
                 return;
             }
 
-            const response = await fetch(`${this.apiBaseUrl}/get-posts`);
+            const response = await fetch(`${this.apiBaseUrl}/get-posts-api`);
 
             if (!response.ok) {
                 throw new Error('Failed to load posts');
@@ -236,7 +236,7 @@ class Blog {
             }
 
             // Load post from API
-            const response = await fetch(`${this.apiBaseUrl}/get-post/${slug}`);
+            const response = await fetch(`${this.apiBaseUrl}/get-post-api/${slug}`);
 
             if (!response.ok) {
                 if (response.status === 404) {
@@ -405,7 +405,11 @@ class Blog {
      * Format date to Spanish locale
      */
     formatDate(dateString) {
-        const date = new Date(dateString);
+        // Parse the date string as a local date (not UTC)
+        // Handle both "YYYY-MM-DD" and full ISO format
+        const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
+        const date = new Date(year, month - 1, day); // month is 0-indexed in Date constructor
+        
         return date.toLocaleDateString('es-AR', {
             year: 'numeric',
             month: 'long',

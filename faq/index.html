@@ -52,96 +52,6 @@
     <link rel="stylesheet" href="../components/accordion.css">
     <link rel="stylesheet" href="faq.css">
     
-    <!-- Structured Data - FAQPage -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "¿Qué cubre un seguro integral para mi hogar o comercio?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Un seguro integral protege tu propiedad contra incendio, robo, daños por agua, fenómenos climáticos, responsabilidad civil y más. Podés elegir coberturas básicas o amplias según tus necesidades y presupuesto. También incluimos protección de contenidos, cristales y equipos electrónicos."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Cómo solicito una cotización?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Podés solicitar una cotización completando el formulario en nuestra página web, contactándonos por WhatsApp al +54 9 358 412 2566, o enviando un email a mariano.pas@onseguros.net. Te responderemos en menos de 24 horas con una propuesta personalizada."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Qué es la ART y quién necesita contratarla?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "La ART (Aseguradora de Riesgos del Trabajo) es un seguro obligatorio que cubre a tus empleados contra accidentes laborales y enfermedades profesionales. Incluye asistencia médica, indemnizaciones y rehabilitación. Es fundamental para cumplir con la legislación laboral argentina, sin importar el rubro de tu empresa."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Cuánto tarda en activarse la cobertura de mi seguro?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Depende del tipo de seguro. Los seguros patrimoniales (hogar, comercio) suelen tener vigencia inmediata o dentro de las 72 horas. Los seguros agrícolas tienen períodos de carencia específicos según el cultivo. Te explicamos claramente los plazos al momento de contratar para que sepas exactamente cuándo estás protegido."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Qué hago si tengo un siniestro?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Contactanos inmediatamente (incluso fuera de horario) para iniciar el reclamo. La aseguradora enviará un perito o inspector para evaluar los daños. Nosotros te acompañamos durante todo el proceso: desde la denuncia hasta el cobro de la indemnización. Nuestro servicio de gestión de siniestros está disponible 24/7."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Qué tipos de seguros de vehículos ofrecen?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Ofrecemos seguros para autos, motos, camionetas y vehículos comerciales. Tenés opciones de responsabilidad civil obligatoria, terceros completo, todo riesgo con o sin franquicia. También cubrimos maquinaria agrícola como tractores y cosechadoras. Las coberturas se ajustan a tu uso y presupuesto."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Cuánto cuesta un seguro?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "El costo varía según el tipo de seguro, las coberturas elegidas, el valor del bien a asegurar y tu historial. Por ejemplo, un seguro de hogar puede arrancar desde unos pocos miles de pesos mensuales. Trabajamos con múltiples aseguradoras para conseguirte la mejor tarifa según tu situación particular."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Trabajan con todas las aseguradoras?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Sí, trabajamos con las principales compañías de seguros del mercado argentino especializadas en seguros integrales, ART y seguros agrícolas. Esto nos permite comparar ofertas y conseguirte la mejor relación precio-cobertura según tus necesidades específicas."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Desde cuándo necesito contratar ART?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Desde el primer empleado en relación de dependencia estás obligado a contratar ART. Esto incluye trabajadores permanentes, temporarios y de temporada, sin importar el rubro de tu empresa. El incumplimiento puede generar multas importantes."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Puedo asegurar una propiedad que alquilo?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Sí, podés asegurar el contenido de una vivienda o local que alquilás, y también contratar responsabilidad civil por daños a terceros. Si sos propietario y alquilás tu inmueble, podés asegurar la estructura del edificio. Te asesoramos sobre qué coberturas necesitás según tu situación."
-                }
-            }
-        ]
-    }
-    </script>
-    
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
     {
@@ -214,6 +124,9 @@
 
             <!-- FAQ List -->
             <div class="faq-list accordion-list" id="faq-list"></div>
+
+            <!-- Empty State (shown when no FAQs) -->
+            <div class="faq-empty" id="faq-empty" aria-live="polite"></div>
 
             <!-- No Results Message -->
             <div class="faq-no-results" id="no-results">
