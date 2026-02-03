@@ -92,10 +92,6 @@ async function loadFAQs() {
     if (cachedFaqs) {
         allFaqs = cachedFaqs;
         renderFAQs();
-        // Initialize accordion component if available
-        if (window.Accordion) {
-            new window.Accordion('.accordion-list');
-        }
         return;
     }
 
@@ -132,21 +128,15 @@ async function loadFAQs() {
         // Cache the FAQs data
         setCachedFAQs(allFaqs);
 
-        // Render FAQs
-        renderFAQs();
-
-        // Hide skeleton and initialize accordion
+        // Hide skeleton
         hideFAQSkeleton();
-        
-        // Initialize accordion component if available
-        if (window.Accordion) {
-            new window.Accordion('.accordion-list');
-        }
+
+        // Render FAQs (which also initializes accordion)
+        renderFAQs();
 
     } catch (error) {
         console.error('Error loading FAQs:', error);
         hideFAQSkeleton();
-        // Keep the hardcoded FAQs as fallback if they exist
     }
 }
 
@@ -168,6 +158,11 @@ function renderFAQs() {
             </div>
         </div>
     `).join('');
+
+    // Initialize accordion after rendering
+    if (window.Accordion) {
+        new window.Accordion('.accordion-list');
+    }
 }
 
 // Show skeletal loading

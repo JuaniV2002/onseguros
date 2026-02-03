@@ -38,11 +38,20 @@ class Accordion {
     }
 }
 
-// Initialize accordion when DOM is ready
+// Expose Accordion class globally
+window.Accordion = Accordion;
+
+// Initialize accordion when DOM is ready (only if not FAQ page)
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        new Accordion('.accordion-list');
+        // Don't auto-initialize on FAQ page - let the FAQ script handle it
+        if (!document.querySelector('.faq-page')) {
+            new Accordion('.accordion-list');
+        }
     });
 } else {
-    new Accordion('.accordion-list');
+    // Don't auto-initialize on FAQ page - let the FAQ script handle it
+    if (!document.querySelector('.faq-page')) {
+        new Accordion('.accordion-list');
+    }
 }

@@ -383,24 +383,23 @@
 
 .faq-skeleton-item {
     background: var(--bg-primary);
-    border: 2px solid var(--border-subtle);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-    box-shadow: var(--shadow-subtle);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
 }
 
 .faq-skeleton-question {
     height: 24px;
     background: linear-gradient(
         90deg,
-        var(--border-subtle) 25%,
-        var(--border-muted) 50%,
-        var(--border-subtle) 75%
+        var(--border-light) 25%,
+        var(--border-medium) 50%,
+        var(--border-light) 75%
     );
     background-size: 200% 100%;
     animation: faq-skeleton-shimmer 1.5s infinite;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     width: 70%;
 }
 
@@ -416,15 +415,15 @@
 /* Dark mode skeletal loading adjustments */
 [data-theme="dark"] .faq-skeleton-item {
     background: var(--bg-secondary);
-    border-color: var(--border-muted);
+    border-color: var(--border-light);
 }
 
 [data-theme="dark"] .faq-skeleton-question {
     background: linear-gradient(
         90deg,
-        var(--border-muted) 25%,
-        var(--border-subtle) 50%,
-        var(--border-muted) 75%
+        var(--border-light) 25%,
+        var(--border-medium) 50%,
+        var(--border-light) 75%
     );
     background-size: 200% 100%;
 }

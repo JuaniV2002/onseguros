@@ -7,20 +7,15 @@ let CONFIG = null;
 let supabaseClient = null;
 let isAuthenticated = false;
 
+// Cache management constants
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const BLOG_CACHE_KEY = 'admin-blog-data';
+const FAQ_CACHE_KEY = 'admin-faq-data';
+
 // Cache clearing utilities
 function clearBlogCache() {
     try {
-        // Clear blog posts list cache
-        sessionStorage.removeItem('blog-posts');
-        
-        // Clear individual blog post caches
-        const keys = Object.keys(sessionStorage);
-        keys.forEach(key => {
-            if (key.startsWith('blog-post-')) {
-                sessionStorage.removeItem(key);
-            }
-        });
-        
+        sessionStorage.removeItem(BLOG_CACHE_KEY);
         console.log('Blog cache cleared');
     } catch (error) {
         console.error('Error clearing blog cache:', error);
@@ -29,10 +24,88 @@ function clearBlogCache() {
 
 function clearFAQCache() {
     try {
-        sessionStorage.removeItem('faq-data');
+        sessionStorage.removeItem(FAQ_CACHE_KEY);
         console.log('FAQ cache cleared');
     } catch (error) {
         console.error('Error clearing FAQ cache:', error);
+    }
+}
+
+/**
+ * Get cached blog posts from sessionStorage
+ */
+function getCachedBlogPosts() {
+    try {
+        const cached = sessionStorage.getItem(BLOG_CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const now = Date.now();
+
+        // Check if cache has expired
+        if (now - timestamp > CACHE_TTL) {
+            sessionStorage.removeItem(BLOG_CACHE_KEY);
+            return null;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error reading blog cache:', error);
+        return null;
+    }
+}
+
+/**
+ * Set blog posts in cache with timestamp
+ */
+function setCachedBlogPosts(posts) {
+    try {
+        const cacheObject = {
+            data: posts,
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem(BLOG_CACHE_KEY, JSON.stringify(cacheObject));
+    } catch (error) {
+        console.error('Error setting blog cache:', error);
+    }
+}
+
+/**
+ * Get cached FAQs from sessionStorage
+ */
+function getCachedAdminFAQs() {
+    try {
+        const cached = sessionStorage.getItem(FAQ_CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const now = Date.now();
+
+        // Check if cache has expired
+        if (now - timestamp > CACHE_TTL) {
+            sessionStorage.removeItem(FAQ_CACHE_KEY);
+            return null;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error reading FAQ cache:', error);
+        return null;
+    }
+}
+
+/**
+ * Set FAQs in cache with timestamp
+ */
+function setCachedAdminFAQs(faqs) {
+    try {
+        const cacheObject = {
+            data: faqs,
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem(FAQ_CACHE_KEY, JSON.stringify(cacheObject));
+    } catch (error) {
+        console.error('Error setting FAQ cache:', error);
     }
 }
 
@@ -399,6 +472,22 @@ function getAuthErrorMessage(error) {
 
 // Load all posts from posts.json
 async function loadPosts() {
+    // Check cache first
+    const cachedPosts = getCachedBlogPosts();
+    if (cachedPosts) {
+        allPosts = cachedPosts;
+        elements.postsLoading.style.display = 'none';
+        
+        if (allPosts.length === 0) {
+            elements.postsEmpty.style.display = 'flex';
+        } else {
+            elements.postsEmpty.style.display = 'none';
+            renderPosts();
+        }
+        return;
+    }
+
+    // Show loading state
     elements.postsLoading.style.display = 'flex';
     elements.postsList.innerHTML = '';
     elements.postsEmpty.style.display = 'none';
@@ -420,6 +509,9 @@ async function loadPosts() {
 
         const data = await response.json();
         allPosts = data.posts || [];
+
+        // Cache the posts
+        setCachedBlogPosts(allPosts);
 
         // Posts are already sorted by publish_date DESC from API
 
@@ -1029,6 +1121,24 @@ elements.postContent.addEventListener('keydown', (e) => {
 
 // Load all FAQs
 async function loadFAQs() {
+    // Check cache first
+    const cachedFaqs = getCachedAdminFAQs();
+    if (cachedFaqs) {
+        allFaqs = cachedFaqs;
+        elements.faqLoading.style.display = 'none';
+        
+        if (allFaqs.length === 0) {
+            elements.faqEmpty.style.display = 'flex';
+            elements.faqList.style.display = 'none';
+        } else {
+            elements.faqEmpty.style.display = 'none';
+            elements.faqList.style.display = 'block';
+            renderFAQsList();
+        }
+        return;
+    }
+
+    // Show loading state
     elements.faqLoading.style.display = 'block';
     elements.faqList.style.display = 'none';
     elements.faqEmpty.style.display = 'none';
@@ -1050,6 +1160,9 @@ async function loadFAQs() {
         }
 
         allFaqs = await response.json();
+
+        // Cache the FAQs
+        setCachedAdminFAQs(allFaqs);
 
         elements.faqLoading.style.display = 'none';
 
