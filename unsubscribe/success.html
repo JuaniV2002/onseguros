@@ -4,62 +4,134 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suscripción cancelada - OnSeguros</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      /* Light Mode Colors */
+      --color-primary: #2e7ef6;
+      --color-background: #fbfbfe;
+      --color-text: #101016;
+      --text-secondary: #6b7280;
+      --border-light: rgba(16, 16, 22, 0.1);
+      --bg-secondary: hsl(240, 60%, 97%);
+      --success-500: #22c55e;
+      --success-bg: #f0fdf4;
+      
+      --transition-normal: 0.3s ease;
+    }
+    
+    [data-theme="dark"] {
+      --color-primary: #4a9eff;
+      --color-background: #0a0a0a;
+      --color-text: #e8e8e8;
+      --text-secondary: #b8b8b8;
+      --border-light: rgba(232, 232, 232, 0.12);
+      --bg-secondary: hsl(0, 0%, 8%);
+      --success-500: #4ade80;
+      --success-bg: #14361e;
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-text);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
     }
+    
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    
     .card {
-      background: #ffffff;
-      border-radius: 16px;
+      background: var(--color-background);
+      border-radius: 24px;
+      border: 1.5px solid var(--border-light);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      max-width: 480px;
+      max-width: 520px;
       width: 100%;
       overflow: hidden;
+      transition: all var(--transition-normal);
     }
+    
+    [data-theme="dark"] .card {
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    
     .header {
-      background: linear-gradient(135deg, #1a365d 0%, #2d5a87 100%);
-      padding: 32px;
-      text-align: center;
-    }
-    .header h1 {
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .header p {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-    }
-    .content {
+      background: linear-gradient(135deg, var(--success-500) 0%, hsl(142, 71%, 35%) 100%);
       padding: 40px 32px;
       text-align: center;
+      position: relative;
     }
+    
+    .logo {
+      width: 180px;
+      height: auto;
+      margin: 0 auto 12px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .header h1 {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    
+    .content {
+      padding: 48px 32px;
+      text-align: center;
+    }
+    
     .icon {
-      font-size: 48px;
-      margin-bottom: 24px;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      opacity: 0.9;
     }
+    
+    [data-theme="dark"] .icon {
+      filter: brightness(1.2);
+    }
+    
     .content h2 {
-      color: #111827;
-      font-size: 20px;
+      color: var(--color-text);
+      font-size: 24px;
+      font-weight: 600;
       margin-bottom: 16px;
     }
+    
     .content p {
-      color: #6b7280;
+      color: var(--text-secondary);
       font-size: 16px;
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
+    
+    .content p:last-of-type {
+      margin-bottom: 32px;
+    }
+    
     .btn {
-      padding: 14px 28px;
-      border-radius: 8px;
+      padding: 14px 32px;
+      border-radius: 50px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
@@ -67,32 +139,57 @@
       text-decoration: none;
       display: inline-block;
       transition: all 0.2s ease;
-      background: linear-gradient(135deg, #1a365d 0%, #2d5a87 100%);
+      background: var(--color-primary);
       color: #ffffff;
+      box-shadow: 0 4px 12px rgba(46, 126, 246, 0.3);
+      font-family: 'Inter', sans-serif;
     }
+    
     .btn:hover {
-      opacity: 0.9;
+      background: hsl(216, 92%, 47%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 126, 246, 0.4);
     }
+    
     .footer {
-      background: #f9fafb;
-      padding: 20px 32px;
+      background: var(--bg-secondary);
+      padding: 24px 32px;
       text-align: center;
-      border-top: 1px solid #e5e7eb;
+      border-top: 1px solid var(--border-light);
     }
+    
     .footer p {
-      color: #9ca3af;
-      font-size: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+    
+    @media (max-width: 640px) {
+      .content {
+        padding: 40px 24px;
+      }
+      
+      .btn {
+        width: 100%;
+      }
     }
   </style>
+  
+  <script>
+    // Dark mode detection
+    (function() {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    })();
+  </script>
 </head>
 <body>
   <div class="card">
     <div class="header">
-      <h1>OnSeguros</h1>
-      <p>Newsletter</p>
+      <img src="../assets/logo.svg" alt="OnSeguros" class="logo">
+      <h1>Newsletter</h1>
     </div>
     <div class="content">
-      <div class="icon">✅</div>
+      <img src="../assets/icons/circle-check.svg" alt="" class="icon" aria-hidden="true">
       <h2>Suscripción cancelada</h2>
       <p>Tu email <strong id="emailDisplay"></strong> fue removido de nuestra lista. Ya no recibirás más emails del newsletter.</p>
       <p style="color: #9ca3af; font-size: 14px;">Si cambiás de opinión, podés volver a suscribirte desde nuestro sitio web.</p>
