@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancelar suscripción - OnSeguros</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      max-width: 480px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a365d 0%, #2d5a87 100%);
+      padding: 32px;
+      text-align: center;
+    }
+    .header h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+    .content {
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .icon {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+    .content h2 {
+      color: #111827;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .content p {
+      color: #6b7280;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .email {
+      background: #f3f4f6;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: #374151;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 32px;
+    }
+    .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: #dc2626;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #b91c1c;
+    }
+    .btn-primary:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    .footer {
+      background: #f9fafb;
+      padding: 20px 32px;
+      text-align: center;
+      border-top: 1px solid #e5e7eb;
+    }
+    .footer p {
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    .error {
+      color: #dc2626;
+      background: #fef2f2;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .loading {
+      display: none;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>OnSeguros</h1>
+      <p>Newsletter</p>
+    </div>
+    <div class="content">
+      <div class="icon">📧</div>
+      <h2>¿Cancelar suscripción?</h2>
+      <p>Estás por cancelar tu suscripción al newsletter de OnSeguros. Ya no recibirás notificaciones de nuevos artículos.</p>
+      <div class="email" id="emailDisplay"></div>
+      <div class="error" id="errorMessage" style="display: none;"></div>
+      <div class="buttons">
+        <button type="button" id="unsubscribeBtn" class="btn btn-primary">
+          Sí, cancelar suscripción
+          <span class="loading">⏳</span>
+        </button>
+        <a href="https://www.onseguros.net" class="btn btn-secondary">Volver al sitio</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p>© 2026 OnSeguros · Río Cuarto, Córdoba, Argentina</p>
+    </div>
+  </div>
+
+  <script>
+    // Get parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
+    const token = params.get('token');
+
+    // Display email
+    if (email) {
+      document.getElementById('emailDisplay').textContent = email;
+    } else {
+      showError('Link de cancelación inválido.');
+    }
+
+    // Handle unsubscribe
+    document.getElementById('unsubscribeBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('unsubscribeBtn');
+      const loading = btn.querySelector('.loading');
+      const errorDiv = document.getElementById('errorMessage');
+      
+      btn.disabled = true;
+      loading.style.display = 'inline';
+      errorDiv.style.display = 'none';
+
+      try {
+        const apiUrl = 'https://tgokvwuiiglioegxgcpu.supabase.co/functions/v1/unsubscribe-api';
+        const response = await fetch(`${apiUrl}?email=${encodeURIComponent(email)}&token=${token}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Redirect to success page (relative path works both locally and in production)
+          window.location.href = `./success.html?email=${encodeURIComponent(email)}`;
+        } else {
+          const data = await response.json();
+          showError(data.error || 'Error al cancelar la suscripción');
+          btn.disabled = false;
+          loading.style.display = 'none';
+        }
+      } catch (error) {
+        showError('Error de conexión. Por favor, intentá de nuevo.');
+        btn.disabled = false;
+        loading.style.display = 'none';
+      }
+    });
+
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

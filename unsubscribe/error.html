@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error - OnSeguros</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      max-width: 480px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a365d 0%, #2d5a87 100%);
+      padding: 32px;
+      text-align: center;
+    }
+    .header h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+    .content {
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .icon {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+    .content h2 {
+      color: #111827;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .content p {
+      color: #6b7280;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s ease;
+      background: linear-gradient(135deg, #1a365d 0%, #2d5a87 100%);
+      color: #ffffff;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .footer {
+      background: #f9fafb;
+      padding: 20px 32px;
+      text-align: center;
+      border-top: 1px solid #e5e7eb;
+    }
+    .footer p {
+      color: #9ca3af;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>OnSeguros</h1>
+      <p>Newsletter</p>
+    </div>
+    <div class="content">
+      <div class="icon">❌</div>
+      <h2 id="errorTitle">Error</h2>
+      <p id="errorMessage">El enlace de cancelación no es válido o ha expirado.</p>
+      <a href="https://www.onseguros.net" class="btn">Volver a OnSeguros</a>
+    </div>
+    <div class="footer">
+      <p>© 2026 OnSeguros · Río Cuarto, Córdoba, Argentina</p>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get('message');
+    if (message) {
+      document.getElementById('errorMessage').textContent = decodeURIComponent(message);
+    }
+  </script>
+</body>
+</html>
