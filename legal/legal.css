@@ -208,7 +208,7 @@
     width: 48px;
     height: 48px;
     border-radius: var(--radius-lg);
-    background: var(--primary-50);
+    background: var(--primary-600);
     color: var(--primary-600);
     display: flex;
     align-items: center;
@@ -216,8 +216,12 @@
     margin-bottom: var(--space-lg);
 }
 
+.legal-card__icon img {
+    filter: brightness(0) invert(1);
+}
+
 [data-theme="dark"] .legal-card__icon {
-    background: var(--primary-900);
+    background: var(--primary-600);
     color: var(--primary-400);
 }
 

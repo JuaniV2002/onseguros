@@ -631,7 +631,6 @@ h6 {
 
 #post-content {
     border-radius: 0 0 var(--radius) var(--radius);
-    font-family: 'Space Grotesk', monospace;
     /* Adjusted to blend code feeling with brand */
     font-size: 14px;
     line-height: 1.7;
@@ -1284,13 +1283,30 @@ h6 {
     transition: all 0.25s ease;
     margin-bottom: 1rem;
     cursor: move;
+    position: relative;
+    overflow: hidden;
 }
 
 .faq-item:hover {
     transform: translateY(-4px);
     box-shadow: var(--effect-raised-hover);
-    border-left-color: var(--primary);
-    border-left-width: 2px;
+    border-color: rgba(var(--color-primary-rgb, 46, 126, 246), 0.1);
+}
+
+.faq-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.faq-item:hover::before {
+    opacity: 1;
 }
 
 .faq-item.dragging {
