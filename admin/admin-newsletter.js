@@ -13,6 +13,23 @@ let subscriberToDelete = null;
 
 // Load all subscribers
 async function loadSubscribers() {
+    // Check cache first
+    const cachedSubscribers = getCachedNewsletterSubscribers();
+    if (cachedSubscribers) {
+        allSubscribers = cachedSubscribers;
+        elements.newsletterLoading.style.display = 'none';
+        
+        if (allSubscribers.length === 0) {
+            elements.newsletterEmpty.style.display = 'flex';
+            elements.newsletterTableContainer.style.display = 'none';
+        } else {
+            elements.newsletterEmpty.style.display = 'none';
+            elements.newsletterTableContainer.style.display = 'block';
+            renderSubscribers();
+        }
+        return;
+    }
+
     // Show loading state
     elements.newsletterLoading.style.display = 'block';
     elements.newsletterTableContainer.style.display = 'none';
@@ -34,6 +51,9 @@ async function loadSubscribers() {
         }
 
         allSubscribers = await response.json();
+
+        // Cache the subscribers
+        setCachedNewsletterSubscribers(allSubscribers);
 
         elements.newsletterLoading.style.display = 'none';
 
@@ -133,6 +153,12 @@ async function deleteSubscriber() {
 
         // Remove from local state
         allSubscribers = allSubscribers.filter(s => s.id !== subscriberToDelete);
+
+        // Clear cache to force refresh on next load
+        clearNewsletterCache();
+
+        // Update cache with new data
+        setCachedNewsletterSubscribers(allSubscribers);
 
         // Hide modal
         elements.deleteModal.style.display = 'none';

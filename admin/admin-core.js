@@ -12,6 +12,7 @@ let isAuthenticated = false;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 const BLOG_CACHE_KEY = 'admin-blog-data';
 const FAQ_CACHE_KEY = 'admin-faq-data';
+const NEWSLETTER_CACHE_KEY = 'admin-newsletter-data';
 
 // Cache clearing utilities
 function clearBlogCache() {
@@ -29,6 +30,15 @@ function clearFAQCache() {
         console.log('FAQ cache cleared');
     } catch (error) {
         console.error('Error clearing FAQ cache:', error);
+    }
+}
+
+function clearNewsletterCache() {
+    try {
+        sessionStorage.removeItem(NEWSLETTER_CACHE_KEY);
+        console.log('Newsletter cache cleared');
+    } catch (error) {
+        console.error('Error clearing newsletter cache:', error);
     }
 }
 
@@ -107,6 +117,45 @@ function setCachedAdminFAQs(faqs) {
         sessionStorage.setItem(FAQ_CACHE_KEY, JSON.stringify(cacheObject));
     } catch (error) {
         console.error('Error setting FAQ cache:', error);
+    }
+}
+
+/**
+ * Get cached newsletter subscribers from sessionStorage
+ */
+function getCachedNewsletterSubscribers() {
+    try {
+        const cached = sessionStorage.getItem(NEWSLETTER_CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const now = Date.now();
+
+        // Check if cache has expired
+        if (now - timestamp > CACHE_TTL) {
+            sessionStorage.removeItem(NEWSLETTER_CACHE_KEY);
+            return null;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error reading newsletter cache:', error);
+        return null;
+    }
+}
+
+/**
+ * Set newsletter subscribers in cache with timestamp
+ */
+function setCachedNewsletterSubscribers(subscribers) {
+    try {
+        const cacheObject = {
+            data: subscribers,
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem(NEWSLETTER_CACHE_KEY, JSON.stringify(cacheObject));
+    } catch (error) {
+        console.error('Error setting newsletter cache:', error);
     }
 }
 
