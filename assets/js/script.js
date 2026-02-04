@@ -720,7 +720,7 @@ class NewsletterFormValidator {
             
             setTimeout(() => {
                 this.successElement.style.display = 'none';
-            }, 5000);
+            }, 3000);
         }
     }
 
@@ -741,23 +741,43 @@ class NewsletterFormValidator {
         submitButton.disabled = true;
 
         try {
-            // Submit form to Formspree
-            const formData = new FormData(this.form);
-            
-            const response = await fetch(this.form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+            // Load Supabase configuration
+            const SUPABASE_URL = window.envConfig.get('SUPABASE_URL');
+            const SUPABASE_ANON_KEY = window.envConfig.get('SUPABASE_ANON_KEY');
 
-            if (!response.ok) {
-                throw new Error('Submission failed');
+            if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+                throw new Error('Supabase configuration not found');
             }
 
-            // Show success message
-            this.showSuccess();
+            // Initialize Supabase client
+            const { createClient } = window.supabase;
+            const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            // Get email from form
+            const email = this.emailField.value.trim();
+
+            // Insert subscriber into database
+            const { error } = await supabaseClient
+                .from('subscribers')
+                .insert([
+                    {
+                        email: email,
+                        subscribed_at: new Date().toISOString(),
+                        confirmed: true
+                    }
+                ]);
+
+            if (error) {
+                // Handle duplicate email gracefully
+                if (error.code === '23505') {
+                    this.showSuccess();
+                } else {
+                    throw error;
+                }
+            } else {
+                // Show success message
+                this.showSuccess();
+            }
             
             // Reset form
             setTimeout(() => {
@@ -765,6 +785,7 @@ class NewsletterFormValidator {
             }, 1000);
             
         } catch (error) {
+            console.error('Newsletter subscription error:', error);
             this.showError('Hubo un error al suscribirte. Por favor intenta nuevamente.');
         } finally {
             // Reset button state

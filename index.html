@@ -82,7 +82,7 @@
         "email": "mariano.pas@onseguros.net",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Constitución 856, Edificio CECIS II (2A)",
+            "streetAddress": "Constitución 852, Edificio CECIS II (2A)",
             "addressLocality": "Río Cuarto",
             "addressRegion": "Córdoba",
             "postalCode": "5800",
@@ -266,7 +266,7 @@
         "image": "https://www.onseguros.net/assets/og-image.png",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Constitución 856, Edificio CECIS II (2A)",
+            "streetAddress": "Constitución 852, Edificio CECIS II (2A)",
             "addressLocality": "Río Cuarto",
             "addressRegion": "Córdoba",
             "postalCode": "5800",
@@ -307,6 +307,9 @@
         }
     }
     </script>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -541,7 +544,7 @@
                             <meta itemprop="telephone" content="+54-9-358-412-2566">
                             <meta itemprop="priceRange" content="$$">
                             <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                                <meta itemprop="streetAddress" content="Constitución 856, Edificio CECIS II (2A)">
+                                <meta itemprop="streetAddress" content="Constitución 852, Edificio CECIS II (2A)">
                                 <meta itemprop="addressLocality" content="Río Cuarto">
                                 <meta itemprop="addressRegion" content="Córdoba">
                                 <meta itemprop="postalCode" content="5800">
@@ -584,7 +587,7 @@
                             <meta itemprop="telephone" content="+54-9-358-412-2566">
                             <meta itemprop="priceRange" content="$$">
                             <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                                <meta itemprop="streetAddress" content="Constitución 856, Edificio CECIS II (2A)">
+                                <meta itemprop="streetAddress" content="Constitución 852, Edificio CECIS II (2A)">
                                 <meta itemprop="addressLocality" content="Río Cuarto">
                                 <meta itemprop="addressRegion" content="Córdoba">
                                 <meta itemprop="postalCode" content="5800">
@@ -627,7 +630,7 @@
                             <meta itemprop="telephone" content="+54-9-358-412-2566">
                             <meta itemprop="priceRange" content="$$">
                             <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                                <meta itemprop="streetAddress" content="Constitución 856, Edificio CECIS II (2A)">
+                                <meta itemprop="streetAddress" content="Constitución 852, Edificio CECIS II (2A)">
                                 <meta itemprop="addressLocality" content="Río Cuarto">
                                 <meta itemprop="addressRegion" content="Córdoba">
                                 <meta itemprop="postalCode" content="5800">
@@ -721,7 +724,7 @@
                                     <a href="https://maps.app.goo.gl/YdnWAYcR1zvXZg6E8" target="_blank"
                                         rel="noopener noreferrer" aria-label="Ver ubicación en Google Maps">
                                         <span class="contact-item__value">
-                                            Constitución 856, Edificio CECIS II (2A)<br>
+                                            Constitución 852, Edificio CECIS II (2A)<br>
                                             Río Cuarto, Córdoba
                                         </span>
                                     </a>
@@ -730,7 +733,7 @@
                         </div>
 
                         <!-- Newsletter Section -->
-                        <!-- <section id="newsletter" class="newsletter" aria-labelledby="newsletter-heading">
+                        <section id="newsletter" class="newsletter" aria-labelledby="newsletter-heading">
                             <div class="newsletter__container">
                                 <div class="newsletter__content">
                                     <h2 id="newsletter-heading" class="newsletter__title">
@@ -758,7 +761,7 @@
                                     </p>
                                 </form>
                             </div>
-                        </section> -->
+                        </section>
                     </div>
 
                     <form class="contact__form" id="cotizacion" action="https://formspree.io/f/xdkyknqv" method="POST"
@@ -849,8 +852,16 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="assets/js/env-config.js"></script>
     <script defer src="components/component-loader.js?v=2"></script>
     <script defer src="assets/js/script.js"></script>
+    <script>
+        // Initialize env config before other scripts use it
+        window.envConfig = new EnvConfig();
+        window.envConfig.load().catch(error => {
+            console.error('Failed to load environment config:', error);
+        });
+    </script>
 </body>
 
 </html>
