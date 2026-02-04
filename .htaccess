@@ -7,19 +7,19 @@
     Header set Expires "0"
 </FilesMatch>
 
-# Aggressive caching for static assets (JS/CSS) with versioning
+# Moderate caching for JS/CSS files (1 hour) - short cache to allow quick updates
 <FilesMatch "\.(js|css)$">
-    Header set Cache-Control "public, max-age=31536000, immutable"
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
 </FilesMatch>
 
-# Moderate caching for HTML files (1 hour)
+# NO CACHE for HTML files - always check for updates
 <FilesMatch "\.(html)$">
-    Header set Cache-Control "public, max-age=3600"
+    Header set Cache-Control "public, max-age=0, must-revalidate"
 </FilesMatch>
 
-# Browser caching for images (1 year)
+# Browser caching for images (30 days)
 <FilesMatch "\.(jpg|jpeg|png|gif|ico|svg|webp)$">
-    Header set Cache-Control "public, max-age=31536000"
+    Header set Cache-Control "public, max-age=2592000"
 </FilesMatch>
 
 # Rewrite rules for friendly URLs (if needed)
