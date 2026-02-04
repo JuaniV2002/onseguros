@@ -226,6 +226,7 @@ function showFAQManagement() {
     elements.postsManagement.style.display = 'none';
     elements.editorContainer.style.display = 'none';
     elements.faqManagement.style.display = 'block';
+    elements.newsletterManagement.style.display = 'none';
     elements.faqEditorContainer.style.display = 'none';
     document.querySelector('.admin-nav').style.display = 'flex';
     currentEditingFaq = null;
@@ -233,6 +234,7 @@ function showFAQManagement() {
     // Update navigation
     elements.showBlogBtn.classList.remove('active');
     elements.showFaqBtn.classList.add('active');
+    elements.showNewsletterBtn.classList.remove('active');
     
     // Reload FAQs to ensure proper state
     loadFAQs();
@@ -505,11 +507,13 @@ function setupNavigation() {
     elements.showBlogBtn.addEventListener('click', () => {
         elements.postsManagement.style.display = 'block';
         elements.faqManagement.style.display = 'none';
+        elements.newsletterManagement.style.display = 'none';
         elements.editorContainer.style.display = 'none';
         elements.faqEditorContainer.style.display = 'none';
         
         elements.showBlogBtn.classList.add('active');
         elements.showFaqBtn.classList.remove('active');
+        elements.showNewsletterBtn.classList.remove('active');
         
         loadPosts();
     });

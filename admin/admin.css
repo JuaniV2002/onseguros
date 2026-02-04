@@ -1459,6 +1459,90 @@ h6 {
     color: #d97706;
 }
 
+/* =====================================================
+   Newsletter Subscribers Table
+   ===================================================== */
+
+.subscribers-table-wrapper {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--effect-raised);
+    overflow: hidden;
+}
+
+.subscribers-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.subscribers-table thead {
+    background: var(--gray-50);
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.subscribers-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.subscribers-table th:first-child {
+    width: 80px;
+    text-align: center;
+}
+
+.subscribers-table th:last-child {
+    width: 140px;
+    text-align: center;
+}
+
+.subscribers-table tbody tr {
+    border-bottom: 1px solid var(--gray-200);
+    transition: background-color 0.2s ease;
+}
+
+.subscribers-table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+.subscribers-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.subscribers-table td {
+    padding: 16px 20px;
+    color: var(--gray-800);
+}
+
+.subscribers-table td:first-child {
+    text-align: center;
+    font-weight: 600;
+    color: var(--gray-500);
+    font-size: 14px;
+}
+
+.subscribers-table td:nth-child(2) {
+    font-weight: 500;
+}
+
+.subscribers-table td:nth-child(3) {
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+.subscribers-table td:last-child {
+    text-align: center;
+}
+
+.newsletter-management {
+    animation: fadeIn 0.3s ease;
+}
+
 /* Responsive adjustments for FAQ */
 @media (max-width: 1200px) {
     .faq-preview {
@@ -1486,5 +1570,23 @@ h6 {
     .faq-item-actions {
         width: 100%;
         justify-content: flex-end;
+    }
+
+    .subscribers-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .subscribers-table {
+        font-size: 14px;
+    }
+
+    .subscribers-table th,
+    .subscribers-table td {
+        padding: 12px 16px;
+    }
+
+    .subscribers-table th:first-child,
+    .subscribers-table td:first-child {
+        display: none;
     }
 }

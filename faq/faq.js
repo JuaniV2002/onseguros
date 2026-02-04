@@ -6,6 +6,65 @@
 let allFaqs = [];
 let currentCategory = 'all';
 
+/**
+ * Generate FAQ Schema structured data (JSON-LD)
+ * @param {Array} faqs - Array of FAQ objects
+ */
+function generateFAQStructuredData(faqs) {
+    console.log('generateFAQStructuredData called with', faqs);
+    if (!faqs || faqs.length === 0) {
+        console.log('No FAQs provided, returning early');
+        return;
+    }
+
+    // Remove existing dynamic FAQ structured data if present
+    const existingScript = document.getElementById('faq-dynamic-schema');
+    if (existingScript) {
+        console.log('Removing existing schema');
+        existingScript.remove();
+    }
+
+    // Create mainEntity array with all FAQs
+    const mainEntity = faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": stripHtmlTags(faq.answer) // Remove any HTML tags from answer
+        }
+    }));
+
+    // Create FAQPage schema
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": mainEntity
+    };
+
+    // Create script element
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-dynamic-schema';
+    script.textContent = JSON.stringify(faqSchema);
+
+    // Inject into head
+    document.head.appendChild(script);
+
+    console.log(`Generated FAQ schema with ${faqs.length} questions`);
+}
+
+/**
+ * Strip HTML tags from text while preserving content
+ * @param {string} html - HTML string to clean
+ * @returns {string} - Plain text without HTML tags
+ */
+function stripHtmlTags(html) {
+    if (!html) return '';
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+}
+
 document.addEventListener('DOMContentLoaded', async function() {
     const faqListContainer = document.getElementById('faq-list');
     const searchInput = document.getElementById('faq-search');
@@ -145,8 +204,12 @@ async function loadFAQs() {
         hideFAQSkeleton();
 
         // Generate JSON-LD structured data
+        console.log('About to call generateFAQStructuredData with', allFaqs.length, 'FAQs');
         if (typeof generateFAQStructuredData === 'function') {
+            console.log('Function exists, calling it now');
             generateFAQStructuredData(allFaqs);
+        } else {
+            console.error('generateFAQStructuredData function not found!');
         }
 
         // Render FAQs (which also initializes accordion)
@@ -320,61 +383,9 @@ function setCachedFAQs(faqs) {
         };
         sessionStorage.setItem(FAQ_CACHE_KEY, JSON.stringify(cacheObject));
     } catch (error) {
- 
-
-/**
- * Generate and inject JSON-LD structured data for FAQPage schema
- * This makes dynamically loaded FAQs visible to search engines
- * @param {Array} faqs - Array of FAQ objects from Supabase
- */
-function generateFAQStructuredData(faqs) {
-    if (!faqs || faqs.length === 0) return;
-
-    // Remove existing dynamic FAQ structured data if present
-    const existingScript = document.getElementById('faq-dynamic-schema');
-    if (existingScript) {
-        existingScript.remove();
-    }
-
-    // Create mainEntity array with all FAQs
-    const mainEntity = faqs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": stripHtmlTags(faq.answer) // Remove any HTML tags from answer
-        }
-    }));
-
-    // Create FAQPage schema
-    const faqSchema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": mainEntity
-    };
-
-    // Create script element
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = 'faq-dynamic-schema';
-    script.textContent = JSON.stringify(faqSchema);
-
-    // Inject into head
-    document.head.appendChild(script);
-
-    console.log(`Generated FAQ schema with ${faqs.length} questions`);
-}
-
-/**
- * Strip HTML tags from text while preserving content
- * @param {string} html - HTML string to clean
- * @returns {string} - Plain text without HTML tags
- */
-function stripHtmlTags(html) {
-    if (!html) return '';
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent || div.innerText || '';
-}       console.error('Error setting FAQ cache:', error);
+        console.error('Error loading FAQs:', error);
+        hideFAQSkeleton();
+        // Show empty state on error
+        renderFAQs();
     }
 }

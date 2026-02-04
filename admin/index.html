@@ -419,10 +419,72 @@ Más contenido aquí..." rows="20"></textarea>
                 </div>
             </div>
 
+            <!-- Newsletter Management Section -->
+            <div class="newsletter-management" id="newsletter-management" style="display: none;">
+                <div class="section-header">
+                    <h2>Suscriptores al Newsletter</h2>
+                </div>
+
+                <div id="newsletter-loading" class="posts-loading" style="display: none;">
+                    <div class="posts-skeleton-list">
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="newsletter-empty" class="posts-empty" style="display: none;">
+                    <p>No hay suscriptores todavía.</p>
+                </div>
+
+                <div id="newsletter-table-container" style="display: none;">
+                    <div class="subscribers-table-wrapper">
+                        <table class="subscribers-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Email</th>
+                                    <th>Fecha de Suscripción</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subscribers-list">
+                                <!-- Subscribers will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- Navigation Toggle -->
             <div class="admin-nav">
                 <button id="show-blog-btn" class="nav-btn active"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Blog</button>
                 <button id="show-faq-btn" class="nav-btn"><img src="../assets/icons/message-circle-question-mark.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> FAQ</button>
+                <button id="show-newsletter-btn" class="nav-btn"><img src="../assets/icons/newspaper.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Newsletter</button>
             </div>
         </main>
 
@@ -499,6 +561,8 @@ Más contenido aquí..." rows="20"></textarea>
     <script src="admin-blog.js?v=1"></script>
     <!-- FAQ module: FAQ CRUD and editor (depends on core, loads after blog) -->
     <script src="admin-faq.js?v=1"></script>
+    <!-- Newsletter module: newsletter subscribers management (depends on core) -->
+    <script src="admin-newsletter.js?v=1"></script>
 </body>
 
 </html>

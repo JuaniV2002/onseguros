@@ -128,7 +128,9 @@ async function loadConfig() {
             GET_FAQ_API_URL: window.envConfig.get('GET_FAQ_API_URL'),
             CREATE_FAQ_API_URL: window.envConfig.get('CREATE_FAQ_API_URL'),
             UPDATE_FAQ_API_URL: window.envConfig.get('UPDATE_FAQ_API_URL'),
-            DELETE_FAQ_API_URL: window.envConfig.get('DELETE_FAQ_API_URL')
+            DELETE_FAQ_API_URL: window.envConfig.get('DELETE_FAQ_API_URL'),
+            GET_SUBSCRIBERS_API_URL: window.envConfig.get('GET_SUBSCRIBERS_API_URL'),
+            DELETE_SUBSCRIBER_API_URL: window.envConfig.get('DELETE_SUBSCRIBER_API_URL')
         };
 
         // Initialize Supabase client after config is loaded
@@ -248,9 +250,17 @@ const elements = {
     faqPreviewCategory: document.getElementById('faq-preview-category'),
     faqPreviewAnswer: document.getElementById('faq-preview-answer'),
 
+    // Newsletter Management
+    newsletterManagement: document.getElementById('newsletter-management'),
+    newsletterLoading: document.getElementById('newsletter-loading'),
+    newsletterEmpty: document.getElementById('newsletter-empty'),
+    newsletterTableContainer: document.getElementById('newsletter-table-container'),
+    subscribersList: document.getElementById('subscribers-list'),
+
     // Navigation
     showBlogBtn: document.getElementById('show-blog-btn'),
-    showFaqBtn: document.getElementById('show-faq-btn')
+    showFaqBtn: document.getElementById('show-faq-btn'),
+    showNewsletterBtn: document.getElementById('show-newsletter-btn')
 };
 
 /* =====================================================

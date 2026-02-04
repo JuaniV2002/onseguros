@@ -3,6 +3,66 @@
  * Handles blog post listing, markdown rendering, and newsletter subscription
  */
 
+/**
+ * Generate Blog Post Schema structured data (JSON-LD)
+ * @param {Object} post - The blog post object
+ */
+function generateBlogPostStructuredData(post) {
+    console.log('generateBlogPostStructuredData called with post:', post);
+    
+    if (!post || !post.title) {
+        console.log('Invalid post data, returning early');
+        return;
+    }
+
+    // Remove existing dynamic blog post structured data if present
+    const existingScript = document.getElementById('blog-post-dynamic-schema');
+    if (existingScript) {
+        console.log('Removing existing blog post schema');
+        existingScript.remove();
+    }
+
+    // Create BlogPosting schema
+    const blogSchema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.description,
+        "datePublished": post.publish_date,
+        "dateModified": post.updated_at || post.publish_date,
+        "author": {
+            "@type": "Person",
+            "name": "Mariano Villanueva",
+            "url": "https://www.onseguros.net/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "OnSeguros",
+            "url": "https://www.onseguros.net/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.onseguros.net/assets/logo.svg"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://www.onseguros.net/blog/post.html?slug=${post.slug}`
+        }
+    };
+
+    // Create script element
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'blog-post-dynamic-schema';
+    script.textContent = JSON.stringify(blogSchema, null, 2);
+
+    // Inject into head at the end
+    document.head.appendChild(script);
+    
+    console.log('Blog post schema injected:', JSON.stringify(blogSchema, null, 2));
+    console.log(`Generated blog post schema for: ${post.title}`);
+}
+
 class Blog {
     constructor() {
         this.apiBaseUrl = window.envConfig.get('API_BASE_URL');
@@ -278,7 +338,15 @@ class Blog {
         // Update page title and meta tags
         document.title = `${post.title} | Blog OnSeguros`;
         this.updateMetaTags(post);
-        this.updateStructuredData(post);
+        
+        // Generate JSON-LD structured data
+        console.log('renderPost: About to call generateBlogPostStructuredData');
+        if (typeof generateBlogPostStructuredData === 'function') {
+            console.log('renderPost: Function exists, calling it now');
+            generateBlogPostStructuredData(post);
+        } else {
+            console.error('renderPost: generateBlogPostStructuredData function not found!');
+        }
 
         // Update breadcrumb
         if (breadcrumbTitle) {
@@ -343,43 +411,6 @@ class Blog {
 
         const twitterDesc = document.querySelector('meta[name="twitter:description"]');
         if (twitterDesc) twitterDesc.content = post.description;
-    }
-
-    /**
-     * Update structured data for SEO
-     */
-    updateStructuredData(post) {
-        const schemaScript = document.getElementById('post-schema');
-        if (!schemaScript) return;
-
-        const schema = {
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "headline": post.title,
-            "description": post.description,
-            "datePublished": post.publish_date,
-            "dateModified": post.updated_at || post.publish_date,
-            "author": {
-                "@type": "Person",
-                "name": "Mariano Villanueva",
-                "url": "https://www.onseguros.net/"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "OnSeguros",
-                "url": "https://www.onseguros.net/",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://www.onseguros.net/assets/logo.svg"
-                }
-            },
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": `https://www.onseguros.net/blog/post.html?slug=${post.slug}`
-            }
-        };
-
-        schemaScript.textContent = JSON.stringify(schema);
     }
 
     /**
