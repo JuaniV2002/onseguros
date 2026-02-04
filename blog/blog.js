@@ -103,7 +103,9 @@ class Blog {
                 return;
             }
 
-            const response = await fetch(`${this.apiBaseUrl}/get-posts-api`);
+            const url = new URL(`${this.apiBaseUrl}/get-posts-api`);
+            url.searchParams.append('t', Date.now());
+            const response = await fetch(url.toString());
 
             if (!response.ok) {
                 throw new Error('Failed to load posts');
@@ -296,7 +298,9 @@ class Blog {
             }
 
             // Load post from API
-            const response = await fetch(`${this.apiBaseUrl}/get-post-api/${slug}`);
+            const url = new URL(`${this.apiBaseUrl}/get-post-api/${slug}`);
+            url.searchParams.append('t', Date.now());
+            const response = await fetch(url.toString());
 
             if (!response.ok) {
                 if (response.status === 404) {
