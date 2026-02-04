@@ -46,7 +46,9 @@ async function loadFAQs() {
             headers['Authorization'] = `Bearer ${session.access_token}`;
         }
 
-        const response = await fetch(CONFIG.GET_FAQS_API_URL, { headers });
+        const url = new URL(CONFIG.GET_FAQS_API_URL);
+        url.searchParams.append('t', Date.now());
+        const response = await fetch(url.toString(), { headers });
         
         if (!response.ok) {
             throw new Error('Failed to fetch FAQs');

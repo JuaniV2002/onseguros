@@ -38,7 +38,9 @@ async function loadSubscribers() {
     try {
         const { data: { session } } = await supabaseClient.auth.getSession();
 
-        const response = await fetch(CONFIG.GET_SUBSCRIBERS_API_URL, {
+        const url = new URL(CONFIG.GET_SUBSCRIBERS_API_URL);
+        url.searchParams.append('t', Date.now());
+        const response = await fetch(url.toString(), {
             headers: {
                 'Authorization': `Bearer ${session?.access_token}`
             }
