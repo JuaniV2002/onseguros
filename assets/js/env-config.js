@@ -19,7 +19,14 @@ class EnvConfig {
         }
 
         try {
-            const response = await fetch('/config.json');
+            // Add timestamp to force fresh fetch and bypass browser cache
+            const response = await fetch(`/config.json?t=${Date.now()}`, {
+                cache: 'no-store',
+                headers: {
+                    'Pragma': 'no-cache',
+                    'Cache-Control': 'no-cache'
+                }
+            });
 
             if (!response.ok) {
                 throw new Error(`Failed to load config.json: ${response.status} ${response.statusText}`);
