@@ -7,8 +7,7 @@ Insurance agency website for OnSeguros, featuring a blog and faq system and admi
 - **Frontend**: Vanilla HTML, CSS, JavaScript (no frameworks)
 - **Styling**: Custom CSS with CSS variables for theming
 - **Backend**: Supabase (PostgreSQL database, authentication)
-- **Blog API**: Netlify Functions
-- **FAQ API**: Supabase Edge Functions
+- **Blog API**, **FAQ API** and **Subscribers API**: Supabase Edge Functions
 - **Hosting**: DreamHost
 - **CDN and DNS record tracking**: Cloudflare
 - **Deployment**: GitHub Actions
@@ -31,6 +30,7 @@ Insurance agency website for OnSeguros, featuring a blog and faq system and admi
 
 - **Blog System**: Markdown-based blog with admin panel
 - **FAQ Section**: Searchable FAQ with admin management
+- **Subscribers Management**: Email subscription handling with admin panel
 - **Responsive Design**: Mobile-first, accessible layout
 - **Dark Mode**: Automatic theme switching based on system preference
 - **SEO Optimized**: Structured data, meta tags, sitemap
