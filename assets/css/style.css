@@ -733,6 +733,11 @@ ol {
     background-color: var(--surface-raised);
 }
 
+[data-theme="dark"] .form-input {
+    color: var(--text-primary);
+    background-color: var(--surface-sunken);
+}
+
 /* Only show red border after form submission attempt */
 .contact__form.submitted .form-input:invalid,
 .contact__form .form-input.error {
