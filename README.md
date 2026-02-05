@@ -87,12 +87,6 @@ Features:
 - Quote form use Formspree for submissions
 - Newsletter subscriptions go directly to Supabase
 
-## Browser Support
-
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- ES6+ JavaScript required
-- CSS Grid and Custom Properties required
-
 ## Dependencies
 
 External libraries loaded via CDN:

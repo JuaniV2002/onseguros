@@ -27,7 +27,13 @@
     color: var(--text-primary);
     margin-bottom: var(--space-md);
 }
-
+.faq-header__description {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
 /* FAQ Search */
 .faq-search {
     position: relative;
