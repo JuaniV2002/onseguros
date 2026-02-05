@@ -69,6 +69,7 @@ class Blog {
         this.blogGrid = document.getElementById('blog-grid');
         this.blogEmpty = document.getElementById('blog-empty');
         this.blogSearch = document.getElementById('blog-search');
+        this.blogSearchContainer = document.getElementById('blog-search-container');
         this.blogNoResults = document.getElementById('blog-no-results');
         this.progressBar = document.getElementById('reading-progress');
         this.isPostPage = window.location.pathname.includes('post.html');
@@ -99,6 +100,10 @@ class Blog {
             const cachedData = this.getCachedData('blog-posts');
             if (cachedData) {
                 this.posts = cachedData;
+                if (this.posts.length === 0) {
+                    this.showEmptyState();
+                    return;
+                }
                 this.renderPosts(this.posts);
                 return;
             }
@@ -234,6 +239,14 @@ class Blog {
     renderPosts(posts) {
         if (!this.blogGrid) return;
 
+        // Show search bar and grid when there are posts
+        if (this.blogSearchContainer) {
+            this.blogSearchContainer.style.display = '';
+        }
+        if (this.blogEmpty) {
+            this.blogEmpty.classList.add('blog-empty--hidden');
+        }
+
         this.blogGrid.innerHTML = posts.map((post, index) => this.createPostCard(post, index === 0)).join('');
     }
 
@@ -268,11 +281,16 @@ class Blog {
      * Show empty state when no posts are available
      */
     showEmptyState() {
-        if (this.blogGrid) {
-            this.blogGrid.style.display = 'none';
+        // Hide search bar and grid
+        if (this.blogSearchContainer) {
+            this.blogSearchContainer.style.display = 'none';
         }
+        if (this.blogGrid) {
+            this.blogGrid.innerHTML = '';
+        }
+        // Show empty state message
         if (this.blogEmpty) {
-            this.blogEmpty.style.display = 'block';
+            this.blogEmpty.classList.remove('blog-empty--hidden');
         }
     }
 
