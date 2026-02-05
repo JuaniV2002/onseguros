@@ -731,37 +731,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Newsletter Section -->
-                        <section id="newsletter" class="newsletter" aria-labelledby="newsletter-heading">
-                            <div class="newsletter__container">
-                                <div class="newsletter__content">
-                                    <h2 id="newsletter-heading" class="newsletter__title">
-                                        Suscribite al Newsletter
-                                    </h2>
-                                    <p class="newsletter__description">
-                                        Recibí cada viernes consejos sobre seguros, novedades del sector y contenido exclusivo directo en tu correo.
-                                    </p>
-                                </div>
-                                <form class="newsletter__form" id="newsletter-form" action="https://formspree.io/f/xdkyknqv" method="POST" aria-labelledby="newsletter-heading">
-                                    <input type="hidden" name="_subject" value="Nueva Suscripción al Newsletter - On Seguros">
-                                    <input type="text" name="_gotcha" style="display:none">
-                                    
-                                    <div class="newsletter__form-group">
-                                        <label class="sr-only" for="newsletter-email">Tu dirección de email</label>
-                                        <input type="email" id="newsletter-email" name="Email Newsletter" class="newsletter__input" placeholder="Tu email" required aria-required="true" aria-describedby="newsletter-consent newsletter-error">
-                                        <button type="submit" class="newsletter__button btn btn--primary">
-                                            Suscribirme
-                                        </button>
-                                    </div>
-                                    <div id="newsletter-error" class="newsletter__error" role="alert" aria-live="polite"></div>
-                                    <div id="newsletter-success" class="newsletter__success" role="status" aria-live="polite" style="display: none;"></div>
-                                    <p class="newsletter__consent" id="newsletter-consent">
-                                        Al suscribirte aceptás nuestra <a href="/legal/privacidad/">política de privacidad</a>. Enviamos emails los viernes.
-                                    </p>
-                                </form>
-                            </div>
-                        </section>
                     </div>
 
                     <form class="contact__form" id="cotizacion" action="https://formspree.io/f/xdkyknqv" method="POST"
@@ -844,6 +813,37 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="newsletter" aria-labelledby="newsletter-heading">
+            <div class="newsletter__container">
+                <div class="newsletter__content">
+                    <h2 id="newsletter-heading" class="newsletter__title">
+                        Suscribite al Newsletter
+                    </h2>
+                    <p class="newsletter__description">
+                        Recibí cada viernes consejos sobre seguros, novedades del sector y contenido exclusivo directo en tu correo.
+                    </p>
+                </div>
+                <form class="newsletter__form" id="newsletter-form" action="https://formspree.io/f/xdkyknqv" method="POST" aria-labelledby="newsletter-heading">
+                    <input type="hidden" name="_subject" value="Nueva Suscripción al Newsletter - On Seguros">
+                    <input type="text" name="_gotcha" style="display:none">
+                    
+                    <div class="newsletter__form-group">
+                        <label class="sr-only" for="newsletter-email">Tu dirección de email</label>
+                        <input type="email" id="newsletter-email" name="Email Newsletter" class="newsletter__input" placeholder="Tu email" required aria-required="true" aria-describedby="newsletter-consent newsletter-error">
+                        <button type="submit" class="newsletter__button btn btn--primary">
+                            Suscribirme
+                        </button>
+                    </div>
+                    <div id="newsletter-error" class="newsletter__error" role="alert" aria-live="polite"></div>
+                    <div id="newsletter-success" class="newsletter__success" role="status" aria-live="polite" style="display: none;"></div>
+                    <p class="newsletter__consent" id="newsletter-consent">
+                        Al suscribirte aceptás nuestra <a href="/legal/privacidad/">política de privacidad</a>. Enviamos emails los viernes.
+                    </p>
+                </form>
             </div>
         </section>
     </main>

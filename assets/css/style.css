@@ -1957,20 +1957,28 @@ ol {
    ========================================================================== */
 
 .newsletter {
-    background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
-    border-radius: var(--radius-xl);
-    padding: var(--space-2xl);
-    border: 1px solid var(--primary-200);
-    margin-top: var(--space-3xl);
+    padding: var(--space-4xl) var(--space-lg);
+    background: linear-gradient(180deg, var(--surface-base) 0%, var(--bg-primary) 100%);
 }
 
 .newsletter__container {
-    max-width: 100%;
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4xl) var(--space-3xl);
+    border: 1px solid var(--primary-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3xl);
+    min-height: 280px;
 }
 
 .newsletter__content {
-    text-align: center;
-    margin-bottom: var(--space-lg);
+    flex: 1;
+    text-align: left;
+    margin-bottom: 0;
 }
 
 .newsletter__title {
@@ -1987,7 +1995,8 @@ ol {
 }
 
 .newsletter__form {
-    width: 100%;
+    flex: 1;
+    max-width: 500px;
 }
 
 .newsletter__form-group {
@@ -2073,7 +2082,7 @@ ol {
     }
 
     .newsletter__title {
-        font-size: var(--font-size-2xl);
+        font-size: var(--font-size-3xl);
     }
 
     .newsletter__description {
@@ -2081,8 +2090,29 @@ ol {
     }
 }
 
+@media (max-width: 639px) {
+    .newsletter {
+        padding: var(--space-3xl) var(--space-md);
+    }
+
+    .newsletter__container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: var(--space-2xl) var(--space-lg);
+        gap: var(--space-2xl);
+    }
+
+    .newsletter__content {
+        text-align: center;
+    }
+
+    .newsletter__form {
+        max-width: 100%;
+    }
+}
+
 /* Dark mode adjustments for newsletter */
-[data-theme="dark"] .newsletter {
+[data-theme="dark"] .newsletter__container {
     background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.1) 0%, rgba(var(--color-primary-rgb), 0.15) 100%);
     border-color: rgba(var(--color-primary-rgb), 0.2);
 }
