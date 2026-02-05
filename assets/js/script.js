@@ -610,21 +610,35 @@ class FormValidator {
     }
 
     async submitForm() {
-        // Submit the form using fetch to FormSubmit
-        const formData = new FormData(this.form);
-        
-        const response = await fetch(this.form.action, {
+        // Get form data
+        const formData = {
+            fullName: this.fields.fullName.value.trim(),
+            email: this.fields.email.value.trim(),
+            phone: this.fields.phone.value.trim(),
+            insuranceType: this.fields.insuranceType.value,
+            message: this.fields.message.value.trim(),
+            consent: this.fields.consent.checked
+        };
+
+        // Get Supabase configuration
+        const QUOTE_API_URL = window.envConfig.get('QUOTE_API_URL');
+        const SUPABASE_ANON_KEY = window.envConfig.get('SUPABASE_ANON_KEY');
+
+        // Submit to Supabase Edge Function
+        const response = await fetch(QUOTE_API_URL, {
             method: 'POST',
-            body: formData,
             headers: {
-                'Accept': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_ANON_KEY,
+            },
+            body: JSON.stringify(formData)
         });
-        
+
         if (!response.ok) {
-            throw new Error('Submission failed');
+            const error = await response.json();
+            throw new Error(error.error || 'Error al enviar la solicitud');
         }
-        
+
         return response;
     }
 

@@ -1477,7 +1477,7 @@ h6 {
 }
 
 .subscribers-table thead {
-    background: var(--gray-50);
+    background: var(--gray-100);
     border-bottom: 2px solid var(--gray-200);
 }
 
@@ -1543,6 +1543,148 @@ h6 {
     animation: fadeIn 0.3s ease;
 }
 
+/* =====================================================
+   Quotes Management Styles
+   ===================================================== */
+.quotes-management {
+    animation: fadeIn 0.3s ease;
+}
+
+.quotes-table-wrapper {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--effect-raised);
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.quotes-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 1000px;
+}
+
+.quotes-table thead {
+    background: var(--gray-100);
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.quotes-table th {
+    padding: 16px 24px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.quotes-table th:first-child {
+    text-align: left;
+}
+
+.quotes-table th:last-child {
+    width: 140px;
+    text-align: center;
+}
+
+.quotes-table tbody tr {
+    border-bottom: 1px solid var(--gray-200);
+    transition: background-color 0.2s ease;
+}
+
+.quotes-table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+.quotes-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.quotes-table td {
+    padding: 16px 24px;
+    color: var(--gray-800);
+}
+
+.quotes-table td:first-child {
+    font-weight: 500;
+}
+
+.quotes-table td:nth-child(2) {
+    font-weight: 500;
+}
+
+.quotes-table td:nth-child(3) a,
+.quotes-table td:nth-child(4) a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.quotes-table td:nth-child(3) a:hover,
+.quotes-table td:nth-child(4) a:hover {
+    text-decoration: underline;
+}
+
+.quotes-table td.quote-message {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--gray-600);
+}
+
+.quotes-table td.quote-message em {
+    color: var(--gray-400);
+    font-style: italic;
+}
+
+.quotes-table td:last-child {
+    text-align: center;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-contacted {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+/* Pagination */
+.quotes-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+}
+
+.quotes-pagination .page-info {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#quotes-pagination-top {
+    border-top: none;
+    border-bottom: 1px solid #e5e7eb;
+}
+
 /* Responsive adjustments for FAQ */
 @media (max-width: 1200px) {
     .faq-preview {
@@ -1588,5 +1730,28 @@ h6 {
     .subscribers-table th:first-child,
     .subscribers-table td:first-child {
         display: none;
+    }
+
+    .quotes-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .quotes-table {
+        font-size: 12px;
+        min-width: 900px;
+    }
+
+    .quotes-table th,
+    .quotes-table td {
+        padding: 12px 10px;
+    }
+
+    .quotes-table td.quote-message {
+        max-width: 150px;
+    }
+
+    .quotes-pagination {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }

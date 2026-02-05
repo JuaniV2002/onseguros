@@ -180,8 +180,6 @@ async function deletePost() {
             throw new Error('No estás autenticado. Por favor, volvé a iniciar sesión.');
         }
 
-        console.log('Deleting with user:', session.user.email);
-
         const response = await fetch(CONFIG.DELETE_API_URL, {
             method: 'POST',
             headers: {

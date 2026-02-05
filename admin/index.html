@@ -480,11 +480,90 @@ Más contenido aquí..." rows="20"></textarea>
                 </div>
             </div>
 
+            <!-- Quotes Management Section -->
+            <div class="quotes-management" id="quotes-management" style="display: none;">
+                <div class="section-header">
+                    <h2>Solicitudes de Cotización</h2>
+                </div>
+
+                <div id="quotes-loading" class="posts-loading" style="display: none;">
+                    <div class="posts-skeleton-list">
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quotes-empty" class="posts-empty" style="display: none;">
+                    <p>Todavía no recibiste solicitudes de cotización.</p>
+                    <p style="margin-top: 0.5rem; color: var(--gray-500); font-size: 0.9rem;">Las solicitudes aparecerán aquí cuando los clientes completen el formulario de cotización en tu sitio web.</p>
+                </div>
+
+                <div id="quotes-table-container" style="display: none;">
+                    <div class="quotes-pagination" id="quotes-pagination-top" style="display: none;">
+                        <button id="quotes-prev-btn" class="btn btn-sm btn-secondary" disabled>← Anterior</button>
+                        <span id="quotes-page-info" class="page-info"></span>
+                        <button id="quotes-next-btn" class="btn btn-sm btn-secondary">Siguiente →</button>
+                    </div>
+
+                    <div class="quotes-table-wrapper">
+                        <table class="quotes-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Tipo de Seguro</th>
+                                    <th>Mensaje</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quotes-list">
+                                <!-- Quotes will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="quotes-pagination" id="quotes-pagination-bottom" style="display: none;">
+                        <button id="quotes-prev-btn-bottom" class="btn btn-sm btn-secondary" disabled>← Anterior</button>
+                        <span id="quotes-page-info-bottom" class="page-info"></span>
+                        <button id="quotes-next-btn-bottom" class="btn btn-sm btn-secondary">Siguiente →</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Navigation Toggle -->
             <div class="admin-nav">
                 <button id="show-blog-btn" class="nav-btn active"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Blog</button>
                 <button id="show-faq-btn" class="nav-btn"><img src="../assets/icons/message-circle-question-mark.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> FAQ</button>
                 <button id="show-newsletter-btn" class="nav-btn"><img src="../assets/icons/newspaper.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Suscriptores</button>
+                <button id="show-quotes-btn" class="nav-btn"><img src="../assets/icons/dollar-sign.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Cotizaciones</button>
                 <button id="show-client-btn" class="nav-btn"><img src="../assets/icons/user-round.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Clientes</button>
             </div>
         </main>
@@ -564,6 +643,8 @@ Más contenido aquí..." rows="20"></textarea>
     <script src="admin-faq.js?v=1"></script>
     <!-- Newsletter module: newsletter subscribers management (depends on core) -->
     <script src="admin-newsletter.js?v=1"></script>
+    <!-- Quotes module: quote requests management (depends on core) -->
+    <script src="admin-quotes.js?v=1"></script>
 </body>
 
 </html>

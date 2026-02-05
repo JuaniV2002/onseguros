@@ -11,9 +11,7 @@ let currentCategory = 'all';
  * @param {Array} faqs - Array of FAQ objects
  */
 function generateFAQStructuredData(faqs) {
-    console.log('generateFAQStructuredData called with', faqs);
     if (!faqs || faqs.length === 0) {
-        console.log('No FAQs provided, returning early');
         return;
     }
 
@@ -204,9 +202,7 @@ async function loadFAQs() {
         hideFAQSkeleton();
 
         // Generate JSON-LD structured data
-        console.log('About to call generateFAQStructuredData with', allFaqs.length, 'FAQs');
         if (typeof generateFAQStructuredData === 'function') {
-            console.log('Function exists, calling it now');
             generateFAQStructuredData(allFaqs);
         } else {
             console.error('generateFAQStructuredData function not found!');

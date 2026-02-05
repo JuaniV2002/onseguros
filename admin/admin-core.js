@@ -18,7 +18,6 @@ const NEWSLETTER_CACHE_KEY = 'admin-newsletter-data';
 function clearBlogCache() {
     try {
         sessionStorage.removeItem(BLOG_CACHE_KEY);
-        console.log('Blog cache cleared');
     } catch (error) {
         console.error('Error clearing blog cache:', error);
     }
@@ -27,7 +26,6 @@ function clearBlogCache() {
 function clearFAQCache() {
     try {
         sessionStorage.removeItem(FAQ_CACHE_KEY);
-        console.log('FAQ cache cleared');
     } catch (error) {
         console.error('Error clearing FAQ cache:', error);
     }
@@ -36,7 +34,6 @@ function clearFAQCache() {
 function clearNewsletterCache() {
     try {
         sessionStorage.removeItem(NEWSLETTER_CACHE_KEY);
-        console.log('Newsletter cache cleared');
     } catch (error) {
         console.error('Error clearing newsletter cache:', error);
     }
@@ -306,10 +303,26 @@ const elements = {
     newsletterTableContainer: document.getElementById('newsletter-table-container'),
     subscribersList: document.getElementById('subscribers-list'),
 
+    // Quotes Management
+    quotesManagement: document.getElementById('quotes-management'),
+    quotesLoading: document.getElementById('quotes-loading'),
+    quotesEmpty: document.getElementById('quotes-empty'),
+    quotesTableContainer: document.getElementById('quotes-table-container'),
+    quotesList: document.getElementById('quotes-list'),
+    quotesPaginationTop: document.getElementById('quotes-pagination-top'),
+    quotesPaginationBottom: document.getElementById('quotes-pagination-bottom'),
+    quotesPrevBtn: document.getElementById('quotes-prev-btn'),
+    quotesNextBtn: document.getElementById('quotes-next-btn'),
+    quotesPageInfo: document.getElementById('quotes-page-info'),
+    quotesPrevBtnBottom: document.getElementById('quotes-prev-btn-bottom'),
+    quotesNextBtnBottom: document.getElementById('quotes-next-btn-bottom'),
+    quotesPageInfoBottom: document.getElementById('quotes-page-info-bottom'),
+
     // Navigation
     showBlogBtn: document.getElementById('show-blog-btn'),
     showFaqBtn: document.getElementById('show-faq-btn'),
-    showNewsletterBtn: document.getElementById('show-newsletter-btn')
+    showNewsletterBtn: document.getElementById('show-newsletter-btn'),
+    showQuotesBtn: document.getElementById('show-quotes-btn')
 };
 
 /* =====================================================
@@ -527,10 +540,11 @@ function formatDate(dateString) {
     // Parse the date string as a local date (not UTC)
     // Handle both "YYYY-MM-DD" and full ISO format
     const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
-    const date = new Date(year, month - 1, day); // month is 0-indexed in Date constructor
     
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('es-AR', options);
+    // Format as DD/MM/YYYY
+    const dayStr = String(day).padStart(2, '0');
+    const monthStr = String(month).padStart(2, '0');
+    return `${dayStr}/${monthStr}/${year}`;
 }
 
 function escapeHtml(text) {
