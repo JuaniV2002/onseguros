@@ -2127,6 +2127,54 @@ ol {
     border-color: var(--border-medium);
 }
 
+/* Compact newsletter variant for blog pages */
+.newsletter--compact {
+    padding: 0;
+}
+
+.newsletter.newsletter--compact {
+    padding: 0;
+}
+
+.newsletter--compact .newsletter__container {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+    gap: var(--space-xl);
+    min-height: auto;
+    max-width: 100%;
+    margin: 0;
+}
+
+.newsletter--compact .newsletter__content {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.newsletter--compact .newsletter__title {
+    font-size: var(--font-size-2xl);
+}
+
+.newsletter--compact .newsletter__description {
+    font-size: var(--font-size-sm);
+}
+
+.newsletter--compact .newsletter__form {
+    max-width: 100%;
+}
+
+@media (min-width: 640px) {
+    .newsletter--compact .newsletter__container {
+        padding: var(--space-3xl) var(--space-2xl);
+    }
+    
+    .newsletter--compact .newsletter__form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
 /* ==========================================================================
    Animations & Loading States
    ========================================================================== */

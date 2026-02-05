@@ -637,6 +637,11 @@ class FormValidator {
             // Announce to screen readers
             this.successMessage.setAttribute('role', 'alert');
             this.successMessage.setAttribute('aria-live', 'polite');
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                this.hideSuccessMessage();
+            }, 3000);
         }
     }
 
