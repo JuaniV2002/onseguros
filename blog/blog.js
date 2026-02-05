@@ -4,6 +4,41 @@
  */
 
 /**
+ * Update Breadcrumb Schema structured data (JSON-LD)
+ * @param {Object} post - The blog post object
+ */
+function updateBreadcrumbSchema(post) {
+    const breadcrumbSchema = document.getElementById('breadcrumb-schema');
+    if (breadcrumbSchema) {
+        const schemaData = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Inicio",
+                    "item": "https://www.onseguros.net/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Blog",
+                    "item": "https://www.onseguros.net/blog/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": post.title,
+                    "item": `https://www.onseguros.net/blog/post.html?slug=${post.slug}`
+                }
+            ]
+        };
+        breadcrumbSchema.textContent = JSON.stringify(schemaData, null, 2);
+    }
+}
+
+/**
  * Generate Blog Post Schema structured data (JSON-LD)
  * @param {Object} post - The blog post object
  */
@@ -368,6 +403,13 @@ class Blog {
             generateBlogPostStructuredData(post);
         } else {
             console.error('renderPost: generateBlogPostStructuredData function not found!');
+        }
+
+        // Update breadcrumb schema
+        if (typeof updateBreadcrumbSchema === 'function') {
+            updateBreadcrumbSchema(post);
+        } else {
+            console.error('renderPost: updateBreadcrumbSchema function not found!');
         }
 
         // Update breadcrumb
