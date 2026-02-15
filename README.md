@@ -42,21 +42,7 @@ Insurance agency website for OnSeguros, featuring a blog and faq system and admi
 
 ### Configuration
 
-The site uses environment variables loaded from `config.json` (gitignored). Required keys:
-
-```json
-{
-  "SUPABASE_URL": "your-supabase-url",
-  "SUPABASE_ANON_KEY": "your-supabase-anon-key",
-  "API_BASE_URL": "https://onseguros-newsletter.netlify.app/api",
-  "GET_POSTS_API_URL": "https://onseguros-newsletter.netlify.app/api/get-posts",
-  "GET_POST_API_URL": "https://onseguros-newsletter.netlify.app/api/get-post",
-  "PUBLISH_API_URL": "https://onseguros-newsletter.netlify.app/api/publish-post",
-  "UPDATE_API_URL": "https://onseguros-newsletter.netlify.app/api/update-post",
-  "DELETE_API_URL": "https://onseguros-newsletter.netlify.app/api/delete-post",
-  "BLOG_BASE_URL": "https://www.onseguros.net/blog/post.html"
-}
-```
+The site uses environment variables loaded from `config.json` (gitignored).
 
 These values are injected during deployment via GitHub Secrets.
 
