@@ -96,6 +96,20 @@
             "@type": "InsuranceAgency",
             "name": "OnSeguros",
             "url": "https://www.onseguros.net/",
+            "telephone": "+54-358-4636363",
+            "priceRange": "$$$",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://www.onseguros.net/assets/logo.svg"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Constitución 852, Edificio CECIS II (2A)",
+                "addressLocality": "Río Cuarto",
+                "addressRegion": "Córdoba",
+                "postalCode": "5800",
+                "addressCountry": "AR"
+            },
             "logo": {
                 "@type": "ImageObject",
                 "url": "https://www.onseguros.net/assets/logo.svg"
@@ -123,37 +137,6 @@
                     "item": "https://www.onseguros.net/blog/"
                 }
             ]
-        },
-    }
-    </script>
-    <!-- Newsletter Subscription Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Blog OnSeguros",
-        "url": "https://www.onseguros.net/blog/",
-        "potentialAction": {
-            "@type": "SubscribeAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "https://www.onseguros.net/blog/#newsletter",
-                "actionPlatform": [
-                    "http://schema.org/DesktopWebPlatform",
-                    "http://schema.org/MobileWebPlatform"
-                ]
-            },
-            "object": {
-                "@type": "Product",
-                "name": "Newsletter OnSeguros",
-                "description": "Recibí cada viernes consejos sobre seguros, novedades del sector y contenido exclusivo directo en tu correo."
-            },
-            "expectsAcceptanceOf": {
-                "@type": "Offer",
-                "category": "Newsletter gratuito",
-                "price": "0",
-                "priceCurrency": "ARS"
-            }
         }
     }
     </script>
