@@ -1107,6 +1107,61 @@ ol {
     }
 }
 
+/* Scroll Indicator */
+.hero__scroll-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-primary);
+    text-decoration: none;
+    border-radius: 50%;
+    border: 2px solid rgba(var(--color-primary-rgb), 0.5);
+    box-shadow: 0 0 14px rgba(var(--color-primary-rgb), 0.2), inset 0 0 8px rgba(var(--color-primary-rgb), 0.05);
+    z-index: 3;
+    opacity: 0;
+    animation:
+        scrollIndicatorFadeIn 0.8s ease-out 2s forwards,
+        scrollBounce 2.2s ease-in-out 2.8s infinite;
+    transition: border-color var(--transition-normal), color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hero__scroll-indicator:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 22px rgba(var(--color-primary-rgb), 0.4);
+}
+
+@keyframes scrollIndicatorFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-6px);
+    }
+    to {
+        opacity: 0.85;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes scrollBounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(7px);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero__scroll-indicator {
+        display: none;
+    }
+}
+
 /* ==========================================================================
    Hero Section End
    ========================================================================== */
