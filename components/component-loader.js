@@ -96,6 +96,10 @@ function initComponents() {
         basePath = '../components/';
     } else if (currentPath.includes('/admin')) {
         basePath = '../components/';
+    } else if (currentPath.includes('/cotizar') || currentPath.includes('/agente')) {
+        basePath = '../components/';
+    } else if (currentPath.includes('/unsubscribe')) {
+        basePath = '../components/';
     }
     
     // Load all components

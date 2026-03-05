@@ -475,3 +475,39 @@
     background-size: 200% 100%;
 }
 
+/* Skeleton state for search bar */
+.faq-search.is-loading img {
+    opacity: 0;
+}
+
+.faq-search.is-loading .faq-search__input {
+    color: transparent;
+    border-color: transparent;
+    pointer-events: none;
+    caret-color: transparent;
+    background: linear-gradient(
+        90deg,
+        var(--border-light) 25%,
+        var(--border-medium) 50%,
+        var(--border-light) 75%
+    );
+    background-size: 200% 100%;
+    animation: faq-skeleton-shimmer 1.5s infinite;
+}
+
+/* Skeleton state for category chips */
+.faq-categories.is-loading .faq-category-chip {
+    color: transparent;
+    border-color: transparent;
+    pointer-events: none;
+    box-shadow: none;
+    background: linear-gradient(
+        90deg,
+        var(--border-light) 25%,
+        var(--border-medium) 50%,
+        var(--border-light) 75%
+    );
+    background-size: 200% 100%;
+    animation: faq-skeleton-shimmer 1.5s infinite;
+}
+

@@ -876,6 +876,32 @@
     }
 }
 
+/* Skeleton state for search bar */
+.blog-search.is-loading img {
+    opacity: 0;
+}
+
+.blog-search.is-loading .blog-search__input {
+    color: transparent;
+    border-color: transparent;
+    pointer-events: none;
+    caret-color: transparent;
+    background: linear-gradient(90deg,
+            var(--bg-tertiary) 25%,
+            var(--border-light) 50%,
+            var(--bg-tertiary) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+[data-theme="dark"] .blog-search.is-loading .blog-search__input {
+    background: linear-gradient(90deg,
+            var(--surface-overlay) 25%,
+            var(--surface-raised) 50%,
+            var(--surface-overlay) 75%);
+    background-size: 200% 100%;
+}
+
 /* Skeleton Card (Blog Grid) */
 .skeleton-card {
     background: var(--surface-raised);

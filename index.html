@@ -11,6 +11,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnSeguros | Seguros Integrales, ART y Agrícolas - Mariano Villanueva</title>
+    <meta name="title" content="OnSeguros | Seguros Integrales, ART y Agrícolas - Mariano Villanueva">
     <meta name="description"
         content="Seguros patrimoniales, ART y granizo. 25+ años de experiencia. Asesoramiento personalizado con aseguradoras de trayectoria en Argentina.">
     <meta name="keywords"
@@ -19,16 +21,16 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://www.onseguros.net/">
 
-    <!-- DNS Prefetch & Preconnect for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-
     <!-- Favicon -->
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="assets/icons/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+    <!-- DNS Prefetch & Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:locale" content="es_AR">
@@ -50,8 +52,6 @@
         content="Asesoramiento personalizado en seguros patrimoniales, ART y agrícolas, con más de 25 años de experiencia y respaldo confiable.">
     <meta name="twitter:image" content="https://www.onseguros.net/assets/og-image.png">
     <meta name="twitter:image:alt" content="OnSeguros - Seguros Integrales, ART y Agrícolas">
-
-    <title>OnSeguros | Seguros Integrales, ART y Agrícolas - Mariano Villanueva</title>
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">
@@ -211,14 +211,21 @@
                 "@type": "SiteNavigationElement",
                 "position": 2,
                 "name": "Preguntas Frecuentes",
-                "description": "Respuestas a dudas comunes",
+                "description": "Respuestas a dudas comunes sobre seguros",
                 "url": "https://www.onseguros.net/faq/"
             },
             {
                 "@type": "SiteNavigationElement",
                 "position": 3,
+                "name": "Agente IA",
+                "description": "Cotizá tu seguro con inteligencia artificial",
+                "url": "https://www.onseguros.net/agente/"
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "position": 4,
                 "name": "Contacto",
-                "description": "Cotizá tu seguro",
+                "description": "Contactá a un asesor de seguros",
                 "url": "https://www.onseguros.net/#contacto"
             }
         ]
@@ -337,9 +344,9 @@
                         aseguradoras de trayectoria en Argentina.
                     </p>
                     <div class="hero__actions" role="group" aria-label="Acciones principales">
-                        <a href="#cotizacion" class="btn btn--primary btn--hero"
-                            aria-label="Solicitar cotización de seguro agrícola">
-                            <span class="btn__text">Cotizar Seguro</span>
+                        <a href="/agente/" class="btn btn--primary btn--hero"
+                            aria-label="Cotizar con nuestro Agente IA">
+                            <span class="btn__text">Hablar con el Agente IA</span>
                             <span class="btn__icon">→</span>
                         </a>
                         <a href="#servicios" class="btn btn--secondary btn--hero"
@@ -479,8 +486,7 @@
                             Tu comercio, hogar y edificio protegido con diferentes y completas coberturas. Activá
                             tranquilidad.
                         </p>
-                        <a href="#contacto" class="service-card__link"
-                            data-insurance-type="Seguros Integrales (Hogar/Comercio/Edificio)"
+                        <a href="/agente/" class="service-card__link"
                             aria-label="Solicitar cotización de seguros integrales">
                             Cotizar Ahora
                             <span aria-hidden="true">→</span>
@@ -501,7 +507,7 @@
                         <p class="service-card__description" itemprop="description">
                             Tu empresa y tus empleados son lo más valioso. Aseguralos en las mejores compañías.
                         </p>
-                        <a href="#contacto" class="service-card__link" data-insurance-type="ART y Vida Colectivo"
+                        <a href="/agente/" class="service-card__link"
                             aria-label="Obtener información sobre ART y Vida Colectivo">
                             Cotizar Ahora
                             <span aria-hidden="true">→</span>
@@ -519,8 +525,7 @@
                         <p class="service-card__description" itemprop="description">
                             Protegé tus cosechas contra granizo, incendios, resiembra y heladas. Coberturas a medida.
                         </p>
-                        <a href="#contacto" class="service-card__link"
-                            data-insurance-type="Seguros Agrícolas (Granizo/Multirriesgo)"
+                        <a href="/agente/" class="service-card__link"
                             aria-label="Obtener información sobre seguros agrícolas">
                             Cotizar Ahora
                             <span aria-hidden="true">→</span>
@@ -680,11 +685,10 @@
             <div class="contact__container">
                 <div class="contact__content">
                     <div class="contact__info">
-                        <h2 id="contact-heading" class="contact__title">Cotizá tu Seguro</h2>
+                        <h2 id="contact-heading" class="contact__title">Contacto</h2>
                         <p class="contact__description">
-                            ¿Necesitás protección para tu hogar, empresa o campo? Mariano Villanueva, productor asesor
-                            habilitado, te brinda asesoramiento personalizado en seguros patrimoniales, ART y agrícolas.
-                            Cotización gratuita y sin compromiso.
+                            Mariano Villanueva, productor asesor habilitado, te brinda asesoramiento personalizado en
+                            seguros patrimoniales, ART y agrícolas. Más de 25 años de experiencia en Río Cuarto y zona.
                         </p>
 
                         <div class="contact__details">
@@ -744,80 +748,27 @@
                         </div>
                     </div>
 
-                    <form class="contact__form" id="cotizacion" method="POST"
-                        aria-labelledby="form-heading" novalidate>
-                        <h3 id="form-heading" class="contact__form-title">Solicitá tu Cotización</h3>
-                        <div class="form-group">
-                            <label for="full-name" class="form-label">Nombre Completo <abbr
-                                    title="campo requerido">*</abbr></label>
-                            <input type="text" id="full-name" name="Nombre Completo" class="form-input" required
-                                aria-required="true" aria-describedby="name-error" autocomplete="name"
-                                placeholder="Ej: Juan Pérez">
-                            <div id="name-error" class="form-error" role="alert" aria-live="polite"></div>
+                    <div class="oni-cta-card" aria-label="Cotizá con el Agente IA Oni">
+                        <div class="oni-cta-card__badge">
+                            <span class="oni-cta-card__avatar" aria-hidden="true">O</span>
+                            <span class="oni-cta-card__badge-text">Agente IA · OnSeguros</span>
                         </div>
-
-                        <div class="form-group">
-                            <label for="email" class="form-label">Dirección de Email <abbr
-                                    title="campo requerido">*</abbr></label>
-                            <input type="email" id="email" name="Email" class="form-input" required aria-required="true"
-                                aria-describedby="email-error" autocomplete="email" placeholder="ejemplo@correo.com">
-                            <div id="email-error" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Número de Teléfono <abbr
-                                    title="campo requerido">*</abbr></label>
-                            <input type="tel" id="phone" name="Teléfono" class="form-input" required
-                                aria-required="true" aria-describedby="phone-error" autocomplete="tel"
-                                placeholder="Ej: 358 412 2566">
-                            <div id="phone-error" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="insurance-type" class="form-label">Tipo de Seguro <abbr
-                                    title="campo requerido">*</abbr></label>
-                            <select id="insurance-type" name="Tipo de Seguro" class="form-input" required
-                                aria-required="true" aria-describedby="type-error">
-                                <option value="">Seleccioná el tipo de seguro</option>
-                                <option value="Seguros Integrales (Hogar/Comercio/Edificio)">Seguros Integrales
-                                    (Hogar/Comercio/Edificio)</option>
-                                <option value="ART y Vida Colectivo">ART y Vida Colectivo</option>
-                                <option value="Seguros Agrícolas (Granizo/Multirriesgo)">Seguros Agrícolas
-                                    (Granizo/Multirriesgo)</option>
-                                <option value="Seguros de Vehículos">Seguros de Vehículos</option>
-                                <option value="Otras Coberturas">Otras Coberturas</option>
-                            </select>
-                            <div id="type-error" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message" class="form-label">Mensaje <span
-                                    class="form-optional">(Opcional)</span></label>
-                            <textarea id="message" name="Mensaje" class="form-input form-textarea" rows="4"
-                                aria-describedby="message-help"
-                                placeholder="Contanos qué necesitás asegurar y cuáles son tus prioridades. Cuanto más detalles, mejor podemos asesorarte."></textarea>
-                            <div id="message-help" class="sr-only">Campo opcional para proporcionar detalles adicionales
-                                sobre tus necesidades de cobertura</div>
-                        </div>
-
-                        <div class="form-group form-group--checkbox">
-                            <input type="checkbox" id="consent" name="consent" class="form-checkbox" required
-                                aria-required="true" aria-describedby="consent-error consent-label">
-                            <label for="consent" class="form-checkbox-label" id="consent-label">
-                                Acepto recibir comunicaciones de OnSeguros sobre mi solicitud de cotización <abbr
-                                    title="campo requerido">*</abbr>
-                            </label>
-                            <div id="consent-error" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-
-                        <button type="submit" class="btn btn--primary btn--full-width"
-                            aria-label="Enviar formulario de cotización">
-                            Obtener Mi Cotización Gratuita
-                        </button>
-
-                        <div class="form-success" id="form-success" role="status" aria-live="polite" aria-atomic="true">
-                        </div>
-                    </form>
+                        <h3 class="oni-cta-card__title">Cotizá con Oni en minutos</h3>
+                        <p class="oni-cta-card__description">
+                            Chateá con nuestro Agente IA, respondé unas preguntas simples sobre lo que querés asegurar
+                            y Mariano te contacta con la cotización personalizada.
+                        </p>
+                        <ul class="oni-cta-card__features" aria-label="Características del Agente IA">
+                            <li>Te guía paso a paso según el tipo de seguro</li>
+                            <li>Recopila exactamente lo que Mariano necesita para cotizar</li>
+                            <li>Disponible las 24 horas, sin esperas</li>
+                        </ul>
+                        <a href="/agente/" class="oni-cta-card__btn" aria-label="Ir al Agente IA Oni para cotizar">
+                            Hablar con Oni
+                            <span aria-hidden="true">→</span>
+                        </a>
+                        <p class="oni-cta-card__disclaimer">Gratis · Sin compromiso · Respuesta rápida</p>
+                    </div>
                 </div>
             </div>
         </section>

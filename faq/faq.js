@@ -234,12 +234,16 @@ function renderFAQs() {
         // Hide search and categories
         if (faqSearch) faqSearch.style.display = 'none';
         if (faqCategories) faqCategories.style.display = 'none';
+        if (faqSearch) faqSearch.classList.remove('is-loading');
+        if (faqCategories) faqCategories.classList.remove('is-loading');
         return;
     }
 
     // Show search and categories if FAQs are available
     if (faqSearch) faqSearch.style.display = 'block';
     if (faqCategories) faqCategories.style.display = 'flex';
+    if (faqSearch) faqSearch.classList.remove('is-loading');
+    if (faqCategories) faqCategories.classList.remove('is-loading');
     // Hide empty state if visible
     hideEmptyState();
 

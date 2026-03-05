@@ -192,22 +192,45 @@
     }
 
     .nav__link--cta {
-        background-color: var(--primary-600);
+        background: linear-gradient(135deg, hsl(215, 95%, 68%) 0%, var(--color-primary) 55%, hsl(216, 88%, 46%) 100%);
         color: #ffffff;
         border-radius: 50px;
         padding: var(--space-sm) var(--space-xl);
         box-shadow: var(--btn-shadow);
+        overflow: hidden;
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+    }
+
+    .nav__link--cta::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            105deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.32) 50%,
+            transparent 65%
+        );
+        transform: translateX(-120%);
+        transition: transform 0.5s ease;
+        border-radius: inherit;
+        pointer-events: none;
     }
 
     .nav__link--cta:hover {
-        background-color: var(--primary-700);
         color: #ffffff;
-        transform: translateY(-2px);
+        filter: brightness(0.9) saturate(1.15);
+        transform: translateY(-2px) scale(1.02);
         box-shadow: var(--btn-shadow-hover);
     }
 
+    .nav__link--cta:hover::after {
+        transform: translateX(120%);
+    }
+
     .nav__link--cta:active {
-        transform: translateY(0);
+        filter: brightness(0.85);
+        transform: translateY(0) scale(1);
         box-shadow: var(--btn-shadow-active);
     }
 
@@ -330,7 +353,7 @@
         }
 
         .nav__logo-img {
-            height: 42px;
+            height: 50px;
             width: auto;
         }
     }
@@ -365,7 +388,7 @@
                     <a href="/faq/" class="nav__link" role="menuitem">Preguntas frecuentes</a>
                 </li>
                 <li class="nav__item nav__item--cta" role="none">
-                    <a href="/#cotizacion" class="nav__link nav__link--cta" role="menuitem">Cotizar</a>
+                    <a href="/agente/" class="nav__link nav__link--cta" role="menuitem">Hablar con el Agente IA</a>
                 </li>
             </ul>
         </div>

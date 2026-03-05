@@ -277,6 +277,7 @@ class Blog {
         // Show search bar and grid when there are posts
         if (this.blogSearchContainer) {
             this.blogSearchContainer.style.display = '';
+            this.blogSearchContainer.classList.remove('is-loading');
         }
         if (this.blogEmpty) {
             this.blogEmpty.classList.add('blog-empty--hidden');
@@ -319,6 +320,7 @@ class Blog {
         // Hide search bar and grid
         if (this.blogSearchContainer) {
             this.blogSearchContainer.style.display = 'none';
+            this.blogSearchContainer.classList.remove('is-loading');
         }
         if (this.blogGrid) {
             this.blogGrid.innerHTML = '';
