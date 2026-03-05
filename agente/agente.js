@@ -38,7 +38,7 @@ async function init() {
 
     // Welcome message — no API call needed
     appendAgentMessage(
-        '¡Hola! Soy **Oni**, tu Agente IA de OnSeguros 👋\n\n' +
+        '¡Hola! Soy **Oni**, tu Agente de IA de OnSeguros 👋\n\n' +
         '¿Qué tipo de seguro necesitás cotizar hoy?'
     );
 }
@@ -255,7 +255,7 @@ async function handleContactSubmit() {
             fullName: name,
             phone: phone || '',
             email: email || '',
-            insuranceType: 'Consulta via Agente IA',
+            insuranceType: 'Consulta via Agente de IA',
             message: extractSummaryBlock(agentSummaryText),
             consent: true,
         };
