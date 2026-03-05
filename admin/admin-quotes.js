@@ -161,22 +161,20 @@ function renderQuotes() {
             ? '<span class="status-badge status-contacted">Contactado</span>'
             : '<span class="status-badge status-pending">Pendiente</span>';
         
-        const insuranceTypeNames = {
-            'integrales': 'Integrales',
-            'art-vida': 'ART y Vida',
-            'agricolas': 'Agrícolas',
-            'vehiculos': 'Vehículos',
-            'otras': 'Otras'
-        };
+        const emailCell = quote.email
+            ? `<a href="mailto:${escapeHtml(quote.email)}">${escapeHtml(quote.email)}</a>`
+            : '<em style="color:var(--gray-400)">—</em>';
         
-        const insuranceTypeName = insuranceTypeNames[quote.insurance_type] || quote.insurance_type;
+        const phoneCell = quote.phone
+            ? `<a href="tel:${escapeHtml(quote.phone)}">${escapeHtml(quote.phone)}</a>`
+            : '<em style="color:var(--gray-400)">—</em>';
         
         return `
             <tr>
                 <td>${escapeHtml(quote.full_name)}</td>
-                <td><a href="mailto:${escapeHtml(quote.email)}">${escapeHtml(quote.email)}</a></td>
-                <td><a href="tel:${escapeHtml(quote.phone)}">${escapeHtml(quote.phone)}</a></td>
-                <td>${escapeHtml(insuranceTypeName)}</td>
+                <td>${emailCell}</td>
+                <td>${phoneCell}</td>
+                <td><span class="status-badge" style="background:#ede9fe;color:#6d28d9;">🤖 Agente Oni</span></td>
                 <td class="quote-message">${quote.message ? escapeHtml(quote.message) : '<em>Sin mensaje</em>'}</td>
                 <td>${formatDate(quote.created_at)}</td>
                 <td>${statusBadge}</td>
