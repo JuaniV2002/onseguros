@@ -63,7 +63,7 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="agente.css">
 
-    <!-- Structured Data: Breadcrumb + WebPage -->
+    <!-- Structured Data: Breadcrumb + WebPage + WebApplication -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -88,12 +88,14 @@
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
+        "@id": "https://www.onseguros.net/agente/#webpage",
         "name": "Agente de IA: Asistente Virtual de Seguros | OnSeguros",
         "description": "Chateá con Oni, nuestro Agente de IA de seguros. Cotizá en minutos, gratis y sin compromiso.",
         "url": "https://www.onseguros.net/agente/",
         "inLanguage": "es-AR",
         "isPartOf": {
             "@type": "WebSite",
+            "@id": "https://www.onseguros.net/#website",
             "name": "OnSeguros",
             "url": "https://www.onseguros.net/"
         },
@@ -113,6 +115,40 @@
                     "item": "https://www.onseguros.net/agente/"
                 }
             ]
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "@id": "https://www.onseguros.net/agente/#app",
+        "name": "Oni - Agente de IA para Cotización de Seguros",
+        "alternateName": "Oni Agente Virtual OnSeguros",
+        "description": "Oni es el asistente virtual de OnSeguros. Chateá para cotizar seguros de auto, hogar, ART, agrícola y vida en minutos. Gratuito, instantáneo y sin compromiso.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "url": "https://www.onseguros.net/agente/",
+        "inLanguage": "es-AR",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "ARS",
+            "description": "Cotización gratuita y sin compromiso"
+        },
+        "featureList": [
+            "Cotización instantánea de seguros",
+            "Seguros de auto y vehículos",
+            "Seguros de hogar y comercio",
+            "ART y Vida Colectivo",
+            "Seguros agrícolas y granizo",
+            "Atención en español"
+        ],
+        "provider": {
+            "@type": "InsuranceAgency",
+            "@id": "https://www.onseguros.net/#organization",
+            "name": "OnSeguros",
+            "url": "https://www.onseguros.net/"
         }
     }
     </script>

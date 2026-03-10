@@ -6,5 +6,7 @@ Allow: /
 
 # Archivos y directorios a excluir del crawling
 Disallow: /admin/
+Disallow: /unsubscribe/
+
 # Sitemap
 Sitemap: https://www.onseguros.net/sitemap.xml
