@@ -230,6 +230,7 @@ function showFAQManagement() {
     elements.faqManagement.style.display = 'block';
     elements.newsletterManagement.style.display = 'none';
     elements.quotesManagement.style.display = 'none';
+    elements.siniestrosManagement.style.display = 'none';
     elements.faqEditorContainer.style.display = 'none';
     document.querySelector('.admin-nav').style.display = 'flex';
     currentEditingFaq = null;
@@ -239,6 +240,7 @@ function showFAQManagement() {
     elements.showFaqBtn.classList.add('active');
     elements.showNewsletterBtn.classList.remove('active');
     elements.showQuotesBtn.classList.remove('active');
+    if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
     
     // Reload FAQs to ensure proper state
     loadFAQs();
@@ -511,6 +513,7 @@ function setupNavigation() {
         elements.faqManagement.style.display = 'none';
         elements.newsletterManagement.style.display = 'none';
         elements.quotesManagement.style.display = 'none';
+        elements.siniestrosManagement.style.display = 'none';
         elements.editorContainer.style.display = 'none';
         elements.faqEditorContainer.style.display = 'none';
         
@@ -518,6 +521,7 @@ function setupNavigation() {
         elements.showFaqBtn.classList.remove('active');
         elements.showNewsletterBtn.classList.remove('active');
         elements.showQuotesBtn.classList.remove('active');
+        if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
         
         loadPosts();
     });
@@ -526,6 +530,11 @@ function setupNavigation() {
         showFAQManagement();
         loadFAQs();
     });
+
+    const refreshFaqBtn = document.getElementById('refresh-faq-btn');
+    if (refreshFaqBtn) {
+        refreshFaqBtn.addEventListener('click', () => loadFAQs());
+    }
 
     // Quotes button navigation will be handled by admin-quotes.js
     // Newsletter button navigation will be handled by admin-newsletter.js

@@ -493,6 +493,11 @@ if (elements.cancelEditBtn) {
     elements.cancelEditBtn.addEventListener('click', cancelEdit);
 }
 
+const refreshBlogBtn = document.getElementById('refresh-blog-btn');
+if (refreshBlogBtn) {
+    refreshBlogBtn.addEventListener('click', () => loadPosts());
+}
+
 // Handle "new post" triggers from empty state
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('new-post-trigger')) {

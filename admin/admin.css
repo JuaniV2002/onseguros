@@ -184,6 +184,12 @@ h6 {
     border-color: #fecaca;
 }
 
+#close-siniestro-modal-btn:hover:not(:disabled) {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border-color: #fecaca;
+}
+
 .spinner {
     width: 20px;
     height: 20px;
@@ -967,6 +973,137 @@ h6 {
     display: flex;
     gap: 12px;
     justify-content: center;
+}
+
+/* ==========================================================================
+   Siniestro Detail Modal
+   ========================================================================== */
+
+.siniestro-detail-content {
+    max-width: 680px !important;
+    text-align: left !important;
+    padding: 32px !important;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.siniestro-detail-content h2 {
+    margin-bottom: 24px;
+}
+
+.modal-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.modal-header-row h2 {
+    margin-bottom: 0 !important;
+}
+
+.sd-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.sd-section {
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    overflow: hidden;
+}
+
+.sd-section--full {
+    grid-column: 1 / -1;
+}
+
+.sd-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-400);
+    margin-bottom: 12px;
+}
+
+.sd-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 8px;
+    margin: 0 -8px;
+    border-radius: 4px;
+}
+
+.sd-field:nth-child(even) {
+    background: rgba(0, 0, 0, 0.035);
+}
+
+.sd-label {
+    font-size: 13px;
+    color: var(--gray-500);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.sd-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-800);
+    text-align: right;
+    word-break: break-word;
+}
+
+.sd-descripcion {
+    font-size: 14px;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.sd-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.sd-photo-grid a {
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--gray-200);
+    transition: border-color 0.15s, transform 0.15s;
+}
+
+.sd-photo-grid a:hover {
+    border-color: var(--primary-500, #3b82f6);
+    transform: scale(1.03);
+}
+
+.sd-photo-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sd-meta {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--gray-400);
+    padding-top: 4px;
+}
+
+@media (max-width: 520px) {
+    .sd-sections {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ==========================================================================

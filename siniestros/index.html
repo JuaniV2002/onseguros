@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+
+<head>
+    <script>
+        // Prevent flash of wrong theme - runs before CSS loads
+        (function () {
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denunciar Siniestro: Reportá tu accidente online | OnSeguros</title>
+    <meta name="title" content="Denunciar Siniestro | OnSeguros">
+    <meta name="description" content="Reportá tu siniestro online. Completá el formulario y Mariano Villanueva te contactará para guiarte en el proceso de reclamo. OnSeguros Argentina.">
+    <meta name="author" content="Mariano Villanueva - OnSeguros">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://www.onseguros.net/siniestros/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="../assets/icons/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+
+    <!-- DNS Prefetch & Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="OnSeguros">
+    <meta property="og:title" content="Denunciar Siniestro | OnSeguros">
+    <meta property="og:description" content="Reportá tu siniestro online. Completá el formulario y Mariano Villanueva te contactará para guiarte en el proceso de reclamo.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.onseguros.net/siniestros/">
+    <meta property="og:image" content="https://www.onseguros.net/assets/og-image.png">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="../assets/css/style.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+
+    <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="siniestros.css">
+
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "https://www.onseguros.net/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Denunciar Siniestro",
+                "item": "https://www.onseguros.net/siniestros/"
+            }
+        ]
+    }
+    </script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+    <!-- Header Component -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="siniestro-page" id="main-content">
+        <div class="siniestro-container">
+
+            <!-- Page Header -->
+            <header class="siniestro-header">
+                <div class="siniestro-header__eyebrow">Accidente de tránsito</div>
+                <h1 class="siniestro-header__title">Denunciá tu Siniestro</h1>
+                <p class="siniestro-header__description">
+                    Completá el formulario con los detalles del hecho y Mariano te contactará a la brevedad para guiarte en el proceso de reclamo.
+                </p>
+            </header>
+
+            <!-- Emergency Alert -->
+            <div class="siniestro-alert" role="note">
+                <img src="../assets/icons/info.svg" alt="" width="20" height="20" aria-hidden="true">
+                <div>
+                    <strong>¿Necesitás atención urgente?</strong>
+                    Contactá a Mariano directamente por
+                    <a href="https://wa.me/543584122566" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">WhatsApp</a>
+                    o al <a href="tel:+543584122566" aria-label="Llamar al teléfono">+54 9 358 412 2566</a>.
+                </div>
+            </div>
+
+            <!-- Accident Report Form -->
+            <form
+                class="siniestro-form"
+                id="siniestro-form"
+                novalidate
+                aria-label="Formulario de denuncia de accidente de tránsito">
+
+                <!-- =============================================
+                     SECCIÓN 1: TUS DATOS
+                ============================================== -->
+                <section class="siniestro-section" aria-labelledby="section-1-title">
+                    <div class="siniestro-section__header">
+                        <span class="siniestro-section__number" aria-hidden="true">1</span>
+                        <div class="siniestro-section__meta">
+                            <h2 id="section-1-title" class="siniestro-section__title">Tus datos</h2>
+                            <p class="siniestro-section__subtitle">Quién reporta el accidente</p>
+                        </div>
+                    </div>
+
+                    <div class="siniestro-grid">
+                        <div class="form-group siniestro-grid__full">
+                            <label for="nombre" class="form-label">
+                                Nombre completo
+                                <span class="siniestro-required" aria-hidden="true">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="nombre"
+                                name="Nombre"
+                                class="form-input"
+                                placeholder="Ej: Juan García"
+                                required
+                                autocomplete="name"
+                                aria-required="true"
+                                aria-describedby="nombre-error">
+                            <div class="form-error" id="nombre-error" role="alert" aria-live="polite"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" class="form-label">
+                                Teléfono
+                                <span class="siniestro-required" aria-hidden="true">*</span>
+                            </label>
+                            <input
+                                type="tel"
+                                id="telefono"
+                                name="Telefono"
+                                class="form-input"
+                                placeholder="+54 9 358 412 2566"
+                                required
+                                autocomplete="tel"
+                                inputmode="tel"
+                                aria-required="true"
+                                aria-describedby="telefono-error">
+                            <div class="form-error" id="telefono-error" role="alert" aria-live="polite"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                Email
+                                <span class="siniestro-required" aria-hidden="true">*</span>
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="Email"
+                                class="form-input"
+                                placeholder="tu@email.com"
+                                required
+                                autocomplete="email"
+                                inputmode="email"
+                                aria-required="true"
+                                aria-describedby="email-error">
+                            <div class="form-error" id="email-error" role="alert" aria-live="polite"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dni" class="form-label">
+                                DNI
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="dni"
+                                name="DNI"
+                                class="form-input"
+                                placeholder="Ej: 28.456.789"
+                                autocomplete="off"
+                                inputmode="numeric">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     SECCIÓN 2: TU VEHÍCULO
+                ============================================== -->
+                <section class="siniestro-section" aria-labelledby="section-2-title">
+                    <div class="siniestro-section__header">
+                        <span class="siniestro-section__number" aria-hidden="true">2</span>
+                        <div class="siniestro-section__meta">
+                            <h2 id="section-2-title" class="siniestro-section__title">Tu vehículo</h2>
+                            <p class="siniestro-section__subtitle">Datos del vehículo asegurado</p>
+                        </div>
+                    </div>
+
+                    <div class="siniestro-grid">
+                        <div class="form-group">
+                            <label for="patente" class="form-label">
+                                Patente
+                                <span class="siniestro-required" aria-hidden="true">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="patente"
+                                name="Patente"
+                                class="form-input"
+                                placeholder="Ej: AB 123 CD"
+                                required
+                                autocomplete="off"
+                                autocapitalize="characters"
+                                aria-required="true"
+                                aria-describedby="patente-error">
+                            <div class="form-error" id="patente-error" role="alert" aria-live="polite"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="marca-modelo" class="form-label">
+                                Marca y modelo
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="marca-modelo"
+                                name="Marca_Modelo"
+                                class="form-input"
+                                placeholder="Ej: Renault Kwid 2022">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aseguradora" class="form-label">
+                                Aseguradora
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="aseguradora"
+                                name="Aseguradora"
+                                class="form-input"
+                                placeholder="Ej: Sancor, La Segunda…">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero-poliza" class="form-label">
+                                Número de póliza
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="numero-poliza"
+                                name="Numero_Poliza"
+                                class="form-input"
+                                placeholder="Ej: 000-12345678">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     SECCIÓN 3: EL ACCIDENTE
+                ============================================== -->
+                <section class="siniestro-section" aria-labelledby="section-3-title">
+                    <div class="siniestro-section__header">
+                        <span class="siniestro-section__number" aria-hidden="true">3</span>
+                        <div class="siniestro-section__meta">
+                            <h2 id="section-3-title" class="siniestro-section__title">El accidente</h2>
+                            <p class="siniestro-section__subtitle">Cuándo, dónde y cómo ocurrió</p>
+                        </div>
+                    </div>
+
+                    <div class="siniestro-grid">
+                        <div class="form-group">
+                            <label for="fecha-siniestro" class="form-label">
+                                Fecha
+                                <span class="siniestro-required" aria-hidden="true">*</span>
+                            </label>
+                            <input
+                                type="date"
+                                id="fecha-siniestro"
+                                name="Fecha_Siniestro"
+                                class="form-input"
+                                required
+                                aria-required="true"
+                                aria-describedby="fecha-siniestro-error">
+                            <div class="form-error" id="fecha-siniestro-error" role="alert" aria-live="polite"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hora-siniestro" class="form-label">
+                                Hora
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="time"
+                                id="hora-siniestro"
+                                name="Hora_Siniestro"
+                                class="form-input">
+                        </div>
+
+                        <div class="form-group siniestro-grid__full">
+                            <label for="lugar-siniestro" class="form-label">
+                                Lugar del accidente
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="lugar-siniestro"
+                                name="Lugar_Siniestro"
+                                class="form-input"
+                                placeholder="Ej: Av. San Martín y Mitre, Río Cuarto, Córdoba">
+                        </div>
+                    </div>
+
+                    <!-- Police report -->
+                    <div class="form-group">
+                        <fieldset class="siniestro-fieldset">
+                            <legend class="form-label">¿Se realizó denuncia policial?</legend>
+                            <div class="siniestro-radio-group">
+                                <label class="siniestro-radio">
+                                    <input type="radio" name="Denuncia_Policial" value="Sí" id="denuncia-si">
+                                    <span class="siniestro-radio__box" aria-hidden="true"></span>
+                                    Sí
+                                </label>
+                                <label class="siniestro-radio">
+                                    <input type="radio" name="Denuncia_Policial" value="No" id="denuncia-no" checked>
+                                    <span class="siniestro-radio__box" aria-hidden="true"></span>
+                                    No
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group" id="numero-denuncia-group" hidden>
+                        <label for="numero-denuncia" class="form-label">Número de denuncia</label>
+                        <input
+                            type="text"
+                            id="numero-denuncia"
+                            name="Numero_Denuncia"
+                            class="form-input"
+                            placeholder="Ej: 12345/2026">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion" class="form-label">
+                            Descripción del accidente
+                            <span class="siniestro-required" aria-hidden="true">*</span>
+                        </label>
+                        <textarea
+                            id="descripcion"
+                            name="Descripcion"
+                            class="form-input form-textarea"
+                            rows="4"
+                            required
+                            aria-required="true"
+                            aria-describedby="descripcion-error"
+                            placeholder="Hacé una descripción detallada del accidente y los daños causados"></textarea>
+                        <div class="form-error" id="descripcion-error" role="alert" aria-live="polite"></div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     SECCIÓN 4: TERCERO INVOLUCRADO
+                ============================================== -->
+                <section class="siniestro-section" aria-labelledby="section-4-title">
+                    <div class="siniestro-section__header">
+                        <span class="siniestro-section__number" aria-hidden="true">4</span>
+                        <div class="siniestro-section__meta">
+                            <h2 id="section-4-title" class="siniestro-section__title">Tercero involucrado</h2>
+                            <p class="siniestro-section__subtitle">Datos del otro vehículo, si los tenés</p>
+                        </div>
+                    </div>
+
+                    <div class="siniestro-grid">
+                        <div class="form-group">
+                            <label for="tercero-nombre" class="form-label">
+                                Nombre del conductor
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="tercero-nombre"
+                                name="Tercero_Nombre"
+                                class="form-input"
+                                placeholder="Nombre completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tercero-telefono" class="form-label">
+                                Teléfono del tercero
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="tel"
+                                id="tercero-telefono"
+                                name="Tercero_Telefono"
+                                class="form-input"
+                                placeholder="+54 9 358 123 4567"
+                                inputmode="tel">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tercero-patente" class="form-label">
+                                Patente del tercero
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="tercero-patente"
+                                name="Tercero_Patente"
+                                class="form-input"
+                                placeholder="Ej: AB 123 CD"
+                                autocomplete="off"
+                                autocapitalize="characters">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tercero-aseguradora" class="form-label">
+                                Aseguradora del tercero
+                                <span class="siniestro-optional">(opcional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="tercero-aseguradora"
+                                name="Tercero_Aseguradora"
+                                class="form-input"
+                                placeholder="Ej: Zurich, Galicia Seguros…">
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- =============================================
+                     SECCIÓN 5: FOTOS DEL ACCIDENTE
+                ============================================== -->
+                <section class="siniestro-section" aria-labelledby="section-5-title">
+                    <div class="siniestro-section__header">
+                        <span class="siniestro-section__number" aria-hidden="true">5</span>
+                        <div class="siniestro-section__meta">
+                            <h2 id="section-5-title" class="siniestro-section__title">Fotos del accidente</h2>
+                            <p class="siniestro-section__subtitle">Adjuntá hasta 5 fotos de los daños (opcional, pero muy útil para la gestión del reclamo)</p>
+                        </div>
+                    </div>
+
+                    <div
+                        id="photo-drop-zone"
+                        class="photo-drop-zone"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Zona para subir fotos del accidente. Hacé clic o arrastrá imágenes aquí."
+                        aria-describedby="photo-drop-hint">
+                        <input
+                            type="file"
+                            id="fotos-input"
+                            name="fotos"
+                            accept="image/*"
+                            multiple
+                            class="photo-file-input"
+                            aria-hidden="true"
+                            tabindex="-1">
+                        <div class="photo-drop-zone__idle" id="photo-drop-idle">
+                            <div class="photo-drop-zone__icon" aria-hidden="true">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </div>
+                            <p class="photo-drop-zone__title">Arrastrá fotos aquí</p>
+                            <p class="photo-drop-zone__subtitle" id="photo-drop-hint">o hacé clic para seleccionar &mdash; JPG, PNG, WEBP &middot; Máx. 5 fotos &middot; 5 MB c/u</p>
+                        </div>
+                        <div class="photo-drop-zone__dragover" id="photo-drop-dragover" hidden aria-hidden="true">
+                            <p>Soltá las fotos aquí ✓</p>
+                        </div>
+                    </div>
+
+                    <div id="photo-preview-grid" class="photo-preview-grid" hidden aria-label="Fotos seleccionadas"></div>
+
+                    <div id="photo-error" class="form-error" role="alert" aria-live="polite" style="margin-top: var(--space-sm);"></div>
+                    <div id="photo-upload-status" class="photo-upload-status" hidden aria-live="polite"></div>
+                </section>
+
+                <!-- Submit Area -->
+                <div class="siniestro-submit">
+                    <div id="form-success" class="siniestro-success" hidden role="status" aria-live="polite">
+                        <img src="../assets/icons/circle-check.svg" alt="" width="24" height="24" aria-hidden="true">
+                        <div>
+                            <strong>¡Denuncia recibida con éxito!</strong>
+                            <p>Mariano revisará tu caso y se comunicará con vos a la brevedad para guiarte en el reclamo.</p>
+                        </div>
+                    </div>
+
+                    <div id="form-error-msg" class="siniestro-error" hidden role="alert" aria-live="polite"></div>
+
+                    <button type="submit" class="btn btn--primary btn--full-width" id="submit-btn">
+                        <img src="../assets/icons/send.svg" alt="" width="18" height="18" aria-hidden="true">
+                        Enviar denuncia
+                    </button>
+
+                    <p class="siniestro-submit__note">
+                        Al enviar este formulario aceptás nuestra
+                        <a href="/legal/privacidad/">política de privacidad</a>.
+                        Tus datos serán tratados de forma confidencial.
+                        Los campos marcados con <span aria-hidden="true">*</span>
+                        <span class="sr-only">asterisco</span> son obligatorios.
+                    </p>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/env-config.js?v=2"></script>
+    <script src="../components/component-loader.js?v=2"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="siniestros.js"></script>
+</body>
+
+</html>

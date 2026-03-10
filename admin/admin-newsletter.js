@@ -198,6 +198,7 @@ function showNewsletterManagement() {
     elements.faqManagement.style.display = 'none';
     elements.newsletterManagement.style.display = 'block';
     elements.quotesManagement.style.display = 'none';
+    elements.siniestrosManagement.style.display = 'none';
     elements.editorContainer.style.display = 'none';
     elements.faqEditorContainer.style.display = 'none';
     
@@ -205,6 +206,7 @@ function showNewsletterManagement() {
     elements.showFaqBtn.classList.remove('active');
     elements.showNewsletterBtn.classList.add('active');
     elements.showQuotesBtn.classList.remove('active');
+    if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
 }
 
 // Setup navigation
@@ -213,6 +215,15 @@ function setupNewsletterNavigation() {
         showNewsletterManagement();
         loadSubscribers();
     });
+
+    // Refresh button
+    if (elements.refreshNewsletterBtn) {
+        elements.refreshNewsletterBtn.addEventListener('click', () => {
+            clearNewsletterCache();
+            allSubscribers = [];
+            loadSubscribers();
+        });
+    }
 }
 
 /* =====================================================

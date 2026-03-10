@@ -176,7 +176,8 @@ async function loadConfig() {
             UPDATE_FAQ_API_URL: window.envConfig.get('UPDATE_FAQ_API_URL'),
             DELETE_FAQ_API_URL: window.envConfig.get('DELETE_FAQ_API_URL'),
             GET_SUBSCRIBERS_API_URL: window.envConfig.get('GET_SUBSCRIBERS_API_URL'),
-            DELETE_SUBSCRIBER_API_URL: window.envConfig.get('DELETE_SUBSCRIBER_API_URL')
+            DELETE_SUBSCRIBER_API_URL: window.envConfig.get('DELETE_SUBSCRIBER_API_URL'),
+            GET_SINIESTROS_API_URL: window.envConfig.get('GET_SINIESTROS_API_URL')
         };
 
         // Initialize Supabase client after config is loaded
@@ -303,6 +304,19 @@ const elements = {
     newsletterTableContainer: document.getElementById('newsletter-table-container'),
     subscribersList: document.getElementById('subscribers-list'),
 
+    // Siniestros Management
+    refreshNewsletterBtn: document.getElementById('refresh-newsletter-btn'),
+    refreshQuotesBtn: document.getElementById('refresh-quotes-btn'),
+    siniestrosManagement: document.getElementById('siniestros-management'),
+    siniestrosLoading: document.getElementById('siniestros-loading'),
+    siniestrosEmpty: document.getElementById('siniestros-empty'),
+    siniestrosTableContainer: document.getElementById('siniestros-table-container'),
+    siniestrosList: document.getElementById('siniestros-list'),
+    refreshSiniestrosBtn: document.getElementById('refresh-siniestros-btn'),
+    siniestroDetailModal: document.getElementById('siniestro-detail-modal'),
+    siniestroDetailBody: document.getElementById('siniestro-detail-body'),
+    closeSiniestroModalBtn: document.getElementById('close-siniestro-modal-btn'),
+
     // Quotes Management
     quotesManagement: document.getElementById('quotes-management'),
     quotesLoading: document.getElementById('quotes-loading'),
@@ -322,7 +336,8 @@ const elements = {
     showBlogBtn: document.getElementById('show-blog-btn'),
     showFaqBtn: document.getElementById('show-faq-btn'),
     showNewsletterBtn: document.getElementById('show-newsletter-btn'),
-    showQuotesBtn: document.getElementById('show-quotes-btn')
+    showQuotesBtn: document.getElementById('show-quotes-btn'),
+    showSiniestrosBtn: document.getElementById('show-siniestros-btn')
 };
 
 /* =====================================================

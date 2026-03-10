@@ -32,7 +32,16 @@ function initQuotesManagement() {
     
     // Set up navigation
     elements.showQuotesBtn.addEventListener('click', showQuotesManagement);
-    
+
+    // Refresh button
+    if (elements.refreshQuotesBtn) {
+        elements.refreshQuotesBtn.addEventListener('click', () => {
+            clearCachedQuotes();
+            allQuotes = [];
+            loadQuotes();
+        });
+    }
+
     // Set up pagination controls
     setupPaginationControls();
 }
@@ -60,6 +69,7 @@ function showQuotesManagement() {
     elements.faqManagement.style.display = 'none';
     elements.newsletterManagement.style.display = 'none';
     elements.quotesManagement.style.display = 'block';
+    elements.siniestrosManagement.style.display = 'none';
     elements.editorContainer.style.display = 'none';
     elements.faqEditorContainer.style.display = 'none';
     
@@ -68,6 +78,7 @@ function showQuotesManagement() {
     elements.showFaqBtn.classList.remove('active');
     elements.showNewsletterBtn.classList.remove('active');
     elements.showQuotesBtn.classList.add('active');
+    if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
     
     // Load quotes if not already loaded
     if (allQuotes.length === 0) {
