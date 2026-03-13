@@ -1,13 +1,13 @@
 # OnSeguros Website
 
-Insurance agency website for OnSeguros, featuring a blog and faq system and admin panel for content management.
+Full-featured insurance agency website with AI-powered quote assistance, content management system, and claims handling. Includes admin panel for blog, FAQ, subscribers, quote requests, and claim forms with photo uploads. 
 
 ## Stack
 
 - **Frontend**: Vanilla HTML, CSS, JavaScript (no frameworks)
 - **Styling**: Custom CSS with CSS variables for theming
 - **Backend**: Supabase (PostgreSQL database, authentication)
-- **Blog API**, **FAQ API** and **Subscribers API**: Supabase Edge Functions
+- **Blog API**, **FAQ API**, **Subscribers API**, **Quote API**, and **Claims API**: Supabase Edge Functions
 - **Hosting**: DreamHost
 - **CDN and DNS record tracking**: Cloudflare
 - **Deployment**: GitHub Actions
@@ -16,12 +16,14 @@ Insurance agency website for OnSeguros, featuring a blog and faq system and admi
 
 ```
 /
-├── admin/              # Admin panel for blog and faq management
+├── admin/              # Admin panel (blog, faq, subscribers, quotes, claims)
 ├── assets/             # Images, icons, CSS, JS
 ├── blog/               # Blog listing and post pages
+├── agente/             # AI quote assistant agent
 ├── components/         # Reusable HTML components (header, footer)
 ├── faq/                # FAQ page
 ├── legal/              # Legal pages (privacy, terms, accesibility)
+├── siniestros/         # Car crash/claims form
 ├── scripts/            # Build scripts (sitemap generation)
 └── index.html          # Main landing page
 ```
@@ -31,12 +33,15 @@ Insurance agency website for OnSeguros, featuring a blog and faq system and admi
 - **Blog System**: Markdown-based blog with admin panel
 - **FAQ Section**: Searchable FAQ with admin management
 - **Subscribers Management**: Email subscription handling with admin panel
+- **AI Quote Assistant**: LLM-powered agent helping clients get insurance quotes
+- **Quote Requests Management**: Admin dashboard to view and manage quote request submissions
+- **Claims/Siniestros Form**: Car accident form with photo uploads and email notifications
+- **File Storage**: Supabase Storage buckets for claim form images
 - **Responsive Design**: Mobile-first, accessible layout
 - **Dark Mode**: Automatic theme switching based on system preference
 - **SEO Optimized**: Structured data, meta tags, sitemap
 - **Accessibility**: ARIA roles and keyboard navigation
 - **Newsletter**: Supabase-powered email subscriptions
-- **Contact Forms**: Formspree integration
 
 ## Development
 
