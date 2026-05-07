@@ -57,12 +57,16 @@ function generateBlogPostStructuredData(post) {
         existingScript.remove();
     }
 
-    // Create BlogPosting schema
+    // Create BlogPosting schema. `image` is a Google-recommended field for
+    // Article structured data; falls back to the static OG image until
+    // per-post images are introduced.
+    const ogImageUrl = post.og_image_url || 'https://www.onseguros.net/assets/og-image.png';
     const blogSchema = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "headline": post.title,
         "description": post.description,
+        "image": [ogImageUrl],
         "datePublished": post.publish_date,
         "dateModified": post.updated_at || post.publish_date,
         "author": {
