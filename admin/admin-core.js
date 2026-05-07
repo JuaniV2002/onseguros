@@ -177,7 +177,14 @@ async function loadConfig() {
             DELETE_FAQ_API_URL: window.envConfig.get('DELETE_FAQ_API_URL'),
             GET_SUBSCRIBERS_API_URL: window.envConfig.get('GET_SUBSCRIBERS_API_URL'),
             DELETE_SUBSCRIBER_API_URL: window.envConfig.get('DELETE_SUBSCRIBER_API_URL'),
-            GET_SINIESTROS_API_URL: window.envConfig.get('GET_SINIESTROS_API_URL')
+            GET_SINIESTROS_API_URL: window.envConfig.get('GET_SINIESTROS_API_URL'),
+            SUBMIT_HINT_API_URL: window.envConfig.get('SUBMIT_HINT_API_URL'),
+            GET_HINTS_API_URL: window.envConfig.get('GET_HINTS_API_URL'),
+            GET_DRAFTS_API_URL: window.envConfig.get('GET_DRAFTS_API_URL'),
+            UPDATE_DRAFT_API_URL: window.envConfig.get('UPDATE_DRAFT_API_URL'),
+            DISCARD_DRAFT_API_URL: window.envConfig.get('DISCARD_DRAFT_API_URL'),
+            PUBLISH_DRAFT_API_URL: window.envConfig.get('PUBLISH_DRAFT_API_URL'),
+            GENERATE_DRAFT_API_URL: window.envConfig.get('GENERATE_DRAFT_API_URL')
         };
 
         // Initialize Supabase client after config is loaded
@@ -337,7 +344,43 @@ const elements = {
     showFaqBtn: document.getElementById('show-faq-btn'),
     showNewsletterBtn: document.getElementById('show-newsletter-btn'),
     showQuotesBtn: document.getElementById('show-quotes-btn'),
-    showSiniestrosBtn: document.getElementById('show-siniestros-btn')
+    showSiniestrosBtn: document.getElementById('show-siniestros-btn'),
+    showDraftsBtn: document.getElementById('show-drafts-btn'),
+
+    // Drafts management
+    draftsManagement: document.getElementById('drafts-management'),
+    draftsLoading: document.getElementById('drafts-loading'),
+    draftsEmpty: document.getElementById('drafts-empty'),
+    draftsList: document.getElementById('drafts-list'),
+    refreshDraftsBtn: document.getElementById('refresh-drafts-btn'),
+    generateDraftBtn: document.getElementById('generate-draft-btn'),
+
+    // Topic hint card
+    hintForm: document.getElementById('hint-form'),
+    hintInput: document.getElementById('hint-input'),
+    hintSubmitBtn: document.getElementById('hint-submit-btn'),
+    hintCount: document.getElementById('hint-count'),
+    hintsList: document.getElementById('hints-list'),
+
+    // Draft editor
+    draftEditorContainer: document.getElementById('draft-editor-container'),
+    draftEditorTitle: document.getElementById('draft-editor-title'),
+    cancelDraftEditBtn: document.getElementById('cancel-draft-edit-btn'),
+    draftForm: document.getElementById('draft-form'),
+    draftTitle: document.getElementById('draft-title'),
+    draftDescription: document.getElementById('draft-description'),
+    draftContent: document.getElementById('draft-content'),
+    draftSlug: document.getElementById('draft-slug'),
+    draftSaveBtn: document.getElementById('draft-save-btn'),
+    draftPublishBtn: document.getElementById('draft-publish-btn'),
+    draftDiscardBtn: document.getElementById('draft-discard-btn'),
+    draftTitleCount: document.getElementById('draft-title-count'),
+    draftDescCount: document.getElementById('draft-desc-count'),
+    draftContentCount: document.getElementById('draft-content-count'),
+    draftPreviewBody: document.getElementById('draft-preview-body'),
+    draftPreviewTitle: document.getElementById('draft-preview-title'),
+    draftPreviewDescription: document.getElementById('draft-preview-description'),
+    draftSourcesList: document.getElementById('draft-sources-list')
 };
 
 /* =====================================================
@@ -478,10 +521,19 @@ function showAdminScreen(user, isInitialLoad = false) {
     elements.adminScreen.style.display = 'block';
     elements.userEmail.textContent = user.email;
     isAuthenticated = true;
-    
-    // Only reset to posts management view on initial load
+
+    // Only reset to default view on initial load
     if (isInitialLoad) {
         updatePreviewDate();
+
+        // Honor deep link from email "Editar en panel" button
+        const urlParams = new URLSearchParams(window.location.search);
+        const deepDraftId = urlParams.get('draft');
+        if (deepDraftId && typeof window.openDraftById === 'function') {
+            window.openDraftById(deepDraftId);
+            return;
+        }
+
         loadPosts(); // Load existing posts
         showPostsManagement(); // Show posts list by default
     }

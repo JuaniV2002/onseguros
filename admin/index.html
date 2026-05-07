@@ -644,6 +644,118 @@ Más contenido aquí..." rows="20"></textarea>
                 </div>
             </div>
 
+            <!-- Drafts (AI) Management Section -->
+            <div class="drafts-management" id="drafts-management" style="display: none;">
+                <div class="section-header">
+                    <h2>Borradores generados por IA</h2>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button id="refresh-drafts-btn" class="btn btn-secondary btn-sm">↺ Actualizar</button>
+                        <button id="generate-draft-btn" class="btn btn-primary btn-sm" title="Forzar la generación ahora (sin esperar al viernes)">⚡ Generar borrador ahora</button>
+                    </div>
+                </div>
+
+                <!-- Topic hint card -->
+                <div class="post-item" style="display:block;margin-bottom:24px;padding:20px;background:#fffbf0;border-color:#f5d99a;">
+                    <h3 class="post-item-title" style="margin-bottom:8px;">Próximo tema</h3>
+                    <p class="post-item-description" style="margin-bottom:12px;">Si esta semana hay alguna novedad que quieras que el borrador del viernes desarrolle, dejala acá. La IA va a buscar en fuentes oficiales y armar el artículo en base a tu sugerencia.</p>
+                    <form id="hint-form">
+                        <textarea id="hint-input" name="hint" rows="3" maxlength="500" placeholder="Ej: La SSN sacó la resolución 1234/2026 sobre seguros de motovehículos." style="width:100%;padding:12px;border:1px solid rgba(16,16,22,.15);border-radius:8px;font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+                            <span class="char-count"><span id="hint-count">0</span>/500</span>
+                            <button id="hint-submit-btn" type="submit" class="btn btn-primary btn-sm">Guardar tema</button>
+                        </div>
+                    </form>
+                    <div id="hints-list" style="margin-top:16px;"></div>
+                </div>
+
+                <div id="drafts-loading" class="posts-loading" style="display: none;">
+                    <div class="posts-skeleton-list">
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                        <div class="posts-skeleton-row">
+                            <div class="skeleton-row-left">
+                                <div class="skeleton skeleton-row-title"></div>
+                                <div class="skeleton skeleton-row-meta"></div>
+                            </div>
+                            <div class="skeleton-row-right">
+                                <div class="skeleton skeleton-btn"></div>
+                                <div class="skeleton skeleton-btn"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="drafts-empty" class="posts-empty" style="display: none;">
+                    <p>No hay borradores pendientes. El próximo se genera el viernes a las 8:00 AM.</p>
+                </div>
+
+                <div id="drafts-list" class="posts-list"></div>
+            </div>
+
+            <!-- Draft Editor Section -->
+            <div class="editor-container" id="draft-editor-container" style="display: none;">
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h2 id="draft-editor-title">Editar borrador</h2>
+                        <button id="cancel-draft-edit-btn" type="button" class="btn btn-secondary btn-sm">← Volver</button>
+                    </div>
+                    <form id="draft-form" class="post-form">
+                        <div class="form-group">
+                            <label for="draft-title">Título *</label>
+                            <input type="text" id="draft-title" name="title" required maxlength="100" />
+                            <span class="char-count"><span id="draft-title-count">0</span>/100</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="draft-slug">Slug (URL)</label>
+                            <input type="text" id="draft-slug" name="slug" maxlength="60" placeholder="se-genera-del-titulo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="draft-description">Descripción (SEO) *</label>
+                            <textarea id="draft-description" name="description" rows="3" maxlength="160" required></textarea>
+                            <span class="char-count"><span id="draft-desc-count">0</span>/160</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="draft-content">Contenido (Markdown) *</label>
+                            <textarea id="draft-content" name="content" rows="20" required></textarea>
+                            <span class="char-count"><span id="draft-content-count">0</span>/∞</span>
+                        </div>
+                        <div id="draft-sources" class="form-group" style="display:none;">
+                            <label>Fuentes consultadas por la IA</label>
+                            <ul id="draft-sources-list" style="margin:0;padding-left:20px;color:#5a5a64;font-size:13px;line-height:1.6;"></ul>
+                        </div>
+                        <div class="form-actions" style="flex-wrap:wrap;gap:8px;">
+                            <button type="button" id="draft-discard-btn" class="btn btn-danger btn-sm">Descartar</button>
+                            <button type="submit" id="draft-save-btn" class="btn btn-secondary">Guardar cambios</button>
+                            <button type="button" id="draft-publish-btn" class="btn btn-primary">Publicar y enviar newsletter</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="preview-panel">
+                    <div class="preview-header">
+                        <h2>Vista Previa</h2>
+                        <span class="preview-badge">En vivo</span>
+                    </div>
+                    <div class="preview-content">
+                        <article class="preview-article">
+                            <h1 id="draft-preview-title" class="preview-title">Tu título aparecerá aquí</h1>
+                            <p id="draft-preview-description" class="preview-description">La descripción aparecerá aquí…</p>
+                            <hr>
+                            <div id="draft-preview-body" class="preview-body">
+                                <p class="placeholder-text">El contenido de tu artículo se mostrará aquí mientras editás…</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
             <!-- Navigation Toggle -->
             <div class="admin-nav">
                 <button id="show-blog-btn" class="nav-btn active"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Blog</button>
@@ -651,6 +763,7 @@ Más contenido aquí..." rows="20"></textarea>
                 <button id="show-newsletter-btn" class="nav-btn"><img src="../assets/icons/newspaper.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Suscriptores</button>
                 <button id="show-quotes-btn" class="nav-btn"><img src="../assets/icons/dollar-sign.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Cotizaciones</button>
                 <button id="show-siniestros-btn" class="nav-btn"><img src="../assets/icons/siren.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Siniestros</button>
+                <button id="show-drafts-btn" class="nav-btn"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Borradores IA</button>
                 <button id="show-client-btn" class="nav-btn"><img src="../assets/icons/user-round.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Clientes</button>
             </div>
         </main>
@@ -723,9 +836,11 @@ Más contenido aquí..." rows="20"></textarea>
 
     <script src="../assets/js/env-config.js?v=2"></script>
     <!-- Core module: config, auth, DOM, utilities (must load first) -->
-    <script src="admin-core.js?v=1"></script>
+    <script src="admin-core.js?v=2"></script>
     <!-- Blog module: blog CRUD and editor (depends on core) -->
     <script src="admin-blog.js?v=1"></script>
+    <!-- Drafts module: AI-generated weekly drafts (depends on core, loads after blog) -->
+    <script src="admin-drafts.js?v=1"></script>
     <!-- FAQ module: FAQ CRUD and editor (depends on core, loads after blog) -->
     <script src="admin-faq.js?v=1"></script>
     <!-- Newsletter module: newsletter subscribers management (depends on core) -->

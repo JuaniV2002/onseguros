@@ -96,7 +96,16 @@ jobs:
             "AI_QUOTE_API_URL": "${{ secrets.AI_QUOTE_API_URL }}",
             "QUOTE_API_URL": "${{ secrets.QUOTE_API_URL }}",
             "GET_QUOTES_API_URL": "${{ secrets.GET_QUOTES_API_URL }}",
-            "UPDATE_QUOTE_STATUS_API_URL": "${{ secrets.UPDATE_QUOTE_STATUS_API_URL }}"
+            "UPDATE_QUOTE_STATUS_API_URL": "${{ secrets.UPDATE_QUOTE_STATUS_API_URL }}",
+            "SUBMIT_SINIESTRO_API_URL": "${{ secrets.SUBMIT_SINIESTRO_API_URL }}",
+            "GET_SINIESTROS_API_URL": "${{ secrets.GET_SINIESTROS_API_URL }}",
+            "SUBMIT_HINT_API_URL": "${{ secrets.SUBMIT_HINT_API_URL }}",
+            "GET_HINTS_API_URL": "${{ secrets.GET_HINTS_API_URL }}",
+            "GET_DRAFTS_API_URL": "${{ secrets.GET_DRAFTS_API_URL }}",
+            "UPDATE_DRAFT_API_URL": "${{ secrets.UPDATE_DRAFT_API_URL }}",
+            "DISCARD_DRAFT_API_URL": "${{ secrets.DISCARD_DRAFT_API_URL }}",
+            "PUBLISH_DRAFT_API_URL": "${{ secrets.PUBLISH_DRAFT_API_URL }}",
+            "GENERATE_DRAFT_API_URL": "${{ secrets.GENERATE_DRAFT_API_URL }}"
           }
           EOF
           echo "config.json created successfully"
@@ -111,6 +120,7 @@ jobs:
             --exclude '.DS_Store' \
             --exclude 'README.md' \
             --exclude '/admin/SETUP.md' \
+            --exclude '/supabase/' \
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
           echo "Deployment completed successfully!"
