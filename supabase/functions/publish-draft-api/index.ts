@@ -244,6 +244,36 @@ serve(async (req) => {
       }
     }
 
+    // Trigger sitemap regeneration via GitHub Actions workflow_dispatch.
+    // Best-effort: failure here doesn't block publish.
+    const ghToken = Deno.env.get('GITHUB_DISPATCH_TOKEN')
+    const ghRepo = Deno.env.get('GITHUB_REPO')
+    const ghWorkflow = Deno.env.get('SITEMAP_WORKFLOW_FILE') || 'update-sitemap.yml'
+    if (ghToken && ghRepo) {
+      try {
+        const dispatchRes = await fetch(
+          `https://api.github.com/repos/${ghRepo}/actions/workflows/${ghWorkflow}/dispatches`,
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': `Bearer ${ghToken}`,
+              'X-GitHub-Api-Version': '2022-11-28',
+              'Content-Type': 'application/json',
+              'User-Agent': 'onseguros-publish-draft-api',
+            },
+            body: JSON.stringify({ ref: 'master' }),
+          },
+        )
+        if (!dispatchRes.ok) {
+          const body = await dispatchRes.text()
+          console.error(`Sitemap dispatch ${dispatchRes.status}: ${body.substring(0, 200)}`)
+        }
+      } catch (dispatchErr) {
+        console.error('Sitemap dispatch failed:', dispatchErr)
+      }
+    }
+
     return jsonResponse({
       success: true,
       post_id: newPost.id,

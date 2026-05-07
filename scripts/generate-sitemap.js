@@ -17,7 +17,7 @@ const https = require('https');
 // Configuration
 const CONFIG = {
     baseUrl: 'https://www.onseguros.net',
-    apiUrl: 'https://onseguros-newsletter.netlify.app/api/get-posts',
+    apiUrl: 'https://tgokvwuiiglioegxgcpu.supabase.co/functions/v1/get-posts-api',
     sitemapPath: path.join(__dirname, '..', 'sitemap.xml'),
     staticPages: [
         { loc: '/', priority: '1.0', changefreq: 'weekly' },
