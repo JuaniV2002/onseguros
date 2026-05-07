@@ -90,12 +90,4 @@
         <priority>0.3</priority>
     </url>
 
-    <!-- Blog Posts -->
-    <url>
-        <loc>https://www.onseguros.net/blog/post.html?slug=ssn-interviene-aseguradora-prohibida-nuevas-polizas</loc>
-        <lastmod>2026-05-07</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
 </urlset>
