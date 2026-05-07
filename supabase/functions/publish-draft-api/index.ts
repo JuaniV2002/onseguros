@@ -1,7 +1,16 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders, htmlResponse, jsonResponse } from '../_shared/cors.ts'
-import { verifyDraftToken } from '../_shared/draft-token.ts'
+// publish_token is the HMAC-signed value stored at draft creation/edit.
+// We don't recompute it here — direct timing-safe compare against the stored
+// value. Status flip ('published') is the single-use guard; editing a draft
+// rotates publish_token via update-draft-api, invalidating older email links.
+function timingSafeEqualString(a: string, b: string): boolean {
+  if (a.length !== b.length) return false
+  let diff = 0
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  return diff === 0
+}
 import { ensureUniqueSlug } from '../_shared/slug.ts'
 
 const ALLOWED_PUBLISH_STATUSES = ['pending', 'edited']
@@ -93,12 +102,9 @@ serve(async (req) => {
     Deno.env.get('SUPABASE_URL') ?? '',
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
   )
-  const draftSecret = Deno.env.get('DRAFT_PUBLISH_SECRET')
   const webhookSecret = Deno.env.get('WEBHOOK_SECRET')
   const apiBaseUrl = Deno.env.get('SUPABASE_URL')
   const blogBaseUrl = Deno.env.get('BLOG_BASE_URL') || 'https://www.onseguros.net/blog/post.html'
-
-  if (!draftSecret) return errorPage('Configuración', 'DRAFT_PUBLISH_SECRET no configurado.', 500)
 
   const url = new URL(req.url)
   let id: string | null
@@ -110,7 +116,7 @@ serve(async (req) => {
     if (!id || !token) return errorPage('Falta información', 'El enlace está incompleto.', 400)
     const { data: draft, error } = await supabaseAdmin
       .from('post_drafts')
-      .select('id, title, description, status, slug, updated_at')
+      .select('id, title, description, status, slug, publish_token')
       .eq('id', id)
       .single()
     if (error || !draft) return errorPage('No encontrado', 'No se encontró el borrador.', 404)
@@ -121,12 +127,7 @@ serve(async (req) => {
         409,
       )
     }
-    const ok = await verifyDraftToken(
-      { draftId: draft.id, rotationStamp: draft.updated_at },
-      token,
-      draftSecret,
-    )
-    if (!ok) {
+    if (!timingSafeEqualString(draft.publish_token, token)) {
       return errorPage(
         'Enlace vencido',
         'Este enlace ya no es válido (probablemente porque editaste el borrador). Publicalo desde el panel.',
@@ -173,12 +174,9 @@ serve(async (req) => {
     }
 
     if (!isAdminAuthenticated) {
-      const ok = await verifyDraftToken(
-        { draftId: draft.id, rotationStamp: draft.updated_at },
-        token!,
-        draftSecret,
-      )
-      if (!ok) return jsonResponse({ error: 'Invalid or expired token' }, 401)
+      if (!timingSafeEqualString(draft.publish_token, token!)) {
+        return jsonResponse({ error: 'Invalid or expired token' }, 401)
+      }
     }
 
     const finalSlug = await ensureUniqueSlug(draft.slug, async (candidate) => {
