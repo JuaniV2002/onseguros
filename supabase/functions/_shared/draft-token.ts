@@ -33,13 +33,23 @@ export interface DraftTokenPayload {
   draftId: string
   // ISO timestamp that rotates whenever the draft mutates (use updated_at).
   rotationStamp: string
+  // Namespaces tokens so a 'blog' token can't be replayed against the FAQ
+  // publish endpoint (or vice versa). Defaults to 'blog' so existing blog
+  // tokens signed before this field was added keep validating.
+  kind?: 'blog' | 'faq'
 }
 
 export async function signDraftToken(
   payload: DraftTokenPayload,
   secret: string,
 ): Promise<string> {
-  return hmac(secret, `${payload.draftId}.${payload.rotationStamp}`)
+  // Legacy blog tokens were signed without a `kind` prefix — preserve that
+  // exact format when the caller doesn't pass `kind`, so blog email links
+  // signed before this field was introduced keep validating.
+  const message = payload.kind
+    ? `${payload.kind}.${payload.draftId}.${payload.rotationStamp}`
+    : `${payload.draftId}.${payload.rotationStamp}`
+  return hmac(secret, message)
 }
 
 export async function verifyDraftToken(

@@ -646,58 +646,120 @@ Más contenido aquí..." rows="20"></textarea>
 
             <!-- Drafts (AI) Management Section -->
             <div class="drafts-management" id="drafts-management" style="display: none;">
-                <div class="section-header">
-                    <h2>Borradores generados por IA</h2>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                        <button id="refresh-drafts-btn" class="btn btn-secondary btn-sm">↺ Actualizar</button>
-                        <button id="generate-draft-btn" class="btn btn-primary btn-sm" title="Forzar la generación ahora (sin esperar al viernes)">⚡ Generar borrador ahora</button>
-                    </div>
+                <div class="drafts-subnav" role="tablist" aria-label="Tipo de borrador">
+                    <button id="drafts-pill-blog" class="subpill active" type="button" role="tab" aria-selected="true" data-target="blog"><img src="../assets/icons/scroll-text.svg" width="14" height="14" alt=""> Blog</button>
+                    <button id="drafts-pill-faq" class="subpill" type="button" role="tab" aria-selected="false" data-target="faq"><img src="../assets/icons/message-circle-question-mark.svg" width="14" height="14" alt=""> FAQ</button>
                 </div>
 
-                <!-- Topic hint card -->
-                <div class="post-item" style="display:block;margin-bottom:24px;padding:20px;background:#fffbf0;border-color:#f5d99a;">
-                    <h3 class="post-item-title" style="margin-bottom:8px;">Próximo tema</h3>
-                    <p class="post-item-description" style="margin-bottom:12px;">Si esta semana hay alguna novedad que quieras que el borrador del viernes desarrolle, dejala acá. La IA va a buscar en fuentes oficiales y armar el artículo en base a tu sugerencia.</p>
-                    <form id="hint-form">
-                        <textarea id="hint-input" name="hint" rows="3" maxlength="500" placeholder="Ej: La SSN sacó la resolución 1234/2026 sobre seguros de motovehículos." style="width:100%;padding:12px;border:1px solid rgba(16,16,22,.15);border-radius:8px;font-family:inherit;font-size:14px;resize:vertical;"></textarea>
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                            <span class="char-count"><span id="hint-count">0</span>/500</span>
-                            <button id="hint-submit-btn" type="submit" class="btn btn-primary btn-sm">Guardar tema</button>
-                        </div>
-                    </form>
-                    <div id="hints-list" style="margin-top:16px;"></div>
-                </div>
-
-                <div id="drafts-loading" class="posts-loading" style="display: none;">
-                    <div class="posts-skeleton-list">
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
+                <div id="blog-drafts-panel">
+                    <div class="section-header">
+                        <h2>Borradores de blog generados por IA</h2>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <button id="refresh-drafts-btn" class="btn btn-secondary btn-sm">↺ Actualizar</button>
+                            <button id="generate-draft-btn" class="btn btn-primary btn-sm" title="Forzar la generación ahora (sin esperar al viernes)">⚡ Generar borrador ahora</button>
                         </div>
                     </div>
+
+                    <!-- Topic hint card -->
+                    <div class="post-item" style="display:block;margin-bottom:24px;padding:20px;background:#fffbf0;border-color:#f5d99a;">
+                        <h3 class="post-item-title" style="margin-bottom:8px;">Próximo tema</h3>
+                        <p class="post-item-description" style="margin-bottom:12px;">Si esta semana hay alguna novedad que quieras que el borrador del viernes desarrolle, dejala acá. La IA va a buscar en fuentes oficiales y armar el artículo en base a tu sugerencia.</p>
+                        <form id="hint-form">
+                            <textarea id="hint-input" name="hint" rows="3" maxlength="500" placeholder="Ej: La SSN sacó la resolución 1234/2026 sobre seguros de motovehículos." style="width:100%;padding:12px;border:1px solid rgba(16,16,22,.15);border-radius:8px;font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+                                <span class="char-count"><span id="hint-count">0</span>/500</span>
+                                <button id="hint-submit-btn" type="submit" class="btn btn-primary btn-sm">Guardar tema</button>
+                            </div>
+                        </form>
+                        <div id="hints-list" style="margin-top:16px;"></div>
+                    </div>
+
+                    <div id="drafts-loading" class="posts-loading" style="display: none;">
+                        <div class="posts-skeleton-list">
+                            <div class="posts-skeleton-row">
+                                <div class="skeleton-row-left">
+                                    <div class="skeleton skeleton-row-title"></div>
+                                    <div class="skeleton skeleton-row-meta"></div>
+                                </div>
+                                <div class="skeleton-row-right">
+                                    <div class="skeleton skeleton-btn"></div>
+                                    <div class="skeleton skeleton-btn"></div>
+                                </div>
+                            </div>
+                            <div class="posts-skeleton-row">
+                                <div class="skeleton-row-left">
+                                    <div class="skeleton skeleton-row-title"></div>
+                                    <div class="skeleton skeleton-row-meta"></div>
+                                </div>
+                                <div class="skeleton-row-right">
+                                    <div class="skeleton skeleton-btn"></div>
+                                    <div class="skeleton skeleton-btn"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="drafts-empty" class="posts-empty" style="display: none;">
+                        <p>No hay borradores pendientes. El próximo se genera el viernes a las 8:00 AM.</p>
+                    </div>
+
+                    <div id="drafts-list" class="posts-list"></div>
                 </div>
 
-                <div id="drafts-empty" class="posts-empty" style="display: none;">
-                    <p>No hay borradores pendientes. El próximo se genera el viernes a las 8:00 AM.</p>
-                </div>
+                <div id="faq-drafts-panel" style="display:none;">
+                    <div class="section-header">
+                        <h2>Borradores de FAQ generados por IA</h2>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <button id="refresh-faq-drafts-btn" class="btn btn-secondary btn-sm">↺ Actualizar</button>
+                            <button id="generate-faq-draft-btn" class="btn btn-primary btn-sm" title="Forzar la generación ahora">Generar FAQ ahora</button>
+                        </div>
+                    </div>
 
-                <div id="drafts-list" class="posts-list"></div>
+                    <!-- FAQ topic hint card -->
+                    <div class="post-item" style="display:block;margin-bottom:24px;padding:20px;background:#fffbf0;border-color:#f5d99a;">
+                        <h3 class="post-item-title" style="margin-bottom:8px;">Próxima FAQ</h3>
+                        <p class="post-item-description" style="margin-bottom:12px;">Si te llega una consulta recurrente que querés que la IA convierta en FAQ, dejala acá. La IA va a buscar el fundamento legal en fuentes oficiales argentinas y proponer la respuesta.</p>
+                        <form id="faq-hint-form">
+                            <textarea id="faq-hint-input" name="hint" rows="3" maxlength="500" placeholder="Ej: ¿Qué pasa si denuncio un siniestro fuera del plazo de 3 días?" style="width:100%;padding:12px;border:1px solid rgba(16,16,22,.15);border-radius:8px;font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+                                <span class="char-count"><span id="faq-hint-count">0</span>/500</span>
+                                <button id="faq-hint-submit-btn" type="submit" class="btn btn-primary btn-sm">Guardar tema</button>
+                            </div>
+                        </form>
+                        <div id="faq-hints-list" style="margin-top:16px;"></div>
+                    </div>
+
+                    <div id="faq-drafts-loading" class="posts-loading" style="display: none;">
+                        <div class="posts-skeleton-list">
+                            <div class="posts-skeleton-row">
+                                <div class="skeleton-row-left">
+                                    <div class="skeleton skeleton-row-title"></div>
+                                    <div class="skeleton skeleton-row-meta"></div>
+                                </div>
+                                <div class="skeleton-row-right">
+                                    <div class="skeleton skeleton-btn"></div>
+                                    <div class="skeleton skeleton-btn"></div>
+                                </div>
+                            </div>
+                            <div class="posts-skeleton-row">
+                                <div class="skeleton-row-left">
+                                    <div class="skeleton skeleton-row-title"></div>
+                                    <div class="skeleton skeleton-row-meta"></div>
+                                </div>
+                                <div class="skeleton-row-right">
+                                    <div class="skeleton skeleton-btn"></div>
+                                    <div class="skeleton skeleton-btn"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="faq-drafts-empty" class="posts-empty" style="display: none;">
+                        <p>No hay borradores de FAQ pendientes. El próximo se genera cada dos semanas.</p>
+                    </div>
+
+                    <div id="faq-drafts-list" class="posts-list"></div>
+                </div>
             </div>
 
             <!-- Draft Editor Section -->
@@ -756,6 +818,99 @@ Más contenido aquí..." rows="20"></textarea>
                 </div>
             </div>
 
+            <!-- FAQ Draft Editor Section -->
+            <div class="editor-container" id="faq-draft-editor-container" style="display: none;">
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h2 id="faq-draft-editor-title">Editar borrador de FAQ</h2>
+                        <button id="cancel-faq-draft-edit-btn" type="button" class="btn btn-secondary btn-sm">← Volver</button>
+                    </div>
+                    <form id="faq-draft-form" class="post-form">
+                        <div class="form-group">
+                            <label for="faq-draft-question">Pregunta <span class="required">*</span></label>
+                            <div class="input-with-count">
+                                <input type="text" id="faq-draft-question" name="question" required maxlength="200" />
+                                <span class="char-count"><span id="faq-draft-question-count">0</span>/200</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faq-draft-category">Categoría <span class="required">*</span></label>
+                            <select id="faq-draft-category" name="category" required>
+                                <option value="general">General</option>
+                                <option value="cobertura">Coberturas</option>
+                                <option value="cotizacion">Cotización</option>
+                                <option value="art">ART</option>
+                                <option value="siniestro">Siniestros</option>
+                                <option value="vehiculos">Vehículos</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faq-draft-answer">Respuesta <span class="required">*</span></label>
+                            <div class="faq-toolbar" data-target="faq-draft-answer">
+                                <div class="toolbar-group">
+                                    <button type="button" class="toolbar-btn" data-action="bold" title="Negrita">
+                                        <img src="../assets/icons/bold.svg" width="16" height="16" alt="Bold">
+                                    </button>
+                                    <button type="button" class="toolbar-btn" data-action="italic" title="Cursiva">
+                                        <img src="../assets/icons/italic.svg" width="16" height="16" alt="Italic">
+                                    </button>
+                                </div>
+                                <span class="toolbar-divider"></span>
+                                <div class="toolbar-group">
+                                    <button type="button" class="toolbar-btn" data-action="ul" title="Lista">
+                                        <img src="../assets/icons/list.svg" width="16" height="16" alt="Unordered list">
+                                    </button>
+                                    <button type="button" class="toolbar-btn" data-action="ol" title="Lista numerada">
+                                        <img src="../assets/icons/list-ordered.svg" width="16" height="16" alt="Ordered list">
+                                    </button>
+                                </div>
+                                <span class="toolbar-divider"></span>
+                                <div class="toolbar-group">
+                                    <button type="button" class="toolbar-btn" data-action="link" title="Insertar enlace">
+                                        <img src="../assets/icons/link.svg" width="16" height="16" alt="Link">
+                                    </button>
+                                    <button type="button" class="toolbar-btn" data-action="p" title="Párrafo">
+                                        <img src="../assets/icons/text-align-start.svg" width="16" height="16" alt="Paragraph">
+                                    </button>
+                                </div>
+                            </div>
+                            <textarea id="faq-draft-answer" name="answer" rows="14" required placeholder="Escribí la respuesta en HTML simple."></textarea>
+                            <span class="char-count"><span id="faq-draft-answer-count">0</span>/∞</span>
+                        </div>
+
+                        <div id="faq-draft-sources" class="form-group" style="display:none;">
+                            <label>Fuentes consultadas por la IA</label>
+                            <ul id="faq-draft-sources-list" style="margin:0;padding-left:20px;color:#5a5a64;font-size:13px;line-height:1.6;"></ul>
+                        </div>
+
+                        <div class="form-actions" style="flex-wrap:wrap;gap:8px;">
+                            <button type="button" id="faq-draft-discard-btn" class="btn btn-danger btn-sm">Descartar</button>
+                            <button type="submit" id="faq-draft-save-btn" class="btn btn-secondary">Guardar cambios</button>
+                            <button type="button" id="faq-draft-publish-btn" class="btn btn-primary">Publicar FAQ</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="preview-panel faq-preview">
+                    <div class="preview-header">
+                        <h2>Vista Previa</h2>
+                        <span class="preview-badge">En vivo</span>
+                    </div>
+                    <div class="preview-content">
+                        <div class="faq-preview-item">
+                            <div class="faq-preview-question">
+                                <span id="faq-draft-preview-question">Tu pregunta aparecerá aquí</span>
+                                <span class="faq-preview-category" id="faq-draft-preview-category">general</span>
+                            </div>
+                            <div class="faq-preview-answer" id="faq-draft-preview-answer">
+                                <p class="placeholder-text">La respuesta aparecerá aquí mientras editás…</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Navigation Toggle -->
             <div class="admin-nav">
                 <button id="show-blog-btn" class="nav-btn active"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Blog</button>
@@ -763,7 +918,7 @@ Más contenido aquí..." rows="20"></textarea>
                 <button id="show-newsletter-btn" class="nav-btn"><img src="../assets/icons/newspaper.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Suscriptores</button>
                 <button id="show-quotes-btn" class="nav-btn"><img src="../assets/icons/dollar-sign.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Cotizaciones</button>
                 <button id="show-siniestros-btn" class="nav-btn"><img src="../assets/icons/siren.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Siniestros</button>
-                <button id="show-drafts-btn" class="nav-btn"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Borradores IA</button>
+                <button id="show-drafts-btn" class="nav-btn"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Borradores</button>
                 <button id="show-client-btn" class="nav-btn"><img src="../assets/icons/user-round.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Clientes</button>
             </div>
         </main>
@@ -840,9 +995,11 @@ Más contenido aquí..." rows="20"></textarea>
     <!-- Blog module: blog CRUD and editor (depends on core) -->
     <script src="admin-blog.js?v=1"></script>
     <!-- Drafts module: AI-generated weekly drafts (depends on core, loads after blog) -->
-    <script src="admin-drafts.js?v=1"></script>
+    <script src="admin-drafts.js?v=2"></script>
     <!-- FAQ module: FAQ CRUD and editor (depends on core, loads after blog) -->
     <script src="admin-faq.js?v=1"></script>
+    <!-- FAQ Drafts module: AI-generated FAQ drafts (depends on core, loads after admin-drafts) -->
+    <script src="admin-faq-drafts.js?v=1"></script>
     <!-- Newsletter module: newsletter subscribers management (depends on core) -->
     <script src="admin-newsletter.js?v=1"></script>
     <!-- Quotes module: quote requests management (depends on core) -->

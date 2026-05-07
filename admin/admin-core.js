@@ -184,7 +184,14 @@ async function loadConfig() {
             UPDATE_DRAFT_API_URL: window.envConfig.get('UPDATE_DRAFT_API_URL'),
             DISCARD_DRAFT_API_URL: window.envConfig.get('DISCARD_DRAFT_API_URL'),
             PUBLISH_DRAFT_API_URL: window.envConfig.get('PUBLISH_DRAFT_API_URL'),
-            GENERATE_DRAFT_API_URL: window.envConfig.get('GENERATE_DRAFT_API_URL')
+            GENERATE_DRAFT_API_URL: window.envConfig.get('GENERATE_DRAFT_API_URL'),
+            SUBMIT_FAQ_HINT_API_URL: window.envConfig.get('SUBMIT_FAQ_HINT_API_URL'),
+            GET_FAQ_HINTS_API_URL: window.envConfig.get('GET_FAQ_HINTS_API_URL'),
+            GET_FAQ_DRAFTS_API_URL: window.envConfig.get('GET_FAQ_DRAFTS_API_URL'),
+            UPDATE_FAQ_DRAFT_API_URL: window.envConfig.get('UPDATE_FAQ_DRAFT_API_URL'),
+            DISCARD_FAQ_DRAFT_API_URL: window.envConfig.get('DISCARD_FAQ_DRAFT_API_URL'),
+            PUBLISH_FAQ_DRAFT_API_URL: window.envConfig.get('PUBLISH_FAQ_DRAFT_API_URL'),
+            GENERATE_FAQ_DRAFT_API_URL: window.envConfig.get('GENERATE_FAQ_DRAFT_API_URL')
         };
 
         // Initialize Supabase client after config is loaded
@@ -380,7 +387,45 @@ const elements = {
     draftPreviewBody: document.getElementById('draft-preview-body'),
     draftPreviewTitle: document.getElementById('draft-preview-title'),
     draftPreviewDescription: document.getElementById('draft-preview-description'),
-    draftSourcesList: document.getElementById('draft-sources-list')
+    draftSourcesList: document.getElementById('draft-sources-list'),
+
+    // Drafts sub-pill toggle (Blog | FAQ)
+    draftsPillBlog: document.getElementById('drafts-pill-blog'),
+    draftsPillFaq: document.getElementById('drafts-pill-faq'),
+    blogDraftsPanel: document.getElementById('blog-drafts-panel'),
+    faqDraftsPanel: document.getElementById('faq-drafts-panel'),
+
+    // FAQ drafts list
+    faqDraftsList: document.getElementById('faq-drafts-list'),
+    faqDraftsLoading: document.getElementById('faq-drafts-loading'),
+    faqDraftsEmpty: document.getElementById('faq-drafts-empty'),
+    refreshFaqDraftsBtn: document.getElementById('refresh-faq-drafts-btn'),
+    generateFaqDraftBtn: document.getElementById('generate-faq-draft-btn'),
+
+    // FAQ topic hint card
+    faqHintForm: document.getElementById('faq-hint-form'),
+    faqHintInput: document.getElementById('faq-hint-input'),
+    faqHintSubmitBtn: document.getElementById('faq-hint-submit-btn'),
+    faqHintCount: document.getElementById('faq-hint-count'),
+    faqHintsList: document.getElementById('faq-hints-list'),
+
+    // FAQ draft editor
+    faqDraftEditorContainer: document.getElementById('faq-draft-editor-container'),
+    faqDraftEditorTitle: document.getElementById('faq-draft-editor-title'),
+    cancelFaqDraftEditBtn: document.getElementById('cancel-faq-draft-edit-btn'),
+    faqDraftForm: document.getElementById('faq-draft-form'),
+    faqDraftQuestion: document.getElementById('faq-draft-question'),
+    faqDraftCategory: document.getElementById('faq-draft-category'),
+    faqDraftAnswer: document.getElementById('faq-draft-answer'),
+    faqDraftSaveBtn: document.getElementById('faq-draft-save-btn'),
+    faqDraftPublishBtn: document.getElementById('faq-draft-publish-btn'),
+    faqDraftDiscardBtn: document.getElementById('faq-draft-discard-btn'),
+    faqDraftQuestionCount: document.getElementById('faq-draft-question-count'),
+    faqDraftAnswerCount: document.getElementById('faq-draft-answer-count'),
+    faqDraftPreviewQuestion: document.getElementById('faq-draft-preview-question'),
+    faqDraftPreviewCategory: document.getElementById('faq-draft-preview-category'),
+    faqDraftPreviewAnswer: document.getElementById('faq-draft-preview-answer'),
+    faqDraftSourcesList: document.getElementById('faq-draft-sources-list')
 };
 
 /* =====================================================
@@ -526,11 +571,16 @@ function showAdminScreen(user, isInitialLoad = false) {
     if (isInitialLoad) {
         updatePreviewDate();
 
-        // Honor deep link from email "Editar en panel" button
+        // Honor deep links from email "Editar en panel" buttons
         const urlParams = new URLSearchParams(window.location.search);
         const deepDraftId = urlParams.get('draft');
         if (deepDraftId && typeof window.openDraftById === 'function') {
             window.openDraftById(deepDraftId);
+            return;
+        }
+        const deepFaqDraftId = urlParams.get('faqDraft');
+        if (deepFaqDraftId && typeof window.openFaqDraftById === 'function') {
+            window.openFaqDraftById(deepFaqDraftId);
             return;
         }
 

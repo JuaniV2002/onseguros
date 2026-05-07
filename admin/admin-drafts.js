@@ -45,6 +45,7 @@ function hideAllOtherSections() {
     if (elements.siniestrosManagement) elements.siniestrosManagement.style.display = 'none';
     if (elements.editorContainer) elements.editorContainer.style.display = 'none';
     if (elements.faqEditorContainer) elements.faqEditorContainer.style.display = 'none';
+    if (elements.faqDraftEditorContainer) elements.faqDraftEditorContainer.style.display = 'none';
 }
 
 function setActiveNavBtn(activeBtn) {
@@ -56,6 +57,9 @@ function showDraftsManagement() {
     hideAllOtherSections();
     if (elements.draftEditorContainer) elements.draftEditorContainer.style.display = 'none';
     elements.draftsManagement.style.display = 'block';
+    // Default sub-pill state: blog. activateBlogPill() lives in admin-faq-drafts.js
+    // which loads after this module — guard so first-load doesn't crash if order changes.
+    if (typeof activateBlogPill === 'function') activateBlogPill();
     setActiveNavBtn(elements.showDraftsBtn);
     document.querySelector('.admin-nav').style.display = 'flex';
 }
@@ -448,6 +452,13 @@ async function generateDraftNow() {
 
 if (elements.showDraftsBtn) {
     elements.showDraftsBtn.addEventListener('click', async () => {
+        // Honor the last-selected pill so reopening the Drafts tab returns
+        // the user to whichever sub-view (Blog | FAQ) they last looked at.
+        const lastPill = (typeof getLastPill === 'function') ? getLastPill() : 'blog';
+        if (lastPill === 'faq' && typeof window.openFaqDraftsTab === 'function') {
+            window.openFaqDraftsTab();
+            return;
+        }
         showDraftsManagement();
         await Promise.all([loadDrafts(true), loadHints()]);
     });
@@ -508,6 +519,7 @@ document.querySelectorAll('.admin-nav .nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         if (elements.draftsManagement) elements.draftsManagement.style.display = 'none';
         if (elements.draftEditorContainer) elements.draftEditorContainer.style.display = 'none';
+        if (elements.faqDraftEditorContainer) elements.faqDraftEditorContainer.style.display = 'none';
     });
 });
 

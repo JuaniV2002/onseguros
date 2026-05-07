@@ -106,7 +106,14 @@ jobs:
             "UPDATE_DRAFT_API_URL": "${{ secrets.UPDATE_DRAFT_API_URL }}",
             "DISCARD_DRAFT_API_URL": "${{ secrets.DISCARD_DRAFT_API_URL }}",
             "PUBLISH_DRAFT_API_URL": "${{ secrets.PUBLISH_DRAFT_API_URL }}",
-            "GENERATE_DRAFT_API_URL": "${{ secrets.GENERATE_DRAFT_API_URL }}"
+            "GENERATE_DRAFT_API_URL": "${{ secrets.GENERATE_DRAFT_API_URL }}",
+            "SUBMIT_FAQ_HINT_API_URL": "${{ secrets.SUBMIT_FAQ_HINT_API_URL }}",
+            "GET_FAQ_HINTS_API_URL": "${{ secrets.GET_FAQ_HINTS_API_URL }}",
+            "GET_FAQ_DRAFTS_API_URL": "${{ secrets.GET_FAQ_DRAFTS_API_URL }}",
+            "UPDATE_FAQ_DRAFT_API_URL": "${{ secrets.UPDATE_FAQ_DRAFT_API_URL }}",
+            "DISCARD_FAQ_DRAFT_API_URL": "${{ secrets.DISCARD_FAQ_DRAFT_API_URL }}",
+            "PUBLISH_FAQ_DRAFT_API_URL": "${{ secrets.PUBLISH_FAQ_DRAFT_API_URL }}",
+            "GENERATE_FAQ_DRAFT_API_URL": "${{ secrets.GENERATE_FAQ_DRAFT_API_URL }}"
           }
           EOF
           echo "config.json created successfully"
