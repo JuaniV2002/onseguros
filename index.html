@@ -437,57 +437,28 @@
 
                     <article class="liveinfo__card liveinfo__card--loading" id="weather-card" aria-busy="true"
                         aria-live="polite">
-                        <header class="liveinfo__head">
-                            <span class="liveinfo__icon" id="weather-icon" aria-hidden="true">🌡️</span>
-                            <div>
-                                <h3 class="liveinfo__title">Río Cuarto</h3>
-                                <p class="liveinfo__subtitle" id="weather-desc">Cargando el clima…</p>
-                            </div>
-                        </header>
-                        <p class="liveinfo__value" id="weather-temp">--°</p>
-                        <ul class="liveinfo__meta">
-                            <li class="liveinfo__meta-item">
-                                <span class="liveinfo__meta-label">Sensación</span>
-                                <span class="liveinfo__meta-value" id="weather-feels">--°</span>
-                            </li>
-                            <li class="liveinfo__meta-item">
-                                <span class="liveinfo__meta-label">Humedad</span>
-                                <span class="liveinfo__meta-value" id="weather-humidity">--%</span>
-                            </li>
-                            <li class="liveinfo__meta-item">
-                                <span class="liveinfo__meta-label">Viento</span>
-                                <span class="liveinfo__meta-value" id="weather-wind">-- km/h</span>
-                            </li>
-                        </ul>
-                        <footer class="liveinfo__foot">
-                            <span id="weather-range">Máx --° · Mín --°</span>
-                            <span id="weather-stamp"></span>
-                        </footer>
+                        <span class="liveinfo__icon" id="weather-icon" aria-hidden="true">🌡️</span>
+                        <div>
+                            <p class="liveinfo__label">Río Cuarto</p>
+                            <p class="liveinfo__value">
+                                <span id="weather-temp">--°</span>
+                                <span class="liveinfo__note" id="weather-desc">Cargando el clima…</span>
+                            </p>
+                        </div>
                     </article>
 
                     <article class="liveinfo__card liveinfo__card--loading" id="dolar-card" aria-busy="true"
                         aria-live="polite">
-                        <header class="liveinfo__head">
-                            <span class="liveinfo__icon" aria-hidden="true">💵</span>
-                            <div>
-                                <h3 class="liveinfo__title">Dólar oficial</h3>
-                                <p class="liveinfo__subtitle">Cotización de referencia</p>
-                            </div>
-                        </header>
-                        <div class="liveinfo__pair">
-                            <div class="liveinfo__quote">
-                                <span class="liveinfo__value" id="dolar-buy">$--</span>
-                                <span class="liveinfo__quote-label">Compra</span>
-                            </div>
-                            <div class="liveinfo__quote">
-                                <span class="liveinfo__value" id="dolar-sell">$--</span>
-                                <span class="liveinfo__quote-label">Venta</span>
-                            </div>
+                        <span class="liveinfo__icon" aria-hidden="true">💵</span>
+                        <div>
+                            <p class="liveinfo__label">Dólar oficial</p>
+                            <p class="liveinfo__value">
+                                <span id="dolar-buy">$--</span>
+                                <span class="liveinfo__note">compra</span>
+                                <span id="dolar-sell">$--</span>
+                                <span class="liveinfo__note">venta</span>
+                            </p>
                         </div>
-                        <footer class="liveinfo__foot">
-                            <span>Fuente: dolarapi.com</span>
-                            <span id="dolar-stamp"></span>
-                        </footer>
                     </article>
 
                 </div>

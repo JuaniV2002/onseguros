@@ -101,14 +101,16 @@
         $('weather-icon').textContent = now.is_day ? dayIcon : (nightIcon || dayIcon);
         $('weather-desc').textContent = desc;
         $('weather-temp').textContent = deg(now.temperature_2m);
-        $('weather-feels').textContent = deg(now.apparent_temperature);
-        $('weather-humidity').textContent = Math.round(now.relative_humidity_2m) + '%';
-        $('weather-wind').textContent = Math.round(now.wind_speed_10m) + ' km/h';
-        $('weather-range').textContent =
-            'Máx ' + deg(data.daily.temperature_2m_max[0]) + ' · Mín ' + deg(data.daily.temperature_2m_min[0]);
 
+        // El detalle va en el tooltip para no agrandar la píldora.
         // now.time ya viene en hora local de Córdoba ("2026-09-01T10:45").
-        $('weather-stamp').textContent = 'Actualizado ' + now.time.slice(11, 16) + ' hs';
+        $('weather-card').title = [
+            'Sensación ' + deg(now.apparent_temperature),
+            'Humedad ' + Math.round(now.relative_humidity_2m) + '%',
+            'Viento ' + Math.round(now.wind_speed_10m) + ' km/h',
+            'Máx ' + deg(data.daily.temperature_2m_max[0]) + ' · Mín ' + deg(data.daily.temperature_2m_min[0]),
+            'Actualizado ' + now.time.slice(11, 16) + ' hs'
+        ].join(' · ');
         ready('weather-card');
     }
 
@@ -118,9 +120,11 @@
         $('dolar-buy').textContent = '$' + pesos.format(data.compra);
         $('dolar-sell').textContent = '$' + pesos.format(data.venta);
 
-        const updated = new Date(data.fechaActualizacion);
         // Se muestra siempre la fecha: el oficial no se mueve sábados, domingos ni feriados.
-        $('dolar-stamp').textContent = isNaN(updated) ? '' : 'Actualizado ' + fechaHora.format(updated).replace(', ', ' ') + ' hs';
+        const updated = new Date(data.fechaActualizacion);
+        $('dolar-card').title = isNaN(updated)
+            ? 'Cotización de referencia'
+            : 'Cotización de referencia · Actualizado ' + fechaHora.format(updated).replace(', ', ' ') + ' hs';
         ready('dolar-card');
     }
 
