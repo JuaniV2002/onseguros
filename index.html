@@ -429,6 +429,71 @@
             </div>
         </section>
 
+        <!-- Live Info: clima de Río Cuarto + dólar oficial (assets/js/live-widgets.js) -->
+        <section class="liveinfo" id="en-vivo" aria-labelledby="liveinfo-heading">
+            <div class="liveinfo__container">
+                <h2 id="liveinfo-heading" class="sr-only">Clima en Río Cuarto y cotización del dólar oficial</h2>
+                <div class="liveinfo__grid">
+
+                    <article class="liveinfo__card liveinfo__card--loading" id="weather-card" aria-busy="true"
+                        aria-live="polite">
+                        <header class="liveinfo__head">
+                            <span class="liveinfo__icon" id="weather-icon" aria-hidden="true">🌡️</span>
+                            <div>
+                                <h3 class="liveinfo__title">Río Cuarto</h3>
+                                <p class="liveinfo__subtitle" id="weather-desc">Cargando el clima…</p>
+                            </div>
+                        </header>
+                        <p class="liveinfo__value" id="weather-temp">--°</p>
+                        <ul class="liveinfo__meta">
+                            <li class="liveinfo__meta-item">
+                                <span class="liveinfo__meta-label">Sensación</span>
+                                <span class="liveinfo__meta-value" id="weather-feels">--°</span>
+                            </li>
+                            <li class="liveinfo__meta-item">
+                                <span class="liveinfo__meta-label">Humedad</span>
+                                <span class="liveinfo__meta-value" id="weather-humidity">--%</span>
+                            </li>
+                            <li class="liveinfo__meta-item">
+                                <span class="liveinfo__meta-label">Viento</span>
+                                <span class="liveinfo__meta-value" id="weather-wind">-- km/h</span>
+                            </li>
+                        </ul>
+                        <footer class="liveinfo__foot">
+                            <span id="weather-range">Máx --° · Mín --°</span>
+                            <span id="weather-stamp"></span>
+                        </footer>
+                    </article>
+
+                    <article class="liveinfo__card liveinfo__card--loading" id="dolar-card" aria-busy="true"
+                        aria-live="polite">
+                        <header class="liveinfo__head">
+                            <span class="liveinfo__icon" aria-hidden="true">💵</span>
+                            <div>
+                                <h3 class="liveinfo__title">Dólar oficial</h3>
+                                <p class="liveinfo__subtitle">Cotización de referencia</p>
+                            </div>
+                        </header>
+                        <div class="liveinfo__pair">
+                            <div class="liveinfo__quote">
+                                <span class="liveinfo__value" id="dolar-buy">$--</span>
+                                <span class="liveinfo__quote-label">Compra</span>
+                            </div>
+                            <div class="liveinfo__quote">
+                                <span class="liveinfo__value" id="dolar-sell">$--</span>
+                                <span class="liveinfo__quote-label">Venta</span>
+                            </div>
+                        </div>
+                        <footer class="liveinfo__foot">
+                            <span>Fuente: dolarapi.com</span>
+                            <span id="dolar-stamp"></span>
+                        </footer>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
         <!-- About Section -->
         <section class="about" id="nosotros" aria-labelledby="about-heading">
             <div class="about__container">
@@ -831,6 +896,7 @@
     <script src="assets/js/env-config.js"></script>
     <script defer src="components/component-loader.js?v=2"></script>
     <script defer src="assets/js/script.js"></script>
+    <script defer src="assets/js/live-widgets.js"></script>
     <script>
         // Initialize env config before other scripts use it
         window.envConfig = new EnvConfig();

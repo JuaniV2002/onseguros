@@ -3034,3 +3034,176 @@ ol {
         display: none;
     }
 }
+
+/* ==========================================================================
+   Live Info — clima de Río Cuarto + dólar oficial
+   ========================================================================== */
+
+.liveinfo {
+    padding: var(--space-4xl) 0 0;
+    background-color: var(--bg-primary);
+}
+
+.liveinfo__container {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.liveinfo__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--space-xl);
+}
+
+.liveinfo__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    background-color: var(--surface-raised);
+    background-image: var(--card-gradient);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--effect-raised);
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.liveinfo__card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-normal);
+}
+
+.liveinfo__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--effect-raised-hover);
+}
+
+.liveinfo__card:hover::before {
+    transform: scaleX(1);
+}
+
+.liveinfo__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.liveinfo__icon {
+    font-size: var(--font-size-4xl);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.liveinfo__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.liveinfo__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.liveinfo__value {
+    display: block;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--primary-600);
+    font-variant-numeric: tabular-nums;
+}
+
+.liveinfo__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+}
+
+.liveinfo__meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.liveinfo__meta-label,
+.liveinfo__quote-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+}
+
+.liveinfo__meta-value {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.liveinfo__pair {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xl);
+}
+
+.liveinfo__quote {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.liveinfo__quote .liveinfo__value {
+    font-size: var(--font-size-3xl);
+}
+
+.liveinfo__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: auto;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-light);
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+/* Estado de carga: los números laten hasta que llegan los datos */
+.liveinfo__card--loading .liveinfo__value,
+.liveinfo__card--loading .liveinfo__meta-value,
+.liveinfo__card--loading #weather-range {
+    animation: liveinfo-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes liveinfo-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.15; }
+}
+
+@media (max-width: 480px) {
+    .liveinfo__meta {
+        gap: var(--space-md);
+    }
+
+    .liveinfo__pair {
+        gap: var(--space-xl);
+    }
+}
