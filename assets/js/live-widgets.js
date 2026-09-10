@@ -1,10 +1,11 @@
 /**
  * OnSeguros — Widgets en vivo: clima de Río Cuarto y dólar oficial.
  *
- * Fuentes públicas, sin API key ni backend propio:
- *   - Open-Meteo (clima)  https://open-meteo.com
- *   - dolarAPI   (dólar)  https://dolarapi.com
- * Ambas responden con CORS abierto, así que se consultan directo desde el navegador.
+ * Clima: Servicio Meteorológico Nacional, vía la edge function get-clima-api
+ *        (el open data del SMN viene en un ZIP sin CORS, así que no se puede
+ *        leer directo desde el navegador).
+ * Dólar: dolarAPI /dolares/oficial, que replica la pizarra de Banco Nación.
+ *        `venta` es el tipo vendedor.
  */
 
 'use strict';
@@ -13,54 +14,31 @@
     const REFRESH_MS = 10 * 60 * 1000;
     const TZ = 'America/Argentina/Cordoba';
 
-    // Río Cuarto, Córdoba
-    const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast'
-        + '?latitude=-33.1307&longitude=-64.3499'
-        + '&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day'
-        + '&daily=temperature_2m_max,temperature_2m_min&forecast_days=1'
-        + '&timezone=' + encodeURIComponent(TZ);
-
     const DOLAR_URL = 'https://dolarapi.com/v1/dolares/oficial';
 
-    // Códigos WMO → [descripción, ícono de día, ícono de noche (opcional)]
-    const WMO = {
-        0: ['Despejado', '☀️', '🌙'],
-        1: ['Mayormente despejado', '🌤️', '🌙'],
-        2: ['Parcialmente nublado', '⛅', '☁️'],
-        3: ['Nublado', '☁️'],
-        45: ['Niebla', '🌫️'],
-        48: ['Niebla con escarcha', '🌫️'],
-        51: ['Llovizna leve', '🌦️'],
-        53: ['Llovizna', '🌦️'],
-        55: ['Llovizna intensa', '🌧️'],
-        56: ['Llovizna helada', '🌧️'],
-        57: ['Llovizna helada', '🌧️'],
-        61: ['Lluvia leve', '🌦️'],
-        63: ['Lluvia', '🌧️'],
-        65: ['Lluvia intensa', '🌧️'],
-        66: ['Lluvia helada', '🌧️'],
-        67: ['Lluvia helada', '🌧️'],
-        71: ['Nevada leve', '🌨️'],
-        73: ['Nevada', '🌨️'],
-        75: ['Nevada intensa', '❄️'],
-        77: ['Aguanieve', '🌨️'],
-        80: ['Chaparrones', '🌦️'],
-        81: ['Chaparrones', '🌧️'],
-        82: ['Chaparrones fuertes', '⛈️'],
-        85: ['Chaparrones de nieve', '🌨️'],
-        86: ['Chaparrones de nieve', '🌨️'],
-        95: ['Tormenta', '⛈️'],
-        96: ['Tormenta con granizo', '⛈️'],
-        99: ['Tormenta con granizo', '⛈️']
-    };
+    // Estados del SMN → [ícono de día, ícono de noche]. Se evalúa en orden:
+    // "Nublado con tormenta sin precipitación" tiene que caer en tormenta,
+    // no en nublado.
+    const ICONOS = [
+        [/tormenta|graniz/i, '⛈️', '⛈️'],
+        [/nieve|nevada|aguanieve/i, '🌨️', '🌨️'],
+        // Ojo: no se matchea "precipitación" suelto. Los dos estados del SMN que la
+        // nombran son "tormenta sin precipitación" (ya cae en tormenta arriba) y
+        // "precipitación a la vista", que es lluvia a lo lejos, no sobre la ciudad.
+        [/llovizna|lluvia|chaparr/i, '🌧️', '🌧️'],
+        [/niebla|neblina|bruma|humo|polvo/i, '🌫️', '🌫️'],
+        [/parcialmente nublado|algo nublado/i, '⛅', '☁️'],
+        [/cubierto|nublado/i, '☁️', '☁️'],
+        [/despejado|claro/i, '☀️', '🌙']
+    ];
 
     const pesos = new Intl.NumberFormat('es-AR', { maximumFractionDigits: 2 });
+    const grados = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     const fechaHora = new Intl.DateTimeFormat('es-AR', {
         day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: TZ
     });
 
     const $ = (id) => document.getElementById(id);
-    const deg = (v) => Math.round(v) + '°';
 
     // Una vez que una tarjeta cargó bien, un fallo posterior deja los últimos
     // datos a la vista en lugar de esconder la tarjeta.
@@ -93,43 +71,59 @@
         }
     }
 
-    async function renderWeather() {
-        const data = await getJSON(WEATHER_URL);
-        const now = data.current;
-        const [desc, dayIcon, nightIcon] = WMO[now.weather_code] || ['Sin datos', '🌡️'];
+    /** Ícono según el estado del SMN, de día o de noche según la hora del dato. */
+    function icono(estado, hora) {
+        const h = parseInt(String(hora || '').slice(0, 2), 10);
+        const esDia = !Number.isFinite(h) || (h >= 7 && h < 19);
+        for (const [re, dia, noche] of ICONOS) {
+            if (re.test(estado || '')) return esDia ? dia : noche;
+        }
+        return '🌡️';
+    }
 
-        $('weather-icon').textContent = now.is_day ? dayIcon : (nightIcon || dayIcon);
-        $('weather-desc').textContent = desc;
-        $('weather-temp').textContent = deg(now.temperature_2m);
+    async function renderClima() {
+        const config = await window.envConfig.load();
+        const base = config.API_BASE_URL;
+        if (!base) throw new Error('falta API_BASE_URL en config.json');
+
+        const d = await getJSON(base + '/get-clima-api?t=' + Date.now());
+        if (d.error) throw new Error('get-clima-api: ' + d.error);
+
+        $('weather-icon').textContent = icono(d.estado, d.hora);
+        $('weather-desc').textContent = d.estado || '';
+        $('weather-temp').textContent = d.temperatura === null ? '--°' : grados.format(d.temperatura) + '°';
 
         // El detalle va en el tooltip para no agrandar la píldora.
-        // now.time ya viene en hora local de Córdoba ("2026-09-01T10:45").
-        $('weather-card').title = [
-            'Sensación ' + deg(now.apparent_temperature),
-            'Humedad ' + Math.round(now.relative_humidity_2m) + '%',
-            'Viento ' + Math.round(now.wind_speed_10m) + ' km/h',
-            'Máx ' + deg(data.daily.temperature_2m_max[0]) + ' · Mín ' + deg(data.daily.temperature_2m_min[0]),
-            'Actualizado ' + now.time.slice(11, 16) + ' hs'
-        ].join(' · ');
+        const detalle = [];
+        if (d.sensacion !== null && d.sensacion !== undefined) detalle.push('Sensación ' + grados.format(d.sensacion) + '°');
+        if (d.humedad !== null) detalle.push('Humedad ' + Math.round(d.humedad) + '%');
+        if (d.viento && d.viento.velocidad) detalle.push('Viento ' + d.viento.direccion + ' ' + Math.round(d.viento.velocidad) + ' km/h');
+        else if (d.viento && d.viento.direccion) detalle.push('Viento ' + d.viento.direccion);
+        if (d.visibilidad) detalle.push('Visibilidad ' + d.visibilidad);
+        if (d.presion !== null) detalle.push('Presión ' + Math.round(d.presion) + ' hPa');
+        if (d.hora) detalle.push('Medición de las ' + d.hora + ' hs');
+        if (d.obsoleto) detalle.push('(el SMN no responde, último dato disponible)');
+        $('weather-card').title = detalle.join(' · ');
+
         ready('weather-card');
     }
 
     async function renderDolar() {
-        const data = await getJSON(DOLAR_URL);
+        const d = await getJSON(DOLAR_URL);
 
-        $('dolar-buy').textContent = '$' + pesos.format(data.compra);
-        $('dolar-sell').textContent = '$' + pesos.format(data.venta);
+        $('dolar-buy').textContent = '$' + pesos.format(d.compra);
+        $('dolar-sell').textContent = '$' + pesos.format(d.venta);
 
         // Se muestra siempre la fecha: el oficial no se mueve sábados, domingos ni feriados.
-        const updated = new Date(data.fechaActualizacion);
-        $('dolar-card').title = isNaN(updated)
-            ? 'Cotización de referencia'
-            : 'Cotización de referencia · Actualizado ' + fechaHora.format(updated).replace(', ', ' ') + ' hs';
+        const updated = new Date(d.fechaActualizacion);
+        $('dolar-card').title = 'Pizarra de Banco Nación · venta = tipo vendedor'
+            + (isNaN(updated) ? '' : ' · Actualizado ' + fechaHora.format(updated).replace(', ', ' ') + ' hs');
+
         ready('dolar-card');
     }
 
     function tick() {
-        renderWeather().catch((e) => fail('weather-card', e));
+        renderClima().catch((e) => fail('weather-card', e));
         renderDolar().catch((e) => fail('dolar-card', e));
     }
 
