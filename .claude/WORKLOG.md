@@ -15,3 +15,9 @@
 - pushed: solo el commit de teléfonos (03a0660) a master. Local estaba 88 commits atrás (todos del bot de sitemap): rebase sobre origin/master y cherry-pick del commit de teléfonos para no arrastrar los widgets. Deploy OK, verificado en producción.
 - state: done y en producción.
 - next: los widgets de clima/dólar siguen locales esperando ajustes de Mariano. OJO: `.claude/` no está en los excludes del rsync de deploy.yml — al pushear los widgets, el WORKLOG queda público en onseguros.net/.claude/WORKLOG.md.
+
+## 2026-09-10 — clima desde el SMN + dólar etiquetado como BNA
+- done: `.claude` agregado a los excludes del rsync (8bcd10f). Nueva edge function `supabase/functions/get-clima-api` que baja el ZIP del open data del SMN, lo infla con DecompressionStream (sin librería de zip) y sirve la línea de Río Cuarto como JSON. `live-widgets.js` reescrito para consumirla vía `API_BASE_URL` (no hizo falta clave nueva en config.json). Etiquetas: "Río Cuarto · SMN" y "Dólar oficial · Banco Nación".
+- Verificado: dolarapi `oficial` == pizarra de bna.com.ar exacto (1485/1535), así que el dólar ya era BNA, solo faltaba decirlo. Íconos probados contra los 20 estados que publicó el SMN hoy.
+- state: BLOQUEADO para deployar — el CLI de supabase de esta máquina está logueado en otra cuenta y da 403 en el proyecto tgokvwuiiglioegxgcpu.
+- next: deployar con `supabase functions deploy get-clima-api --no-verify-jwt --project-ref tgokvwuiiglioegxgcpu` desde la cuenta de Mariano, verificar el endpoint, recién ahí pushear (si no, la píldora del clima se oculta sola en producción).
