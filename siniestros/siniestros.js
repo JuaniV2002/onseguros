@@ -116,10 +116,10 @@
         const idleEl = document.getElementById('photo-drop-idle');
         if (idleEl) {
             idleEl.innerHTML =
-                '<span style="font-size:var(--font-size-sm);color:var(--text-secondary)">' +
+                '<span class="photo-drop-zone__count">' +
                 selectedFiles.length + ' / ' + MAX_PHOTOS + ' fotos seleccionadas</span>' +
                 (selectedFiles.length < MAX_PHOTOS
-                    ? '<span style="font-size:var(--font-size-sm);color:var(--primary-600);font-weight:500">+ Agregar más</span>'
+                    ? '<span class="photo-add-more">+ Agregar más</span>'
                     : '');
         }
     }

@@ -49,14 +49,13 @@
     <meta name="twitter:image:alt" content="Preguntas Frecuentes - OnSeguros">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="../assets/css/style.css?v=4" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style">
     
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css?v=4">
-    <link rel="stylesheet" href="../components/accordion.css">
-    <link rel="stylesheet" href="faq.css?v=2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=6">
+    <link rel="stylesheet" href="../components/accordion.css?v=2">
+    <link rel="stylesheet" href="faq.css?v=3">
     
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -166,52 +165,58 @@
                 <p class="faq-header__description">Encuentra respuestas a todas tus dudas sobre seguros integrales, ART, agrícolas y de vehículos.</p>
             </header>
 
-            <!-- Search Bar -->
-            <div class="faq-search is-loading">
-                <img src="../assets/icons/search.svg" alt="search icon">
-                <input 
-                    type="search" 
-                    class="faq-search__input" 
-                    id="faq-search"
-                    placeholder="Buscar una pregunta..."
-                    aria-label="Buscar preguntas frecuentes">
-            </div>
+            <div class="faq-layout">
+                <div class="faq-tools">
+                    <!-- Search Bar -->
+                    <div class="faq-search is-loading">
+                        <img src="../assets/icons/search.svg" alt="search icon">
+                        <input 
+                            type="search" 
+                            class="faq-search__input" 
+                            id="faq-search"
+                            placeholder="Buscar una pregunta..."
+                            aria-label="Buscar preguntas frecuentes">
+                    </div>
 
-            <!-- Category Filter Chips -->
-            <div class="faq-categories is-loading">
-                <button class="faq-category-chip active" data-category="all">
-                    Todas
-                </button>
-                <button class="faq-category-chip category-general" data-category="general">
-                    General
-                </button>
-                <button class="faq-category-chip category-cobertura" data-category="cobertura">
-                    Coberturas
-                </button>
-                <button class="faq-category-chip category-cotizacion" data-category="cotizacion">
-                    Cotización
-                </button>
-                <button class="faq-category-chip category-art" data-category="art">
-                    ART
-                </button>
-                <button class="faq-category-chip category-siniestro" data-category="siniestro">
-                    Siniestros
-                </button>
-                <button class="faq-category-chip category-vehiculos" data-category="vehiculos">
-                    Vehículos
-                </button>
-            </div>
+                    <!-- Category Filter Chips -->
+                    <div class="faq-categories is-loading">
+                        <button class="faq-category-chip active" data-category="all">
+                            Todas
+                        </button>
+                        <button class="faq-category-chip category-general" data-category="general">
+                            General
+                        </button>
+                        <button class="faq-category-chip category-cobertura" data-category="cobertura">
+                            Coberturas
+                        </button>
+                        <button class="faq-category-chip category-cotizacion" data-category="cotizacion">
+                            Cotización
+                        </button>
+                        <button class="faq-category-chip category-art" data-category="art">
+                            ART
+                        </button>
+                        <button class="faq-category-chip category-siniestro" data-category="siniestro">
+                            Siniestros
+                        </button>
+                        <button class="faq-category-chip category-vehiculos" data-category="vehiculos">
+                            Vehículos
+                        </button>
+                    </div>
+                </div>
 
-            <!-- FAQ List -->
-            <div class="faq-list accordion-list" id="faq-list"></div>
+                <div class="faq-results">
+                    <!-- FAQ List -->
+                    <div class="faq-list accordion-list" id="faq-list"></div>
 
-            <!-- Empty State (shown when no FAQs) -->
-            <div class="faq-empty" id="faq-empty" aria-live="polite"></div>
+                    <!-- Empty State (shown when no FAQs) -->
+                    <div class="faq-empty" id="faq-empty" aria-live="polite"></div>
 
-            <!-- No Results Message -->
-            <div class="faq-no-results" id="no-results">
-                <p>No se encontraron preguntas que coincidan con tu búsqueda.</p>
-                <p>Por favor, intenta con otros términos o contactanos directamente.</p>
+                    <!-- No Results Message -->
+                    <div class="faq-no-results" id="no-results">
+                        <p>No se encontraron preguntas que coincidan con tu búsqueda.</p>
+                        <p>Por favor, intenta con otros términos o contactanos directamente.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Contact Cards -->
@@ -244,9 +249,9 @@
 
     <!-- Scripts -->
     <script src="../assets/js/env-config.js?v=2"></script>
-    <script src="../components/component-loader.js?v=2"></script>
+    <script src="../components/component-loader.js?v=3"></script>
     <script src="../components/accordion.js"></script>
-    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js?v=2"></script>
     <script src="faq.js?v=2"></script>
 </body>
 </html>

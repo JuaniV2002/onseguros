@@ -184,7 +184,7 @@ function injectContactForm() {
     formRow.innerHTML = `
         <div class="chat-avatar" aria-hidden="true">O</div>
         <div class="chat-bubble chat-bubble--agent chat-contact-form">
-            <p class="chat-contact-form__title">Para recibir la cotización, dejame tus datos 👇</p>
+            <p class="chat-contact-form__title">Para recibir la cotización, dejame tus datos</p>
             <div class="chat-contact-form__field">
                 <label for="contact-name">Nombre y apellido *</label>
                 <input type="text" id="contact-name" placeholder="Juan García" autocomplete="name" required>
@@ -200,7 +200,7 @@ function injectContactForm() {
             <p class="chat-contact-form__hint">Completá al menos el teléfono o el email.</p>
             <p class="chat-contact-form__error" id="contact-form-error" hidden></p>
             <button type="button" class="chat-contact-form__btn" id="contact-submit-btn">
-                Enviar mis datos 📩
+                Enviar mis datos
             </button>
         </div>
     `;
@@ -285,7 +285,7 @@ async function handleContactSubmit() {
 
     } catch (err) {
         console.error('Error submitting contact form:', err);
-        submitBtn.textContent = 'Enviar mis datos 📩';
+        submitBtn.textContent = 'Enviar mis datos';
         submitBtn.disabled = false;
         errorEl.textContent = 'Hubo un error al enviar tus datos. Por favor intentá de nuevo.';
         errorEl.hidden = false;

@@ -274,11 +274,7 @@ class Navigation {
     updateHeaderBackground() {
         const currentScrollY = window.scrollY;
         
-        if (currentScrollY > 50) {
-            this.header.style.boxShadow = 'var(--shadow-md)';
-        } else {
-            this.header.style.boxShadow = 'none';
-        }
+        this.header.classList.toggle('header--scrolled', currentScrollY > 50);
     }
 
     toggleMobileMenu() {
@@ -748,107 +744,6 @@ class ServiceWorkerManager {
 // Application Initialization
 // ==========================================================================
 
-class HeroAnimations {
-    constructor() {
-        this.hero = document.querySelector('.hero');
-        this.heroBackground = document.querySelector('.hero__background');
-        this.visualCards = document.querySelectorAll('.hero__visual-card');
-        
-        if (!this.hero) return;
-        
-        this.init();
-    }
-
-    init() {
-        // Add parallax effect on mouse move for desktop
-        if (window.innerWidth >= 1024) {
-            this.hero.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        }
-
-        // Add scroll-based parallax for background
-        window.addEventListener('scroll', Utils.throttle(() => this.handleScroll(), 50));
-        
-        // Pause/resume animations based on visibility
-        this.setupIntersectionObserver();
-    }
-
-    handleMouseMove(e) {
-        const rect = this.hero.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        
-        // Move visual cards with parallax effect
-        this.visualCards.forEach((card, index) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardCenterX = cardRect.left + cardRect.width / 2;
-            const cardCenterY = cardRect.top + cardRect.height / 2;
-            
-            // Calculate distance from mouse to card center
-            const deltaX = e.clientX - cardCenterX;
-            const deltaY = e.clientY - cardCenterY;
-            
-            // Base depth for general parallax
-            const depth = (index + 1) * 10;
-            const baseX = x * depth;
-            const baseY = y * depth;
-            
-            // Add magnetic effect when hovering near the card
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const maxDistance = 300; // pixels within which the effect is active
-            
-            if (distance < maxDistance) {
-                const strength = 1 - (distance / maxDistance); // 1 at center, 0 at maxDistance
-                const magneticX = (deltaX / distance) * strength * 20; // 20px max movement
-                const magneticY = (deltaY / distance) * strength * 20;
-                
-                card.style.transform = `translate(${baseX + magneticX}px, ${baseY + magneticY}px)`;
-            } else {
-                card.style.transform = `translate(${baseX}px, ${baseY}px)`;
-            }
-        });
-    }
-
-    handleScroll() {
-        if (!this.heroBackground) return;
-        
-        const scrolled = window.scrollY;
-        const heroHeight = this.hero.offsetHeight;
-        
-        // Only apply parallax while hero is visible
-        if (scrolled < heroHeight) {
-            const parallaxAmount = scrolled * 0.5;
-            this.heroBackground.style.transform = `translateY(${parallaxAmount}px)`;
-        }
-    }
-
-    setupIntersectionObserver() {
-        const options = {
-            threshold: 0.1,
-            rootMargin: '0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Resume animations when hero is visible
-                    this.visualCards.forEach(card => {
-                        card.style.animationPlayState = 'running';
-                    });
-                } else {
-                    // Pause animations when hero is not visible (performance optimization)
-                    this.visualCards.forEach(card => {
-                        card.style.animationPlayState = 'paused';
-                    });
-                }
-            });
-        }, options);
-
-        if (this.hero) {
-            observer.observe(this.hero);
-        }
-    }
-}
-
 class SecureGuardApp {
     constructor() {
         this.components = [];
@@ -877,7 +772,6 @@ class SecureGuardApp {
             // Initialize all components
             this.components.push(new ThemeToggle());
             this.components.push(new Navigation());
-            this.components.push(new HeroAnimations());
             this.components.push(new NewsletterFormValidator('#newsletter-form'));
             this.components.push(new ScrollAnimations());
             this.components.push(new AccessibilityEnhancements());

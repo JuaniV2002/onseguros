@@ -1,40 +1,46 @@
 <style>
     /* ==========================================================================
-       Footer
+       Footer — flat, opens with the 2px rule used by landing sections
        ========================================================================== */
 
     .footer {
-        padding: var(--space-4xl) var(--space-lg) var(--space-xl);
+        padding: var(--space-4xl) 0 var(--space-xl);
         margin-top: auto;
     }
 
     .footer__container {
         max-width: var(--container-xl);
         margin: 0 auto;
-        background: var(--surface-raised);
-        border-radius: var(--radius-xl);
-        padding: var(--space-4xl) var(--space-2xl) var(--space-2xl);
-        border: 1px solid var(--border-light);
-        box-shadow: var(--effect-raised);
-        transition: background var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+        padding: 0 var(--space-md);
     }
 
-    [data-theme="dark"] .footer__container {
-        background: var(--surface-overlay);
-        border: 1px solid var(--border-medium);
+    @media (min-width: 640px) {
+        .footer__container {
+            padding-left: var(--space-lg);
+            padding-right: var(--space-lg);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .footer__container {
+            padding-left: var(--space-xl);
+            padding-right: var(--space-xl);
+        }
     }
 
     .footer__content {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
         gap: var(--space-3xl);
+        padding-top: var(--space-2xl);
         margin-bottom: var(--space-3xl);
+        border-top: 2px solid var(--rule-strong);
     }
 
     .footer__section {
         display: flex;
         flex-direction: column;
-        gap: var(--space-lg);
+        gap: var(--space-md);
     }
 
     .footer__brand {
@@ -47,52 +53,44 @@
     .footer__logo {
         display: flex;
         align-items: center;
-        gap: var(--space-sm);
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--primary-600);
+        align-self: flex-start;
         text-decoration: none;
-        transition: opacity var(--transition-fast);
-    }
-
-    .footer__logo:hover {
-        opacity: 0.8;
     }
 
     .footer__logo:focus-visible {
-        outline: 2px solid var(--primary-600);
+        outline: 2px solid var(--focus-ring);
         outline-offset: 2px;
         border-radius: var(--radius-sm);
     }
 
-    .footer__logo-text {
-        color: var(--text-primary);
-    }
-
     .footer__title {
-        font-size: var(--font-size-lg);
+        font-family: 'Inter', sans-serif;
+        font-size: var(--font-size-xs);
         font-weight: var(--font-weight-semibold);
-        color: var(--text-primary);
-        margin-bottom: var(--space-xs);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin: 0;
     }
 
     .footer__description {
         color: var(--text-secondary);
         line-height: 1.6;
         font-size: var(--font-size-sm);
+        max-width: 40ch;
     }
 
     .footer__links {
         display: flex;
         flex-direction: column;
-        gap: var(--space-md);
+        gap: var(--space-xs);
         list-style: none;
         padding: 0;
         margin: 0;
     }
 
     .footer__link {
-        color: var(--text-secondary);
+        color: var(--text-primary);
         text-decoration: none;
         font-size: var(--font-size-sm);
         transition: color var(--transition-fast);
@@ -100,24 +98,21 @@
         display: inline-block;
     }
 
-    .footer__link:hover,
-    .footer__link:focus {
-        color: var(--primary-600);
+    .footer__link:hover {
+        color: var(--link);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
     }
 
     .footer__link:focus-visible {
-        outline: 2px solid var(--primary-600);
+        outline: 2px solid var(--focus-ring);
         outline-offset: 2px;
         border-radius: var(--radius-sm);
     }
 
     .footer__bottom {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: var(--space-lg);
-        border-top: 1px solid var(--border-light);
-        flex-wrap: wrap;
+        flex-direction: column;
         gap: var(--space-lg);
     }
 
@@ -128,30 +123,53 @@
         flex-wrap: wrap;
         gap: var(--space-lg);
         width: 100%;
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--rule);
     }
 
     .footer__copyright {
         width: 100%;
-        text-align: center;
         padding-top: var(--space-lg);
-        border-top: 1px solid var(--border-light);
+        border-top: 1px solid var(--rule);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-lg);
     }
 
     .footer__copyright p {
         margin: 0;
         color: var(--text-secondary);
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xs);
     }
 
+    .footer__credit a {
+        color: var(--link);
+        text-decoration: none;
+    }
+
+    .footer__credit a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+
+    .footer__credit a:focus-visible {
+        outline: 2px solid var(--focus-ring);
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+    }
+
+    /* Safety reminder: brand-blue icons, ink text */
     .footer__safety {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
         gap: var(--space-sm);
         margin-top: auto;
-        color: var(--primary-600);
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-medium);
+        padding-top: var(--space-md);
+        color: var(--text-primary);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-semibold);
     }
 
     .footer__safety-icons {
@@ -164,61 +182,12 @@
         width: 20px;
         height: 20px;
         filter: brightness(0) saturate(100%) invert(46%) sepia(88%) saturate(2618%) hue-rotate(207deg) brightness(99%) contrast(93%);
-        opacity: 0.9;
-        transition: opacity var(--transition-fast);
-    }
-
-    .footer__safety:hover .footer__safety-icon {
-        opacity: 1;
-    }
-
-    .footer__legal {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-md);
-        font-size: var(--font-size-sm);
-    }
-
-    .footer__legal p {
-        margin: 0;
-        color: var(--text-secondary);
     }
 
     .footer__legal-links {
         display: flex;
         gap: var(--space-xl);
         flex-wrap: wrap;
-    }
-
-    .footer__social {
-        display: flex;
-        gap: var(--space-md);
-    }
-
-    .social-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        min-width: 44px;
-        min-height: 44px;
-        border-radius: var(--radius-full);
-        background-color: var(--bg-secondary);
-        color: var(--text-secondary);
-        transition: all var(--transition-fast);
-        text-decoration: none;
-    }
-
-    .social-link:hover {
-        background-color: var(--primary-600);
-        color: #ffffff;
-        transform: translateY(-2px);
-    }
-
-    .social-link:focus-visible {
-        outline: 2px solid var(--primary-600);
-        outline-offset: 2px;
     }
 
     /* ==========================================================================
@@ -263,11 +232,11 @@
         height: 28px;
         min-width: 52px;
         min-height: 28px;
-        background-color: var(--primary-600);
+        background-color: var(--brand-blue);
         border-radius: var(--radius-full);
         cursor: pointer;
         transition: background-color var(--transition-normal);
-        border: 2px solid var(--primary-500);
+        border: 2px solid var(--brand-blue);
         display: inline-block;
     }
 
@@ -279,12 +248,13 @@
     }
 
     .theme-toggle__switch:focus {
-        outline: 2px solid var(--primary-600);
+        outline: 2px solid var(--focus-ring);
         outline-offset: 2px;
     }
 
     .theme-toggle__switch:hover {
-        background-color: var(--primary-700);
+        background-color: var(--brand-blue-hover);
+        border-color: var(--brand-blue-hover);
     }
 
     .theme-toggle__slider {
@@ -310,7 +280,6 @@
         background-color: #fff;
         transition: var(--transition-normal);
         border-radius: var(--radius-full);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .theme-toggle__switch input:checked+.theme-toggle__slider:before {
@@ -318,7 +287,7 @@
     }
 
     .theme-toggle__switch input:focus-visible+.theme-toggle__slider {
-        outline: 2px solid var(--primary-600);
+        outline: 2px solid var(--focus-ring);
         outline-offset: 2px;
     }
 
@@ -350,12 +319,7 @@
 
     @media (max-width: 639px) {
         .footer {
-            padding: var(--space-2xl) 0 var(--space-lg);
-        }
-
-        .footer__container {
-            margin-left: var(--space-md);
-            margin-right: var(--space-md);
+            padding: var(--space-3xl) 0 var(--space-lg);
         }
 
         .footer__content {
@@ -365,14 +329,11 @@
 
         .footer__bottom-content {
             flex-direction: column;
-            text-align: center;
-            justify-content: center;
+            align-items: flex-start;
         }
 
         .footer__legal-links {
-            flex-direction: column;
-            gap: var(--space-sm);
-            align-items: center;
+            gap: var(--space-lg);
         }
     }
 </style>
@@ -453,10 +414,8 @@
             </div>
             <div class="footer__copyright">
                 <p>&copy; 2026 OnSeguros. Todos los derechos reservados.</p>
-                <p style="margin-top: var(--space-sm); font-size: var(--font-size-xs); opacity: 0.7;">
-                    Diseñado y desarrollado por <a href="https://juani.me" target="_blank" rel="noopener noreferrer"
-                        style="color: var(--primary-600); text-decoration: none; transition: opacity var(--transition-fast);"
-                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Juani Villanueva</a>
+                <p class="footer__credit">
+                    Diseñado y desarrollado por <a href="https://juani.me" target="_blank" rel="noopener noreferrer">Juani Villanueva</a>
                 </p>
             </div>
         </div>
