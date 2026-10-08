@@ -26,3 +26,8 @@
 - done: `get-clima-api` deployada (el error de Mariano era estar parado en `~` en vez del repo). Pusheados los 7 commits. Bug encontrado al verificar: Cloudflare cachea `style.css` con max-age=14400, así que los widgets salieron sin estilos — se versionaron las 18 referencias a `style.css?v=3` (mismo patrón que el `?v=2` de component-loader).
 - state: done. Verificado en vivo: píldoras con estilos, clima del SMN, dólar BNA, tel nuevo, wa.me viejo, `.claude` da 404.
 - next: nada pendiente. Si se toca el CSS y hace falta que se vea ya, subir el `?v=`.
+
+## 2026-10-08 — rediseño de la landing (sacarle el "look IA")
+- done: commit 30c2f54 en rama `landing-redesign` (NO en master). Bloque CSS nuevo al final de style.css, todo bajo `body.landing`; hero con índice 01–03 en vez de tarjetas flotantes, servicios en filas, testimonio destacado, sin gradientes/glows/fade-ins. style.css → ?v=4 en 11 HTML. Copy sin cambios.
+- state: reviewer limpio, QA PASS (4 anchos × claro/oscuro, teclado, reduced-motion, otras páginas iguales). Esperando que Mariano lo vea.
+- next: si aprueba → merge a master + push. Pendiente de decisión: botón con gradiente "Cotizá con Oni" del header (header quedó fuera de alcance). Deuda chica: HeroAnimations en script.js:751-845 ahora es código muerto; `.btn--primary` global no pasa AA (style.css:635); style.css duplicado en faq/ y siniestros/.
