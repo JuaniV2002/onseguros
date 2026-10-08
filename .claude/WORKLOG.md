@@ -31,3 +31,8 @@
 - done: commit 30c2f54 en rama `landing-redesign` (NO en master). Bloque CSS nuevo al final de style.css, todo bajo `body.landing`; hero con índice 01–03 en vez de tarjetas flotantes, servicios en filas, testimonio destacado, sin gradientes/glows/fade-ins. style.css → ?v=4 en 11 HTML. Copy sin cambios.
 - state: reviewer limpio, QA PASS (4 anchos × claro/oscuro, teclado, reduced-motion, otras páginas iguales). Esperando que Mariano lo vea.
 - next: si aprueba → merge a master + push. Pendiente de decisión: botón con gradiente "Cotizá con Oni" del header (header quedó fuera de alcance). Deuda chica: HeroAnimations en script.js:751-845 ahora es código muerto; `.btn--primary` global no pasa AA (style.css:635); style.css duplicado en faq/ y siniestros/.
+
+## 2026-10-08 — "des-IA-zado" extendido a todo el sitio público
+- done: en `landing-redesign` (sin push): 36e9b91 (azul del logo #2e7ef6, header/footer planos, blog/faq/legal/agente/siniestros/sitemap/404/unsubscribe restyle, ?v= bumpeados: style.css v6, script.js v2, loader v3), 81e4ed7 (console.log de blog.js), 4abe6ea (markup terminos + alt FAQ). Reviewer + QA PASS (15 páginas × 4 anchos × claro/oscuro), admin intacto.
+- state: esperando que Mariano lo vea.
+- next: decisiones pendientes: botones 19px bold (AA con azul del logo) vs fill más oscuro; ocultar WhatsApp FAB en /agente/ (input queda angosto en 320); "Volver al Inicio" en legal/* apunta a /legal/; Formspree blog (xgolwvob) ≠ landing (xdkyknqv); blog y FAQ en producción devuelven 0 items; copy "Encuentra"→"Encontrá" en faq. Deuda: siniestros.js:241-252 sin aria-invalid, chips FAQ sin aria-pressed, reglas .legal-page* muertas en style.css (~2749-2880).
