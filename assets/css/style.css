@@ -48,7 +48,8 @@ body,
 html {
     font-size: 16px;
     scroll-behavior: smooth;
-    scroll-padding-top: 120px;
+    /* Anchors land a comfortable gap below the floating header at every width */
+    scroll-padding-top: calc(var(--float-inset) + var(--header-h) + 2px + var(--space-lg));
 }
 
 body {
@@ -169,7 +170,10 @@ ol {
     --float-border: var(--border-light);
     --float-shadow: 0 4px 16px -8px rgba(15, 23, 42, 0.16);
     --float-shadow-scrolled: 0 8px 24px -10px rgba(15, 23, 42, 0.24);
-    --float-watermark: hsl(220, 14%, 95%);    /* footer wordmark, ~1.1:1 on the card */
+    --float-watermark: hsl(220, 14%, 97.5%);  /* footer wordmark, barely off the card */
+    --header-h: 64px;                         /* header card inner height (components/header.html) */
+    --fab-size: 56px;                         /* WhatsApp button (.whatsapp-fab) */
+    --fab-offset: var(--space-xl);
 
     /* Derived Light Colors */
     --primary-light: hsl(216, 92%, 67%);
@@ -407,6 +411,14 @@ ol {
 @media (min-width: 1024px) {
     :root {
         --float-pad: var(--space-xl);
+        --header-h: 76px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --fab-size: 52px;
+        --fab-offset: var(--space-lg);
     }
 }
 
@@ -429,7 +441,7 @@ ol {
     --surface-band: hsl(36, 8%, 10%);
     --float-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
     --float-shadow-scrolled: 0 10px 28px -10px rgba(0, 0, 0, 0.75);
-    --float-watermark: hsl(0, 0%, 15.5%);
+    --float-watermark: hsl(0, 0%, 14%);
     --color-secondary: #6b6b6b;
     /* Mid gray */
     --color-secondary-rgb: 107, 107, 107;
@@ -2756,8 +2768,8 @@ ol {
 
 .whatsapp-fab {
     position: fixed;
-    bottom: var(--space-xl);
-    right: var(--space-xl);
+    bottom: var(--fab-offset);
+    right: var(--fab-offset);
     z-index: 9000;
     display: flex;
     align-items: center;
@@ -2765,10 +2777,10 @@ ol {
     background: #25D366;
     color: #fff;
     border-radius: 50px;
-    width: 56px;
-    height: 56px;
-    /* (56px - 28px icon) / 2 = 14px — keeps icon perfectly centered at rest */
-    padding: 0 14px;
+    width: var(--fab-size);
+    height: var(--fab-size);
+    /* (size - 28px icon) / 2 keeps the icon centered at rest */
+    padding: 0 calc((var(--fab-size) - 28px) / 2);
     justify-content: flex-start;
     text-decoration: none;
     transition: width 0.3s ease, padding 0.3s ease, background-color var(--transition-fast);
@@ -2779,7 +2791,7 @@ ol {
 .whatsapp-fab:hover,
 .whatsapp-fab:focus-visible {
     width: 240px;
-    padding: 0 14px;
+    padding: 0 calc((var(--fab-size) - 28px) / 2);
     background: #008069;
 }
 
@@ -2814,16 +2826,9 @@ ol {
 }
 
 @media (max-width: 768px) {
-    .whatsapp-fab {
-        bottom: var(--space-lg);
-        right: var(--space-lg);
-        width: 52px;
-        height: 52px;
-    }
-
     .whatsapp-fab:hover,
     .whatsapp-fab:focus-visible {
-        width: 52px;
+        width: var(--fab-size);
         background: #25D366;
     }
 
@@ -3646,4 +3651,51 @@ ol {
 
 [data-theme="dark"] .landing .logo-carousel__logo {
     filter: grayscale(100%) invert(1) brightness(0.85) opacity(0.7);
+}
+
+/* ==========================================================================
+   Mobile polish: legible fine print, 44px touch targets, even gutters.
+   Hit areas grow through padding or an invisible pseudo-element, so the
+   visible layout stays the same; desktop (fine pointer) is untouched.
+   ========================================================================== */
+
+@media (max-width: 767px) {
+    /* Same 24px gutter as every other landing section */
+    .landing .testimonials__container {
+        padding: 0 var(--space-lg);
+    }
+
+    .landing .hero__badge-text,
+    [data-theme="dark"] .landing .hero__badge-text,
+    .newsletter__consent,
+    .oni-cta-card__disclaimer,
+    .siniestros-mini-card__subtitle {
+        font-size: 0.8125rem;
+    }
+
+    .oni-cta-card__badge-text {
+        font-size: var(--font-size-xs);
+    }
+}
+
+@media (max-width: 639px) {
+    .landing .newsletter {
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
+    }
+}
+
+@media (pointer: coarse) {
+    .service-card__link::after,
+    a.contact-item__value::after {
+        content: '';
+        position: absolute;
+        inset: -11px -4px;
+    }
+
+    .siniestros-mini-card__btn {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
 }

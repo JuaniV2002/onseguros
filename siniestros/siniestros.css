@@ -141,6 +141,14 @@
     text-underline-offset: 2px;
 }
 
+/* Touch: the two urgent-contact links get a 44px-tall hit area; padding on
+   an inline link doesn't change the line box, so the text doesn't move */
+@media (pointer: coarse) {
+    .siniestro-alert a {
+        padding-block: 14px;
+    }
+}
+
 .siniestro-alert a:hover {
     color: var(--link-hover);
 }
@@ -270,6 +278,13 @@
     font-weight: var(--font-weight-medium);
 }
 
+/* No reserved line under required fields while there's no error: keeps the
+   gap between every field the same (it opens when a message appears) */
+.siniestro-form .form-error:empty {
+    min-height: 0;
+    margin-top: 0;
+}
+
 /* ==========================================================================
    Required / Optional Labels
    ========================================================================== */
@@ -282,7 +297,7 @@
 
 .siniestro-optional {
     color: var(--text-secondary);
-    font-size: var(--font-size-xs);
+    font-size: 0.8125rem;
     font-weight: var(--font-weight-normal);
     margin-left: var(--space-xs);
 }
@@ -405,7 +420,7 @@
 }
 
 .siniestro-submit__note {
-    font-size: var(--font-size-xs);
+    font-size: 0.8125rem;
     color: var(--text-secondary);
     text-align: left;
     line-height: var(--line-height-relaxed);

@@ -157,6 +157,12 @@
         background-color var(--transition-fast);
 }
 
+@media (pointer: coarse) {
+    .faq-category-chip {
+        min-height: 44px;
+    }
+}
+
 .faq-category-chip:hover {
     color: var(--text-primary);
     border-color: var(--text-primary);

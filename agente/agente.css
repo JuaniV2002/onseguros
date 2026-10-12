@@ -323,7 +323,7 @@
     border: none;
     background: transparent;
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 1rem; /* 16px: below this iOS zooms the page on focus */
     color: var(--text-primary);
     resize: none;
     outline: none;
@@ -517,6 +517,18 @@
    Responsive
    ========================================================================== */
 
+/* Touch: 44px chips and send button */
+@media (pointer: coarse) {
+    .suggestion-chip {
+        min-height: 44px;
+    }
+
+    .chat-send-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
 @media (max-width: 768px) {
     .cotizar-container {
         padding: 0 var(--space-md);
@@ -577,7 +589,7 @@
     }
 
     .suggestion-chip {
-        font-size: 0.8125rem;
+        font-size: var(--font-size-sm);
         padding: 0.375rem var(--space-sm);
     }
 

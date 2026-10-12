@@ -57,13 +57,12 @@
         align-items: center;
         justify-content: space-between;
         gap: var(--space-lg);
-        min-height: 64px;
+        min-height: var(--header-h);
         padding: var(--space-xs) var(--float-pad);
     }
 
     @media (min-width: 1024px) {
         .nav__container {
-            min-height: 76px;
             padding-top: var(--space-sm);
             padding-bottom: var(--space-sm);
         }
@@ -204,7 +203,7 @@
             border-radius: var(--radius-xl);
             box-shadow: var(--float-shadow-scrolled);
             /* viewport minus top inset, bar, gap and a bottom inset */
-            max-height: calc(100dvh - 64px - var(--space-xs) - 2 * var(--float-inset) - 2px);
+            max-height: calc(100dvh - var(--header-h) - var(--space-xs) - 2 * var(--float-inset) - 2px);
             overflow-y: auto;
 
             /* Hidden state */

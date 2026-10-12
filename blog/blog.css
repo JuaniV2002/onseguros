@@ -523,6 +523,7 @@
     padding: 0;
     margin: 0;
     font-size: var(--font-size-sm);
+    overflow-wrap: anywhere;
 }
 
 .blog-post__breadcrumb li {
@@ -544,6 +545,20 @@
     text-decoration-color: transparent;
     text-underline-offset: 3px;
     transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+/* Touch: 44px hit area on the small links without moving them */
+@media (pointer: coarse) {
+    .blog-post__breadcrumb a {
+        padding-block: 14px;
+        margin-block: -14px;
+    }
+
+    /* the current-page crumb is plain text; let taps fall through to the
+       link hit areas it overlaps when it wraps onto the next line */
+    .blog-post__breadcrumb li:last-child {
+        pointer-events: none;
+    }
 }
 
 .blog-post__breadcrumb a:hover {
@@ -594,6 +609,7 @@
     letter-spacing: -0.03em;
     color: var(--text-primary);
     text-wrap: balance;
+    overflow-wrap: break-word;
     margin: 0;
 }
 
@@ -617,6 +633,13 @@
     color: var(--text-primary);
     font-size: var(--font-size-lg);
     line-height: 1.75;
+    /* Long words and pasted URLs wrap instead of widening the page */
+    overflow-wrap: break-word;
+}
+
+.prose a,
+.prose code {
+    overflow-wrap: anywhere;
 }
 
 .prose > :first-child {
@@ -860,6 +883,17 @@
 
     .prose h3 {
         font-size: var(--font-size-lg);
+    }
+
+    /* A table wider than the column scrolls on its own, not the page */
+    .prose table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .newsletter__consent,
+    [data-theme="dark"] .newsletter__consent {
+        font-size: 0.8125rem;
     }
 
     .newsletter.newsletter--compact {
