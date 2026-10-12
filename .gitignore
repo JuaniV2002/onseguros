@@ -5,3 +5,4 @@ config.json
 .codegraph
 skills-lock.json
 CLAUDE.md
+.playwright-mcp/

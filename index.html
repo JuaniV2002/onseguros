@@ -55,7 +55,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">
-    <link rel="preload" href="assets/css/style.css?v=3" as="style">
+    <link rel="preload" href="assets/css/style.css?v=14" as="style">
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         as="style">
@@ -64,7 +64,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=3">
+    <link rel="stylesheet" href="assets/css/style.css?v=14">
 
     <!-- Structured Data - Insurance Agency -->
     <script type="application/ld+json">
@@ -126,7 +126,7 @@
             "worstRating": "5"
         },
         "sameAs": [
-            "https://wa.me/543584122566"
+            "https://wa.me/543584921111"
         ],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -326,7 +326,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body>
+<body class="landing">
     <!-- Header Component -->
     <div id="header-placeholder"></div>
 
@@ -335,11 +335,9 @@
         <!-- Hero Section -->
         <section class="hero" id="inicio" aria-labelledby="hero-heading" itemscope
             itemtype="https://schema.org/Service">
-            <div class="hero__background"></div>
             <div class="hero__container">
                 <div class="hero__content">
                     <div class="hero__badge">
-                        <span class="hero__badge-icon">🛡️</span>
                         <span class="hero__badge-text">25 años protegiendo lo que más importa</span>
                     </div>
                     <h1 id="hero-heading" class="hero__title" itemprop="name">
@@ -364,42 +362,33 @@
                 </div>
                 <div class="hero__visual" role="img"
                     aria-label="Representación visual de protección y seguridad para tu campo, empresa y familia">
-                    <div class="hero__visual-card hero__visual-card--1">
-                        <div class="hero__visual-icon">🌾</div>
-                        <div class="hero__visual-label">Seguros Agrícolas</div>
-                    </div>
-                    <div class="hero__visual-card hero__visual-card--2">
-                        <div class="hero__visual-icon">🏢</div>
-                        <div class="hero__visual-label">ART Empresarial</div>
-                    </div>
-                    <div class="hero__visual-card hero__visual-card--3">
-                        <div class="hero__visual-icon">🏠</div>
-                        <div class="hero__visual-label">Patrimoniales</div>
-                    </div>
-                    <div class="hero__visual-glow"></div>
+                    <ol class="hero__lines">
+                        <li class="hero__line"><span class="hero__line-num">01</span><img class="hero__line-icon" src="assets/icons/wheat.svg" alt="" width="22" height="22"><span class="hero__line-label">Seguros Agrícolas</span></li>
+                        <li class="hero__line"><span class="hero__line-num">02</span><img class="hero__line-icon" src="assets/icons/building.svg" alt="" width="22" height="22"><span class="hero__line-label">ART Empresarial</span></li>
+                        <li class="hero__line"><span class="hero__line-num">03</span><img class="hero__line-icon" src="assets/icons/house.svg" alt="" width="22" height="22"><span class="hero__line-label">Patrimoniales</span></li>
+                    </ol>
                 </div>
             </div>
 
-            <!-- Scroll Indicator -->
-            <a href="#nosotros" class="hero__scroll-indicator" aria-label="Ver más contenido">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                </svg>
-            </a>
-
             <!-- Logo Carousel -->
-            <div class="logo-carousel" aria-label="Compañías aseguradoras asociadas">
+            <div class="logo-carousel" aria-label="Compañías asociadas">
                 <div class="logo-carousel__container">
                     <div class="logo-carousel__track">
-                        <div class="logo-carousel__item">
+                        <div class="logo-carousel__item logo-carousel__item--lg">
                             <img src="assets/logos/allianz-logo.webp" alt="Allianz" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item">
+                        <div class="logo-carousel__item logo-carousel__item--lg">
                             <img src="assets/logos/experta-logo.webp" alt="Experta" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item">
+                        <div class="logo-carousel__item logo-carousel__item--ua">
+                            <img src="assets/logos/universal-assistance.svg" alt="Universal Assistance"
+                                class="logo-carousel__logo logo-carousel__logo--light" width="160" height="39">
+                            <img src="assets/logos/universal-assistance-negative.svg" alt="Universal Assistance"
+                                class="logo-carousel__logo logo-carousel__logo--dark" width="160" height="39">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--lg">
                             <img src="assets/logos/parana-logo.webp" alt="Paraná" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
@@ -407,22 +396,28 @@
                             <img src="assets/logos/sancor-logo.webp" alt="Sancor" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
-                        <!-- Duplicate logos for infinite scroll on mobile -->
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/allianz-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
+                        <!-- Duplicate logos for infinite scroll on mobile (same order as above) -->
+                        <div class="logo-carousel__item logo-carousel__item--lg logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/allianz-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--lg logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/experta-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--ua logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/universal-assistance.svg" alt=""
+                                class="logo-carousel__logo logo-carousel__logo--light" width="160" height="39">
+                            <img src="assets/logos/universal-assistance-negative.svg" alt=""
+                                class="logo-carousel__logo logo-carousel__logo--dark" width="160" height="39">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--lg logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/parana-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
                         <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/experta-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
-                        </div>
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/parana-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
-                        </div>
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/sancor-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
+                            <img src="assets/logos/sancor-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
                     </div>
                 </div>
@@ -578,6 +573,48 @@
             </div>
         </section>
 
+        <!-- Travel assistance (Universal Assistance partner block) -->
+        <section class="travel" id="asistencia-al-viajero" aria-labelledby="travel-heading">
+            <div class="travel__container">
+                <div class="travel__card">
+                    <div class="travel__brand">
+                        <div class="travel__intro">
+                            <img class="travel__logo" src="assets/logos/universal-assistance-zurich-negative.svg"
+                                alt="Universal Assistance, a company of Zurich" width="311" height="42">
+                            <p class="travel__tagline"><span>Tu viaje es tu viaje.</span>
+                                <span>Nosotros lo protegemos.</span></p>
+                            <p class="travel__partner">OnSeguros es partner de Universal Assistance</p>
+                        </div>
+                        <picture class="travel__photo">
+                            <source srcset="assets/images/ivan-de-pineda-ua.webp" type="image/webp">
+                            <img src="assets/images/ivan-de-pineda-ua.png"
+                                alt="Iván de Pineda, embajador de Universal Assistance" width="820" height="894"
+                                loading="lazy" decoding="async">
+                        </picture>
+                    </div>
+                    <div class="travel__body">
+                        <p class="travel__eyebrow">Asistencia al viajero</p>
+                        <h2 id="travel-heading" class="travel__title">Con Universal Assistance y OnSeguros viajás
+                            protegido</h2>
+                        <ul class="travel__list">
+                            <li>Asistencia al viajero desde <strong>USD&nbsp;5 por día</strong>, en hasta <strong>12&nbsp;cuotas sin interés</strong></li>
+                            <li>Coberturas de hasta <strong>USD&nbsp;1.000.000</strong></li>
+                            <li>Acceso a <strong>salones VIP</strong> de aeropuertos de todo el mundo si tu vuelo se
+                                demora</li>
+                            <li><strong>Telemedicina</strong> y coberturas para viajes con preexistencias</li>
+                            <li>Cobertura para viajes <strong>deportivos</strong></li>
+                        </ul>
+                        <a href="https://wa.me/543584921111?text=Hola%21%20Quiero%20cotizar%20una%20asistencia%20al%20viajero%20con%20Universal%20Assistance."
+                            class="btn btn--primary travel__cta" target="_blank" rel="noopener noreferrer">
+                            <span>Cotizá tu asistencia</span><span class="sr-only"> por WhatsApp (se abre en una
+                                pestaña nueva)</span>
+                        </a>
+                        <p class="travel__fineprint">Coberturas sujetas a condiciones del producto contratado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Testimonials Section -->
         <section class="testimonials" id="testimonios" aria-labelledby="testimonials-heading">
             <div class="testimonials__container">
@@ -624,7 +661,7 @@
                             </blockquote>
                             <footer class="testimonial-card__author" itemprop="author" itemscope
                                 itemtype="https://schema.org/Person">
-                                <div class="testimonial-card__avatar" role="img"
+                                <div class="testimonial-card__avatar" role="img" data-initials="JJ"
                                     aria-label="Foto de perfil de Juan José L."></div>
                                 <div class="testimonial-card__info">
                                     <cite class="testimonial-card__name" itemprop="name">Juan José L.</cite>
@@ -667,7 +704,7 @@
                             </blockquote>
                             <footer class="testimonial-card__author" itemprop="author" itemscope
                                 itemtype="https://schema.org/Person">
-                                <div class="testimonial-card__avatar" role="img"
+                                <div class="testimonial-card__avatar" role="img" data-initials="MM"
                                     aria-label="Foto de perfil de Mariana M."></div>
                                 <div class="testimonial-card__info">
                                     <cite class="testimonial-card__name" itemprop="name">Mariana M.</cite>
@@ -710,7 +747,7 @@
                             </blockquote>
                             <footer class="testimonial-card__author" itemprop="author" itemscope
                                 itemtype="https://schema.org/Person">
-                                <div class="testimonial-card__avatar" role="img"
+                                <div class="testimonial-card__avatar" role="img" data-initials="CL"
                                     aria-label="Foto de perfil de Carlos L."></div>
                                 <div class="testimonial-card__info">
                                     <cite class="testimonial-card__name" itemprop="name">Carlos L.</cite>
@@ -741,9 +778,9 @@
                                 </div>
                                 <div class="contact-item__content">
                                     <p class="contact-item__label">WhatsApp</p>
-                                    <a href="https://wa.me/543584122566" class="contact-item__value" target="_blank"
+                                    <a href="https://wa.me/543584921111" class="contact-item__value" target="_blank"
                                         rel="noopener noreferrer"
-                                        aria-label="Contactar por WhatsApp al +54 9 358 412 2566">+54 9 358 412 2566</a>
+                                        aria-label="Contactar por WhatsApp al +54 9 358 492 1111">+54 9 358 492 1111</a>
                                 </div>
                             </div>
 
@@ -815,7 +852,7 @@
                         </div>
                         <div class="siniestros-mini-card">
                             <div class="siniestros-mini-card__content">
-                                <span class="siniestros-mini-card__icon" aria-hidden="true">🚗</span>
+                                <img class="siniestros-mini-card__icon" src="assets/icons/car.svg" alt="" width="24" height="24" aria-hidden="true">
                                 <div>
                                     <p class="siniestros-mini-card__title">¿Ya sos cliente de OnSeguros?</p>
                                     <p class="siniestros-mini-card__subtitle">Denunciá tu accidente de auto de forma rápida y online.</p>
@@ -865,8 +902,8 @@
 
     <!-- Scripts -->
     <script src="assets/js/env-config.js"></script>
-    <script defer src="components/component-loader.js?v=2"></script>
-    <script defer src="assets/js/script.js"></script>
+    <script defer src="components/component-loader.js?v=8"></script>
+    <script defer src="assets/js/script.js?v=2"></script>
     <script defer src="assets/js/live-widgets.js"></script>
     <script>
         // Initialize env config before other scripts use it

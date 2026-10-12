@@ -177,7 +177,6 @@ async function loadConfig() {
             DELETE_FAQ_API_URL: window.envConfig.get('DELETE_FAQ_API_URL'),
             GET_SUBSCRIBERS_API_URL: window.envConfig.get('GET_SUBSCRIBERS_API_URL'),
             DELETE_SUBSCRIBER_API_URL: window.envConfig.get('DELETE_SUBSCRIBER_API_URL'),
-            GET_SINIESTROS_API_URL: window.envConfig.get('GET_SINIESTROS_API_URL'),
             SUBMIT_HINT_API_URL: window.envConfig.get('SUBMIT_HINT_API_URL'),
             GET_HINTS_API_URL: window.envConfig.get('GET_HINTS_API_URL'),
             GET_DRAFTS_API_URL: window.envConfig.get('GET_DRAFTS_API_URL'),
@@ -318,40 +317,12 @@ const elements = {
     newsletterTableContainer: document.getElementById('newsletter-table-container'),
     subscribersList: document.getElementById('subscribers-list'),
 
-    // Siniestros Management
     refreshNewsletterBtn: document.getElementById('refresh-newsletter-btn'),
-    refreshQuotesBtn: document.getElementById('refresh-quotes-btn'),
-    siniestrosManagement: document.getElementById('siniestros-management'),
-    siniestrosLoading: document.getElementById('siniestros-loading'),
-    siniestrosEmpty: document.getElementById('siniestros-empty'),
-    siniestrosTableContainer: document.getElementById('siniestros-table-container'),
-    siniestrosList: document.getElementById('siniestros-list'),
-    refreshSiniestrosBtn: document.getElementById('refresh-siniestros-btn'),
-    siniestroDetailModal: document.getElementById('siniestro-detail-modal'),
-    siniestroDetailBody: document.getElementById('siniestro-detail-body'),
-    closeSiniestroModalBtn: document.getElementById('close-siniestro-modal-btn'),
-
-    // Quotes Management
-    quotesManagement: document.getElementById('quotes-management'),
-    quotesLoading: document.getElementById('quotes-loading'),
-    quotesEmpty: document.getElementById('quotes-empty'),
-    quotesTableContainer: document.getElementById('quotes-table-container'),
-    quotesList: document.getElementById('quotes-list'),
-    quotesPaginationTop: document.getElementById('quotes-pagination-top'),
-    quotesPaginationBottom: document.getElementById('quotes-pagination-bottom'),
-    quotesPrevBtn: document.getElementById('quotes-prev-btn'),
-    quotesNextBtn: document.getElementById('quotes-next-btn'),
-    quotesPageInfo: document.getElementById('quotes-page-info'),
-    quotesPrevBtnBottom: document.getElementById('quotes-prev-btn-bottom'),
-    quotesNextBtnBottom: document.getElementById('quotes-next-btn-bottom'),
-    quotesPageInfoBottom: document.getElementById('quotes-page-info-bottom'),
 
     // Navigation
     showBlogBtn: document.getElementById('show-blog-btn'),
     showFaqBtn: document.getElementById('show-faq-btn'),
     showNewsletterBtn: document.getElementById('show-newsletter-btn'),
-    showQuotesBtn: document.getElementById('show-quotes-btn'),
-    showSiniestrosBtn: document.getElementById('show-siniestros-btn'),
     showDraftsBtn: document.getElementById('show-drafts-btn'),
 
     // Drafts management

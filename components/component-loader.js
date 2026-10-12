@@ -12,7 +12,7 @@ class ComponentLoader {
      */
     static async loadComponent(componentName, targetSelector, basePath = 'components/') {
         try {
-            const componentPath = `${basePath}${componentName}.html?v=2`;
+            const componentPath = `${basePath}${componentName}.html?v=8`;
             
             const response = await fetch(componentPath);
             

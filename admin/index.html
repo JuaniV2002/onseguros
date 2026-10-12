@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Panel de Administración | OnSeguros </title>
-    <link rel="stylesheet" href="admin.css?v=7">
+    <link rel="stylesheet" href="admin.css?v=8">
     <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -487,163 +487,6 @@ Más contenido aquí..." rows="20"></textarea>
                 </div>
             </div>
 
-            <!-- Siniestros Management Section -->
-            <div class="siniestros-management" id="siniestros-management" style="display: none;">
-                <div class="section-header">
-                    <h2>Denuncias de Accidentes</h2>
-                    <button id="refresh-siniestros-btn" class="btn btn-secondary btn-sm">↺ Actualizar</button>
-                </div>
-
-                <div id="siniestros-loading" class="posts-loading" style="display: none;">
-                    <div class="posts-skeleton-list">
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="siniestros-empty" class="posts-empty" style="display: none;">
-                    <p>No hay denuncias de accidentes todavía.</p>
-                </div>
-
-                <div id="siniestros-table-container" style="display: none;">
-                    <div class="quotes-table-wrapper">
-                        <table class="quotes-table siniestros-table">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Asegurado</th>
-                                    <th>Teléfono</th>
-                                    <th>Patente</th>
-                                    <th>Lugar</th>
-                                    <th>Denuncia</th>
-                                    <th>Descripción</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="siniestros-list">
-                                <!-- Siniestros will be rendered here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Siniestro Detail Modal -->
-            <div id="siniestro-detail-modal" class="modal" style="display: none;">
-                <div class="modal-content siniestro-detail-content">
-                    <div class="modal-header-row">
-                        <h2>Detalle del Accidente</h2>
-                        <button id="close-siniestro-modal-btn" class="btn btn-secondary btn-sm">✕ Cerrar</button>
-                    </div>
-                    <div id="siniestro-detail-body"></div>
-                </div>
-            </div>
-
-            <!-- Quotes Management Section -->
-            <div class="quotes-management" id="quotes-management" style="display: none;">
-                <div class="section-header">
-                    <h2>Solicitudes de Cotización</h2>
-                    <button id="refresh-quotes-btn" class="btn btn-secondary btn-sm">↺ Actualizar</button>
-                </div>
-
-                <div id="quotes-loading" class="posts-loading" style="display: none;">
-                    <div class="posts-skeleton-list">
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                        <div class="posts-skeleton-row">
-                            <div class="skeleton-row-left">
-                                <div class="skeleton skeleton-row-title"></div>
-                                <div class="skeleton skeleton-row-meta"></div>
-                            </div>
-                            <div class="skeleton-row-right">
-                                <div class="skeleton skeleton-btn"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="quotes-empty" class="posts-empty" style="display: none;">
-                    <p>Todavía no recibiste consultas del Agente Oni.</p>
-                    <p style="margin-top: 0.5rem; color: var(--gray-500); font-size: 0.9rem;">Las consultas aparecerán aquí cuando los clientes usen el Agente de IA.</p>
-                </div>
-
-                <div id="quotes-table-container" style="display: none;">
-                    <div class="quotes-pagination" id="quotes-pagination-top" style="display: none;">
-                        <button id="quotes-prev-btn" class="btn btn-sm btn-secondary" disabled>← Anterior</button>
-                        <span id="quotes-page-info" class="page-info"></span>
-                        <button id="quotes-next-btn" class="btn btn-sm btn-secondary">Siguiente →</button>
-                    </div>
-
-                    <div class="quotes-table-wrapper">
-                        <table class="quotes-table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Email</th>
-                                    <th>Teléfono</th>
-                                    <th>Tipo de Seguro</th>
-                                    <th>Mensaje</th>
-                                    <th>Fecha</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="quotes-list">
-                                <!-- Quotes will be rendered here -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="quotes-pagination" id="quotes-pagination-bottom" style="display: none;">
-                        <button id="quotes-prev-btn-bottom" class="btn btn-sm btn-secondary" disabled>← Anterior</button>
-                        <span id="quotes-page-info-bottom" class="page-info"></span>
-                        <button id="quotes-next-btn-bottom" class="btn btn-sm btn-secondary">Siguiente →</button>
-                    </div>
-                </div>
-            </div>
-
             <!-- Drafts (AI) Management Section -->
             <div class="drafts-management" id="drafts-management" style="display: none;">
                 <div class="drafts-subnav" role="tablist" aria-label="Tipo de borrador">
@@ -917,9 +760,6 @@ Más contenido aquí..." rows="20"></textarea>
                 <button id="show-blog-btn" class="nav-btn active"><img src="../assets/icons/scroll-text.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Blog</button>
                 <button id="show-faq-btn" class="nav-btn"><img src="../assets/icons/message-circle-question-mark.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> FAQ</button>
                 <button id="show-newsletter-btn" class="nav-btn"><img src="../assets/icons/newspaper.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Suscriptores</button>
-                <button id="show-quotes-btn" class="nav-btn"><img src="../assets/icons/dollar-sign.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Cotizaciones</button>
-                <button id="show-siniestros-btn" class="nav-btn"><img src="../assets/icons/siren.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Siniestros</button>
-                <button id="show-client-btn" class="nav-btn"><img src="../assets/icons/user-round.svg" width="16" height="16" alt="" style="vertical-align: middle; margin-right: 4px;"> Clientes</button>
             </div>
         </main>
 
@@ -991,21 +831,17 @@ Más contenido aquí..." rows="20"></textarea>
 
     <script src="../assets/js/env-config.js?v=2"></script>
     <!-- Core module: config, auth, DOM, utilities (must load first) -->
-    <script src="admin-core.js?v=2"></script>
+    <script src="admin-core.js?v=3"></script>
     <!-- Blog module: blog CRUD and editor (depends on core) -->
     <script src="admin-blog.js?v=1"></script>
     <!-- Drafts module: AI-generated weekly drafts (depends on core, loads after blog) -->
-    <script src="admin-drafts.js?v=2"></script>
+    <script src="admin-drafts.js?v=4"></script>
     <!-- FAQ module: FAQ CRUD and editor (depends on core, loads after blog) -->
-    <script src="admin-faq.js?v=1"></script>
+    <script src="admin-faq.js?v=2"></script>
     <!-- FAQ Drafts module: AI-generated FAQ drafts (depends on core, loads after admin-drafts) -->
     <script src="admin-faq-drafts.js?v=1"></script>
     <!-- Newsletter module: newsletter subscribers management (depends on core) -->
-    <script src="admin-newsletter.js?v=1"></script>
-    <!-- Quotes module: quote requests management (depends on core) -->
-    <script src="admin-quotes.js?v=1"></script>
-    <!-- Siniestros module: accident reports management (depends on core) -->
-    <script src="admin-siniestros.js?v=1"></script>
+    <script src="admin-newsletter.js?v=2"></script>
 </body>
 
 </html>

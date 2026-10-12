@@ -7,14 +7,15 @@
 const conversationHistory = [];
 
 let apiBaseUrl = '';
-let quoteApiUrl = '';
 let isLoading = false;
 let firstUserMessage = true;
-let contactFormInjected = false;
 let agentSummaryText = '';
 
 // Token the AI appends when it's ready to collect the user's contact details
 const CONTACT_SIGNAL = '[SOLICITAR_CONTACTO]';
+
+// Mariano's WhatsApp Business number (wa.me format)
+const WHATSAPP_NUMBER = '543584921111';
 
 /**
  * Initialise the page: load components, config, and display the welcome message.
@@ -23,8 +24,7 @@ async function init() {
     // Components are auto-loaded by component-loader.js
     try {
         await window.envConfig.load();
-        apiBaseUrl  = window.envConfig.get('AI_QUOTE_API_URL') || '';
-        quoteApiUrl = window.envConfig.get('QUOTE_API_URL') || '';
+        apiBaseUrl = window.envConfig.get('AI_QUOTE_API_URL') || '';
     } catch (err) {
         console.error('Could not load config:', err);
     }
@@ -138,12 +138,11 @@ async function fetchAgentReply() {
         conversationHistory.push({ role: 'assistant', content: cleanReply });
         appendAgentMessage(cleanReply);
 
-        if (hasSignal && !contactFormInjected) {
-            contactFormInjected = true;
+        if (hasSignal) {
             agentSummaryText = cleanReply;
             // Brief pause so the summary bubble renders first
             await new Promise((r) => setTimeout(r, 400));
-            injectContactForm();
+            showWhatsAppAction();
         }
 
     } catch (err) {
@@ -164,132 +163,83 @@ async function fetchAgentReply() {
 function extractSummaryBlock(text) {
     // Match the heading line + every following "- key: value" bullet line
     const match = text.match(/(?:📋\s*)?\*{0,2}Resumen de tu consulta\*{0,2}(?:\n- .+)+/);
-    if (match) {
-        // Strip markdown bold (**) from the heading
-        return match[0].replace(/\*\*/g, '').trim();
-    }
-    return text;
+    // Strip markdown bold (**): WhatsApp uses single * for bold
+    return (match ? match[0] : text).replace(/\*\*/g, '').trim();
 }
 
 /**
- * Inject an inline contact form into the chat after the agent's summary.
- * On submit, POSTs to the existing send-quote-email-api endpoint.
+ * Build the wa.me URL with the greeting, the optional name and the summary.
+ * @returns {string}
  */
-function injectContactForm() {
+function buildWhatsAppUrl() {
+    const nameInput = document.getElementById('contact-name');
+    const name = nameInput ? nameInput.value.trim() : '';
+    const summary = extractSummaryBlock(agentSummaryText)
+        .replace(/Resumen de tu consulta/, 'Resumen de mi consulta');
+
+    const message =
+        '¡Hola Mariano! ' + (name ? 'Soy ' + name + '. ' : '') + 'Quiero cotizar un seguro.\n\n' +
+        summary;
+
+    return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+}
+
+/**
+ * Show the "send by WhatsApp" action after the agent's summary.
+ * If Oni sends a new summary later, the same action moves below it and
+ * its link picks up the new summary.
+ */
+function showWhatsAppAction() {
     const container = document.getElementById('chat-messages');
+    let actionRow = document.getElementById('chat-contact-form-row');
 
-    const formRow = document.createElement('div');
-    formRow.className = 'chat-message chat-message--agent';
-    formRow.id = 'chat-contact-form-row';
-    formRow.innerHTML = `
-        <div class="chat-avatar" aria-hidden="true">O</div>
-        <div class="chat-bubble chat-bubble--agent chat-contact-form">
-            <p class="chat-contact-form__title">Para recibir la cotización, dejame tus datos 👇</p>
-            <div class="chat-contact-form__field">
-                <label for="contact-name">Nombre y apellido *</label>
-                <input type="text" id="contact-name" placeholder="Juan García" autocomplete="name" required>
+    if (!actionRow) {
+        actionRow = document.createElement('div');
+        actionRow.className = 'chat-message chat-message--agent';
+        actionRow.id = 'chat-contact-form-row';
+        actionRow.innerHTML = `
+            <div class="chat-avatar" aria-hidden="true">O</div>
+            <div class="chat-bubble chat-bubble--agent chat-contact-form">
+                <p class="chat-contact-form__title">Mandale tu consulta a Mariano por WhatsApp y te pasa la cotización</p>
+                <div class="chat-contact-form__field">
+                    <label for="contact-name">Tu nombre (opcional)</label>
+                    <input type="text" id="contact-name" placeholder="Juan García" autocomplete="name">
+                </div>
+                <a class="chat-contact-form__btn" id="whatsapp-quote-link" href="#" target="_blank" rel="noopener">
+                    Enviar consulta por WhatsApp
+                </a>
+                <p class="chat-contact-form__hint">Se abre WhatsApp con tu consulta lista: solo tenés que tocar enviar.</p>
             </div>
-            <div class="chat-contact-form__field">
-                <label for="contact-phone">Teléfono</label>
-                <input type="tel" id="contact-phone" placeholder="Ej: 358 123-4567" autocomplete="tel">
-            </div>
-            <div class="chat-contact-form__field">
-                <label for="contact-email">Email</label>
-                <input type="email" id="contact-email" placeholder="tu@email.com" autocomplete="email">
-            </div>
-            <p class="chat-contact-form__hint">Completá al menos el teléfono o el email.</p>
-            <p class="chat-contact-form__error" id="contact-form-error" hidden></p>
-            <button type="button" class="chat-contact-form__btn" id="contact-submit-btn">
-                Enviar mis datos 📩
-            </button>
-        </div>
-    `;
+        `;
 
-    container.appendChild(formRow);
+        const link = actionRow.querySelector('#whatsapp-quote-link');
+        const nameInput = actionRow.querySelector('#contact-name');
+        nameInput.addEventListener('input', () => { link.href = buildWhatsAppUrl(); });
+        link.addEventListener('click', handleWhatsAppClick);
+    }
 
-    // Disable chat input while form is pending
-    const chatInput = document.getElementById('chat-input');
-    const chatSendBtn = document.getElementById('chat-send-btn');
-    chatInput.disabled = true;
-    chatInput.placeholder = 'Completá el formulario de arriba para continuar...';
-    chatSendBtn.disabled = true;
-
-    document.getElementById('contact-submit-btn').addEventListener('click', handleContactSubmit);
+    // Append (or move) the action below the latest summary
+    container.appendChild(actionRow);
+    actionRow.querySelector('#whatsapp-quote-link').href = buildWhatsAppUrl();
     scrollToBottom();
 }
 
+let whatsAppOpenedNoticeShown = false;
+
 /**
- * Handle the contact form submission.
+ * After the client opens WhatsApp, remind them to tap send (once).
+ * The link itself navigates natively, so nothing is prevented here.
  */
-async function handleContactSubmit() {
-    const name  = document.getElementById('contact-name').value.trim();
-    const phone = document.getElementById('contact-phone').value.trim();
-    const email = document.getElementById('contact-email').value.trim();
-    const errorEl = document.getElementById('contact-form-error');
-    const submitBtn = document.getElementById('contact-submit-btn');
+function handleWhatsAppClick(e) {
+    // Make sure the href carries the latest name before the browser follows it
+    e.currentTarget.href = buildWhatsAppUrl();
 
-    // Validation
-    if (!name) {
-        errorEl.textContent = 'Por favor ingresá tu nombre.';
-        errorEl.hidden = false;
-        return;
-    }
-    if (!phone && !email) {
-        errorEl.textContent = 'Por favor ingresá al menos un teléfono o email para que Mariano pueda contactarte.';
-        errorEl.hidden = false;
-        return;
-    }
-    errorEl.hidden = true;
-
-    if (!quoteApiUrl) {
-        errorEl.textContent = 'El servicio no está disponible en este momento. Escribinos directamente a mariano.pas@onseguros.net';
-        errorEl.hidden = false;
-        return;
-    }
-
-    submitBtn.textContent = 'Enviando...';
-    submitBtn.disabled = true;
-
-    try {
-        const payload = {
-            fullName: name,
-            phone: phone || '',
-            email: email || '',
-            insuranceType: 'Consulta via Agente de IA',
-            message: extractSummaryBlock(agentSummaryText),
-            consent: true,
-        };
-
-        const res = await fetch(quoteApiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'apikey': window.envConfig.get('SUPABASE_ANON_KEY') || '',
-                'Authorization': `Bearer ${window.envConfig.get('SUPABASE_ANON_KEY') || ''}`,
-            },
-            body: JSON.stringify(payload),
-        });
-
-        if (!res.ok) {
-            throw new Error(`HTTP ${res.status}`);
-        }
-
-        // Remove the form and show a success message from the agent
-        document.getElementById('chat-contact-form-row').remove();
-        appendAgentMessage(
-            '✅ **¡Listo, ' + name.split(' ')[0] + '!** Le envié tu consulta a Mariano.\n\n' +
-            'Te va a contactar a la brevedad con la cotización. Si necesitás algo urgente podés escribirle directamente a **mariano.pas@onseguros.net** 😊'
-        );
-
-        // Leave chat input disabled — conversation is done
-
-    } catch (err) {
-        console.error('Error submitting contact form:', err);
-        submitBtn.textContent = 'Enviar mis datos 📩';
-        submitBtn.disabled = false;
-        errorEl.textContent = 'Hubo un error al enviar tus datos. Por favor intentá de nuevo.';
-        errorEl.hidden = false;
-    }
+    if (whatsAppOpenedNoticeShown) return;
+    whatsAppOpenedNoticeShown = true;
+    appendAgentMessage(
+        '✅ **¡Listo!** Se abrió WhatsApp con tu consulta para Mariano. Tocá **enviar** en WhatsApp y te contesta a la brevedad con la cotización 😊\n\n' +
+        'Si no se abrió, tocá de nuevo el botón de arriba.'
+    );
 }
 
 /**

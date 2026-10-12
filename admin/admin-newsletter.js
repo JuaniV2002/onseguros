@@ -197,16 +197,12 @@ function showNewsletterManagement() {
     elements.postsManagement.style.display = 'none';
     elements.faqManagement.style.display = 'none';
     elements.newsletterManagement.style.display = 'block';
-    elements.quotesManagement.style.display = 'none';
-    elements.siniestrosManagement.style.display = 'none';
     elements.editorContainer.style.display = 'none';
     elements.faqEditorContainer.style.display = 'none';
     
     elements.showBlogBtn.classList.remove('active');
     elements.showFaqBtn.classList.remove('active');
     elements.showNewsletterBtn.classList.add('active');
-    elements.showQuotesBtn.classList.remove('active');
-    if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
 }
 
 // Setup navigation

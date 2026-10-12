@@ -11,165 +11,197 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
+    /* Self-contained: this page does not load style.css. Token values are
+       copied from assets/css/style.css (:root light / [data-theme="dark"]). */
     :root {
-      /* Light Mode Colors */
-      --color-primary: #2e7ef6;
       --color-background: #fbfbfe;
       --color-text: #101016;
-      --text-secondary: #6b7280;
-      --border-light: rgba(16, 16, 22, 0.1);
-      --bg-secondary: hsl(240, 60%, 97%);
-      --success-500: #22c55e;
-      --success-bg: #f0fdf4;
-      
-      --transition-normal: 0.3s ease;
+      --text-secondary: hsl(240, 16%, 37%);
+      --rule: rgba(16, 16, 22, 0.1);
+      --rule-strong: var(--color-text);
+      --accent-dark: hsl(45, 92%, 52%);
+      --brand-blue: #2e7ef6;
+      --brand-blue-hover: hsl(216, 92%, 47%);
+      --on-brand: #ffffff;
+      --brand-label-size: 1.1875rem;
+      --focus-ring: hsl(216, 92%, 42%);
+      --status: #15803d;
+      --radius-md: 0.5rem;
+      --transition-fast: 150ms ease-in-out;
     }
-    
+
     [data-theme="dark"] {
-      --color-primary: #4a9eff;
       --color-background: #0a0a0a;
       --color-text: #e8e8e8;
-      --text-secondary: #b8b8b8;
-      --border-light: rgba(232, 232, 232, 0.12);
-      --bg-secondary: hsl(0, 0%, 8%);
-      --success-500: #4ade80;
-      --success-bg: #14361e;
+      --text-secondary: hsl(0, 0%, 72%);
+      --rule: rgba(232, 232, 232, 0.12);
+      --accent-dark: hsl(43, 100%, 48%);
+      --focus-ring: hsl(216, 92%, 68%);
+      --status: #4ade80;
     }
-    
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: var(--color-background);
       color: var(--color-text);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
-      transition: background-color var(--transition-normal), color var(--transition-normal);
+      padding: 3rem 1rem;
     }
-    
+
     h1, h2, h3 {
       font-family: 'Space Grotesk', 'Inter', sans-serif;
       letter-spacing: -0.02em;
     }
-    
+
     .card {
-      background: var(--color-background);
-      border-radius: 24px;
-      border: 1.5px solid var(--border-light);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      max-width: 520px;
       width: 100%;
-      overflow: hidden;
-      transition: all var(--transition-normal);
+      max-width: 34rem;
+      margin: 0 auto;
     }
-    
-    [data-theme="dark"] .card {
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    }
-    
+
     .header {
-      background: linear-gradient(135deg, var(--success-500) 0%, hsl(142, 71%, 35%) 100%);
-      padding: 40px 32px;
-      text-align: center;
-      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid var(--rule-strong);
     }
-    
+
+    /* logo.svg has ~14% side / ~24% top padding in its viewBox;
+       pull it back so the mark aligns with the text column. */
     .logo {
-      width: 180px;
+      display: block;
+      width: 168px;
       height: auto;
-      margin: 0 auto 12px;
-      filter: brightness(0) invert(1);
+      margin: -13px 0 -13px -23px;
     }
-    
+
+    /* Eyebrow label with the landing's short yellow rule */
     .header h1 {
-      color: #ffffff;
-      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
       font-weight: 600;
-      opacity: 0.9;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
     }
-    
+
+    .header h1::before {
+      content: '';
+      width: 2rem;
+      height: 2px;
+      background: var(--accent-dark);
+    }
+
     .content {
-      padding: 48px 32px;
-      text-align: center;
+      padding: 2.5rem 0;
     }
-    
+
+    /* Status icon: the Lucide SVG used as a mask so it takes the status color */
     .icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 24px;
-      opacity: 0.9;
+      display: block;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 1.25rem;
+      background-color: var(--status);
+      -webkit-mask: url(../assets/icons/circle-check.svg) center / contain no-repeat;
+      mask: url(../assets/icons/circle-check.svg) center / contain no-repeat;
     }
-    
-    [data-theme="dark"] .icon {
-      filter: brightness(1.2);
-    }
-    
+
     .content h2 {
-      color: var(--color-text);
-      font-size: 24px;
+      font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.875rem);
       font-weight: 600;
-      margin-bottom: 16px;
+      line-height: 1.15;
+      margin-bottom: 1rem;
     }
-    
+
     .content p {
       color: var(--text-secondary);
-      font-size: 16px;
+      font-size: 1rem;
       line-height: 1.6;
-      margin-bottom: 16px;
+      max-width: 52ch;
+      margin-bottom: 1rem;
+      overflow-wrap: anywhere;
     }
-    
-    .content p:last-of-type {
-      margin-bottom: 32px;
-    }
-    
-    .btn {
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-size: 16px;
+
+    .content p strong {
+      color: var(--color-text);
       font-weight: 600;
-      cursor: pointer;
-      border: none;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.2s ease;
-      background: var(--color-primary);
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(46, 126, 246, 0.3);
+    }
+
+    .content p.note {
+      font-size: 0.875rem;
+    }
+
+    .content p:last-of-type {
+      margin-bottom: 2rem;
+    }
+
+    /* Same shape and large-bold label as .btn--primary in style.css:
+       white on #2e7ef6 is 3.9:1, so the label is 19px / 700 (large text). */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.875rem 1.75rem;
+      border: 2px solid var(--brand-blue);
+      border-radius: var(--radius-md);
+      background: var(--brand-blue);
+      color: var(--on-brand);
       font-family: 'Inter', sans-serif;
+      font-size: var(--brand-label-size);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.005em;
+      text-decoration: none;
+      transition: background-color var(--transition-fast),
+        border-color var(--transition-fast);
     }
-    
-    .btn:hover {
-      background: hsl(216, 92%, 47%);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(46, 126, 246, 0.4);
+
+    .btn:hover,
+    .btn:active {
+      background: var(--brand-blue-hover);
+      border-color: var(--brand-blue-hover);
     }
-    
+
+    .btn:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
     .footer {
-      background: var(--bg-secondary);
-      padding: 24px 32px;
-      text-align: center;
-      border-top: 1px solid var(--border-light);
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
     }
-    
+
     .footer p {
       color: var(--text-secondary);
-      font-size: 13px;
+      font-size: 0.8125rem;
     }
-    
-    @media (max-width: 640px) {
-      .content {
-        padding: 40px 24px;
-      }
-      
+
+    @media (max-width: 480px) {
       .btn {
         width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn {
+        transition: none;
       }
     }
   </style>
@@ -189,10 +221,10 @@
       <h1>Newsletter</h1>
     </div>
     <div class="content">
-      <img src="../assets/icons/circle-check.svg" alt="" class="icon" aria-hidden="true">
+      <span class="icon" aria-hidden="true"></span>
       <h2>Suscripción cancelada</h2>
       <p>Tu email <strong id="emailDisplay"></strong> fue removido de nuestra lista. Ya no recibirás más emails del newsletter.</p>
-      <p style="color: #9ca3af; font-size: 14px;">Si cambiás de opinión, podés volver a suscribirte desde nuestro sitio web.</p>
+      <p class="note">Si cambiás de opinión, podés volver a suscribirte desde nuestro sitio web.</p>
       <a href="https://www.onseguros.net" class="btn">Volver a OnSeguros</a>
     </div>
     <div class="footer">

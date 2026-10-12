@@ -43,17 +43,14 @@ function updateBreadcrumbSchema(post) {
  * @param {Object} post - The blog post object
  */
 function generateBlogPostStructuredData(post) {
-    console.log('generateBlogPostStructuredData called with post:', post);
     
     if (!post || !post.title) {
-        console.log('Invalid post data, returning early');
         return;
     }
 
     // Remove existing dynamic blog post structured data if present
     const existingScript = document.getElementById('blog-post-dynamic-schema');
     if (existingScript) {
-        console.log('Removing existing blog post schema');
         existingScript.remove();
     }
 
@@ -98,8 +95,6 @@ function generateBlogPostStructuredData(post) {
     // Inject into head at the end
     document.head.appendChild(script);
     
-    console.log('Blog post schema injected:', JSON.stringify(blogSchema, null, 2));
-    console.log(`Generated blog post schema for: ${post.title}`);
 }
 
 class Blog {
@@ -403,9 +398,7 @@ class Blog {
         this.updateMetaTags(post);
         
         // Generate JSON-LD structured data
-        console.log('renderPost: About to call generateBlogPostStructuredData');
         if (typeof generateBlogPostStructuredData === 'function') {
-            console.log('renderPost: Function exists, calling it now');
             generateBlogPostStructuredData(post);
         } else {
             console.error('renderPost: generateBlogPostStructuredData function not found!');

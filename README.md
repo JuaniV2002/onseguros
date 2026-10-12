@@ -1,13 +1,13 @@
 # OnSeguros Website
 
-Full-featured insurance agency website with AI-powered quote assistance, content management system, and claims handling. Includes admin panel for blog, FAQ, subscribers, quote requests, and claim forms with photo uploads. 
+Full-featured insurance agency website with AI-powered quote assistance, content management system, and claims handling. Includes admin panel for blog, FAQ, and subscribers. Quote and claim requests are sent to the agency via WhatsApp. 
 
 ## Stack
 
 - **Frontend**: Vanilla HTML, CSS, JavaScript (no frameworks)
 - **Styling**: Custom CSS with CSS variables for theming
 - **Backend**: Supabase (PostgreSQL database, authentication)
-- **Blog API**, **FAQ API**, **Subscribers API**, **Quote API**, and **Claims API**: Supabase Edge Functions
+- **Blog API**, **FAQ API**, and **Subscribers API**: Supabase Edge Functions
 - **Hosting**: DreamHost
 - **CDN and DNS record tracking**: Cloudflare
 - **Deployment**: GitHub Actions
@@ -16,7 +16,7 @@ Full-featured insurance agency website with AI-powered quote assistance, content
 
 ```
 /
-├── admin/              # Admin panel (blog, faq, subscribers, quotes, claims)
+├── admin/              # Admin panel (blog, faq, subscribers)
 ├── assets/             # Images, icons, CSS, JS
 ├── blog/               # Blog listing and post pages
 ├── agente/             # AI quote assistant agent
@@ -34,9 +34,7 @@ Full-featured insurance agency website with AI-powered quote assistance, content
 - **FAQ Section**: Searchable FAQ with admin management
 - **Subscribers Management**: Email subscription handling with admin panel
 - **AI Quote Assistant**: LLM-powered agent helping clients get insurance quotes
-- **Quote Requests Management**: Admin dashboard to view and manage quote request submissions
-- **Claims/Siniestros Form**: Car accident form with photo uploads and email notifications
-- **File Storage**: Supabase Storage buckets for claim form images
+- **Claims/Siniestros Form**: Car accident form; submit opens WhatsApp with a formatted message (photos are attached in the chat)
 - **Responsive Design**: Mobile-first, accessible layout
 - **Dark Mode**: Automatic theme switching based on system preference
 - **SEO Optimized**: Structured data, meta tags, sitemap
@@ -75,7 +73,7 @@ Features:
 - `config.json` is gitignored and generated during deployment
 - Blog content and faq entries are stored in Supabase, not in the repository
 - The sitemap auto-updates daily via GitHub Actions
-- Quote form use Formspree for submissions
+- The landing newsletter form uses Formspree; quote and claim flows open WhatsApp instead
 - Newsletter subscriptions go directly to Supabase
 
 ## Dependencies

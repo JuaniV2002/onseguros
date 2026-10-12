@@ -65,7 +65,12 @@ Re-deploy both with the flag:
 ```bash
 supabase functions deploy publish-draft-api     --no-verify-jwt --project-ref tgokvwuiiglioegxgcpu
 supabase functions deploy generate-weekly-draft --no-verify-jwt --project-ref tgokvwuiiglioegxgcpu
+# FAQ pipeline: same rule
+supabase functions deploy publish-faq-draft-api --no-verify-jwt --project-ref tgokvwuiiglioegxgcpu
+supabase functions deploy generate-faq-draft    --no-verify-jwt --project-ref tgokvwuiiglioegxgcpu
 ```
+
+`supabase/config.toml` also pins `verify_jwt = false` for these four, so a deploy that forgets the flag stays correct.
 
 Both functions still validate their own auth (HMAC for publish, `x-webhook-secret` for generate), so this is safe.
 

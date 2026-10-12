@@ -26,31 +26,49 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=3">
+    <link rel="stylesheet" href="assets/css/style.css?v=14">
 
     <style>
         .sitemap-page {
-            padding: calc(120px + var(--space-4xl)) var(--space-lg) var(--space-4xl);
+            padding: calc(120px + var(--space-4xl)) 0 var(--space-4xl);
             min-height: 60vh;
             background: var(--bg-primary);
         }
 
+        /* Same column as .footer__container so the page lines up with the footer */
         .sitemap-container {
             max-width: var(--container-xl);
             margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        @media (min-width: 640px) {
+            .sitemap-container {
+                padding-left: var(--space-lg);
+                padding-right: var(--space-lg);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .sitemap-container {
+                padding-left: var(--space-xl);
+                padding-right: var(--space-xl);
+            }
         }
 
         .sitemap-header {
             margin-bottom: var(--space-3xl);
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: var(--space-xl);
+            border-bottom: 2px solid var(--rule-strong);
+            padding-bottom: var(--space-lg);
         }
 
         .sitemap-title {
-            font-size: var(--font-size-3xl);
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: clamp(1.875rem, 1.25rem + 2.4vw, 2.75rem);
             font-weight: var(--font-weight-bold);
+            line-height: 1.08;
+            letter-spacing: -0.025em;
             color: var(--text-primary);
-            margin-bottom: var(--space-sm);
         }
 
         .sitemap-grid {
@@ -63,13 +81,17 @@
             display: flex;
             flex-direction: column;
             gap: var(--space-md);
+            min-width: 0;
         }
 
         .sitemap-section-title {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
             font-size: var(--font-size-lg);
             font-weight: var(--font-weight-semibold);
+            letter-spacing: -0.01em;
             color: var(--text-primary);
-            margin-bottom: var(--space-sm);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--rule);
         }
 
         .sitemap-list {
@@ -84,13 +106,34 @@
         .sitemap-link {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: var(--font-size-md);
+            font-size: var(--font-size-base);
+            line-height: 1.5;
             transition: color var(--transition-fast);
         }
 
+        /* Touch: 44px rows */
+        @media (pointer: coarse) {
+            .sitemap-list {
+                gap: 0;
+            }
+
+            .sitemap-link {
+                display: inline-block;
+                padding-block: 10px;
+            }
+        }
+
         .sitemap-link:hover {
-            color: var(--primary-600);
+            color: var(--link-hover);
             text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.2em;
+        }
+
+        .sitemap-link:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+            border-radius: 2px;
         }
 
         @media (max-width: 1024px) {
@@ -157,7 +200,7 @@
                             <li><a href="/faq/" class="sitemap-link">Preguntas Frecuentes</a></li>
                             <li><a href="/siniestros/" class="sitemap-link">Denunciar Siniestro</a></li>
                             <li><a href="/blog/" class="sitemap-link">Blog de Novedades</a></li>
-                            <li><a href="https://wa.me/543584122566" target="_blank" class="sitemap-link">Soporte por
+                            <li><a href="https://wa.me/543584921111" target="_blank" class="sitemap-link">Soporte por
                                     WhatsApp</a></li>
                             <li><a href="mailto:mariano.pas@onseguros.net" class="sitemap-link">Contacto por Email</a>
                             </li>
@@ -183,8 +226,8 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script defer src="components/component-loader.js?v=2"></script>
-    <script defer src="assets/js/script.js"></script>
+    <script defer src="components/component-loader.js?v=8"></script>
+    <script defer src="assets/js/script.js?v=2"></script>
 </body>
 
 </html>
