@@ -66,3 +66,8 @@
 - done: commit en `landing-redesign` (sin push). Logo color de UA (bicolor según manual, `assets/logos/universal-assistance.svg`) en el carrusel del hero, sin filtro gris, blanco en modo oscuro; loop del carrusel en mobile arreglado; sección UA sin párrafo intro, + ítem viajes deportivos, + "hasta 12 cuotas sin interés"; sacada la flecha de scroll del hero. style.css v11. Reviewer PASS.
 - state: esperando que Mariano lo vea.
 - next: se perdió la única mención de cobertura por embarazo al borrar el párrafo (¿agregar ítem?). UA es el único logo a color del carrusel — confirmar que le gusta.
+
+## 2026-10-12 — UA al centro del carrusel + frase + foto de Iván de Pineda
+- done: 2 commits en `landing-redesign` (sin push). UA 3º de 5 en el carrusel (tamaños por clase `--lg`, no por posición); panel azul de UA con "Tu viaje es tu viaje. Nosotros lo protegemos." y foto recortada de Iván de Pineda (embajador) anclada abajo-izquierda (`assets/images/ivan-de-pineda-ua.{webp,png}`). Aparte: arreglado overflow de 4px del newsletter a 640-645px. style.css v12. Reviewer PASS.
+- state: esperando que Mariano lo vea.
+- next: confirmar con UA que los partners pueden usar la imagen de Iván de Pineda y el slogan (derechos de imagen del embajador suelen ser restringidos). Mención de embarazo sacada a propósito (pedido de Mariano).
