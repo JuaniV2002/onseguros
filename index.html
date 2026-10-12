@@ -55,7 +55,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">
-    <link rel="preload" href="assets/css/style.css?v=11" as="style">
+    <link rel="preload" href="assets/css/style.css?v=12" as="style">
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         as="style">
@@ -64,7 +64,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=11">
+    <link rel="stylesheet" href="assets/css/style.css?v=12">
 
     <!-- Structured Data - Insurance Agency -->
     <script type="application/ld+json">
@@ -374,20 +374,12 @@
             <div class="logo-carousel" aria-label="Compañías asociadas">
                 <div class="logo-carousel__container">
                     <div class="logo-carousel__track">
-                        <div class="logo-carousel__item">
+                        <div class="logo-carousel__item logo-carousel__item--lg">
                             <img src="assets/logos/allianz-logo.webp" alt="Allianz" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item">
+                        <div class="logo-carousel__item logo-carousel__item--lg">
                             <img src="assets/logos/experta-logo.webp" alt="Experta" class="logo-carousel__logo"
-                                width="200" height="80">
-                        </div>
-                        <div class="logo-carousel__item">
-                            <img src="assets/logos/parana-logo.webp" alt="Paraná" class="logo-carousel__logo"
-                                width="200" height="80">
-                        </div>
-                        <div class="logo-carousel__item">
-                            <img src="assets/logos/sancor-logo.webp" alt="Sancor" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
                         <div class="logo-carousel__item logo-carousel__item--ua">
@@ -396,28 +388,36 @@
                             <img src="assets/logos/universal-assistance-negative.svg" alt="Universal Assistance"
                                 class="logo-carousel__logo logo-carousel__logo--dark" width="160" height="39">
                         </div>
-                        <!-- Duplicate logos for infinite scroll on mobile -->
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/allianz-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
+                        <div class="logo-carousel__item logo-carousel__item--lg">
+                            <img src="assets/logos/parana-logo.webp" alt="Paraná" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/experta-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
+                        <div class="logo-carousel__item">
+                            <img src="assets/logos/sancor-logo.webp" alt="Sancor" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/parana-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
+                        <!-- Duplicate logos for infinite scroll on mobile (same order as above) -->
+                        <div class="logo-carousel__item logo-carousel__item--lg logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/allianz-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
-                            <img src="assets/logos/sancor-logo.webp" alt="" class="logo-carousel__logo" width="200"
-                                height="80">
+                        <div class="logo-carousel__item logo-carousel__item--lg logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/experta-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
-                        <div class="logo-carousel__item logo-carousel__item--duplicate logo-carousel__item--ua" aria-hidden="true">
+                        <div class="logo-carousel__item logo-carousel__item--ua logo-carousel__item--duplicate" aria-hidden="true">
                             <img src="assets/logos/universal-assistance.svg" alt=""
                                 class="logo-carousel__logo logo-carousel__logo--light" width="160" height="39">
                             <img src="assets/logos/universal-assistance-negative.svg" alt=""
                                 class="logo-carousel__logo logo-carousel__logo--dark" width="160" height="39">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--lg logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/parana-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
+                            <img src="assets/logos/sancor-logo.webp" alt="" class="logo-carousel__logo"
+                                width="200" height="80">
                         </div>
                     </div>
                 </div>
@@ -578,9 +578,19 @@
             <div class="travel__container">
                 <div class="travel__card">
                     <div class="travel__brand">
-                        <img class="travel__logo" src="assets/logos/universal-assistance-negative.svg"
-                            alt="Universal Assistance" width="180" height="44">
-                        <p class="travel__partner">OnSeguros es partner de Universal Assistance</p>
+                        <div class="travel__intro">
+                            <img class="travel__logo" src="assets/logos/universal-assistance-negative.svg"
+                                alt="Universal Assistance" width="180" height="44">
+                            <p class="travel__tagline"><span>Tu viaje es tu viaje.</span>
+                                <span>Nosotros lo protegemos.</span></p>
+                            <p class="travel__partner">OnSeguros es partner de Universal Assistance</p>
+                        </div>
+                        <picture class="travel__photo">
+                            <source srcset="assets/images/ivan-de-pineda-ua.webp" type="image/webp">
+                            <img src="assets/images/ivan-de-pineda-ua.png"
+                                alt="Iván de Pineda, embajador de Universal Assistance" width="820" height="894"
+                                loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <div class="travel__body">
                         <p class="travel__eyebrow">Asistencia al viajero</p>

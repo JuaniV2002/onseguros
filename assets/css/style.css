@@ -1035,10 +1035,10 @@ ol {
     transition: none;
 }
 
-/* Specific logo sizing adjustments - make Allianz, Experta, and Parana bigger to match Sancor */
-.logo-carousel__item:nth-child(1) .logo-carousel__logo,
-.logo-carousel__item:nth-child(2) .logo-carousel__logo,
-.logo-carousel__item:nth-child(3) .logo-carousel__logo {
+/* Allianz, Experta and Paraná carry --lg (in index.html, originals and
+   duplicates) so they read as big as Sancor; by class, not position, so the
+   logo order can change freely. */
+.logo-carousel__item--lg .logo-carousel__logo {
     height: 90px;
 }
 
@@ -1054,9 +1054,7 @@ ol {
     }
 
     /* Adjusted sizing for specific logos at tablet */
-    .logo-carousel__item:nth-child(1) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(2) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(3) .logo-carousel__logo {
+    .logo-carousel__item--lg .logo-carousel__logo {
         height: 105px;
     }
 }
@@ -1067,9 +1065,7 @@ ol {
     }
 
     /* Adjusted sizing for specific logos at desktop */
-    .logo-carousel__item:nth-child(1) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(2) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(3) .logo-carousel__logo {
+    .logo-carousel__item--lg .logo-carousel__logo {
         height: 120px;
     }
 }
@@ -1081,7 +1077,8 @@ ol {
     }
 
     /* Seamless loop: the track sizes to its content and ends with one extra
-       gap, so -50% lands exactly on the first duplicate (5 logos + 5 gaps). */
+       gap, so -50% lands exactly on the first duplicate (5 logos + 5 gaps).
+       Needs the duplicate set in index.html in the same order as the originals. */
     .logo-carousel__track {
         --carousel-gap: clamp(2rem, 4vw, 3rem);
         justify-content: flex-start;
@@ -1101,12 +1098,7 @@ ol {
     }
 
     /* Adjusted sizing for specific logos on mobile */
-    .logo-carousel__item:nth-child(1) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(2) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(3) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(6) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(7) .logo-carousel__logo,
-    .logo-carousel__item:nth-child(8) .logo-carousel__logo {
+    .logo-carousel__item--lg .logo-carousel__logo {
         height: 65px;
     }
 
@@ -3098,7 +3090,7 @@ ol {
         height: 48px;
     }
 
-    .landing .logo-carousel__item:nth-child(-n+3) .logo-carousel__logo {
+    .landing .logo-carousel__item--lg .logo-carousel__logo {
         height: 64px;
     }
 }
@@ -3631,21 +3623,49 @@ ol {
     overflow: hidden;
 }
 
+/* The panel: logo, campaign line and partner note on top; Iván de Pineda
+   (UA's ambassador) sits on the panel's bottom-left corner, so the cut-off
+   legs and armchair in the cutout read as the panel's own edge. The faint
+   light behind him keeps the navy armchair from sinking into UA blue. */
 .landing .travel__brand {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-lg);
-    padding: var(--space-xl) var(--space-lg);
-    background: var(--ua-blue);
+    padding: var(--space-xl) var(--space-lg) 0;
+    background:
+        radial-gradient(ellipse 70% 45% at 35% 100%, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0) 70%),
+        var(--ua-blue);
     color: #ffffff;
 }
 
-/* 180px wide => clear space x = 12px; panel padding and gap exceed it */
+.landing .travel__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Brand rule: clear space around the logo of at least its own height
+   (viewBox ratio 130.16 / 534.72), so the gap below it is computed. */
 .landing .travel__logo {
+    --ua-logo-w: 180px;
     display: block;
-    width: 180px;
+    width: var(--ua-logo-w);
     height: auto;
+    margin-bottom: calc(var(--ua-logo-w) * 0.2434);
+}
+
+.landing .travel__tagline {
+    margin: 0 0 var(--space-md);
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: clamp(1.375rem, 1.2rem + 0.75vw, 1.625rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.landing .travel__tagline span {
+    display: block;
 }
 
 .landing .travel__partner {
@@ -3654,6 +3674,23 @@ ol {
     font-weight: var(--font-weight-medium);
     line-height: 1.4;
     color: #ffffff;
+}
+
+/* Bleeds to the panel's left and bottom edges. Mobile crops the bottom
+   (legs, seat) to keep the panel short; the face is at the top. */
+.landing .travel__photo {
+    display: block;
+    width: min(calc(100% + var(--space-lg)), 22rem);
+    max-width: none;
+    height: 16.5rem;
+    margin: var(--space-xl) 0 0 calc(-1 * var(--space-lg));
+    overflow: hidden;
+}
+
+.landing .travel__photo img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .landing .travel__body {
@@ -3723,18 +3760,64 @@ ol {
     }
 }
 
+/* Stacked card, wide enough for photo and text side by side */
+@media (min-width: 640px) and (max-width: 899.98px) {
+    .landing .travel__brand {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: var(--space-xl);
+        align-items: end;
+    }
+
+    .landing .travel__intro {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: start;
+        padding-bottom: var(--space-xl);
+    }
+
+    .landing .travel__photo {
+        grid-column: 1;
+        grid-row: 1;
+        width: calc(100% + var(--space-lg));
+        max-width: 22rem;
+        height: auto;
+        margin: 0 0 0 calc(-1 * var(--space-lg));
+    }
+}
+
 @media (min-width: 900px) {
     .landing .travel__card {
         grid-template-columns: minmax(18rem, 1fr) 2fr;
     }
 
     .landing .travel__brand {
-        justify-content: space-between;
-        padding: var(--space-3xl);
+        display: flex;
+        padding: var(--space-3xl) var(--space-3xl) 0;
     }
 
     .landing .travel__logo {
-        width: 220px;
+        --ua-logo-w: 220px;
+    }
+
+    /* Fills whatever height the text column leaves under the partner note;
+       the image is then as large as fits (contain), pinned bottom-left. */
+    .landing .travel__photo {
+        position: relative;
+        flex: 1 1 0;
+        width: calc(100% + var(--space-3xl));
+        max-width: none;
+        height: auto;
+        min-height: 15rem;
+        margin: var(--space-xl) 0 0 calc(-1 * var(--space-3xl));
+    }
+
+    .landing .travel__photo img {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        object-fit: contain;
+        object-position: left bottom;
     }
 
     .landing .travel__partner {
