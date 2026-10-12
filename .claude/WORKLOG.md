@@ -41,3 +41,8 @@
 - done: 1 commit en `landing-redesign` (sin push). Mariano quería el header/footer "que flotan" de antes → cards con inset, borde fino y una sombra suave, sin gradiente/glow. Sacados `min-height` del newsletter y `100vh` de blog/faq/legal (causaban los huecos enormes). loader v4, style.css v7. Reviewer PASS, QA del designer 11 páginas × 4 anchos × claro/oscuro.
 - state: esperando que Mariano lo vea.
 - next: nit: en páginas muy cortas en pantallas muy altas el footer no queda pegado abajo (body no es flex). Reglas `.legal-page` en style.css ~2586/2699 usan tokens inexistentes, borrables.
+
+## 2026-10-12 — header con más aire + marca de agua en footer
+- done: e3fbbb5 en `landing-redesign` (sin push). Token `--float-pad` (16/24/32px) compartido por header/footer; header ocupa la columna de 1280px. Footer sin logo, con "OnSeguros" gigante casi invisible de fondo (estilo fieldrecreation.com), aria-hidden y recortado por la card. loader v5, style.css v8. Reviewer PASS.
+- state: esperando que Mariano lo vea.
+- next: el padding del footer en ≥640px bajó de 32/40 a 24/32px para igualar al header; confirmar que le gusta.
