@@ -518,6 +518,7 @@ document.querySelectorAll('.admin-nav .nav-btn').forEach(btn => {
         if (elements.draftsManagement) elements.draftsManagement.style.display = 'none';
         if (elements.draftEditorContainer) elements.draftEditorContainer.style.display = 'none';
         if (elements.faqDraftEditorContainer) elements.faqDraftEditorContainer.style.display = 'none';
+        if (elements.showDraftsBtn) elements.showDraftsBtn.classList.remove('active');
     });
 });
 
