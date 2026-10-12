@@ -438,16 +438,14 @@
 }
 
 /* ==========================================================================
-   Success & Error Messages
+   Success Message
    ========================================================================== */
 
-.siniestro-success[hidden],
-.siniestro-error[hidden] {
+.siniestro-success[hidden] {
     display: none;
 }
 
-.siniestro-success,
-.siniestro-error {
+.siniestro-success {
     display: flex;
     align-items: flex-start;
     gap: var(--space-md);
@@ -456,9 +454,6 @@
     font-size: var(--font-size-sm);
     line-height: var(--line-height-relaxed);
     background-color: var(--bg-primary);
-}
-
-.siniestro-success {
     border: 1px solid var(--sin-success);
     border-left-width: 4px;
     color: var(--text-primary);
@@ -482,241 +477,14 @@
     color: var(--sin-success);
 }
 
-.siniestro-error {
-    border: 1px solid var(--sin-error);
-    border-left-width: 4px;
-    color: var(--sin-error);
-    font-weight: var(--font-weight-medium);
-}
-
-/* ==========================================================================
-   Loading State
-   ========================================================================== */
-
-.siniestro-form.is-submitting {
-    pointer-events: none;
-    opacity: 0.8;
-}
-
-/* ==========================================================================
-   Photo Upload — Drop Zone
-   ========================================================================== */
-
-.photo-file-input {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.photo-drop-zone {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 140px;
-    padding: var(--space-xl) var(--space-lg);
-    border: 1px dashed var(--sin-field-border);
-    border-radius: var(--radius-sm);
-    background-color: var(--surface-band);
-    cursor: pointer;
-    transition: border-color var(--transition-fast);
-    overflow: hidden;
-}
-
-.photo-drop-zone:hover,
-.photo-drop-zone.is-dragover {
-    border-color: var(--link);
-    border-style: solid;
-}
-
-.photo-drop-zone:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-}
-
-.photo-drop-zone.is-has-files {
-    border-style: solid;
-    border-color: var(--rule);
-    min-height: auto;
-    padding: var(--space-md);
-}
-
-.photo-drop-zone.is-has-files:hover {
-    border-color: var(--link);
-}
-
-.photo-drop-zone__idle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-    text-align: center;
-    pointer-events: none;
-}
-
-.photo-drop-zone__icon {
-    color: var(--text-secondary);
-}
-
-.photo-drop-zone__title {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.photo-drop-zone__subtitle {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    margin: 0;
-}
-
-/* Drag-over label: the JS never toggles [hidden], so CSS swaps it in */
-.photo-drop-zone__dragover {
-    pointer-events: none;
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
+/* WhatsApp fallback link: same treatment as .siniestro-alert a */
+.siniestro-success a {
     color: var(--link);
-}
-
-.photo-drop-zone.is-dragover .photo-drop-zone__dragover {
-    display: block;
-}
-
-.photo-drop-zone.is-dragover .photo-drop-zone__idle {
-    display: none;
-}
-
-/* Counter + "add more" shown once files are selected (rendered by JS) */
-.photo-drop-zone.is-has-files .photo-drop-zone__idle {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-xs) var(--space-md);
-}
-
-.photo-drop-zone__count {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-}
-
-.photo-add-more {
-    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    color: var(--link);
     text-decoration: underline;
     text-underline-offset: 2px;
 }
 
-/* ==========================================================================
-   Photo Upload — Preview Grid
-   ========================================================================== */
-
-.photo-preview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
+.siniestro-success a:hover {
+    color: var(--link-hover);
 }
-
-.photo-preview-grid[hidden] { display: none; }
-
-.photo-preview-item {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    border: 1px solid var(--rule);
-    background: var(--surface-band);
-}
-
-.photo-preview-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.photo-preview-item__remove {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: rgba(0, 0, 0, 0.72);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-full);
-    font-size: 14px;
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-    padding: 0;
-}
-
-.photo-preview-item__remove:hover {
-    background: #000;
-}
-
-.photo-preview-item__remove:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: -4px;
-}
-
-.photo-preview-item__uploading {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.75);
-}
-
-[data-theme="dark"] .photo-preview-item__uploading {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.photo-preview-item__uploading::after {
-    content: '';
-    width: 22px;
-    height: 22px;
-    border: 3px solid var(--rule);
-    border-top-color: var(--link);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .photo-preview-item__uploading::after {
-        animation-duration: 2.4s;
-    }
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* ==========================================================================
-   Photo Upload Status bar
-   ========================================================================== */
-
-.photo-upload-status {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    margin-top: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--surface-band);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-sm);
-}
-
-.photo-upload-status[hidden] { display: none; }

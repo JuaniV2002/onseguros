@@ -41,8 +41,6 @@ function hideAllOtherSections() {
     if (elements.postsManagement) elements.postsManagement.style.display = 'none';
     if (elements.faqManagement) elements.faqManagement.style.display = 'none';
     if (elements.newsletterManagement) elements.newsletterManagement.style.display = 'none';
-    if (elements.quotesManagement) elements.quotesManagement.style.display = 'none';
-    if (elements.siniestrosManagement) elements.siniestrosManagement.style.display = 'none';
     if (elements.editorContainer) elements.editorContainer.style.display = 'none';
     if (elements.faqEditorContainer) elements.faqEditorContainer.style.display = 'none';
     if (elements.faqDraftEditorContainer) elements.faqDraftEditorContainer.style.display = 'none';

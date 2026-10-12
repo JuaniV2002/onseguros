@@ -11,13 +11,11 @@
     --chat-agent-bg: var(--surface-band);
     --chat-user-bg: var(--brand-ink);          /* logo navy; white text 16.5:1 */
     --chat-user-fg: #ffffff;
-    --chat-error: #b42318;                     /* 6.0:1 on the warm band */
 }
 
 [data-theme="dark"] .cotizar-page {
     --chat-surface: var(--surface-base);
     --chat-user-bg: hsl(198, 100%, 16%);       /* lifted logo navy so it reads on near-black */
-    --chat-error: #ff8a80;                     /* 7.9:1 on the dark band */
 }
 
 /* Page Layout */
@@ -452,14 +450,6 @@
     margin: 0;
 }
 
-.chat-contact-form__error {
-    font-size: 0.8125rem;
-    color: var(--chat-error);
-    border-left: 2px solid var(--chat-error);
-    padding: 2px 0 2px var(--space-sm);
-    margin: 0;
-}
-
 /* Same treatment as the global .btn--primary: flat logo blue, large-bold label */
 .chat-contact-form__btn {
     width: 100%;
@@ -481,6 +471,18 @@
 
 .chat-contact-form__btn:hover:not(:disabled) {
     background-color: var(--brand-blue-hover);
+}
+
+/* Link variant (WhatsApp action): beat .chat-bubble--agent a link styling */
+a.chat-contact-form__btn,
+a.chat-contact-form__btn:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+    color: var(--on-brand);
+    text-decoration: none;
 }
 
 .chat-contact-form__btn:focus-visible {

@@ -229,8 +229,6 @@ function showFAQManagement() {
     elements.editorContainer.style.display = 'none';
     elements.faqManagement.style.display = 'block';
     elements.newsletterManagement.style.display = 'none';
-    elements.quotesManagement.style.display = 'none';
-    elements.siniestrosManagement.style.display = 'none';
     elements.faqEditorContainer.style.display = 'none';
     document.querySelector('.admin-nav').style.display = 'flex';
     currentEditingFaq = null;
@@ -239,8 +237,6 @@ function showFAQManagement() {
     elements.showBlogBtn.classList.remove('active');
     elements.showFaqBtn.classList.add('active');
     elements.showNewsletterBtn.classList.remove('active');
-    elements.showQuotesBtn.classList.remove('active');
-    if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
     
     // Reload FAQs to ensure proper state
     loadFAQs();
@@ -512,16 +508,12 @@ function setupNavigation() {
         elements.postsManagement.style.display = 'block';
         elements.faqManagement.style.display = 'none';
         elements.newsletterManagement.style.display = 'none';
-        elements.quotesManagement.style.display = 'none';
-        elements.siniestrosManagement.style.display = 'none';
         elements.editorContainer.style.display = 'none';
         elements.faqEditorContainer.style.display = 'none';
         
         elements.showBlogBtn.classList.add('active');
         elements.showFaqBtn.classList.remove('active');
         elements.showNewsletterBtn.classList.remove('active');
-        elements.showQuotesBtn.classList.remove('active');
-        if (elements.showSiniestrosBtn) elements.showSiniestrosBtn.classList.remove('active');
         
         loadPosts();
     });
@@ -536,7 +528,6 @@ function setupNavigation() {
         refreshFaqBtn.addEventListener('click', () => loadFAQs());
     }
 
-    // Quotes button navigation will be handled by admin-quotes.js
     // Newsletter button navigation will be handled by admin-newsletter.js
 }
 
