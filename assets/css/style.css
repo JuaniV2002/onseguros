@@ -3643,16 +3643,18 @@ ol {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    align-self: stretch;
 }
 
-/* Brand rule: clear space around the logo of at least its own height
-   (viewBox ratio 130.16 / 534.72), so the gap below it is computed. */
+/* "A company of Zurich" lockup: as wide as the panel allows so the UA mark
+   stays legible. Brand rule: clear space of at least the logo's own height
+   (viewBox ratio 42 / 311), so the gap below it is computed. */
 .landing .travel__logo {
-    --ua-logo-w: 180px;
+    --ua-logo-w: min(100%, 340px);
     display: block;
     width: var(--ua-logo-w);
     height: auto;
-    margin-bottom: calc(var(--ua-logo-w) * 0.2434);
+    margin-bottom: calc(var(--ua-logo-w) * 0.135);
 }
 
 .landing .travel__tagline {
@@ -3793,16 +3795,12 @@ ol {
 
 @media (min-width: 900px) {
     .landing .travel__card {
-        grid-template-columns: minmax(18rem, 1fr) 2fr;
+        grid-template-columns: minmax(22rem, 1fr) 2fr;
     }
 
     .landing .travel__brand {
         display: flex;
         padding: var(--space-3xl) var(--space-3xl) 0;
-    }
-
-    .landing .travel__logo {
-        --ua-logo-w: 220px;
     }
 
     /* Fills whatever height the text column leaves under the partner note;
