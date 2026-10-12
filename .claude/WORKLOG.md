@@ -46,3 +46,8 @@
 - done: e3fbbb5 en `landing-redesign` (sin push). Token `--float-pad` (16/24/32px) compartido por header/footer; header ocupa la columna de 1280px. Footer sin logo, con "OnSeguros" gigante casi invisible de fondo (estilo fieldrecreation.com), aria-hidden y recortado por la card. loader v5, style.css v8. Reviewer PASS.
 - state: esperando que Mariano lo vea.
 - next: el padding del footer en ≥640px bajó de 32/40 a 24/32px para igualar al header; confirmar que le gusta.
+
+## 2026-10-12 — pasada mobile + marca de agua más sutil
+- done: commit en `landing-redesign` (sin push). Auditoría QA 15 páginas × 7 viewports → arreglados: overflow de URLs largas en posts, input del chat a 16px, touch targets ≥44px, texto chico, FAB tapando footer, scroll-padding con `--header-h`. Marca de agua más clara, más arriba, oculta <640px. loader v6, style.css v9. Reviewer PASS.
+- state: esperando que Mariano lo vea.
+- next: decisiones pendientes: ocultar FAB WhatsApp en /agente/ (roza el input del chat), carrusel de logos del hero cortado a la derecha en mobile (¿intencional?). No probado en iPhone real.
