@@ -71,3 +71,8 @@
 - done: 2 commits en `landing-redesign` (sin push). UA 3º de 5 en el carrusel (tamaños por clase `--lg`, no por posición); panel azul de UA con "Tu viaje es tu viaje. Nosotros lo protegemos." y foto recortada de Iván de Pineda (embajador) anclada abajo-izquierda (`assets/images/ivan-de-pineda-ua.{webp,png}`). Aparte: arreglado overflow de 4px del newsletter a 640-645px. style.css v12. Reviewer PASS.
 - state: esperando que Mariano lo vea.
 - next: confirmar con UA que los partners pueden usar la imagen de Iván de Pineda y el slogan (derechos de imagen del embajador suelen ser restringidos). Mención de embarazo sacada a propósito (pedido de Mariano).
+
+## 2026-10-12 — foto de Iván alineada a la derecha
+- done: commit en `landing-redesign` (sin push). Sillón al ras del borde derecho/inferior del panel azul en todos los anchos; piernas cortadas se desvanecen a la izquierda (mask). style.css v13.
+- state: esperando que Mariano lo vea.
+- next: igual que antes: confirmar con UA permiso de imagen de Iván de Pineda y slogan.
