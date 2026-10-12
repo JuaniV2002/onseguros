@@ -55,7 +55,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">
-    <link rel="preload" href="assets/css/style.css?v=10" as="style">
+    <link rel="preload" href="assets/css/style.css?v=11" as="style">
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         as="style">
@@ -64,7 +64,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=10">
+    <link rel="stylesheet" href="assets/css/style.css?v=11">
 
     <!-- Structured Data - Insurance Agency -->
     <script type="application/ld+json">
@@ -370,15 +370,8 @@
                 </div>
             </div>
 
-            <!-- Scroll Indicator -->
-            <a href="#nosotros" class="hero__scroll-indicator" aria-label="Ver más contenido">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"/>
-                </svg>
-            </a>
-
             <!-- Logo Carousel -->
-            <div class="logo-carousel" aria-label="Compañías aseguradoras asociadas">
+            <div class="logo-carousel" aria-label="Compañías asociadas">
                 <div class="logo-carousel__container">
                     <div class="logo-carousel__track">
                         <div class="logo-carousel__item">
@@ -397,6 +390,12 @@
                             <img src="assets/logos/sancor-logo.webp" alt="Sancor" class="logo-carousel__logo"
                                 width="200" height="80">
                         </div>
+                        <div class="logo-carousel__item logo-carousel__item--ua">
+                            <img src="assets/logos/universal-assistance.svg" alt="Universal Assistance"
+                                class="logo-carousel__logo logo-carousel__logo--light" width="160" height="39">
+                            <img src="assets/logos/universal-assistance-negative.svg" alt="Universal Assistance"
+                                class="logo-carousel__logo logo-carousel__logo--dark" width="160" height="39">
+                        </div>
                         <!-- Duplicate logos for infinite scroll on mobile -->
                         <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
                             <img src="assets/logos/allianz-logo.webp" alt="" class="logo-carousel__logo" width="200"
@@ -413,6 +412,12 @@
                         <div class="logo-carousel__item logo-carousel__item--duplicate" aria-hidden="true">
                             <img src="assets/logos/sancor-logo.webp" alt="" class="logo-carousel__logo" width="200"
                                 height="80">
+                        </div>
+                        <div class="logo-carousel__item logo-carousel__item--duplicate logo-carousel__item--ua" aria-hidden="true">
+                            <img src="assets/logos/universal-assistance.svg" alt=""
+                                class="logo-carousel__logo logo-carousel__logo--light" width="160" height="39">
+                            <img src="assets/logos/universal-assistance-negative.svg" alt=""
+                                class="logo-carousel__logo logo-carousel__logo--dark" width="160" height="39">
                         </div>
                     </div>
                 </div>
@@ -581,16 +586,13 @@
                         <p class="travel__eyebrow">Asistencia al viajero</p>
                         <h2 id="travel-heading" class="travel__title">Con Universal Assistance y OnSeguros viajás
                             protegido</h2>
-                        <p class="travel__description">
-                            Muchos países exigen asistencia al viajero para ingresar. Hay coberturas para viajes de
-                            placer, deporte y embarazo.
-                        </p>
                         <ul class="travel__list">
-                            <li>Asistencia al viajero desde <strong>USD&nbsp;5 por día</strong> + cuotas sin interés</li>
+                            <li>Asistencia al viajero desde <strong>USD&nbsp;5 por día</strong>, en hasta <strong>12&nbsp;cuotas sin interés</strong></li>
                             <li>Coberturas de hasta <strong>USD&nbsp;1.000.000</strong></li>
                             <li>Acceso a <strong>salones VIP</strong> de aeropuertos de todo el mundo si tu vuelo se
                                 demora</li>
                             <li><strong>Telemedicina</strong> y coberturas para viajes con preexistencias</li>
+                            <li>Cobertura para viajes <strong>deportivos</strong></li>
                         </ul>
                         <a href="https://wa.me/543584921111?text=Hola%21%20Quiero%20cotizar%20una%20asistencia%20al%20viajero%20con%20Universal%20Assistance."
                             class="btn btn--primary travel__cta" target="_blank" rel="noopener noreferrer">
