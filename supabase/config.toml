@@ -406,3 +406,20 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 # declarative_schema_path = "./database"
 # JSON string passed through to pg-delta SQL formatting.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"
+
+# Public entrypoints that validate their own auth. Pinned here so a deploy
+# without --no-verify-jwt can't put the gateway's JWT check back in front.
+[functions.generate-weekly-draft]
+verify_jwt = false  # x-webhook-secret (pg_cron via pg_net sends no JWT)
+
+[functions.publish-draft-api]
+verify_jwt = false  # HMAC token from the email link
+
+[functions.generate-faq-draft]
+verify_jwt = false  # x-webhook-secret
+
+[functions.publish-faq-draft-api]
+verify_jwt = false  # HMAC token from the email link
+
+[functions.ai-quote-api]
+verify_jwt = false  # public chatbot, browser sends only the anon key
