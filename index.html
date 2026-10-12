@@ -55,7 +55,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">
-    <link rel="preload" href="assets/css/style.css?v=9" as="style">
+    <link rel="preload" href="assets/css/style.css?v=10" as="style">
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         as="style">
@@ -64,7 +64,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=9">
+    <link rel="stylesheet" href="assets/css/style.css?v=10">
 
     <!-- Structured Data - Insurance Agency -->
     <script type="application/ld+json">
@@ -568,6 +568,41 @@
             </div>
         </section>
 
+        <!-- Travel assistance (Universal Assistance partner block) -->
+        <section class="travel" id="asistencia-al-viajero" aria-labelledby="travel-heading">
+            <div class="travel__container">
+                <div class="travel__card">
+                    <div class="travel__brand">
+                        <img class="travel__logo" src="assets/logos/universal-assistance-negative.svg"
+                            alt="Universal Assistance" width="180" height="44">
+                        <p class="travel__partner">OnSeguros es partner de Universal Assistance</p>
+                    </div>
+                    <div class="travel__body">
+                        <p class="travel__eyebrow">Asistencia al viajero</p>
+                        <h2 id="travel-heading" class="travel__title">Con Universal Assistance y OnSeguros viajás
+                            protegido</h2>
+                        <p class="travel__description">
+                            Muchos países exigen asistencia al viajero para ingresar. Hay coberturas para viajes de
+                            placer, deporte y embarazo.
+                        </p>
+                        <ul class="travel__list">
+                            <li>Asistencia al viajero desde <strong>USD&nbsp;5 por día</strong> + cuotas sin interés</li>
+                            <li>Coberturas de hasta <strong>USD&nbsp;1.000.000</strong></li>
+                            <li>Acceso a <strong>salones VIP</strong> de aeropuertos de todo el mundo si tu vuelo se
+                                demora</li>
+                            <li><strong>Telemedicina</strong> y coberturas para viajes con preexistencias</li>
+                        </ul>
+                        <a href="https://wa.me/543584921111?text=Hola%21%20Quiero%20cotizar%20una%20asistencia%20al%20viajero%20con%20Universal%20Assistance."
+                            class="btn btn--primary travel__cta" target="_blank" rel="noopener noreferrer">
+                            <span>Cotizá tu asistencia</span><span class="sr-only"> por WhatsApp (se abre en una
+                                pestaña nueva)</span>
+                        </a>
+                        <p class="travel__fineprint">Coberturas sujetas a condiciones del producto contratado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Testimonials Section -->
         <section class="testimonials" id="testimonios" aria-labelledby="testimonials-heading">
             <div class="testimonials__container">
@@ -855,7 +890,7 @@
 
     <!-- Scripts -->
     <script src="assets/js/env-config.js"></script>
-    <script defer src="components/component-loader.js?v=7"></script>
+    <script defer src="components/component-loader.js?v=8"></script>
     <script defer src="assets/js/script.js?v=2"></script>
     <script defer src="assets/js/live-widgets.js"></script>
     <script>

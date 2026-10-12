@@ -3653,6 +3653,151 @@ ol {
     filter: grayscale(100%) invert(1) brightness(0.85) opacity(0.7);
 }
 
+/* Travel assistance: Universal Assistance partner block. One floating card;
+   UA's white (negative) logo always sits on UA blue #00528F, in both themes,
+   per their brand manual. UA blue stays inside that panel; the rest is ours. */
+.landing .travel {
+    --ua-blue: #00528F;                       /* white text on it: 8:1 */
+    padding: var(--space-5xl) 0 0;
+    background-color: var(--bg-primary);
+}
+
+.landing .travel__container {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.landing .travel__card {
+    display: grid;
+    background: var(--float-surface);
+    border: 1px solid var(--float-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--float-shadow);
+    overflow: hidden;
+}
+
+.landing .travel__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    padding: var(--space-xl) var(--space-lg);
+    background: var(--ua-blue);
+    color: #ffffff;
+}
+
+/* 180px wide => clear space x = 12px; panel padding and gap exceed it */
+.landing .travel__logo {
+    display: block;
+    width: 180px;
+    height: auto;
+}
+
+.landing .travel__partner {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+.landing .travel__body {
+    padding: var(--space-xl) var(--space-lg);
+}
+
+.landing .travel__eyebrow {
+    margin: 0 0 var(--space-sm);
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.landing .travel__title {
+    margin: 0 0 var(--space-md);
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    text-wrap: balance;
+}
+
+.landing .travel__description {
+    margin: 0 0 var(--space-lg);
+    max-width: 56ch;
+    color: var(--text-secondary);
+}
+
+.landing .travel__list {
+    list-style: none;
+    margin: 0 0 var(--space-xl);
+    padding: 0;
+    border-top: 2px solid var(--l-rule-strong);
+}
+
+.landing .travel__list li {
+    position: relative;
+    padding: var(--space-md) 0 var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--l-rule);
+    color: var(--text-primary);
+    line-height: 1.45;
+}
+
+.landing .travel__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(var(--space-md) + 0.6em);
+    width: 0.625rem;
+    height: 2px;
+    background: var(--l-link);
+}
+
+.landing .travel__cta {
+    width: 100%;
+    padding-inline: var(--space-md);  /* keeps the 19px label on one line at 320px */
+}
+
+.landing .travel__fineprint {
+    margin: var(--space-md) 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+@media (min-width: 640px) {
+    .landing .travel__cta {
+        width: auto;
+        padding-inline: var(--space-xl);
+    }
+}
+
+@media (min-width: 900px) {
+    .landing .travel__card {
+        grid-template-columns: minmax(18rem, 1fr) 2fr;
+    }
+
+    .landing .travel__brand {
+        justify-content: space-between;
+        padding: var(--space-3xl);
+    }
+
+    .landing .travel__logo {
+        width: 220px;
+    }
+
+    .landing .travel__partner {
+        max-width: 22ch;
+    }
+
+    .landing .travel__body {
+        padding: var(--space-3xl) var(--space-3xl) var(--space-3xl) var(--space-2xl);
+    }
+}
+
 /* ==========================================================================
    Mobile polish: legible fine print, 44px touch targets, even gutters.
    Hit areas grow through padding or an invisible pseudo-element, so the
