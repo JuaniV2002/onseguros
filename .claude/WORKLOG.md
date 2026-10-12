@@ -76,3 +76,8 @@
 - done: commit en `landing-redesign` (sin push). Sillón al ras del borde derecho/inferior del panel azul en todos los anchos; piernas cortadas se desvanecen a la izquierda (mask). style.css v13.
 - state: esperando que Mariano lo vea.
 - next: igual que antes: confirmar con UA permiso de imagen de Iván de Pineda y slogan.
+
+## 2026-10-12 — logo UA "A company of Zurich" en el panel
+- done: commit en `landing-redesign` (sin push). Panel azul usa `assets/logos/universal-assistance-zurich-negative.svg` (lo pasó Juani) a todo el ancho del panel; columna del panel en desktop min 22rem. Carrusel sigue con el logo UA solo (no hay versión color del lockup). style.css v14.
+- state: esperando OK final de Mariano.
+- next: si UA manda versión color del lockup Zurich, se puede usar también en el carrusel.
