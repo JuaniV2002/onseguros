@@ -51,3 +51,8 @@
 - done: commit en `landing-redesign` (sin push). Auditoría QA 15 páginas × 7 viewports → arreglados: overflow de URLs largas en posts, input del chat a 16px, touch targets ≥44px, texto chico, FAB tapando footer, scroll-padding con `--header-h`. Marca de agua más clara, más arriba, oculta <640px. loader v6, style.css v9. Reviewer PASS.
 - state: esperando que Mariano lo vea.
 - next: decisiones pendientes: ocultar FAB WhatsApp en /agente/ (roza el input del chat), carrusel de logos del hero cortado a la derecha en mobile (¿intencional?). No probado en iPhone real.
+
+## 2026-10-12 — WhatsApp al número fijo + sin FAB en /agente/
+- done: 2 commits en `landing-redesign` (sin push). Mariano: el fijo 3584921111 ahora tiene WhatsApp Business → todos los `wa.me` y el número mostrado pasan de 3584122566 a 3584921111 (6 archivos). FAB de WhatsApp oculto en /agente/ y sacado el hueco que dejaba en el input del chat. loader v7, agente.css v5. QA PASS. Carrusel de logos cortado en mobile = intencional (confirmado).
+- state: esperando que Mariano vea la rama.
+- next: FAQs en la base (Supabase `faqs`) o el prompt de Oni (ai-quote-api, fuera del repo) podrían tener el número viejo — revisar. Si quiere el número nuevo en producción ya, hacer commit aparte sobre master (la rama del rediseño no se puede cherry-pickear limpio).
