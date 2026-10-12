@@ -2118,6 +2118,7 @@ ol {
 
 .newsletter__input {
     flex: 1;
+    min-width: 0;                        /* let it shrink in the row layout */
     padding: var(--space-md) var(--space-lg);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-lg);
