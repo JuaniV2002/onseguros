@@ -159,14 +159,17 @@ ol {
     --rule-strong: var(--text-primary);       /* 2px section-opening rule */
 
     /* Floating header/footer cards: inset from the viewport edges, one soft
-       neutral shadow (no color, no glow). Max width = page column + gutters
-       so card content lines up with page content. */
+       neutral shadow (no color, no glow). Max width = the page column, and
+       the inner padding matches the page gutter on wide screens, so card
+       content lines up with page content there. */
     --float-inset: var(--space-sm);
-    --float-max: calc(var(--container-xl) - 2 * var(--space-md));
+    --float-max: var(--container-xl);
+    --float-pad: var(--space-md);
     --float-surface: var(--surface-raised);
     --float-border: var(--border-light);
     --float-shadow: 0 4px 16px -8px rgba(15, 23, 42, 0.16);
     --float-shadow-scrolled: 0 8px 24px -10px rgba(15, 23, 42, 0.24);
+    --float-watermark: hsl(220, 14%, 95%);    /* footer wordmark, ~1.1:1 on the card */
 
     /* Derived Light Colors */
     --primary-light: hsl(216, 92%, 67%);
@@ -397,6 +400,13 @@ ol {
 @media (min-width: 640px) {
     :root {
         --float-inset: var(--space-md);
+        --float-pad: var(--space-lg);
+    }
+}
+
+@media (min-width: 1024px) {
+    :root {
+        --float-pad: var(--space-xl);
     }
 }
 
@@ -419,6 +429,7 @@ ol {
     --surface-band: hsl(36, 8%, 10%);
     --float-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
     --float-shadow-scrolled: 0 10px 28px -10px rgba(0, 0, 0, 0.75);
+    --float-watermark: hsl(0, 0%, 15.5%);
     --color-secondary: #6b6b6b;
     /* Mid gray */
     --color-secondary-rgb: 107, 107, 107;

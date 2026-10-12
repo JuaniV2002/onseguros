@@ -26,8 +26,9 @@
     /* ==========================================================================
        Header & Navigation — a floating bar: inset from the viewport edges,
        rounded, solid surface, hairline border and one soft neutral shadow.
-       Inset + inner padding add up to the page gutter (16 / 24 / 32px), so the
-       logo and CTA sit on the same column as the page content at every width.
+       Inner padding (--float-pad: 16 / 24 / 32px) gives the logo and CTA
+       room from the card edge; on wide screens the card spans the page
+       column, so logo and CTA line up with the page content.
        ========================================================================== */
 
     .header {
@@ -57,14 +58,14 @@
         justify-content: space-between;
         gap: var(--space-lg);
         min-height: 64px;
-        padding: var(--space-xs) var(--space-sm);
+        padding: var(--space-xs) var(--float-pad);
     }
 
     @media (min-width: 1024px) {
         .nav__container {
-            min-height: 72px;
-            padding-left: var(--space-md);
-            padding-right: var(--space-md);
+            min-height: 76px;
+            padding-top: var(--space-sm);
+            padding-bottom: var(--space-sm);
         }
     }
 
@@ -197,7 +198,7 @@
             flex-direction: column;
             align-items: stretch;
             gap: 0;
-            padding: var(--space-xs) var(--space-md) var(--space-md);
+            padding: var(--space-xs) var(--float-pad) var(--space-md);
             background: var(--float-surface);
             border: 1px solid var(--float-border);
             border-radius: var(--radius-xl);
