@@ -294,11 +294,6 @@
     flex-direction: column;
     gap: var(--space-xs);
     padding: var(--space-md) var(--space-xl) var(--space-lg);
-    /* Keep the send button clear of the fixed WhatsApp button (56px at
-       right: --space-xl) while the container runs edge to edge (< ~1300px):
-       FAB edge 96 + 8 scrollbar slack - container 24 - borders 2 - wrapper
-       padding 4 = 74px, minus whatever side margin the 1200px container has. */
-    padding-right: max(var(--space-xl), calc(74px - max(0px, (100vw - 1200px) / 2)));
 }
 
 .chat-input-wrapper {
@@ -529,19 +524,19 @@
     }
 }
 
+/* This page is already a chat: no floating WhatsApp button over it, so the
+   footer doesn't need the band it normally leaves for it (footer.html) */
+.whatsapp-fab {
+    display: none;
+}
+
+body .footer {
+    padding-bottom: var(--float-inset);
+}
+
 @media (max-width: 768px) {
     .cotizar-container {
         padding: 0 var(--space-md);
-    }
-
-    /* The fixed WhatsApp button (52px at right: --space-lg on this breakpoint,
-       style.css .whatsapp-fab) would sit on top of the send button whenever the
-       input row scrolls to the bottom of the viewport. Reserve a right gutter so
-       the send button always ends 8px left of it:
-       FAB edge (24 + 52 + 8) - container 16 - card border 1 - wrapper border 1
-       - wrapper padding 4 = 62px. */
-    .chat-input-area {
-        padding-right: calc(var(--space-lg) + 52px + var(--space-sm) - var(--space-md) - var(--space-xs) - 2px);
     }
 }
 
@@ -572,7 +567,7 @@
         padding-top: var(--space-sm);
         padding-bottom: var(--space-md);
         padding-left: var(--space-md);
-        /* padding-right: FAB gutter from the 768px block */
+        padding-right: var(--space-md);
     }
 
     .chat-message--agent,
