@@ -36,3 +36,8 @@
 - done: en `landing-redesign` (sin push): 36e9b91 (azul del logo #2e7ef6, header/footer planos, blog/faq/legal/agente/siniestros/sitemap/404/unsubscribe restyle, ?v= bumpeados: style.css v6, script.js v2, loader v3), 81e4ed7 (console.log de blog.js), 4abe6ea (markup terminos + alt FAQ). Reviewer + QA PASS (15 páginas × 4 anchos × claro/oscuro), admin intacto.
 - state: esperando que Mariano lo vea.
 - next: decisiones pendientes: botones 19px bold (AA con azul del logo) vs fill más oscuro; ocultar WhatsApp FAB en /agente/ (input queda angosto en 320); "Volver al Inicio" en legal/* apunta a /legal/; Formspree blog (xgolwvob) ≠ landing (xdkyknqv); blog y FAQ en producción devuelven 0 items; copy "Encuentra"→"Encontrá" en faq. Deuda: siniestros.js:241-252 sin aria-invalid, chips FAQ sin aria-pressed, reglas .legal-page* muertas en style.css (~2749-2880).
+
+## 2026-10-12 — header/footer flotantes de nuevo + huecos
+- done: 1 commit en `landing-redesign` (sin push). Mariano quería el header/footer "que flotan" de antes → cards con inset, borde fino y una sombra suave, sin gradiente/glow. Sacados `min-height` del newsletter y `100vh` de blog/faq/legal (causaban los huecos enormes). loader v4, style.css v7. Reviewer PASS, QA del designer 11 páginas × 4 anchos × claro/oscuro.
+- state: esperando que Mariano lo vea.
+- next: nit: en páginas muy cortas en pantallas muy altas el footer no queda pegado abajo (body no es flex). Reglas `.legal-page` en style.css ~2586/2699 usan tokens inexistentes, borrables.
