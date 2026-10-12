@@ -81,3 +81,8 @@
 - done: commit en `landing-redesign` (sin push). Panel azul usa `assets/logos/universal-assistance-zurich-negative.svg` (lo pasó Juani) a todo el ancho del panel; columna del panel en desktop min 22rem. Carrusel sigue con el logo UA solo (no hay versión color del lockup). style.css v14.
 - state: esperando OK final de Mariano.
 - next: si UA manda versión color del lockup Zurich, se puede usar también en el carrusel.
+
+## 2026-10-12 — cotizaciones y siniestros por WhatsApp, fuera del admin
+- done: 43e2c1c en `landing-redesign` (sin push). Oni muestra "Enviar consulta por WhatsApp" (nombre opcional + resumen) en vez de POST a QUOTE_API_URL; /siniestros/ abre wa.me/543584921111 con los campos agrupados, sin subida de fotos (van en el chat), email opcional, nada a Supabase. Admin sin tabs Cotizaciones/Siniestros (JS+CSS borrados), 5 keys fuera de deploy.yml. Aparte: 240cc66 Borradores ya no queda resaltado al cambiar de tab; 574e0b6 `.playwright-mcp/` ignorado. Reviewer+security+QA PASS.
+- state: esperando que Mariano lo pruebe en un celular real.
+- next: limpieza manual en Supabase (security, prioridad media): borrar edge fns submit-siniestro-api/send-quote-email-api/get-siniestros-api/get-quotes-api/update-quote-status-api (siguen aceptando llamadas anónimas); exportar y borrar o privatizar el bucket público `siniestros-fotos` (fotos con PII, probable INSERT anónimo); exportar/dropear tablas `quote_requests`/`siniestros`; borrar los 5 GitHub Secrets. Revisar prompt de Oni (ai-quote-api) por si dice "te contactamos por email". Botón Clientes del admin no hace nada (decisión de producto). Política de privacidad no menciona WhatsApp/Meta.
