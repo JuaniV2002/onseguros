@@ -1,5 +1,9 @@
 # Retire the Supabase quote/claim backend
 
+**Done 2026-10-12.** All steps ran; tables were backed up as JSON with
+`supabase db query --linked` (no DB password needed), and `storage rm -r`
+also deleted the bucket. Kept for reference.
+
 Quotes (Oni) and claims (/siniestros/) moved to WhatsApp in `landing-redesign`
 (43e2c1c). The old backend stays live until that branch is in production,
 because `master` still posts to it. Run these steps **only after** the

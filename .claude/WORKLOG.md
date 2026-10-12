@@ -96,3 +96,8 @@
 - done: c2cf010 `config.toml` fija verify_jwt=false para generate/publish (blog y FAQ) + ai-quote-api; WEEKLY_DRAFT_DEPLOY.md documenta el deploy FAQ. Causa: generate-faq-draft y publish-faq-draft-api desplegadas con JWT → 401 del gateway (link "Publicar" del mail de FAQ y cron FAQ rotos; blog ok). Rama `landing-redesign` pusheada, PR https://github.com/JuaniV2002/onseguros/pull/1. CLAUDE.md: dueño = Mariano Villanueva, get-clima-api documentada.
 - state: bloqueado — el clasificador de auto mode rechazó el deploy de funciones y el merge a master; los hace Juani o los autoriza.
 - next: merge PR #1 → verificar prod → redeploy `generate-faq-draft` y `publish-faq-draft-api` con --no-verify-jwt y reprobar (esperado: respuesta de la función, no UNAUTHORIZED_NO_AUTH_HEADER) → runbook RETIRE_QUOTES_SINIESTROS.md (Juani exporta CSV de tablas). Revisar si el cron FAQ está agendado (`select * from cron.job`; en la migración está comentado).
+
+## 2026-10-12 — rama en producción + backend viejo retirado
+- done: PR #1 mergeado (4e94929), deploy OK; prod verificado (siniestros sin fotos, agente.js v3, admin sin tabs, config.json sin keys viejas). generate-faq-draft/publish-faq-draft-api redeployadas sin JWT (ahora responden la función: 401 propio / 400 HTML). Oni con prompt nuevo (smoke: resumen + "Tocá el botón", no pide datos). Runbook completo: 5 fns borradas, bucket siniestros-fotos borrado, tablas exportadas a JSON (3+3 filas) y dropeadas (migración 20261012173500), 5 GH secrets borrados, config.json local limpio.
+- state: done.
+- next: cron biweekly-faq-draft SÍ estaba agendado (`0 11 */14 * *`) y venía fallando por el 401; ver que el próximo corra bien. Ojo: `*/14` en día-del-mes corre días 1, 15, 29, no cada 14 días exactos.
