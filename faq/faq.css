@@ -6,7 +6,6 @@
 
 /* FAQ Page Layout */
 .faq-page {
-    min-height: 100vh;
     padding: calc(80px + var(--space-4xl)) 0 var(--space-4xl);
     background-color: var(--bg-primary);
 }

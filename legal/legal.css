@@ -8,7 +8,6 @@
 /* Shared page shell: same width + gutters as the header and footer */
 .legal-page,
 .legal-main {
-    min-height: 100vh;
     padding: calc(80px + var(--space-4xl)) 0 var(--space-4xl);
     background-color: var(--bg-primary);
 }

@@ -1,30 +1,35 @@
 <style>
     /* ==========================================================================
-       Footer — flat, opens with the 2px rule used by landing sections
+       Footer — a floating card: inset from the viewport edges like the header,
+       rounded, solid surface, hairline border and one soft neutral shadow
        ========================================================================== */
 
     .footer {
-        padding: var(--space-4xl) 0 var(--space-xl);
+        padding: var(--space-2xl) var(--float-inset) var(--float-inset);
         margin-top: auto;
     }
 
     .footer__container {
-        max-width: var(--container-xl);
+        max-width: var(--float-max);
         margin: 0 auto;
-        padding: 0 var(--space-md);
+        padding: var(--space-2xl) var(--space-md) var(--space-lg);
+        background: var(--float-surface);
+        border: 1px solid var(--float-border);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--float-shadow);
+        transition: background-color var(--transition-normal), border-color var(--transition-normal);
     }
 
     @media (min-width: 640px) {
         .footer__container {
-            padding-left: var(--space-lg);
-            padding-right: var(--space-lg);
+            padding-left: var(--space-xl);
+            padding-right: var(--space-xl);
         }
     }
 
     @media (min-width: 1024px) {
         .footer__container {
-            padding-left: var(--space-xl);
-            padding-right: var(--space-xl);
+            padding: var(--space-3xl) var(--space-2xl) var(--space-xl);
         }
     }
 
@@ -32,9 +37,7 @@
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
         gap: var(--space-3xl);
-        padding-top: var(--space-2xl);
         margin-bottom: var(--space-3xl);
-        border-top: 2px solid var(--rule-strong);
     }
 
     .footer__section {
@@ -318,10 +321,6 @@
     }
 
     @media (max-width: 639px) {
-        .footer {
-            padding: var(--space-3xl) 0 var(--space-lg);
-        }
-
         .footer__content {
             grid-template-columns: 1fr;
             gap: var(--space-xl);

@@ -24,22 +24,31 @@
     }
 
     /* ==========================================================================
-       Header & Navigation — flat bar, hairline rule, no glass/shadow/pill
+       Header & Navigation — a floating bar: inset from the viewport edges,
+       rounded, solid surface, hairline border and one soft neutral shadow.
+       Inset + inner padding add up to the page gutter (16 / 24 / 32px), so the
+       logo and CTA sit on the same column as the page content at every width.
        ========================================================================== */
 
     .header {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: var(--bg-primary);
-        border-bottom: 1px solid var(--rule);
+        top: var(--float-inset);
+        left: var(--float-inset);
+        right: var(--float-inset);
+        max-width: var(--float-max);
+        margin: 0 auto;
+        background: var(--float-surface);
+        border: 1px solid var(--float-border);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--float-shadow);
         z-index: 100;
-        transition: border-color var(--transition-fast), background-color var(--transition-normal);
+        transition: box-shadow var(--transition-normal), border-color var(--transition-normal), background-color var(--transition-normal);
     }
 
+    /* Scrolled: same float, slightly firmer edge so it separates from content */
     .header--scrolled {
-        border-bottom-color: var(--border-medium);
+        border-color: var(--border-medium);
+        box-shadow: var(--float-shadow-scrolled);
     }
 
     .nav__container {
@@ -47,23 +56,15 @@
         align-items: center;
         justify-content: space-between;
         gap: var(--space-lg);
-        max-width: var(--container-xl);
-        min-height: 72px;
-        margin: 0 auto;
-        padding: var(--space-sm) var(--space-md);
-    }
-
-    @media (min-width: 640px) {
-        .nav__container {
-            padding-left: var(--space-lg);
-            padding-right: var(--space-lg);
-        }
+        min-height: 64px;
+        padding: var(--space-xs) var(--space-sm);
     }
 
     @media (min-width: 1024px) {
         .nav__container {
-            padding-left: var(--space-xl);
-            padding-right: var(--space-xl);
+            min-height: 72px;
+            padding-left: var(--space-md);
+            padding-right: var(--space-md);
         }
     }
 
@@ -181,7 +182,8 @@
         background: var(--brand-blue-hover);
     }
 
-    /* Mobile Navigation: a flat sheet under the bar */
+    /* Mobile Navigation: a second floating card just under the bar,
+       same surface, border, radius and shadow */
     @media (max-width: 1023px) {
         .nav__toggle {
             display: flex;
@@ -189,16 +191,19 @@
 
         .nav__menu {
             position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
+            top: calc(100% + var(--space-xs));
+            left: -1px;
+            right: -1px;
             flex-direction: column;
             align-items: stretch;
             gap: 0;
-            padding: 0 var(--space-md) var(--space-lg);
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-medium);
-            max-height: calc(100dvh - 72px);
+            padding: var(--space-xs) var(--space-md) var(--space-md);
+            background: var(--float-surface);
+            border: 1px solid var(--float-border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--float-shadow-scrolled);
+            /* viewport minus top inset, bar, gap and a bottom inset */
+            max-height: calc(100dvh - 64px - var(--space-xs) - 2 * var(--float-inset) - 2px);
             overflow-y: auto;
 
             /* Hidden state */
@@ -226,7 +231,7 @@
 
         .nav__item--cta {
             border-bottom: 0;
-            margin: var(--space-lg) 0 0;
+            margin: var(--space-md) 0 0;
         }
 
         .nav__link--cta,
@@ -238,24 +243,9 @@
         }
     }
 
-    @media (min-width: 640px) and (max-width: 1023px) {
-        .nav__menu {
-            padding-left: var(--space-lg);
-            padding-right: var(--space-lg);
-        }
-    }
-
     @media (max-width: 640px) {
-        .nav__container {
-            min-height: 64px;
-        }
-
         .nav__logo-img {
             height: 46px;
-        }
-
-        .nav__menu {
-            max-height: calc(100dvh - 64px);
         }
     }
 
