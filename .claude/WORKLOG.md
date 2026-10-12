@@ -56,3 +56,8 @@
 - done: 2 commits en `landing-redesign` (sin push). Mariano: el fijo 3584921111 ahora tiene WhatsApp Business → todos los `wa.me` y el número mostrado pasan de 3584122566 a 3584921111 (6 archivos). FAB de WhatsApp oculto en /agente/ y sacado el hueco que dejaba en el input del chat. loader v7, agente.css v5. QA PASS. Carrusel de logos cortado en mobile = intencional (confirmado).
 - state: esperando que Mariano vea la rama.
 - next: FAQs en la base (Supabase `faqs`) o el prompt de Oni (ai-quote-api, fuera del repo) podrían tener el número viejo — revisar. Si quiere el número nuevo en producción ya, hacer commit aparte sobre master (la rama del rediseño no se puede cherry-pickear limpio).
+
+## 2026-10-12 — sección Universal Assistance en la landing
+- done: commit en `landing-redesign` (sin push). Mariano es partner de UA. Sección #asistencia-al-viajero entre Servicios y Testimonios; logo blanco (vector extraído del manual de marca, `assets/logos/universal-assistance-negative.svg`) sobre azul UA en ambos temas; copy de las frases que UA manda a partners; CTA a WhatsApp con texto precargado; link en footer. loader v8, style.css v10. Reviewer PASS.
+- state: esperando que Mariano lo vea.
+- next: confirmar con UA vigencia de "USD 5 por día" y "USD 1.000.000" y si exigen legales; si UA da link/código de partner para venta online, reemplazar el CTA de WhatsApp.
