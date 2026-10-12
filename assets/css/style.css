@@ -3625,8 +3625,8 @@ ol {
 }
 
 /* The panel: logo, campaign line and partner note on top; Iván de Pineda
-   (UA's ambassador) sits on the panel's bottom-left corner, so the cut-off
-   legs and armchair in the cutout read as the panel's own edge. The faint
+   (UA's ambassador) sits on the panel's bottom-right corner, armchair flush
+   with the panel edge; the cut-off legs fade out on the left. The faint
    light behind him keeps the navy armchair from sinking into UA blue. */
 .landing .travel__brand {
     display: flex;
@@ -3634,7 +3634,7 @@ ol {
     align-items: flex-start;
     padding: var(--space-xl) var(--space-lg) 0;
     background:
-        radial-gradient(ellipse 70% 45% at 35% 100%, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0) 70%),
+        radial-gradient(ellipse 70% 45% at 65% 100%, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0) 70%),
         var(--ua-blue);
     color: #ffffff;
 }
@@ -3677,14 +3677,15 @@ ol {
     color: #ffffff;
 }
 
-/* Bleeds to the panel's left and bottom edges. Mobile crops the bottom
+/* Bleeds to the panel's right and bottom edges. Mobile crops the bottom
    (legs, seat) to keep the panel short; the face is at the top. */
 .landing .travel__photo {
     display: block;
+    align-self: flex-end;
     width: min(calc(100% + var(--space-lg)), 22rem);
     max-width: none;
     height: 16.5rem;
-    margin: var(--space-xl) 0 0 calc(-1 * var(--space-lg));
+    margin: var(--space-xl) calc(-1 * var(--space-lg)) 0 0;
     overflow: hidden;
 }
 
@@ -3692,6 +3693,8 @@ ol {
     display: block;
     width: 100%;
     height: auto;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 15%);
+    mask-image: linear-gradient(to right, transparent, #000 15%);
 }
 
 .landing .travel__body {
@@ -3771,19 +3774,20 @@ ol {
     }
 
     .landing .travel__intro {
-        grid-column: 2;
+        grid-column: 1;
         grid-row: 1;
         align-self: start;
         padding-bottom: var(--space-xl);
     }
 
     .landing .travel__photo {
-        grid-column: 1;
+        grid-column: 2;
         grid-row: 1;
+        justify-self: end;
         width: calc(100% + var(--space-lg));
         max-width: 22rem;
         height: auto;
-        margin: 0 0 0 calc(-1 * var(--space-lg));
+        margin: 0 calc(-1 * var(--space-lg)) 0 0;
     }
 }
 
@@ -3802,23 +3806,26 @@ ol {
     }
 
     /* Fills whatever height the text column leaves under the partner note;
-       the image is then as large as fits (contain), pinned bottom-left. */
+       the image is then as large as fits (contain), pinned bottom-right. */
     .landing .travel__photo {
         position: relative;
         flex: 1 1 0;
-        width: calc(100% + var(--space-3xl));
+        align-self: stretch;
+        width: auto;
         max-width: none;
         height: auto;
         min-height: 15rem;
-        margin: var(--space-xl) 0 0 calc(-1 * var(--space-3xl));
+        margin: var(--space-xl) calc(-1 * var(--space-3xl)) 0;
     }
 
+    /* Sized by height, pinned bottom-right, so the left-edge fade lands on
+       the photo itself rather than on empty box. */
     .landing .travel__photo img {
         position: absolute;
-        inset: 0;
+        right: 0;
+        bottom: 0;
+        width: auto;
         height: 100%;
-        object-fit: contain;
-        object-position: left bottom;
     }
 
     .landing .travel__partner {
