@@ -61,3 +61,8 @@
 - done: commit en `landing-redesign` (sin push). Mariano es partner de UA. Sección #asistencia-al-viajero entre Servicios y Testimonios; logo blanco (vector extraído del manual de marca, `assets/logos/universal-assistance-negative.svg`) sobre azul UA en ambos temas; copy de las frases que UA manda a partners; CTA a WhatsApp con texto precargado; link en footer. loader v8, style.css v10. Reviewer PASS.
 - state: esperando que Mariano lo vea.
 - next: confirmar con UA vigencia de "USD 5 por día" y "USD 1.000.000" y si exigen legales; si UA da link/código de partner para venta online, reemplazar el CTA de WhatsApp.
+
+## 2026-10-12 — UA en el carrusel + ajustes de la sección
+- done: commit en `landing-redesign` (sin push). Logo color de UA (bicolor según manual, `assets/logos/universal-assistance.svg`) en el carrusel del hero, sin filtro gris, blanco en modo oscuro; loop del carrusel en mobile arreglado; sección UA sin párrafo intro, + ítem viajes deportivos, + "hasta 12 cuotas sin interés"; sacada la flecha de scroll del hero. style.css v11. Reviewer PASS.
+- state: esperando que Mariano lo vea.
+- next: se perdió la única mención de cobertura por embarazo al borrar el párrafo (¿agregar ítem?). UA es el único logo a color del carrusel — confirmar que le gusta.
