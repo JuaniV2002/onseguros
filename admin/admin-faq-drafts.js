@@ -189,7 +189,7 @@ async function loadFaqDrafts(useCache = true) {
 
 function faqStatusBadge(status) {
     const map = {
-        pending:   { text: 'Pendiente IA', color: '#2e7ef6', bg: '#e7f0ff' },
+        pending:   { text: 'Pendiente IA', color: '#0853c4', bg: '#e7f0ff' },
         edited:    { text: 'Editado',      color: '#0f7b3a', bg: '#e6f7ec' },
         failed:    { text: 'Falló',        color: '#b3261e', bg: '#fde7e7' },
         published: { text: 'Publicado',    color: '#5a5a64', bg: '#eee' },
@@ -274,7 +274,7 @@ function fillFaqDraftEditor(draft) {
         sourcesContainer.style.display = 'block';
         elements.faqDraftSourcesList.innerHTML = sources
             .slice(0, 12)
-            .map(s => `<li><a href="${s.uri}" target="_blank" rel="noopener" style="color:#2e7ef6;">${escapeHtml((s.title || s.uri).substring(0, 120))}</a></li>`)
+            .map(s => `<li><a href="${s.uri}" target="_blank" rel="noopener" style="color:#0853c4;">${escapeHtml((s.title || s.uri).substring(0, 120))}</a></li>`)
             .join('');
     } else if (sourcesContainer) {
         sourcesContainer.style.display = 'none';

@@ -7,12 +7,17 @@
     --primary: #2e7ef6;
     --primary-hover: hsl(216, 92%, 47%);
     --primary-light: hsl(216, 92%, 87%);
+    /* Contrast-safe blues: white text on --primary is only 3.9:1 and blue
+       text on white needs a darker shade. --primary stays for bars/borders. */
+    --primary-fill: #0f68eb;          /* fills with white labels, 5.0:1 (= --brand-blue-strong) */
+    --primary-text: hsl(216, 92%, 40%); /* blue text/icons, >= 4.7:1 on every admin surface */
     /* primary-lightest for backgrounds */
 
     --success: #22c55e;
     --success-light: #dcfce7;
+    --success-text: #15803d;           /* green text, 4.6:1 on --success-light */
 
-    --error: #ef4444;
+    --error: #dc2626;                 /* white text 4.8:1 (was #ef4444, 3.8:1) */
     --error-light: #fee2e2;
 
     --warning: #f59e0b;
@@ -130,7 +135,7 @@ h6 {
 }
 
 .btn-primary {
-    background-color: var(--primary);
+    background-color: var(--primary-fill);
     color: var(--white);
     box-shadow: var(--btn-shadow);
     border: 1px solid transparent;
@@ -156,7 +161,7 @@ h6 {
 
 .btn-secondary:hover:not(:disabled) {
     background-color: var(--gray-50);
-    color: var(--primary);
+    color: var(--primary-text);
     transform: translateY(-2px);
     box-shadow: var(--effect-raised-hover);
 }
@@ -168,7 +173,7 @@ h6 {
 }
 
 .btn-danger:hover:not(:disabled) {
-    background-color: #dc2626;
+    background-color: #b91c1c;
     transform: translateY(-2px);
     box-shadow: var(--btn-shadow-hover);
 }
@@ -180,7 +185,7 @@ h6 {
 
 #logout-btn:hover:not(:disabled) {
     background-color: #fef2f2;
-    color: #dc2626;
+    color: #b91c1c;
     border-color: #fecaca;
 }
 
@@ -243,7 +248,7 @@ h6 {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: var(--gray-400);
+    color: var(--gray-500);
 }
 
 .char-count {
@@ -430,7 +435,7 @@ h6 {
     width: 40px;
     height: 40px;
     margin-bottom: 16px;
-    color: var(--primary);
+    color: var(--primary-text);
 }
 
 .posts-empty p {
@@ -497,7 +502,7 @@ h6 {
 }
 
 .post-item:hover .post-item-title {
-    color: var(--primary);
+    color: var(--primary-text);
 }
 
 .post-item-description {
@@ -617,7 +622,7 @@ h6 {
 .toolbar-btn:hover {
     background: var(--gray-100);
     border-color: var(--gray-300);
-    color: var(--primary);
+    color: var(--primary-text);
     transform: translateY(-1px);
 }
 
@@ -683,7 +688,7 @@ h6 {
     gap: 6px;
     padding: 4px 10px;
     background: var(--success-light);
-    color: var(--success);
+    color: var(--success-text);
     font-size: 12px;
     font-weight: 600;
     border-radius: 20px;
@@ -776,7 +781,7 @@ h6 {
     padding: 0.2em 0.4em;
     background-color: var(--gray-100);
     border-radius: 4px;
-    color: var(--primary);
+    color: var(--primary-text);
 }
 
 .preview-body pre {
@@ -855,7 +860,7 @@ h6 {
 }
 
 .preview-body a {
-    color: var(--primary);
+    color: var(--primary-text);
     text-decoration: underline;
     text-underline-offset: 2px;
 }
@@ -865,7 +870,7 @@ h6 {
 }
 
 .placeholder-text {
-    color: var(--gray-400);
+    color: var(--gray-500);
     font-style: italic;
 }
 
@@ -932,7 +937,7 @@ h6 {
 
 .modal-icon.success {
     background: var(--success-light);
-    color: var(--success);
+    color: var(--success-text);
 }
 
 .modal-icon.error {
@@ -1114,7 +1119,7 @@ h6 {
 .toast-close {
     background: none;
     border: none;
-    color: var(--gray-400);
+    color: var(--gray-500);
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
@@ -1129,7 +1134,7 @@ h6 {
 /* Toast Variants */
 .toast--success .toast-icon {
     background: var(--success-light);
-    color: var(--success);
+    color: var(--success-text);
 }
 
 .toast--success {
@@ -1147,7 +1152,7 @@ h6 {
 
 .toast--info .toast-icon {
     background: var(--primary-light);
-    color: var(--primary);
+    color: var(--primary-text);
 }
 
 .toast--info {
@@ -1237,7 +1242,7 @@ h6 {
     display: inline-block;
     padding: 4px 12px;
     background: var(--primary-light);
-    color: var(--primary);
+    color: var(--primary-text);
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 600;
@@ -1266,7 +1271,7 @@ h6 {
 }
 
 .faq-preview-answer a {
-    color: var(--primary);
+    color: var(--primary-text);
     text-decoration: underline;
 }
 
@@ -1337,7 +1342,7 @@ h6 {
 
 .faq-item-drag-handle {
     cursor: move;
-    color: var(--gray-400);
+    color: var(--gray-500);
     display: flex;
     align-items: center;
     padding: 4px;
@@ -1353,7 +1358,7 @@ h6 {
     display: inline-block;
     padding: 4px 10px;
     background: var(--primary-light);
-    color: var(--primary);
+    color: var(--primary-text);
     border-radius: 10px;
     font-size: 0.7rem;
     font-weight: 600;
@@ -1415,7 +1420,7 @@ h6 {
 }
 
 .nav-btn.active {
-    background: var(--primary);
+    background: var(--primary-fill);
     color: var(--white);
     font-weight: 600;
 }
@@ -1467,7 +1472,7 @@ h6 {
 }
 
 .drafts-subnav .subpill.active {
-    background: var(--primary);
+    background: var(--primary-fill);
     color: var(--white);
     font-weight: 600;
     box-shadow: var(--btn-shadow, 0 1px 2px rgba(16, 16, 22, 0.1));
@@ -1491,7 +1496,7 @@ h6 {
 
 .category-cotizacion {
     background: #d1fae5;
-    color: #059669;
+    color: #047857;
 }
 
 .category-art {
@@ -1501,12 +1506,12 @@ h6 {
 
 .category-siniestro {
     background: #fee2e2;
-    color: #dc2626;
+    color: #b91c1c;
 }
 
 .category-vehiculos {
     background: #fef3c7;
-    color: #d97706;
+    color: #b45309;
 }
 
 /* =====================================================
