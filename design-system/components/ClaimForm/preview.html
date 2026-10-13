@@ -1,0 +1,24 @@
+<!-- @dsCard group="Forms" height=900 -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- standalone copy: loads the system styles itself -->
+<link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css"><style>body{padding:24px;}</style></head>
+<body>
+<div style="max-width:760px">
+<header style="margin-bottom:32px"><div class="siniestro-header__eyebrow">Accidente de tránsito</div><h1 class="siniestro-header__title">Denunciá tu Siniestro</h1></header>
+<div class="siniestro-alert" role="note" style="margin-bottom:40px"><img src="../../assets/Icons/info.svg" alt=""><div><strong>¿Necesitás atención urgente?</strong> Contactá a Mariano directamente por <a href="#">WhatsApp</a> o al <a href="#">+54 358 492 1111</a>.</div></div>
+<form class="siniestro-form" onsubmit="return false" novalidate>
+<section class="siniestro-section"><div class="siniestro-section__header"><span class="siniestro-section__number" aria-hidden="true">1</span><div><h2 class="siniestro-section__title">Tus datos</h2><p class="siniestro-section__subtitle">Quién reporta el accidente</p></div></div>
+<div class="siniestro-grid">
+<div class="form-group siniestro-grid__full"><label for="n" class="form-label">Nombre completo <span class="siniestro-required" aria-hidden="true">*</span></label><input id="n" class="form-input error" placeholder="Ej: Juan García" aria-invalid="true" aria-describedby="ne"><div class="form-error" id="ne">Ingresá tu nombre completo.</div></div>
+<div class="form-group"><label for="t" class="form-label">Teléfono <span class="siniestro-required" aria-hidden="true">*</span></label><input id="t" class="form-input" placeholder="+54 9 358 123 4567"></div>
+<div class="form-group"><label for="e" class="form-label">Email <span class="siniestro-optional">(opcional)</span></label><input id="e" class="form-input" placeholder="tu@email.com"></div>
+</div>
+<fieldset class="siniestro-fieldset"><legend class="form-label">¿Se realizó denuncia policial?</legend><div class="siniestro-radio-group"><label class="siniestro-radio"><input type="radio" name="d"><span class="siniestro-radio__box" aria-hidden="true"></span>Sí</label><label class="siniestro-radio"><input type="radio" name="d" checked><span class="siniestro-radio__box" aria-hidden="true"></span>No</label></div></fieldset>
+</section>
+<div class="siniestro-submit" style="margin-top:40px">
+<div class="siniestro-success" role="status"><img src="../../assets/Icons/circle-check.svg" alt=""><div><strong>Se abrió WhatsApp con tu denuncia</strong><p>Tocá enviar y después adjuntá las fotos en el mismo chat.</p></div></div>
+<button type="submit" class="btn btn--primary btn--full-width"><img src="../../assets/Icons/send.svg" alt="">Enviar denuncia por WhatsApp</button>
+<p class="siniestro-submit__note">Al enviar este formulario aceptás nuestra <a href="#">política de privacidad</a>. Los campos marcados con * son obligatorios.</p>
+</div></form></div>
+</body></html>

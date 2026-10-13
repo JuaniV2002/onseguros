@@ -1,0 +1,41 @@
+<!-- @dsCard height=300 -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- standalone copy: loads the system styles itself -->
+<link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--bg-primary); }
+  .cover { position: relative; width: 960px; height: 300px; overflow: hidden; background: var(--bg-primary); }
+  .cover svg { position: absolute; inset: 0; }
+  .blue { fill: var(--brand-blue); }
+  .ink { fill: var(--brand-ink); }
+  [data-theme="dark"] .ink { fill: var(--primary-darker); }
+  .gray { fill: var(--color-secondary); }
+  .accent { fill: var(--color-accent); }
+  .soft { rx: var(--radius-md); }
+  .cut { stroke: var(--bg-primary); }
+  .text { position: absolute; left: 40px; bottom: 40px; max-width: 440px; }
+  .name { font-family: var(--font-display); font-weight: 700; font-size: 80px; line-height: .95; letter-spacing: -0.035em; color: var(--text-primary); margin: 0; }
+  .tag { font-family: var(--font-sans); font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin: 24px 0 0; }
+</style></head>
+<body>
+<div class="cover">
+  <svg width="960" height="300" viewBox="0 0 960 300" aria-hidden="true">
+    <!-- blocks: brand-blue 240×300 slab (6×space-2xl, bleeds top+bottom), brand-ink 160×180 (bleeds top+right), color-secondary 80×120, color-accent 80×60; radius-md on the two inner blocks
+         arrangement: one tall slab with satellites, flush modular grid at 40px (space-2xl) right of x=480
+         pattern: editorial row — "index of rows, not cards; borders, not shadows": the ground cut through the blocks as a 2px rule-strong then 1px rules, like a list
+         steps: pitch 80 (space-5xl), cuts 2px/1px (rule-strong/rule weights), radius-md 8px -->
+    <rect class="gray soft" x="480" y="180" width="80" height="120"/>
+    <rect class="blue" x="560" y="-8" width="240" height="316"/>
+    <rect class="ink" x="800" y="-8" width="168" height="188"/>
+    <rect class="accent soft" x="800" y="180" width="80" height="60"/>
+    <line class="cut" x1="560" y1="80" x2="960" y2="80" stroke-width="2"/>
+    <line class="cut" x1="480" y1="160" x2="960" y2="160" stroke-width="1"/>
+    <line class="cut" x1="480" y1="240" x2="800" y2="240" stroke-width="1"/>
+  </svg>
+  <div class="text">
+    <p class="name">OnSeguros</p>
+    <p class="tag">Activá tranquilidad — seguros agrícolas, ART y patrimoniales en Río Cuarto.</p>
+  </div>
+</div>
+</body></html>

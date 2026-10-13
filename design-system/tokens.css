@@ -1,0 +1,332 @@
+/* OnSeguros — generated from tokens.json */
+:root, [data-theme="light"] {
+  --brand-blue: #2e7ef6;
+  --brand-blue-strong: #0f68eb;
+  --brand-blue-hover: hsl(216, 92%, 47%);
+  --brand-ink: #002231;
+  --on-brand: #ffffff;
+  --color-accent: #f7ca43;
+  --link: hsl(216, 92%, 42%);
+  --link-hover: hsl(216, 92%, 33%);
+  --focus-ring: var(--link);
+  --color-text: #101016;
+  --color-background: #fbfbfe;
+  --color-primary: #2e7ef6;
+  --color-secondary: #b8b8b8;
+  --text-primary: var(--color-text);
+  --text-secondary: var(--text-lighter);
+  --text-tertiary: #696970;
+  --text-inverse: var(--color-background);
+  --text-light: hsl(240, 16%, 17%);
+  --text-lighter: hsl(240, 16%, 37%);
+  --bg-primary: var(--color-background);
+  --bg-dark: var(--color-text);
+  --bg-secondary: hsl(240, 60%, 97%);
+  --bg-tertiary: hsl(240, 60%, 95%);
+  --surface-band: hsl(40, 30%, 96%);
+  --surface-base: hsl(240, 60%, 99%);
+  --surface-raised: hsl(240, 60%, 100%);
+  --surface-overlay: hsl(0, 0%, 100%);
+  --surface-sunken: hsl(240, 50%, 96%);
+  --float-surface: var(--surface-raised);
+  --float-border: var(--border-light);
+  --float-watermark: hsl(220, 14%, 97.5%);
+  --border-light: rgba(16, 16, 22, 0.1);
+  --border-medium: rgba(16, 16, 22, 0.2);
+  --border-dark: rgba(16, 16, 22, 0.3);
+  --field-border: rgba(16, 16, 22, 0.5);
+  --rule: var(--border-light);
+  --rule-strong: var(--text-primary);
+  --primary-light: hsl(216, 92%, 67%);
+  --primary-lighter: hsl(216, 92%, 77%);
+  --primary-lightest: hsl(216, 92%, 87%);
+  --primary-dark: hsl(216, 92%, 47%);
+  --primary-darker: hsl(216, 92%, 37%);
+  --primary-50: var(--primary-lightest);
+  --primary-100: var(--primary-lighter);
+  --primary-200: var(--primary-light);
+  --primary-300: var(--color-primary);
+  --primary-400: var(--color-primary);
+  --primary-500: var(--color-primary);
+  --primary-600: var(--color-primary);
+  --primary-700: var(--primary-dark);
+  --primary-800: var(--primary-darker);
+  --primary-900: var(--primary-darker);
+  --primary-950: var(--primary-darker);
+  --accent-light: hsl(45, 92%, 72%);
+  --accent-lighter: hsl(45, 92%, 82%);
+  --accent-lightest: hsl(45, 92%, 92%);
+  --accent-dark: hsl(45, 92%, 52%);
+  --accent-darker: hsl(45, 92%, 42%);
+  --accent-50: var(--accent-lightest);
+  --accent-100: var(--accent-lighter);
+  --accent-200: var(--accent-light);
+  --accent-300: var(--color-accent);
+  --accent-400: var(--color-accent);
+  --accent-500: var(--color-accent);
+  --accent-600: var(--accent-dark);
+  --accent-700: var(--accent-darker);
+  --accent-800: var(--accent-darker);
+  --accent-900: var(--accent-darker);
+  --secondary-light: hsl(0, 0%, 82%);
+  --secondary-lighter: hsl(0, 0%, 92%);
+  --secondary-dark: hsl(0, 0%, 62%);
+  --secondary-darker: hsl(0, 0%, 52%);
+  --secondary-50: var(--secondary-lighter);
+  --secondary-100: var(--secondary-light);
+  --secondary-200: var(--secondary-light);
+  --secondary-300: var(--color-secondary);
+  --secondary-400: var(--color-secondary);
+  --secondary-500: var(--color-secondary);
+  --secondary-600: var(--secondary-dark);
+  --secondary-700: var(--secondary-darker);
+  --secondary-800: var(--secondary-darker);
+  --secondary-900: var(--color-text);
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error-700: #b91c1c;
+  --warning-500: #f59e0b;
+  --success-500: #22c55e;
+  --error-text: var(--error-600);
+  --success-text: #166534;
+  --success-rule: #16a34a;
+  --claim-error: #c81e1e;
+  --claim-success: #15803d;
+  --claim-field-border: rgba(16, 16, 22, 0.52);
+  --claim-placeholder: #696983;
+  --star: hsl(40, 92%, 36%);
+  --whatsapp-green: #25d366;
+  --whatsapp-deep: #008069;
+  --ua-blue: #00528f;
+  --chat-agent-bg: var(--surface-band);
+  --chat-user-bg: var(--brand-ink);
+  --chat-surface: var(--bg-primary);
+  --admin-bg: #fbfbfe;
+  --admin-gray-100: #f3f4f6;
+  --admin-gray-200: #e5e7eb;
+  --admin-gray-300: #d1d5db;
+  --admin-gray-400: #9ca3af;
+  --admin-gray-500: #6b7280;
+  --admin-gray-600: #4b5563;
+  --admin-gray-700: #374151;
+  --admin-gray-800: #101016;
+  --admin-gray-900: #111827;
+  --admin-success-light: #dcfce7;
+  --admin-error-light: #fee2e2;
+  --admin-input-bg: #fafafa;
+  --admin-primary-text: hsl(216, 92%, 40%);
+  --admin-success-text: #15803d;
+  --status-pending: #0853c4;
+  --status-pending-bg: #e7f0ff;
+  --status-edited: #0f7b3a;
+  --status-edited-bg: #e6f7ec;
+  --status-failed: #b3261e;
+  --status-failed-bg: #fde7e7;
+  --status-neutral: #5a5a64;
+  --status-neutral-bg: #eeeeee;
+  --cat-general: #4338ca;
+  --cat-general-bg: #e0e7ff;
+  --cat-cobertura: #1d4ed8;
+  --cat-cobertura-bg: #dbeafe;
+  --cat-cotizacion: #047857;
+  --cat-cotizacion-bg: #d1fae5;
+  --cat-art: #be185d;
+  --cat-art-bg: #fce7f3;
+  --cat-siniestro: var(--error-700);
+  --cat-siniestro-bg: #fee2e2;
+  --cat-vehiculos: #b45309;
+  --cat-vehiculos-bg: #fef3c7;
+  --float-shadow: 0 4px 16px -8px rgba(15, 23, 42, 0.16);
+  --float-shadow-scrolled: 0 8px 24px -10px rgba(15, 23, 42, 0.24);
+  --shadow-sm: 0 1px 2px 0 rgba(16, 16, 22, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(16, 16, 22, 0.1), 0 2px 4px -2px rgba(16, 16, 22, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(16, 16, 22, 0.1), 0 4px 6px -4px rgba(16, 16, 22, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(16, 16, 22, 0.1), 0 8px 10px -6px rgba(16, 16, 22, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(16, 16, 22, 0.25);
+  --shadow-elevated: 0 1px 1px rgba(16, 16, 22, 0.04), 0 2px 4px rgba(16, 16, 22, 0.04), 0 4px 8px rgba(16, 16, 22, 0.06), 0 8px 16px rgba(16, 16, 22, 0.06);
+  --shadow-elevated-lg: 0 2px 2px rgba(16, 16, 22, 0.03), 0 4px 8px rgba(16, 16, 22, 0.04), 0 8px 16px rgba(16, 16, 22, 0.06), 0 16px 32px rgba(16, 16, 22, 0.08);
+  --effect-raised: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 1px 2px rgba(16, 16, 22, 0.04), 0 2px 4px rgba(16, 16, 22, 0.04), 0 4px 8px rgba(16, 16, 22, 0.06);
+  --shadow-inset: inset 0 2px 4px rgba(16, 16, 22, 0.06);
+  --shadow-inset-subtle: inset 0 1px 2px rgba(16, 16, 22, 0.04);
+  --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(16, 16, 22, 0.1), 0 2px 4px rgba(16, 16, 22, 0.1);
+  --effect-raised-hover: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 4px rgba(16, 16, 22, 0.05), 0 4px 8px rgba(16, 16, 22, 0.06), 0 8px 16px rgba(16, 16, 22, 0.08), 0 16px 32px rgba(16, 16, 22, 0.06);
+  --btn-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 4px rgba(16, 16, 22, 0.12), 0 4px 8px rgba(16, 16, 22, 0.12), 0 8px 16px rgba(16, 16, 22, 0.08);
+  --btn-shadow-active: inset 0 2px 4px rgba(16, 16, 22, 0.15);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --highlight-top-subtle: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --admin-toast-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+[data-theme="dark"] {
+  --color-accent: #ffc947;
+  --link: hsl(216, 92%, 68%);
+  --link-hover: hsl(216, 92%, 80%);
+  --focus-ring: var(--link);
+  --color-text: #e8e8e8;
+  --color-background: #0a0a0a;
+  --color-primary: hsl(216, 92%, 68%);
+  --color-secondary: #6b6b6b;
+  --text-primary: var(--color-text);
+  --text-secondary: var(--text-light);
+  --text-tertiary: #949494;
+  --text-inverse: var(--color-background);
+  --text-light: hsl(0, 0%, 82%);
+  --text-lighter: hsl(0, 0%, 72%);
+  --bg-primary: var(--color-background);
+  --bg-dark: var(--color-text);
+  --bg-secondary: hsl(0, 0%, 8%);
+  --bg-tertiary: hsl(0, 0%, 11%);
+  --surface-band: hsl(36, 8%, 10%);
+  --surface-base: hsl(0, 0%, 6%);
+  --surface-raised: hsl(0, 0%, 12%);
+  --surface-overlay: hsl(0, 0%, 16%);
+  --surface-sunken: hsl(0, 0%, 4%);
+  --float-surface: var(--surface-raised);
+  --float-border: var(--border-light);
+  --float-watermark: hsl(0, 0%, 14%);
+  --border-light: rgba(232, 232, 232, 0.12);
+  --border-medium: rgba(232, 232, 232, 0.24);
+  --border-dark: rgba(232, 232, 232, 0.36);
+  --field-border: rgba(232, 232, 232, 0.5);
+  --rule: var(--border-light);
+  --rule-strong: var(--text-primary);
+  --primary-light: hsl(216, 92%, 62%);
+  --primary-lighter: hsl(216, 92%, 72%);
+  --primary-lightest: hsl(216, 92%, 82%);
+  --primary-50: var(--primary-lightest);
+  --primary-100: var(--primary-lighter);
+  --primary-200: var(--primary-light);
+  --primary-300: hsl(216, 92%, 74%);
+  --primary-400: hsl(216, 92%, 70%);
+  --primary-500: var(--color-primary);
+  --primary-600: var(--color-primary);
+  --primary-700: var(--primary-dark);
+  --primary-800: var(--primary-darker);
+  --primary-900: var(--primary-darker);
+  --primary-950: var(--primary-darker);
+  --accent-light: hsl(43, 100%, 68%);
+  --accent-lighter: hsl(43, 100%, 78%);
+  --accent-lightest: hsl(43, 100%, 88%);
+  --accent-dark: hsl(43, 100%, 48%);
+  --accent-darker: hsl(43, 100%, 38%);
+  --accent-50: var(--accent-lightest);
+  --accent-100: var(--accent-lighter);
+  --accent-200: var(--accent-light);
+  --accent-300: var(--color-accent);
+  --accent-400: var(--color-accent);
+  --accent-500: var(--color-accent);
+  --accent-600: var(--accent-dark);
+  --accent-700: var(--accent-darker);
+  --accent-800: var(--accent-darker);
+  --accent-900: var(--accent-darker);
+  --secondary-light: hsl(0, 0%, 52%);
+  --secondary-lighter: hsl(0, 0%, 62%);
+  --secondary-dark: hsl(0, 0%, 32%);
+  --secondary-darker: hsl(0, 0%, 22%);
+  --secondary-50: var(--secondary-lighter);
+  --secondary-100: var(--secondary-light);
+  --secondary-200: var(--secondary-light);
+  --secondary-300: var(--color-secondary);
+  --secondary-400: var(--color-secondary);
+  --secondary-500: var(--color-secondary);
+  --secondary-600: var(--secondary-dark);
+  --secondary-700: var(--secondary-darker);
+  --secondary-800: var(--secondary-darker);
+  --secondary-900: hsl(0, 0%, 12%);
+  --error-text: #f87171;
+  --success-text: #4ade80;
+  --claim-error: #f87171;
+  --claim-success: #4ade80;
+  --claim-field-border: rgba(232, 232, 232, 0.52);
+  --claim-placeholder: #848484;
+  --star: var(--color-accent);
+  --chat-agent-bg: var(--surface-band);
+  --chat-user-bg: hsl(198, 100%, 16%);
+  --chat-surface: var(--surface-base);
+  --cat-siniestro: var(--error-700);
+  --float-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
+  --float-shadow-scrolled: 0 10px 28px -10px rgba(0, 0, 0, 0.75);
+  --shadow-sm: 0 1px 2px 0 rgba(232, 232, 232, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(232, 232, 232, 0.1), 0 2px 4px -2px rgba(232, 232, 232, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(232, 232, 232, 0.1), 0 4px 6px -4px rgba(232, 232, 232, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(232, 232, 232, 0.1), 0 8px 10px -6px rgba(232, 232, 232, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(232, 232, 232, 0.25);
+  --shadow-elevated: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.25);
+  --shadow-elevated-lg: 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.25), 0 16px 32px rgba(0, 0, 0, 0.3);
+  --effect-raised: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.25);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+  --shadow-inset-subtle: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.25);
+  --effect-raised-hover: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 2px 4px rgba(255, 255, 255, 0.05), 0 4px 8px rgba(255, 255, 255, 0.08), 0 8px 16px rgba(255, 255, 255, 0.1), 0 16px 32px rgba(255, 255, 255, 0.06), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --btn-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 2px 4px rgba(0, 0, 0, 0.28), 0 4px 8px rgba(0, 0, 0, 0.28), 0 8px 16px rgba(0, 0, 0, 0.25);
+  --btn-shadow-active: inset 0 2px 4px rgba(0, 0, 0, 0.45);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --highlight-top-subtle: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+:root {
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 3rem;
+  --space-4xl: 4rem;
+  --space-5xl: 5rem;
+  --space-6xl: 6rem;
+  --radius-xs: 2px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  --header-h: 64px;
+  --float-inset: 0.5rem;
+  --float-pad: 1rem;
+  --fab-size: 56px;
+  --fab-offset: 2rem;
+  --touch-target: 48px;
+  --post-max: 760px;
+  --admin-max: 1400px;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-code: "SF Mono", "Fira Code", "Consolas", monospace;
+}
+.hero-title { font-family: var(--font-display); font-size: 4.75rem; line-height: 1.02; font-weight: 700; letter-spacing: -0.035em; }
+.section-title { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; }
+.stat-number { font-family: var(--font-display); font-size: 3.5rem; line-height: 1; font-weight: 700; letter-spacing: -0.03em; }
+.travel-title { font-family: var(--font-display); font-size: 2.5rem; line-height: 1.1; font-weight: 700; letter-spacing: -0.025em; }
+.card-title { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.6; font-weight: 600; letter-spacing: -0.015em; }
+.quote-featured { font-family: var(--font-display); font-size: 1.625rem; line-height: 1.35; font-weight: 500; letter-spacing: -0.01em; }
+.row-title { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.6; font-weight: 600; letter-spacing: -0.01em; }
+.accordion-question { font-family: var(--font-display); font-size: 1.125rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; }
+.lead { font-family: var(--font-sans); font-size: 1.375rem; line-height: 1.625; font-weight: 400; }
+.body-lg { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.625; font-weight: 400; }
+.body { font-family: var(--font-sans); font-size: 1rem; line-height: 1.6; font-weight: 400; }
+.button-brand { font-family: var(--font-sans); font-size: 1.1875rem; line-height: 1.25; font-weight: 700; letter-spacing: -0.005em; }
+.label { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.5; font-weight: 500; }
+.small { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.5; font-weight: 400; }
+.fineprint { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.5; font-weight: 400; }
+.eyebrow { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.5; font-weight: 600; letter-spacing: 0.08em; }
+.blog-title { font-family: var(--font-display); font-size: 4.5rem; line-height: 1; font-weight: 700; letter-spacing: -0.035em; }
+.post-title { font-family: var(--font-display); font-size: 3.125rem; line-height: 1.08; font-weight: 700; letter-spacing: -0.03em; }
+.blog-card-title { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em; }
+.prose-h2 { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em; }
+.prose { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.75; font-weight: 400; }
+.chat-bubble { font-family: var(--font-sans); font-size: 0.95rem; line-height: 1.6; font-weight: 400; }
+.admin-section-title { font-family: var(--font-display); font-size: 1.75rem; line-height: 1.6; font-weight: 700; letter-spacing: -0.02em; }
+.admin-item-title { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.4; font-weight: 700; letter-spacing: -0.02em; }
+.admin-label { font-family: var(--font-display); font-size: 0.875rem; line-height: 1.6; font-weight: 600; }
+.admin-body { font-family: var(--font-sans); font-size: 0.9375rem; line-height: 1.6; font-weight: 400; }
+.badge { font-family: var(--font-sans); font-size: 0.6875rem; line-height: 1.6; font-weight: 600; letter-spacing: 0.04em; }
+.faq-title { font-family: var(--font-display); font-size: 3.5rem; line-height: 1.04; font-weight: 700; letter-spacing: -0.03em; }
+.claim-title { font-family: var(--font-display); font-size: 3rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; }
+.claim-section-title { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.6; font-weight: 600; letter-spacing: -0.01em; }
+.admin-preview-title { font-family: var(--font-display); font-size: 2rem; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; }
+.admin-preview-body { font-family: var(--font-sans); font-size: 1rem; line-height: 1.8; font-weight: 400; }

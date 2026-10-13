@@ -125,6 +125,7 @@ jobs:
             --exclude 'README.md' \
             --exclude '/admin/SETUP.md' \
             --exclude '/supabase/' \
+            --exclude '/design-system/' \
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
           echo "Deployment completed successfully!"

@@ -1,0 +1,18 @@
+<!-- @dsCard group="Forms" height=230 -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- standalone copy: loads the system styles itself -->
+<link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css"><style>body{padding:24px;}</style></head>
+<body>
+<div style="max-width:420px">
+  <div class="form-group">
+    <label class="form-label" for="n">Nombre y apellido</label>
+    <input class="form-input" id="n" placeholder="Ej: Juan Pérez">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="e">Email</label>
+    <input class="form-input error" id="e" value="juan@" aria-invalid="true" aria-describedby="e-err">
+    <span class="form-error" id="e-err">Ingresá un email válido.</span>
+  </div>
+</div>
+</body></html>
