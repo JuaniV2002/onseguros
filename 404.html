@@ -37,6 +37,7 @@
             --border-dark: rgba(16, 16, 22, 0.3);
             --color-accent: #f7ca43;
             --brand-blue: #2e7ef6;
+            --brand-blue-strong: #0f68eb;
             --brand-blue-hover: hsl(216, 92%, 47%);
             --on-brand: #ffffff;
             --brand-label-size: 1.1875rem;
@@ -133,7 +134,7 @@
         }
 
         /* Mirrors .btn--primary / .btn--secondary in style.css: flat, no lift.
-           White on #2e7ef6 is 3.9:1, so the label is large-bold (19px / 700). */
+           White on --brand-blue-strong is 5.0:1; label stays 19px / 700. */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -158,8 +159,8 @@
         }
 
         .btn-primary {
-            background-color: var(--brand-blue);
-            border-color: var(--brand-blue);
+            background-color: var(--brand-blue-strong);
+            border-color: var(--brand-blue-strong);
             color: var(--on-brand);
         }
 

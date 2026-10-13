@@ -144,10 +144,12 @@ ol {
     --color-accent-rgb: 247, 202, 67;
 
     /* Brand tokens (from assets/logo.svg) — use these for new work.
-       --brand-blue is a FILL color. White text on it is 3.9:1, so labels on
-       it must be large-bold (>= 18.66px / 700): use --brand-label-size.
+       --brand-blue is the logo blue, for the mark and decorative fills only:
+       white on it is 3.9:1. Anything with a label (buttons, CTAs) fills with
+       --brand-blue-strong (white 5.0:1 at any size).
        For blue TEXT use --link (darker/lighter shade of the same hue). */
     --brand-blue: #2e7ef6;
+    --brand-blue-strong: #0f68eb;             /* button fills, white text 5.0:1 */
     --brand-blue-hover: hsl(216, 92%, 47%);   /* #0a62e6, white text 5.4:1 */
     --brand-ink: #002231;                     /* logo navy: dark surfaces, white text 16.5:1 */
     --on-brand: #ffffff;
@@ -698,8 +700,8 @@ ol {
 }
 
 .btn--primary {
-    background-color: var(--brand-blue);
-    border-color: var(--brand-blue);
+    background-color: var(--brand-blue-strong);
+    border-color: var(--brand-blue-strong);
     color: var(--on-brand);
 }
 
@@ -3495,7 +3497,7 @@ ol {
 }
 
 .landing .oni-cta-card__btn {
-    background: var(--brand-blue);
+    background: var(--brand-blue-strong);
     color: var(--on-brand);
     border-radius: var(--radius-md);
     font-size: var(--brand-label-size);
