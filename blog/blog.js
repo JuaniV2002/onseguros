@@ -292,16 +292,17 @@ class Blog {
      * @param {boolean} isNewest - Whether this is the newest post
      */
     createPostCard(post, isNewest = false) {
+        const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
         const formattedDate = this.formatDate(post.publish_date);
-        const postUrl = `/blog/post.html?slug=${post.slug}`;
+        const postUrl = `/blog/post.html?slug=${encodeURIComponent(post.slug)}`;
         const badgeHtml = isNewest ? '<span class="blog-card__badge" aria-label="Artículo nuevo">¡Nuevo!</span>' : '';
 
         return `
-            <a href="${postUrl}" class="blog-card" aria-label="Leer artículo: ${post.title}">
+            <a href="${postUrl}" class="blog-card" aria-label="Leer artículo: ${esc(post.title)}">
                 ${badgeHtml}
-                <time class="blog-card__date" datetime="${post.publish_date}">${formattedDate}</time>
-                <h2 class="blog-card__title">${post.title}</h2>
-                <p class="blog-card__description">${post.description}</p>
+                <time class="blog-card__date" datetime="${esc(post.publish_date)}">${formattedDate}</time>
+                <h2 class="blog-card__title">${esc(post.title)}</h2>
+                <p class="blog-card__description">${esc(post.description)}</p>
                 <span class="blog-card__read-more">
                     Leer más
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
