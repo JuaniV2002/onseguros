@@ -71,6 +71,11 @@
         -webkit-user-select: none;
     }
 
+    /* "On" tinted toward the logo blue, as in the real wordmark */
+    .footer__watermark-on {
+        color: var(--float-watermark-on);
+    }
+
     .footer__content {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -394,7 +399,7 @@
 <!-- Footer -->
 <footer class="footer">
     <div class="footer__container">
-        <span class="footer__watermark" aria-hidden="true">OnSeguros</span>
+        <span class="footer__watermark" aria-hidden="true"><span class="footer__watermark-on">On</span>Seguros</span>
         <div class="footer__content">
             <div class="footer__section">
                 <div class="footer__brand">

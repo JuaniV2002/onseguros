@@ -31,6 +31,7 @@
   --float-surface: var(--surface-raised);
   --float-border: var(--border-light);
   --float-watermark: hsl(220, 14%, 97.5%);
+  --float-watermark-on: hsl(216, 92%, 96%);
   --border-light: rgba(16, 16, 22, 0.1);
   --border-medium: rgba(16, 16, 22, 0.2);
   --border-dark: rgba(16, 16, 22, 0.3);
@@ -183,6 +184,7 @@
   --float-surface: var(--surface-raised);
   --float-border: var(--border-light);
   --float-watermark: hsl(0, 0%, 14%);
+  --float-watermark-on: hsl(216, 40%, 16%);
   --border-light: rgba(232, 232, 232, 0.12);
   --border-medium: rgba(232, 232, 232, 0.24);
   --border-dark: rgba(232, 232, 232, 0.36);

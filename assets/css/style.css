@@ -173,6 +173,7 @@ ol {
     --float-shadow: 0 4px 16px -8px rgba(15, 23, 42, 0.16);
     --float-shadow-scrolled: 0 8px 24px -10px rgba(15, 23, 42, 0.24);
     --float-watermark: hsl(220, 14%, 97.5%);  /* footer wordmark, barely off the card */
+    --float-watermark-on: hsl(216, 92%, 96%); /* its "On", a hint of the logo blue */
     --header-h: 64px;                         /* header card inner height (components/header.html) */
     --fab-size: 56px;                         /* WhatsApp button (.whatsapp-fab) */
     --fab-offset: var(--space-xl);
@@ -444,6 +445,7 @@ ol {
     --float-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
     --float-shadow-scrolled: 0 10px 28px -10px rgba(0, 0, 0, 0.75);
     --float-watermark: hsl(0, 0%, 14%);
+    --float-watermark-on: hsl(216, 40%, 16%);
     --color-secondary: #6b6b6b;
     /* Mid gray */
     --color-secondary-rgb: 107, 107, 107;

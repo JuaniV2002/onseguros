@@ -262,6 +262,7 @@ ul, ol { list-style: none; }
 /* ---------- Footer (components/footer.html) ---------- */
 .footer__container { position: relative; isolation: isolate; overflow: hidden; container-type: inline-size; max-width: var(--container-xl); margin: 0 auto; padding: var(--space-2xl) var(--float-pad) var(--space-lg); background: var(--float-surface); border: 1px solid var(--float-border); border-radius: var(--radius-xl); box-shadow: var(--float-shadow); }
 .footer__watermark { position: absolute; left: 50%; bottom: 0; z-index: -1; transform: translate(-50%, -8%); font-family: var(--font-display); font-weight: 700; font-size: 21cqi; line-height: 1; letter-spacing: -0.05em; white-space: nowrap; color: var(--float-watermark); pointer-events: none; user-select: none; }
+.footer__watermark-on { color: var(--float-watermark-on); }
 .footer__content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--space-3xl); margin-bottom: var(--space-3xl); }
 .footer__section, .footer__brand { display: flex; flex-direction: column; gap: var(--space-md); }
 .footer__brand { height: 100%; }
