@@ -11,3 +11,4 @@ One post as a row in the blog index (/blog/), plus the search field that filters
 - “¡Nuevo!”: 12px / 700 uppercase with a 3px `accent-dark` underline — no pill, no pulse.
 - Read-more in `link` 600. Search input: 48px, 1px `field-border` (3:1), `radius-md`.
 - Sample posts in the preview are placeholders; real posts come from Supabase.
+- While loading, `#blog-grid[aria-busy]` holds six `.blog-card` skeleton rows (see Skeleton); the post page does the same for the breadcrumb, date, title and first paragraphs.

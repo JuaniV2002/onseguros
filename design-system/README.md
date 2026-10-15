@@ -40,6 +40,7 @@ OnSeguros is Mariano Villanueva's insurance brokerage in Río Cuarto, Córdoba �
 - Spacing on a rem scale: `space-md` mobile gutter, `space-lg` tablet, `space-xl` desktop; sections breathe at `space-5xl`. Page column `container-xl` (1280px).
 - Left-aligned, editorial: section headers max ~46rem, descriptions max 56–60ch.
 - **Motion is minimal**: content is visible immediately (no scroll-in animations); only 150ms hover color changes and a 3px arrow nudge. Respect `prefers-reduced-motion`.
+- **Loading states mirror the content** (Skeleton): build them from the real item markup with `skeleton-line` bars in `skeleton-fill`, same count and spacing, `aria-busy` on the container. One slow opacity pulse, no shimmer; still under reduced motion.
 - **Accessibility is a requirement**: 48px buttons/inputs, 44px nav targets, a visible 2px `focus-ring` everywhere (`on-brand` on navy), skip link, ARIA on interactive widgets, high-contrast mode turns borders solid black.
 
 ## Iconography
@@ -81,6 +82,7 @@ OnSeguros is Mariano Villanueva's insurance brokerage in Río Cuarto, Córdoba �
 
 - /admin/ is Mariano's private tool and keeps its own older look: white raised cards, `effect-raised` shadows, a gray scale (`admin-gray-*`), a floating bottom nav (AdminNav), toasts and status badges. It is **light-only**; its tokens have no dark values.
 - Don't bring the admin style to the public site, and don't restyle the admin without asking. Section order is Borradores, Blog, FAQ, Suscriptores.
+- Admin loaders are `.is-skeleton` copies of the real rows (posts, FAQs, drafts, subscriber table) filled with `admin-skeleton-fill`, never a boxed card around them.
 - Admin text meets 4.5:1 too: labeled fills use `brand-blue-strong` and `error-600`, blue text uses `admin-primary-text`, green text `admin-success-text`, placeholders `admin-gray-500`, and every badge's text is dark enough for its wash. `brand-blue` stays only for bars and borders there.
 
 ## Not synced

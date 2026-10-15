@@ -76,8 +76,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.addEventListener('visibilitychange', async function() {
         if (!document.hidden) {
             // Page is now visible - refresh FAQs to get latest data
+            // No skeleton here: the list stays up while it refreshes
             clearFAQCache();
-            await loadFAQs();
+            await loadFAQs(true);
+            if (allFaqs.length) filterFAQs();
         }
     });
 
@@ -111,6 +113,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 // Filter FAQs based on search and category
 function filterFAQs() {
+    // Skeleton rows have no answer to search; wait for the real list
+    if (document.getElementById('faq-list')?.hasAttribute('aria-busy')) return;
     const searchInput = document.getElementById('faq-search');
     const noResults = document.getElementById('no-results');
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
@@ -148,7 +152,7 @@ function filterFAQs() {
 }
 
 // Load FAQs from Supabase
-async function loadFAQs() {
+async function loadFAQs(refresh = false) {
     const faqListContainer = document.getElementById('faq-list');
     
     if (!faqListContainer) return;
@@ -166,7 +170,7 @@ async function loadFAQs() {
     }
 
     // Show skeletal loading
-    showFAQSkeleton();
+    if (!refresh) showFAQSkeleton();
 
     try {
         // Load environment config first
@@ -177,6 +181,7 @@ async function loadFAQs() {
         if (!apiUrl) {
             console.error('FAQ API URL not configured');
             hideFAQSkeleton();
+            renderFAQs();
             return;
         }
 
@@ -267,38 +272,31 @@ function renderFAQs() {
     }
 }
 
-// Show skeletal loading
+// Show skeletal loading: real accordion rows with grey bars (one line on
+// desktop, two on phones, like most questions)
 function showFAQSkeleton() {
     const faqListContainer = document.getElementById('faq-list');
     if (!faqListContainer) return;
 
-    faqListContainer.innerHTML = `
-        <div class="faq-skeleton-loading">
-            <div class="faq-skeleton-item">
-                <div class="faq-skeleton-question"></div>
+    const row = ([w, w2]) => `
+        <div class="accordion-item" aria-hidden="true">
+            <div class="accordion-question">
+                <span><span class="skeleton-line" style="--w: ${w}%"></span>${w2 ? `<span class="skeleton-line skeleton-line--m" style="--w: ${w2}%"></span>` : ''}</span>
+                <img src="../assets/icons/chevron-down.svg" alt="">
             </div>
-            <div class="faq-skeleton-item">
-                <div class="faq-skeleton-question"></div>
-            </div>
-            <div class="faq-skeleton-item">
-                <div class="faq-skeleton-question"></div>
-            </div>
-            <div class="faq-skeleton-item">
-                <div class="faq-skeleton-question"></div>
-            </div>
-            <div class="faq-skeleton-item">
-                <div class="faq-skeleton-question"></div>
-            </div>
-        </div>
-    `;
+        </div>`;
+
+    faqListContainer.setAttribute('aria-busy', 'true');
+    faqListContainer.innerHTML = [[78, 55], [64, 40], [70, 48], [42, 0], [82, 35], [60, 52]].map(row).join('');
 }
 
 // Hide skeletal loading
 function hideFAQSkeleton() {
-    const skeleton = document.querySelector('.faq-skeleton-loading');
-    if (skeleton) {
-        skeleton.remove();
-    }
+    const faqListContainer = document.getElementById('faq-list');
+    if (!faqListContainer || !faqListContainer.hasAttribute('aria-busy')) return;
+
+    faqListContainer.removeAttribute('aria-busy');
+    faqListContainer.innerHTML = '';
 }
 
 // Show empty state

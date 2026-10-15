@@ -799,12 +799,6 @@
     border-bottom: 2px solid var(--rule-strong);
 }
 
-/* Loading */
-.blog-post__loading {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-}
 
 /* Not found */
 .blog-post__not-found {
@@ -908,25 +902,9 @@
 }
 
 /* ==========================================================================
-   Skeleton loading — flat blocks with a soft pulse (no shimmer gradient)
-   Global prefers-reduced-motion rule in style.css stops the pulse.
+   Skeleton loading — .skeleton-line bars (style.css) inside the real
+   .blog-card / post elements, so every box matches the loaded layout.
    ========================================================================== */
-
-.skeleton {
-    background-color: var(--border-light);
-    border-radius: var(--radius-sm);
-    animation: skeleton-pulse 1.2s ease-in-out infinite alternate;
-}
-
-@keyframes skeleton-pulse {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0.45;
-    }
-}
 
 /* Skeleton state for the search field */
 .blog-search.is-loading img {
@@ -936,7 +914,7 @@
 .blog-search.is-loading .blog-search__input {
     color: transparent;
     border-color: transparent;
-    background-color: var(--border-light);
+    background-color: var(--skeleton-fill);
     pointer-events: none;
     caret-color: transparent;
     animation: skeleton-pulse 1.2s ease-in-out infinite alternate;
@@ -946,80 +924,11 @@
     color: transparent;
 }
 
-/* Skeleton row (listing) — same rhythm as .blog-card */
-.skeleton-card {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-xl) 0;
-    border-bottom: 1px solid var(--rule);
+/* Post page: the current-page crumb wraps like a real title would */
+.blog-post__breadcrumb li:has(> .blog-post__crumb-skeleton) {
+    flex: 1 1 26em;
 }
 
-.skeleton-date {
-    height: 14px;
-    width: 120px;
-    margin-bottom: var(--space-md);
-}
-
-.skeleton-title {
-    height: 24px;
-    width: min(90%, 32rem);
-    margin-bottom: var(--space-xs);
-}
-
-.skeleton-title-2 {
-    height: 24px;
-    width: min(60%, 22rem);
-    margin-bottom: var(--space-lg);
-}
-
-.skeleton-text {
-    height: 16px;
-    width: min(100%, 40rem);
-    margin-bottom: var(--space-sm);
-}
-
-.skeleton-text-last {
-    height: 16px;
-    width: min(80%, 32rem);
-    margin-bottom: var(--space-lg);
-}
-
-.skeleton-link {
-    height: 16px;
-    width: 96px;
-}
-
-@media (min-width: 768px) {
-    .skeleton-card {
-        padding-left: calc(12.5rem + var(--space-2xl));
-    }
-
-    .skeleton-card .skeleton-date {
-        margin-left: calc(-12.5rem - var(--space-2xl));
-        margin-bottom: calc(-14px);
-    }
-}
-
-/* Skeleton (single post) */
-.skeleton-meta {
-    height: 14px;
-    width: 150px;
-}
-
-.skeleton-h1 {
-    height: 40px;
-    width: 90%;
-    margin-bottom: var(--space-sm);
-}
-
-.skeleton-h1-2 {
-    height: 40px;
-    width: 60%;
-    margin-bottom: var(--space-md);
-}
-
-.skeleton-p {
-    height: 16px;
-    width: 100%;
-    margin-bottom: var(--space-sm);
+.blog-post__crumb-skeleton {
+    flex: 1;
 }

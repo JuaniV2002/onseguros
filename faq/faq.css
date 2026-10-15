@@ -422,39 +422,24 @@
 }
 
 /* ==========================================================================
-   FAQ Skeleton Loading — flat bars with a slow pulse, no shimmer gradient
+   FAQ Skeleton Loading — real .accordion-item rows with .skeleton-line bars
+   (style.css); the search field and chips turn into flat bars too.
    ========================================================================== */
 
-.faq-skeleton-loading {
-    display: flex;
-    flex-direction: column;
-}
-
-.faq-skeleton-item {
-    padding: var(--space-lg) 0;
-    border-bottom: 1px solid var(--rule);
-}
-
-.faq-skeleton-question,
 .faq-search.is-loading .faq-search__input,
 .faq-categories.is-loading .faq-category-chip {
-    background: var(--border-light);
-    animation: faq-skeleton-pulse 1.6s ease-in-out infinite;
+    background: var(--skeleton-fill);
+    animation: skeleton-pulse 1.2s ease-in-out infinite alternate;
 }
 
-.faq-skeleton-question {
-    height: 20px;
-    border-radius: var(--radius-sm);
-    width: 70%;
+/* No counter number or chevron until the questions arrive */
+.faq-list[aria-busy="true"] .accordion-question {
+    cursor: default;
 }
 
-.faq-skeleton-item:nth-child(2n) .faq-skeleton-question {
-    width: 55%;
-}
-
-@keyframes faq-skeleton-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.45; }
+.faq-list[aria-busy="true"] .accordion-question::before,
+.faq-list[aria-busy="true"] .accordion-question img {
+    visibility: hidden;
 }
 
 /* Skeleton state for search bar */
@@ -492,7 +477,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .faq-skeleton-question,
     .faq-search.is-loading .faq-search__input,
     .faq-categories.is-loading .faq-category-chip {
         animation: none;

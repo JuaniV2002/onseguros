@@ -38,6 +38,7 @@
   --field-border: rgba(16, 16, 22, 0.5);
   --rule: var(--border-light);
   --rule-strong: var(--text-primary);
+  --skeleton-fill: var(--border-light);
   --primary-light: hsl(216, 92%, 67%);
   --primary-lighter: hsl(216, 92%, 77%);
   --primary-lightest: hsl(216, 92%, 87%);
@@ -112,6 +113,7 @@
   --admin-gray-700: #374151;
   --admin-gray-800: #101016;
   --admin-gray-900: #111827;
+  --admin-skeleton-fill: var(--admin-gray-200);
   --admin-success-light: #dcfce7;
   --admin-error-light: #fee2e2;
   --admin-input-bg: #fafafa;
@@ -191,6 +193,7 @@
   --field-border: rgba(232, 232, 232, 0.5);
   --rule: var(--border-light);
   --rule-strong: var(--text-primary);
+  --skeleton-fill: var(--border-light);
   --primary-light: hsl(216, 92%, 62%);
   --primary-lighter: hsl(216, 92%, 72%);
   --primary-lightest: hsl(216, 92%, 82%);

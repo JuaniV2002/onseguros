@@ -53,8 +53,8 @@
         rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/style.css?v=15">
-    <link rel="stylesheet" href="blog.css?v=20261012.2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=16">
+    <link rel="stylesheet" href="blog.css?v=20261015">
 
     <!-- Marked.js for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -127,26 +127,21 @@
 
     <!-- Main Content -->
     <main id="main-content" role="main">
-        <article class="blog-post" aria-labelledby="post-title">
+        <article class="blog-post" aria-labelledby="post-title" aria-busy="true">
             <div class="blog-post__container">
                 <!-- Breadcrumb -->
                 <nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
                     <ol>
                         <li><a href="/">Inicio</a></li>
                         <li><a href="/blog/">Blog</a></li>
-                        <li aria-current="page" id="breadcrumb-title">Artículo</li>
+                        <li aria-current="page" id="breadcrumb-title"><span class="sr-only">Artículo</span><span class="blog-post__crumb-skeleton" aria-hidden="true"><span class="skeleton-line" style="--w: 85%"></span><span class="skeleton-line skeleton-line--m" style="--w: 40%"></span></span></li>
                     </ol>
                 </nav>
 
                 <!-- Post Header -->
                 <header class="blog-post__header">
-                    <time class="blog-post__date" id="post-date" datetime="">
-                        <div class="skeleton skeleton-meta"></div>
-                    </time>
-                    <h1 id="post-title" class="blog-post__title">
-                        <div class="skeleton skeleton-h1"></div>
-                        <div class="skeleton skeleton-h1-2"></div>
-                    </h1>
+                    <time class="blog-post__date" id="post-date" datetime=""><span class="skeleton-line" aria-hidden="true" style="--w: 13em"></span></time>
+                    <h1 id="post-title" class="blog-post__title"><span aria-hidden="true"><span class="skeleton-line" style="--w: 88%"></span><span class="skeleton-line skeleton-line--m" style="--w: 84%"></span><span class="skeleton-line" style="--w: 80%"></span><span class="skeleton-line" style="--w: 48%"></span></span></h1>
                     <div class="blog-post__author">
                         <p>por Mariano Villanueva</p>
                     </div>
@@ -154,19 +149,11 @@
 
                 <!-- Post Content (Markdown rendered here) -->
                 <div class="blog-post__content prose" id="post-content">
-                    <div class="blog-post__loading" aria-live="polite">
-                        <div class="skeleton skeleton-p"></div>
-                        <div class="skeleton skeleton-p"></div>
-                        <div class="skeleton skeleton-p"></div>
-                        <div class="skeleton skeleton-p" style="width: 85%"></div>
-                        <br>
-                        <div class="skeleton skeleton-h1-2"></div>
-                        <div class="skeleton skeleton-p"></div>
-                        <div class="skeleton skeleton-p"></div>
-                        <div class="skeleton skeleton-p" style="width: 90%"></div>
-                        <br>
-                        <div class="skeleton skeleton-p"></div>
-                        <div class="skeleton skeleton-p"></div>
+                    <div class="blog-post__loading" aria-hidden="true">
+                        <p><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 62%"></span></p>
+                        <p><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 70%"></span></p>
+                        <h2><span class="skeleton-line" style="--w: 38%"></span></h2>
+                        <p><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 55%"></span></p>
                     </div>
                 </div>
 
@@ -234,7 +221,7 @@
     <script src="../components/component-loader.js?v=8"></script>
     <script src="../assets/js/script.js?v=2"></script>
     <script src="../assets/js/env-config.js?v=2"></script>
-    <script src="blog.js?v=20261008"></script>
+    <script src="blog.js?v=20261015"></script>
 </body>
 
 </html>

@@ -60,7 +60,7 @@
         rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/style.css?v=15">
+    <link rel="stylesheet" href="../assets/css/style.css?v=16">
     <link rel="stylesheet" href="agente.css?v=6">
 
     <!-- Structured Data: Breadcrumb + WebPage + WebApplication -->
@@ -180,9 +180,10 @@
                     </div>
 
                     <!-- Typing indicator -->
-                    <div class="chat-typing" id="chat-typing" aria-label="Oni está escribiendo..." hidden>
+                    <div class="chat-typing" id="chat-typing" hidden>
                         <div class="chat-bubble chat-bubble--agent">
-                            <div class="typing-dots">
+                            <span class="sr-only">Oni está escribiendo...</span>
+                            <div class="typing-dots" aria-hidden="true">
                                 <span></span><span></span><span></span>
                             </div>
                         </div>

@@ -8,3 +8,4 @@ A section header and a list row for blog posts, FAQs, drafts and subscribers in 
 - Rows: white cards, `radius-lg`, `effect-raised`; hover lifts 4px, shows a 4px `brand-blue` left bar and turns the title `admin-primary-text`. (That's the old style; the public site uses ruled rows instead.)
 - Description `admin-gray-600`, meta 13px `admin-gray-500`, slug chip in Space Grotesk on `admin-gray-100`.
 - Section order is fixed: Borradores, Blog, FAQ, Suscriptores.
+- Loading: each list's `.posts-loading` holds three `.is-skeleton` copies of these rows (see Skeleton). The loader has no card of its own.

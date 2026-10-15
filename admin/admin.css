@@ -39,6 +39,7 @@
     --gray-900: #111827;
 
     --white: #ffffff;
+    --skeleton-fill: var(--gray-200); /* loading placeholder bars (= public --skeleton-fill on white) */
 
     /* Depth / Shadows from style.css */
     --shadow-sm: 0 1px 2px 0 rgba(16, 16, 22, 0.05);
@@ -417,7 +418,11 @@ h6 {
     border-radius: 2px;
 }
 
-.posts-loading,
+/* Loaders hold a skeleton built from the real list markup, so no box of their own. */
+.posts-loading {
+    flex-direction: column;
+}
+
 .posts-empty {
     display: flex;
     flex-direction: column;
@@ -429,13 +434,6 @@ h6 {
     box-shadow: var(--effect-raised);
     color: var(--gray-500);
     text-align: center;
-}
-
-.posts-loading .spinner {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 16px;
-    color: var(--primary-text);
 }
 
 .posts-empty p {
@@ -976,78 +974,85 @@ h6 {
 
 /* ==========================================================================
    Skeleton Loading
+   Loaders reuse the real item markup (.post-item, .faq-item, table rows) inside
+   .is-skeleton; text becomes .skeleton-line bars and buttons become filled blocks.
    ========================================================================== */
 
-.skeleton {
-    background: linear-gradient(90deg,
-            var(--gray-100) 25%,
-            var(--gray-50) 50%,
-            var(--gray-100) 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
+.is-skeleton {
+    pointer-events: none;
 }
 
-@keyframes skeleton-loading {
-    0% {
-        background-position: 200% 0;
+.skeleton-line {
+    display: block;
+    position: relative;
+    width: var(--w, 100%);
+    max-width: 100%;
+    height: 1.5em;
+    height: 1lh;
+}
+
+.skeleton-line::before {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 0.7em;
+    transform: translateY(-50%);
+    border-radius: 4px;
+}
+
+.skeleton-line::before,
+.is-skeleton .btn,
+.is-skeleton .faq-item-category-badge,
+.is-skeleton .faq-preview-category {
+    color: transparent;
+    background: var(--skeleton-fill);
+    border-color: transparent;
+    box-shadow: none;
+    animation: skeleton-pulse 1.2s ease-in-out infinite alternate;
+}
+
+.is-skeleton .btn {
+    line-height: normal; /* the real rows use <button>, which does not inherit line-height */
+}
+
+.is-skeleton .btn img {
+    visibility: hidden;
+}
+
+/* Extra wrapped line that only shows where the real text wraps (phones). */
+@media (min-width: 769px) {
+    .skeleton-line--m {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .skeleton-line:has(+ .skeleton-line--m) {
+        width: 100%;
     }
 
-    100% {
-        background-position: -200% 0;
+    /* .faq-item stacks and shrink-wraps here; real questions fill the row. */
+    .is-skeleton .faq-item-content {
+        width: 100%;
     }
 }
 
-.posts-skeleton-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
+.subscribers-table td:first-child > .skeleton-line {
+    margin-inline: auto;
 }
 
-.posts-skeleton-row {
-    padding: 24px;
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--effect-raised);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid var(--gray-100);
+@keyframes skeleton-pulse {
+    from { opacity: 1; }
+    to { opacity: 0.45; }
 }
 
-.skeleton-row-left {
-    flex: 1;
-}
-
-.skeleton-row-title {
-    height: 24px;
-    width: 250px;
-    margin-bottom: 12px;
-    border-radius: 4px;
-}
-
-.skeleton-row-meta {
-    height: 16px;
-    width: 400px;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-.skeleton-row-date {
-    height: 14px;
-    width: 120px;
-    border-radius: 4px;
-}
-
-.skeleton-row-right {
-    display: flex;
-    gap: 12px;
-}
-
-.skeleton-btn {
-    width: 80px;
-    height: 36px;
-    border-radius: var(--radius-lg);
+@media (prefers-reduced-motion: reduce) {
+    .skeleton-line::before,
+    .is-skeleton .btn,
+    .is-skeleton .faq-item-category-badge,
+    .is-skeleton .faq-preview-category {
+        animation: none;
+    }
 }
 
 /* ==========================================================================

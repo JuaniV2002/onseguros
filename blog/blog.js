@@ -283,6 +283,7 @@ class Blog {
         }
 
         this.blogGrid.innerHTML = posts.map((post, index) => this.createPostCard(post, index === 0)).join('');
+        this.blogGrid.removeAttribute('aria-busy');
     }
 
     /**
@@ -323,6 +324,7 @@ class Blog {
         }
         if (this.blogGrid) {
             this.blogGrid.innerHTML = '';
+            this.blogGrid.removeAttribute('aria-busy');
         }
         // Show empty state message
         if (this.blogEmpty) {
@@ -444,6 +446,8 @@ class Blog {
         if (canonical) {
             canonical.href = `https://www.onseguros.net/blog/post.html?slug=${post.slug}`;
         }
+
+        document.querySelector('.blog-post')?.removeAttribute('aria-busy');
     }
 
     /**
@@ -491,6 +495,11 @@ class Blog {
         if (postBack) postBack.style.display = 'none';
         if (newsletter) newsletter.style.display = 'none';
         if (postNotFound) postNotFound.style.display = 'block';
+
+        // Drop the loading skeleton from the breadcrumb and the busy flag
+        const breadcrumbTitle = document.getElementById('breadcrumb-title');
+        if (breadcrumbTitle) breadcrumbTitle.textContent = 'Artículo';
+        document.querySelector('.blog-post')?.removeAttribute('aria-busy');
 
         document.title = 'Artículo no encontrado | Blog OnSeguros';
     }
@@ -627,15 +636,13 @@ class Blog {
 }
 
 // Initialize blog when DOM is ready
+// Start even if config.json fails: the fetch errors then land on the empty /
+// not-found state instead of leaving the skeleton up forever
+const startBlog = () => window.envConfig.load()
+    .catch(error => console.error('Error loading config:', error))
+    .then(() => new Blog());
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', async () => {
-        // Load environment configuration first
-        await window.envConfig.load();
-        new Blog();
-    });
+    document.addEventListener('DOMContentLoaded', startBlog);
 } else {
-    // Load config and initialize blog
-    window.envConfig.load().then(() => {
-        new Blog();
-    });
+    startBlog();
 }

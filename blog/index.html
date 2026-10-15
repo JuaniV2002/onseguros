@@ -61,8 +61,8 @@
         rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/style.css?v=15">
-    <link rel="stylesheet" href="blog.css?v=20261012.2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=16">
+    <link rel="stylesheet" href="blog.css?v=20261015">
 
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -175,61 +175,44 @@
                 </div>
 
                 <!-- Blog Posts Grid -->
-                <div class="blog-grid" id="blog-grid" aria-label="Lista de artículos">
-                    <!-- Skeleton Cards -->
-                    <div class="skeleton-card">
-                        <div class="skeleton skeleton-date"></div>
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-title-2"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text-last"></div>
-                        <div class="skeleton skeleton-link"></div>
+                <div class="blog-grid" id="blog-grid" aria-label="Lista de artículos" aria-busy="true">
+                    <!-- Skeleton: the real .blog-card layout with .skeleton-line bars (blog.js replaces it) -->
+                    <div class="blog-card" aria-hidden="true">
+                        <span class="blog-card__badge"><span class="skeleton-line" style="--w: 4.8em"></span></span>
+                        <span class="blog-card__date"><span class="skeleton-line" style="--w: 10em"></span></span>
+                        <span class="blog-card__title"><span class="skeleton-line" style="--w: 74%"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 58%"></span></span>
+                        <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 72%"></span></span>
+                        <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
-                    <div class="skeleton-card">
-                        <div class="skeleton skeleton-date"></div>
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-title-2"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text-last"></div>
-                        <div class="skeleton skeleton-link"></div>
+                    <div class="blog-card" aria-hidden="true">
+                        <span class="blog-card__date"><span class="skeleton-line" style="--w: 10em"></span></span>
+                        <span class="blog-card__title"><span class="skeleton-line" style="--w: 74%"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 64%"></span></span>
+                        <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 80%"></span></span>
+                        <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
-                    <div class="skeleton-card">
-                        <div class="skeleton skeleton-date"></div>
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-title-2"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text-last"></div>
-                        <div class="skeleton skeleton-link"></div>
+                    <div class="blog-card" aria-hidden="true">
+                        <span class="blog-card__date"><span class="skeleton-line" style="--w: 10em"></span></span>
+                        <span class="blog-card__title"><span class="skeleton-line" style="--w: 74%"></span><span class="skeleton-line" style="--w: 46%"></span></span>
+                        <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 66%"></span></span>
+                        <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
-                    <div class="skeleton-card">
-                        <div class="skeleton skeleton-date"></div>
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-title-2"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text-last"></div>
-                        <div class="skeleton skeleton-link"></div>
+                    <div class="blog-card" aria-hidden="true">
+                        <span class="blog-card__date"><span class="skeleton-line" style="--w: 10em"></span></span>
+                        <span class="blog-card__title"><span class="skeleton-line" style="--w: 74%"></span><span class="skeleton-line" style="--w: 70%"></span></span>
+                        <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 58%"></span></span>
+                        <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
-                    <div class="skeleton-card">
-                        <div class="skeleton skeleton-date"></div>
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-title-2"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text-last"></div>
-                        <div class="skeleton skeleton-link"></div>
+                    <div class="blog-card" aria-hidden="true">
+                        <span class="blog-card__date"><span class="skeleton-line" style="--w: 10em"></span></span>
+                        <span class="blog-card__title"><span class="skeleton-line" style="--w: 74%"></span><span class="skeleton-line" style="--w: 52%"></span></span>
+                        <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 76%"></span></span>
+                        <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
-                    <div class="skeleton-card">
-                        <div class="skeleton skeleton-date"></div>
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-title-2"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text"></div>
-                        <div class="skeleton skeleton-text-last"></div>
-                        <div class="skeleton skeleton-link"></div>
+                    <div class="blog-card" aria-hidden="true">
+                        <span class="blog-card__date"><span class="skeleton-line" style="--w: 10em"></span></span>
+                        <span class="blog-card__title"><span class="skeleton-line" style="--w: 74%"></span><span class="skeleton-line" style="--w: 62%"></span></span>
+                        <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 70%"></span></span>
+                        <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
                 </div>
 
@@ -285,7 +268,7 @@
     <script src="../components/component-loader.js?v=8"></script>
     <script src="../assets/js/script.js?v=2"></script>
     <script src="../assets/js/env-config.js?v=2"></script>
-    <script src="blog.js?v=20261008"></script>
+    <script src="blog.js?v=20261015"></script>
 </body>
 
 </html>
