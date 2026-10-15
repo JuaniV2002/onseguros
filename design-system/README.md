@@ -57,7 +57,7 @@ OnSeguros is Mariano Villanueva's insurance brokerage in Río Cuarto, Córdoba �
 
 ## Footer
 
-- Every page ends with the floating footer card (Footer): same float as the header, a huge “OnSeguros” watermark in `float-watermark` cropped by the bottom edge, eyebrow column titles and 14px links.
+- Every page ends with the floating footer card (Footer): same float as the header, a huge “OnSeguros” watermark in `float-watermark` resting just above the bottom edge (descenders fully visible), eyebrow column titles and 14px links.
 - The theme toggle lives in the footer; the “Usalos siempre” helmet + seatbelt reminder sits under the brand line.
 
 ## Blog

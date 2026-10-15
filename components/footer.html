@@ -48,7 +48,8 @@
     }
 
     /* Wordmark watermark: the brand name set across the whole card, a hair
-       off the surface color, cropped by the card's bottom edge. Decorative
+       off the surface color, sitting just above the card's bottom edge (the
+       -8% clears the "g" descender, which overhangs the line box). Decorative
        only: aria-hidden in the markup, not selectable, not clickable, and
        painted under the content (negative z inside the isolated card). */
     .footer__watermark {
@@ -56,7 +57,7 @@
         left: 50%;
         bottom: 0;
         z-index: -1;
-        transform: translate(-50%, 10%);
+        transform: translate(-50%, -8%);
         font-family: 'Space Grotesk', 'Inter', sans-serif;
         font-weight: var(--font-weight-bold);
         font-size: 20vw;
