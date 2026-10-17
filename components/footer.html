@@ -71,9 +71,20 @@
         -webkit-user-select: none;
     }
 
+    /* The letters are CSS generated content, not text in the DOM: the wordmark
+       is pure decoration (exempt from contrast rules), and keeping it out of
+       the text layer stops contrast checkers flagging it. */
+    .footer__watermark::after {
+        content: "Seguros";
+    }
+
     /* "On" tinted toward the logo blue, as in the real wordmark */
     .footer__watermark-on {
         color: var(--float-watermark-on);
+    }
+
+    .footer__watermark-on::before {
+        content: "On";
     }
 
     .footer__content {
@@ -196,15 +207,15 @@
         }
     }
 
+    /* Link inside a line of text: underlined, not told apart by color alone */
     .footer__credit a {
         color: var(--link);
-        text-decoration: none;
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
     }
 
     .footer__credit a:hover {
         color: var(--link-hover);
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
     }
 
     .footer__credit a:focus-visible {
@@ -399,7 +410,7 @@
 <!-- Footer -->
 <footer class="footer">
     <div class="footer__container">
-        <span class="footer__watermark" aria-hidden="true"><span class="footer__watermark-on">On</span>Seguros</span>
+        <span class="footer__watermark" aria-hidden="true"><span class="footer__watermark-on"></span></span>
         <div class="footer__content">
             <div class="footer__section">
                 <div class="footer__brand">
@@ -419,7 +430,7 @@
             </div>
 
             <nav class="footer__section" aria-labelledby="footer-services-heading">
-                <h3 id="footer-services-heading" class="footer__title">Servicios</h3>
+                <h2 id="footer-services-heading" class="footer__title">Servicios</h2>
                 <ul class="footer__links">
                     <li><a href="/#servicios" class="footer__link">Seguros Integrales</a></li>
                     <li><a href="/#servicios" class="footer__link">ART y Vida Colectivo</a></li>
@@ -429,7 +440,7 @@
             </nav>
 
             <nav class="footer__section" aria-labelledby="footer-company-heading">
-                <h3 id="footer-company-heading" class="footer__title">Empresa</h3>
+                <h2 id="footer-company-heading" class="footer__title">Empresa</h2>
                 <ul class="footer__links">
                     <li><a href="/#nosotros" class="footer__link">Sobre Nosotros</a></li>
                     <li><a href="/#testimonios" class="footer__link">Testimonios</a></li>
@@ -438,7 +449,7 @@
             </nav>
 
             <nav class="footer__section" aria-labelledby="footer-support-heading">
-                <h3 id="footer-support-heading" class="footer__title">Soporte</h3>
+                <h2 id="footer-support-heading" class="footer__title">Soporte</h2>
                 <ul class="footer__links">
                     <li><a href="https://wa.me/543584921111" target="_blank" rel="noopener noreferrer"
                             class="footer__link">WhatsApp</a></li>
@@ -482,7 +493,7 @@
 <!-- WhatsApp Floating Button -->
 <a href="https://wa.me/543584921111" target="_blank" rel="noopener noreferrer"
    class="whatsapp-fab"
-   aria-label="Contactar por WhatsApp">
+   aria-label="Hablanos por WhatsApp">
     <img src="/assets/icons/whatsapp.svg" width="28" height="28" alt="" aria-hidden="true">
     <span class="whatsapp-fab__tooltip">Hablanos por WhatsApp</span>
 </a>

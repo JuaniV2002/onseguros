@@ -1,6 +1,6 @@
 /**
  * Blog Functionality
- * Handles blog post listing, markdown rendering, and newsletter subscription
+ * Handles blog post listing and markdown rendering (newsletter: assets/js/script.js)
  */
 
 /**
@@ -121,8 +121,6 @@ class Blog {
             await this.loadPosts();
             this.initSearch();
         }
-
-        this.initNewsletter();
     }
 
     /**
@@ -519,101 +517,6 @@ class Blog {
             month: 'long',
             day: 'numeric'
         });
-    }
-
-    /**
-     * Initialize newsletter form functionality
-     */
-    initNewsletter() {
-        const form = document.getElementById('newsletter-form');
-        if (!form) return;
-
-        form.addEventListener('submit', (e) => this.handleNewsletterSubmit(e));
-    }
-
-    /**
-     * Handle newsletter form submission
-     */
-    async handleNewsletterSubmit(e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const emailInput = form.querySelector('#newsletter-email');
-        const submitButton = form.querySelector('button[type="submit"]');
-        const errorDiv = document.getElementById('newsletter-error');
-        const successDiv = document.getElementById('newsletter-success');
-
-        // Clear previous messages
-        if (errorDiv) errorDiv.textContent = '';
-        if (successDiv) successDiv.style.display = 'none';
-
-        // Validate email
-        const email = emailInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!email) {
-            if (errorDiv) errorDiv.textContent = 'Por favor ingresá tu email.';
-            emailInput.focus();
-            return;
-        }
-
-        if (!emailRegex.test(email)) {
-            if (errorDiv) errorDiv.textContent = 'Por favor ingresá un email válido.';
-            emailInput.focus();
-            return;
-        }
-
-        // Show loading state
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Enviando...';
-        submitButton.disabled = true;
-
-        try {
-            // Load Supabase configuration from environment
-            const SUPABASE_URL = window.envConfig.get('SUPABASE_URL');
-            const SUPABASE_ANON_KEY = window.envConfig.get('SUPABASE_ANON_KEY');
-
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': SUPABASE_ANON_KEY,
-                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                    'Prefer': 'return=minimal'
-                },
-                body: JSON.stringify({ email: email })
-            });
-
-            if (response.status === 409 || response.status === 400) {
-                // Email already exists (unique constraint violation)
-                if (errorDiv) {
-                    errorDiv.textContent = 'Este email ya está suscrito al newsletter.';
-                }
-                return;
-            }
-
-            if (!response.ok) {
-                throw new Error('Subscription failed');
-            }
-
-            // Show success message
-            if (successDiv) {
-                successDiv.textContent = '✓ ¡Gracias por suscribirte! Recibirás nuestro newsletter cada viernes.';
-                successDiv.style.display = 'block';
-            }
-
-            // Reset form
-            form.reset();
-
-        } catch (error) {
-            console.error('Newsletter subscription error:', error);
-            if (errorDiv) {
-                errorDiv.textContent = 'Hubo un error al suscribirte. Por favor intentá nuevamente.';
-            }
-        } finally {
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-        }
     }
 
     /**

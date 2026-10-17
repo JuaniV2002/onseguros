@@ -45,19 +45,14 @@
     <meta name="twitter:image" content="https://www.onseguros.net/assets/og-image.png">
     <meta name="twitter:image:alt" content="OnSeguros Blog">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-        rel="stylesheet">
-
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/style.css?v=16">
+    <link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../assets/css/style.css?v=17">
     <link rel="stylesheet" href="blog.css?v=20261015">
 
-    <!-- Marked.js for Markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Marked.js for Markdown parsing (deferred: blog.js renders after DOMContentLoaded) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json" id="breadcrumb-schema">
@@ -218,10 +213,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="../components/component-loader.js?v=8"></script>
-    <script src="../assets/js/script.js?v=2"></script>
+    <script src="../components/component-loader.js?v=9"></script>
+    <script src="../assets/js/script.js?v=3"></script>
     <script src="../assets/js/env-config.js?v=2"></script>
-    <script src="blog.js?v=20261015b"></script>
+    <script src="blog.js?v=20261017"></script>
 </body>
 
 </html>

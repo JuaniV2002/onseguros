@@ -28,11 +28,6 @@
     <link rel="alternate icon" href="../assets/icons/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
 
-    <!-- DNS Prefetch & Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <!-- Open Graph -->
     <meta property="og:locale" content="es_AR">
@@ -54,13 +49,10 @@
     <meta name="twitter:image" content="https://www.onseguros.net/assets/og-image.png">
     <meta name="twitter:image:alt" content="OnSeguros - Cotizá tu seguro con IA">
 
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-        rel="stylesheet">
-
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/style.css?v=16">
+    <link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../assets/css/style.css?v=17">
     <link rel="stylesheet" href="agente.css?v=6">
 
     <!-- Structured Data: Breadcrumb + WebPage + WebApplication -->
@@ -247,8 +239,8 @@
 
     <!-- Scripts -->
     <script src="../assets/js/env-config.js"></script>
-    <script src="../components/component-loader.js?v=8"></script>
-    <script src="../assets/js/script.js?v=2"></script>
+    <script src="../components/component-loader.js?v=9"></script>
+    <script src="../assets/js/script.js?v=3"></script>
     <script src="agente.js?v=3"></script>
 </body>
 

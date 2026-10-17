@@ -26,11 +26,6 @@
     <link rel="alternate icon" href="assets/icons/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 
-    <!-- DNS Prefetch & Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:locale" content="es_AR">
@@ -55,16 +50,12 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high">
-    <link rel="preload" href="assets/css/style.css?v=16" as="style">
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        as="style">
+    <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/css/style.css?v=17" as="style">
 
     <!-- Stylesheets -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=16">
+    <link rel="stylesheet" href="assets/css/style.css?v=17">
 
     <!-- Structured Data - Insurance Agency -->
     <script type="application/ld+json">
@@ -321,9 +312,6 @@
         }
     }
     </script>
-
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="landing">
@@ -350,12 +338,11 @@
                     </p>
                     <div class="hero__actions" role="group" aria-label="Acciones principales">
                         <a href="#oni" class="btn btn--primary btn--hero"
-                            aria-label="Conocer a Oni, nuestro Agente de IA para cotizar">
+                            aria-label="Cotizá con Oni, nuestro Agente de IA">
                             <span class="btn__text">Cotizá con Oni</span>
                             <span class="btn__icon">→</span>
                         </a>
-                        <a href="#servicios" class="btn btn--secondary btn--hero"
-                            aria-label="Ver todas las coberturas disponibles">
+                        <a href="#servicios" class="btn btn--secondary btn--hero">
                             <span class="btn__text">Ver Coberturas</span>
                         </a>
                     </div>
@@ -525,7 +512,7 @@
                             tranquilidad.
                         </p>
                         <a href="/agente/" class="service-card__link"
-                            aria-label="Solicitar cotización de seguros integrales">
+                            aria-label="Cotizar Ahora: seguros integrales">
                             Cotizar Ahora
                             <span aria-hidden="true">→</span>
                         </a>
@@ -546,7 +533,7 @@
                             Tu empresa y tus empleados son lo más valioso. Aseguralos en las mejores compañías.
                         </p>
                         <a href="/agente/" class="service-card__link"
-                            aria-label="Obtener información sobre ART y Vida Colectivo">
+                            aria-label="Cotizar Ahora: ART y Vida Colectivo">
                             Cotizar Ahora
                             <span aria-hidden="true">→</span>
                         </a>
@@ -564,7 +551,7 @@
                             Protegé tus cosechas contra granizo, incendios, resiembra y heladas. Coberturas a medida.
                         </p>
                         <a href="/agente/" class="service-card__link"
-                            aria-label="Obtener información sobre seguros agrícolas">
+                            aria-label="Cotizar Ahora: seguros agrícolas">
                             Cotizar Ahora
                             <span aria-hidden="true">→</span>
                         </a>
@@ -627,8 +614,8 @@
                     </p>
                 </header>
 
-                <div class="testimonials__grid" role="list" aria-label="Testimonios de clientes">
-                    <article class="testimonial-card" role="listitem" itemscope itemtype="https://schema.org/Review">
+                <div class="testimonials__grid">
+                    <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
                         <h3 class="sr-only">Testimonio de Juan José L.</h3>
                         <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/InsuranceAgency">
                             <meta itemprop="name" content="On Seguros - Seguros de Granizo">
@@ -671,7 +658,7 @@
                         </div>
                     </article>
 
-                    <article class="testimonial-card" role="listitem" itemscope itemtype="https://schema.org/Review">
+                    <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
                         <h3 class="sr-only">Testimonio de Mariana M.</h3>
                         <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/InsuranceAgency">
                             <meta itemprop="name" content="On Seguros - ART y Seguros Patrimoniales">
@@ -714,7 +701,7 @@
                         </div>
                     </article>
 
-                    <article class="testimonial-card" role="listitem" itemscope itemtype="https://schema.org/Review">
+                    <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
                         <h3 class="sr-only">Testimonio de Carlos L.</h3>
                         <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/InsuranceAgency">
                             <meta itemprop="name" content="On Seguros - Seguros Integrales">
@@ -813,7 +800,7 @@
                                 <div class="contact-item__content">
                                     <p class="contact-item__label">Oficinas</p>
                                     <a href="https://maps.app.goo.gl/YdnWAYcR1zvXZg6E8" target="_blank"
-                                        rel="noopener noreferrer" aria-label="Ver ubicación en Google Maps">
+                                        rel="noopener noreferrer" aria-label="Constitución 852, Edificio CECIS II (2A), Río Cuarto, Córdoba: ver ubicación en Google Maps">
                                         <span class="contact-item__value">
                                             Constitución 852, Edificio CECIS II (2A)<br>
                                             Río Cuarto, Córdoba
@@ -822,7 +809,7 @@
                                     <br>
                                     <a href="https://calendly.com/onseguros" target="_blank" rel="noopener noreferrer"
                                         class="btn btn--primary" style="margin-top: var(--space-xl); display: inline-block;"
-                                        aria-label="Agendar una cita en Calendly">Agendar Cita</a>
+                                        aria-label="Agendar Cita en Calendly">Agendar Cita</a>
                                 </div>
                             </div>
                         </div>
@@ -844,7 +831,7 @@
                                 <li>Recopila exactamente lo que Mariano necesita para cotizar</li>
                                 <li>Disponible las 24 horas, sin esperas</li>
                             </ul>
-                            <a href="/agente/" class="oni-cta-card__btn" aria-label="Ir al Agente de IA Oni para cotizar">
+                            <a href="/agente/" class="oni-cta-card__btn" aria-label="Cotizá con Oni, nuestro Agente de IA">
                                 Cotizá con Oni
                                 <span aria-hidden="true">→</span>
                             </a>
@@ -902,8 +889,8 @@
 
     <!-- Scripts -->
     <script src="assets/js/env-config.js"></script>
-    <script defer src="components/component-loader.js?v=8"></script>
-    <script defer src="assets/js/script.js?v=2"></script>
+    <script defer src="components/component-loader.js?v=9"></script>
+    <script defer src="assets/js/script.js?v=3"></script>
     <script defer src="assets/js/live-widgets.js"></script>
     <script>
         // Initialize env config before other scripts use it

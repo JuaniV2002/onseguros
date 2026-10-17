@@ -1,6 +1,7 @@
 /* OnSeguros components — the site's own rules from assets/css/style.css,
    components/accordion.css and components/header.html, with the landing
    redesign (body.landing) flattened in. Every value comes from tokens.css. */
+/* Previews only: the site self-hosts these faces (assets/fonts/), see README "Not synced" */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -262,11 +263,13 @@ ul, ol { list-style: none; }
 /* ---------- Footer (components/footer.html) ---------- */
 .footer__container { position: relative; isolation: isolate; overflow: hidden; container-type: inline-size; max-width: var(--container-xl); margin: 0 auto; padding: var(--space-2xl) var(--float-pad) var(--space-lg); background: var(--float-surface); border: 1px solid var(--float-border); border-radius: var(--radius-xl); box-shadow: var(--float-shadow); }
 .footer__watermark { position: absolute; left: 50%; bottom: 0; z-index: -1; transform: translate(-50%, -8%); font-family: var(--font-display); font-weight: 700; font-size: 21cqi; line-height: 1; letter-spacing: -0.05em; white-space: nowrap; color: var(--float-watermark); pointer-events: none; user-select: none; }
+.footer__watermark::after { content: "Seguros"; }
 .footer__watermark-on { color: var(--float-watermark-on); }
+.footer__watermark-on::before { content: "On"; }
 .footer__content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--space-3xl); margin-bottom: var(--space-3xl); }
 .footer__section, .footer__brand { display: flex; flex-direction: column; gap: var(--space-md); }
 .footer__brand { height: 100%; }
-.footer__title { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+.footer__title { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); margin: 0; }
 .footer__description { color: var(--text-secondary); line-height: 1.6; font-size: 0.875rem; max-width: 40ch; }
 .footer__links { display: flex; flex-direction: column; gap: var(--space-xs); }
 .footer__link { color: var(--text-primary); font-size: 0.875rem; padding: var(--space-xs) 0; display: inline-block; transition: color 150ms ease-in-out; }
@@ -275,8 +278,8 @@ ul, ol { list-style: none; }
 .footer__bottom-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--rule); }
 .footer__copyright { margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); }
 .footer__copyright p { color: var(--text-secondary); font-size: 0.75rem; }
-.footer__credit a { color: var(--link); }
-.footer__credit a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 0.2em; }
+.footer__credit a { color: var(--link); text-decoration: underline; text-underline-offset: 0.2em; }
+.footer__credit a:hover { color: var(--link-hover); }
 .footer__safety { display: flex; align-items: center; gap: var(--space-sm); margin-top: auto; padding-top: var(--space-md); color: var(--text-primary); font-size: 1rem; font-weight: 600; }
 .footer__safety-icons { display: flex; gap: var(--space-sm); }
 .footer__safety-icon { width: 20px; height: 20px; filter: brightness(0) saturate(100%) invert(46%) sepia(88%) saturate(2618%) hue-rotate(207deg) brightness(99%) contrast(93%); }

@@ -395,8 +395,13 @@ class NewsletterFormValidator {
         
         // Real-time validation
         if (this.emailField) {
-            this.emailField.addEventListener('blur', () => this.validateEmail());
-            this.emailField.addEventListener('input', Utils.debounce(() => this.validateEmail(), 300));
+            // Live checks skip an email that was just submitted, so a fast
+            // submit error isn't wiped by a pending debounce or a blur
+            const liveValidate = () => {
+                if (this.emailField.value.trim() !== this.submittedEmail) this.validateEmail();
+            };
+            this.emailField.addEventListener('blur', liveValidate);
+            this.emailField.addEventListener('input', Utils.debounce(liveValidate, 300));
         }
     }
 
@@ -460,6 +465,8 @@ class NewsletterFormValidator {
             return;
         }
 
+        this.submittedEmail = this.emailField.value.trim();
+
         // Show loading state
         const submitButton = this.form.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
@@ -467,7 +474,8 @@ class NewsletterFormValidator {
         submitButton.disabled = true;
 
         try {
-            // Load Supabase configuration
+            // Load Supabase configuration (waits for config.json on an early submit)
+            await window.envConfig.load();
             const SUPABASE_URL = window.envConfig.get('SUPABASE_URL');
             const SUPABASE_ANON_KEY = window.envConfig.get('SUPABASE_ANON_KEY');
 
@@ -475,35 +483,37 @@ class NewsletterFormValidator {
                 throw new Error('Supabase configuration not found');
             }
 
-            // Initialize Supabase client
-            const { createClient } = window.supabase;
-            const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
             // Get email from form
             const email = this.emailField.value.trim();
 
-            // Insert subscriber into database
-            const { error } = await supabaseClient
-                .from('subscribers')
-                .insert([
+            // Insert subscriber via the PostgREST endpoint directly (no supabase-js:
+            // it was 56 KB of render-blocking JS for this one insert)
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify([
                     {
                         email: email,
                         subscribed_at: new Date().toISOString(),
                         confirmed: true
                     }
-                ]);
+                ])
+            });
 
-            if (error) {
-                // Handle duplicate email gracefully
-                if (error.code === '23505') {
-                    this.showSuccess();
-                } else {
-                    throw error;
+            if (!response.ok) {
+                const error = await response.json().catch(() => ({}));
+                // Handle duplicate email gracefully (unique violation → 409 / 23505)
+                if (response.status !== 409 || error.code !== '23505') {
+                    throw new Error(`Subscribe failed (${response.status}): ${error.message || ''}`);
                 }
-            } else {
-                // Show success message
-                this.showSuccess();
             }
+
+            this.showSuccess();
             
             // Reset form
             setTimeout(() => {
