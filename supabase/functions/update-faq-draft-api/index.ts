@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders, jsonResponse } from '../_shared/cors.ts'
+import { requireUser } from '../_shared/auth.ts'
 import { signDraftToken } from '../_shared/draft-token.ts'
 
 const VALID_CATEGORIES = ['general', 'cobertura', 'cotizacion', 'art', 'siniestro', 'vehiculos']
@@ -8,6 +9,9 @@ const VALID_CATEGORIES = ['general', 'cobertura', 'cotizacion', 'art', 'siniestr
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
   if (req.method !== 'POST') return jsonResponse({ error: 'Method not allowed' }, 405)
+
+  const denied = await requireUser(req)
+  if (denied) return denied
 
   try {
     const supabaseAdmin = createClient(

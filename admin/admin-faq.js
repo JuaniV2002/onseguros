@@ -41,9 +41,9 @@ async function loadFAQs() {
         
         const headers = {};
         if (session) {
-            headers['Authorization'] = `Bearer ${CONFIG.SUPABASE_ANON_KEY}`;
-        } else {
             headers['Authorization'] = `Bearer ${session.access_token}`;
+        } else {
+            headers['Authorization'] = `Bearer ${CONFIG.SUPABASE_ANON_KEY}`;
         }
 
         const url = new URL(CONFIG.GET_FAQS_API_URL);
@@ -202,10 +202,12 @@ function handleFAQDrop(e) {
 // Update FAQ order in backend
 async function updateFAQOrder(faq) {
     try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
         await fetch(CONFIG.UPDATE_FAQ_API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session?.access_token}`
             },
             body: JSON.stringify({
                 id: faq.id,
@@ -322,10 +324,12 @@ async function saveFAQ(e) {
             ? { id: currentEditingFaq.id, question, answer, category, order_number }
             : { question, answer, category, order_number };
 
+        const { data: { session } } = await supabaseClient.auth.getSession();
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session?.access_token}`
             },
             body: JSON.stringify(payload)
         });
@@ -367,10 +371,12 @@ async function deleteFAQ() {
     setDeleteLoading(true);
 
     try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
         const response = await fetch(CONFIG.DELETE_FAQ_API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session?.access_token}`
             },
             body: JSON.stringify({ id: currentEditingFaq.id })
         });
