@@ -26,6 +26,7 @@ serve(async (req) => {
 
     return jsonResponse({ success: true })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('delete-faq-api:', error)
+    return jsonResponse({ error: 'No se pudo eliminar la pregunta' }, 400)
   }
 })

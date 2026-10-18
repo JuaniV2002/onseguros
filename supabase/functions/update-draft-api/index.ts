@@ -75,6 +75,7 @@ serve(async (req) => {
       message: 'Draft updated and token rotated',
     })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('update-draft-api:', error)
+    return jsonResponse({ error: 'No se pudo guardar el borrador' }, 400)
   }
 })

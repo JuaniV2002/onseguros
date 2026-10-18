@@ -38,6 +38,11 @@ serve(async (req) => {
 
     return jsonResponse({ post: data, message: 'Post updated successfully' })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('update-post-api:', error)
+    // posts.slug is UNIQUE (posts_slug_key)
+    if ((error as { code?: string })?.code === '23505') {
+      return jsonResponse({ error: 'Ya existe un artículo con ese slug' }, 400)
+    }
+    return jsonResponse({ error: 'No se pudo actualizar el artículo' }, 400)
   }
 })

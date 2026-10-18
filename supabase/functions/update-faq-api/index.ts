@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders, jsonResponse } from '../_shared/cors.ts'
 import { requireUser } from '../_shared/auth.ts'
+import { sanitizeFaqHtml } from '../_shared/sanitize.ts'
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
@@ -19,7 +20,7 @@ serve(async (req) => {
 
     const { data, error } = await supabaseAdmin
       .from('faqs')
-      .update({ question, answer, category, order_number })
+      .update({ question, answer: answer === undefined ? undefined : sanitizeFaqHtml(answer), category, order_number })
       .eq('id', id)
       .select()
       .single()
@@ -28,6 +29,7 @@ serve(async (req) => {
 
     return jsonResponse(data)
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('update-faq-api:', error)
+    return jsonResponse({ error: 'No se pudo actualizar la pregunta' }, 400)
   }
 })

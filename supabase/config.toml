@@ -423,3 +423,83 @@ verify_jwt = false  # HMAC token from the email link
 
 [functions.ai-quote-api]
 verify_jwt = false  # public chatbot, browser sends only the anon key
+
+[functions.send-newsletter-api]
+verify_jwt = false  # x-webhook-secret (called server-to-server by publish-post-api / publish-draft-api)
+
+[functions.unsubscribe-api]
+verify_jwt = false  # HMAC token from the newsletter unsubscribe link
+
+# Admin endpoints: the gateway JWT check is a second layer in front of
+# requireUser (the anon key passes the gateway, only requireUser stops it).
+# Pinned because a deploy keeps whatever verify_jwt the function already had.
+[functions.create-faq-api]
+verify_jwt = true
+
+[functions.update-faq-api]
+verify_jwt = true
+
+[functions.delete-faq-api]
+verify_jwt = true
+
+[functions.delete-post-api]
+verify_jwt = true
+
+[functions.publish-post-api]
+verify_jwt = true
+
+[functions.update-post-api]
+verify_jwt = true
+
+[functions.get-subscribers-api]
+verify_jwt = true
+
+[functions.delete-subscribers-api]
+verify_jwt = true
+
+[functions.submit-topic-hint-api]
+verify_jwt = true
+
+[functions.get-drafts-api]
+verify_jwt = true
+
+[functions.get-hints-api]
+verify_jwt = true
+
+[functions.update-draft-api]
+verify_jwt = true
+
+[functions.discard-draft-api]
+verify_jwt = true
+
+[functions.submit-faq-hint-api]
+verify_jwt = true
+
+[functions.get-faq-drafts-api]
+verify_jwt = true
+
+[functions.get-faq-hints-api]
+verify_jwt = true
+
+[functions.update-faq-draft-api]
+verify_jwt = true
+
+[functions.discard-faq-draft-api]
+verify_jwt = true
+
+# Public reads (pinned to their current live setting). faq-api / get-faq-api
+# were created with the gateway check on; the anon key passes it.
+[functions.faq-api]
+verify_jwt = true
+
+[functions.get-faq-api]
+verify_jwt = true
+
+[functions.get-post-api]
+verify_jwt = false
+
+[functions.get-posts-api]
+verify_jwt = false
+
+[functions.get-clima-api]
+verify_jwt = false

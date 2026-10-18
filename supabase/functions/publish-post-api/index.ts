@@ -29,7 +29,7 @@ serve(async (req) => {
       .single()
 
     if (existingPost) {
-      return jsonResponse({ error: 'A post with this slug already exists' }, 409)
+      return jsonResponse({ error: 'Ya existe un artículo con ese slug' }, 409)
     }
 
     // Create new post
@@ -73,6 +73,11 @@ serve(async (req) => {
 
     return jsonResponse({ post: data, message: 'Post published and newsletter triggered successfully' })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('publish-post-api:', error)
+    // posts.slug is UNIQUE (posts_slug_key)
+    if ((error as { code?: string })?.code === '23505') {
+      return jsonResponse({ error: 'Ya existe un artículo con ese slug' }, 400)
+    }
+    return jsonResponse({ error: 'No se pudo publicar el artículo' }, 400)
   }
 })

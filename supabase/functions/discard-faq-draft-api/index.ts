@@ -44,6 +44,7 @@ serve(async (req) => {
 
     return jsonResponse({ message: 'Draft discarded; hint reopened if any' })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('discard-faq-draft-api:', error)
+    return jsonResponse({ error: 'No se pudo descartar el borrador' }, 400)
   }
 })

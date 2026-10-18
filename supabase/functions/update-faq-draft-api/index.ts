@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders, jsonResponse } from '../_shared/cors.ts'
 import { requireUser } from '../_shared/auth.ts'
+import { sanitizeFaqHtml } from '../_shared/sanitize.ts'
 import { signDraftToken } from '../_shared/draft-token.ts'
 
 const VALID_CATEGORIES = ['general', 'cobertura', 'cotizacion', 'art', 'siniestro', 'vehiculos']
@@ -48,7 +49,7 @@ serve(async (req) => {
       if (a.length < 50) {
         return jsonResponse({ error: 'answer too short (min 50 chars)' }, 400)
       }
-      updates.answer = a
+      updates.answer = sanitizeFaqHtml(a)
     }
     if (category !== undefined) {
       if (!VALID_CATEGORIES.includes(String(category))) {
@@ -80,6 +81,7 @@ serve(async (req) => {
       message: 'Draft updated and token rotated',
     })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('update-faq-draft-api:', error)
+    return jsonResponse({ error: 'No se pudo guardar el borrador' }, 400)
   }
 })

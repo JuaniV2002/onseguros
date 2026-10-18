@@ -34,13 +34,26 @@ openssl rand -hex 32 | xargs -I {} supabase secrets set DRAFT_PUBLISH_SECRET={} 
 
 # Where the weekly preview goes
 supabase secrets set ADMIN_NOTIFY_EMAIL=mariano.pas@onseguros.net --project-ref tgokvwuiiglioegxgcpu
+
+# Who may use the admin panel: comma-separated logins, case-insensitive
+# (e.g. ADMIN_EMAILS=mariano.pas@onseguros.net,otra@onseguros.net)
+supabase secrets set ADMIN_EMAILS=mariano.pas@onseguros.net --project-ref tgokvwuiiglioegxgcpu
 ```
+
+`ADMIN_EMAILS` is checked by `requireUser` (`_shared/auth.ts`) in every admin
+edge function, after the login check. It **fails closed**: if it is unset or
+empty, or the logged-in email isn't in it, every admin endpoint returns 403 and
+Mariano is locked out of the panel. The Borradores section then shows
+"HTTP 403" (or "Forbidden") in its errors; Blog, FAQ and Suscriptores show
+their generic "Error al…" toasts on save/delete. Fix by setting the secret
+again; no redeploy needed.
 
 Existing secrets that must already be present (verify with `supabase secrets list --project-ref tgokvwuiiglioegxgcpu`):
 
 - `GEMINI_API_KEY` — Gemini 2.5 Pro
 - `RESEND_API_KEY` — outbound email
 - `WEBHOOK_SECRET` — pg_cron → edge fn auth + newsletter trigger
+- `UNSUBSCRIBE_SECRET` — signs newsletter unsubscribe links; `send-newsletter-api` returns 500 without it
 - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` — auto-provided
 
 ## 3. Deploy the edge functions

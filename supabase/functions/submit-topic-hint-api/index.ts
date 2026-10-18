@@ -32,6 +32,7 @@ serve(async (req) => {
     if (error) throw error
     return jsonResponse({ hint: data, message: 'Hint stored' })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('submit-topic-hint-api:', error)
+    return jsonResponse({ error: 'No se pudo guardar el tema' }, 400)
   }
 })

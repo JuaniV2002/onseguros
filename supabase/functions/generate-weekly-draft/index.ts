@@ -2,8 +2,9 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders, jsonResponse } from '../_shared/cors.ts'
 import { signDraftToken } from '../_shared/draft-token.ts'
+import { timingSafeEqual } from '../_shared/timing-safe.ts'
 import { ensureUniqueSlug, slugify } from '../_shared/slug.ts'
-import { renderMarkdown } from '../_shared/markdown.ts'
+import { escapeHtml, isSafeHref, renderMarkdown } from '../_shared/markdown.ts'
 
 const GEMINI_MODEL = 'gemini-2.5-flash'
 const GEMINI_ENDPOINT =
@@ -134,10 +135,10 @@ function buildDraftEmail(opts: {
   const subject = `[OnSeguros] Borrador semanal listo: ${draft.title}`
 
   const sourcesHtml = groundingSources.length
-    ? `<p style="margin:0 0 8px;color:#5a5a64;font-size:13px;font-weight:600;">Fuentes consultadas por la IA:</p><ul style="margin:0 0 24px 24px;padding:0;color:#5a5a64;font-size:13px;line-height:1.5;">${groundingSources.map((s) => `<li><a href="${s.uri}" style="color:#2e7ef6;">${(s.title || s.uri).substring(0, 120)}</a></li>`).join('')}</ul>`
+    ? `<p style="margin:0 0 8px;color:#5a5a64;font-size:13px;font-weight:600;">Fuentes consultadas por la IA:</p><ul style="margin:0 0 24px 24px;padding:0;color:#5a5a64;font-size:13px;line-height:1.5;">${groundingSources.map((s) => `<li>${isSafeHref(s.uri) ? `<a href="${escapeHtml(s.uri)}" style="color:#2e7ef6;">` : '<a>'}${escapeHtml((s.title || s.uri).substring(0, 120))}</a></li>`).join('')}</ul>`
     : ''
   const hintHtml = hintText
-    ? `<div style="background:#fff7e6;border:1px solid #f5d99a;border-radius:8px;padding:12px 16px;margin-bottom:24px;color:#8a5a00;font-size:14px;"><strong>Tema sugerido por vos:</strong> ${hintText}</div>`
+    ? `<div style="background:#fff7e6;border:1px solid #f5d99a;border-radius:8px;padding:12px 16px;margin-bottom:24px;color:#8a5a00;font-size:14px;"><strong>Tema sugerido por vos:</strong> ${escapeHtml(hintText)}</div>`
     : ''
 
   const html = `<!DOCTYPE html>
@@ -165,8 +166,8 @@ function buildDraftEmail(opts: {
     </tr></table>
 
     <p style="margin:0 0 4px;color:#b8b8b8;font-size:12px;text-transform:uppercase;letter-spacing:.05em;">Vista previa del artículo</p>
-    <h1 style="margin:0 0 8px;font-family:'Space Grotesk','Inter',sans-serif;color:#101016;font-size:26px;line-height:1.25;letter-spacing:-0.02em;">${draft.title}</h1>
-    <p style="margin:0 0 24px;color:#5a5a64;font-size:15px;line-height:1.5;">${draft.description}</p>
+    <h1 style="margin:0 0 8px;font-family:'Space Grotesk','Inter',sans-serif;color:#101016;font-size:26px;line-height:1.25;letter-spacing:-0.02em;">${escapeHtml(draft.title)}</h1>
+    <p style="margin:0 0 24px;color:#5a5a64;font-size:15px;line-height:1.5;">${escapeHtml(draft.description)}</p>
     <hr style="border:none;border-top:1px solid rgba(16,16,22,.1);margin:0 0 24px;" />
     ${previewBody}
     <hr style="border:none;border-top:1px solid rgba(16,16,22,.1);margin:24px 0;" />
@@ -201,7 +202,7 @@ function buildFailureEmail(message: string): { html: string; text: string; subje
 <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid rgba(16,16,22,.1);border-radius:12px;padding:24px;">
 <h2 style="margin:0 0 12px;color:#101016;">Falló la generación del borrador</h2>
 <p style="color:#5a5a64;line-height:1.5;">El cron del viernes corrió pero la IA no pudo armar un borrador esta vez. Detalles abajo. Lo podés intentar de nuevo manualmente desde el panel.</p>
-<pre style="background:#fbfbfe;border:1px solid rgba(16,16,22,.1);border-radius:8px;padding:12px;font-size:12px;color:#8b3a3a;white-space:pre-wrap;word-break:break-word;">${message}</pre>
+<pre style="background:#fbfbfe;border:1px solid rgba(16,16,22,.1);border-radius:8px;padding:12px;font-size:12px;color:#8b3a3a;white-space:pre-wrap;word-break:break-word;">${escapeHtml(message)}</pre>
 <p style="color:#b8b8b8;font-size:12px;margin-top:16px;">OnSeguros · automatización de blog</p>
 </div></body></html>`
   const text = `Falló la generación del borrador semanal.\n\n${message}`
@@ -245,7 +246,7 @@ serve(async (req) => {
 
   const webhookSecret = Deno.env.get('WEBHOOK_SECRET')
   const provided = req.headers.get('x-webhook-secret')
-  let authorized = Boolean(webhookSecret && provided && provided === webhookSecret)
+  let authorized = timingSafeEqual(provided, webhookSecret)
   if (!authorized) {
     const auth = req.headers.get('authorization') || ''
     const bearer = auth.startsWith('Bearer ') ? auth.substring(7) : null
@@ -424,6 +425,7 @@ serve(async (req) => {
       console.error('Failed to record failure:', logErr)
     }
 
-    return jsonResponse({ error: message }, 500)
+    // Detail stays in the logs, the failed-draft row and the admin email.
+    return jsonResponse({ error: 'No se pudo generar el borrador' }, 500)
   }
 })

@@ -134,6 +134,6 @@ Deno.serve(async (req) => {
     console.error('[get-clima-api]', error)
     // Si hay algo cacheado, aunque esté viejo, es mejor que nada.
     if (cache) return jsonResponse({ ...cache.body, obsoleto: true })
-    return jsonResponse({ error: String(error instanceof Error ? error.message : error) }, 502)
+    return jsonResponse({ error: 'No se pudo obtener el clima' }, 502)
   }
 })

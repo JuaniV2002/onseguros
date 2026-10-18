@@ -280,6 +280,7 @@ serve(async (req) => {
       message: 'Draft published and newsletter dispatched',
     })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 500)
+    console.error('publish-draft-api:', error)
+    return jsonResponse({ error: 'No se pudo publicar el borrador' }, 500)
   }
 })

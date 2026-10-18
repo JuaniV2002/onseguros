@@ -28,6 +28,7 @@ serve(async (req) => {
     if (error) throw error
     return jsonResponse({ hints: data ?? [] })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('get-hints-api:', error)
+    return jsonResponse({ error: 'No se pudieron cargar los temas' }, 400)
   }
 })

@@ -28,6 +28,7 @@ serve(async (req) => {
 
     return jsonResponse({ message: 'Post deleted successfully' })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('delete-post-api:', error)
+    return jsonResponse({ error: 'No se pudo eliminar el artículo' }, 400)
   }
 })

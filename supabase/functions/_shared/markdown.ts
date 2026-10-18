@@ -3,7 +3,7 @@
 // prompt: H1/H2/H3, bold/italic, links, ordered/unordered lists, blockquotes,
 // horizontal rules, and paragraphs. No tables, no code blocks (prompt forbids).
 
-function escapeHtml(text: string): string {
+export function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -12,12 +12,20 @@ function escapeHtml(text: string): string {
     .replace(/'/g, '&#39;')
 }
 
+// Only absolute http(s)/mailto/tel links; anything else (javascript:, data:,
+// relative paths, which are dead in an email anyway) renders as plain text.
+export function isSafeHref(url: string): boolean {
+  return /^(https?|mailto|tel):/i.test(url)
+}
+
 function renderInline(text: string): string {
   let out = escapeHtml(text)
   out = out.replace(
     /\[([^\]]+)\]\(([^)\s]+)\)/g,
     (_, label, url) =>
-      `<a href="${url}" style="color:#2e7ef6;text-decoration:underline;">${label}</a>`,
+      isSafeHref(url)
+        ? `<a href="${url}" style="color:#2e7ef6;text-decoration:underline;">${label}</a>`
+        : label,
   )
   out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
   out = out.replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')

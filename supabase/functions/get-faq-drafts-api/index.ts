@@ -41,6 +41,7 @@ serve(async (req) => {
     if (error) throw error
     return jsonResponse({ drafts: data ?? [] })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 400)
+    console.error('get-faq-drafts-api:', error)
+    return jsonResponse({ error: 'No se pudieron cargar los borradores' }, 400)
   }
 })

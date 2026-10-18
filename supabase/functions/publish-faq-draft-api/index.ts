@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { corsHeaders, htmlResponse, jsonResponse } from '../_shared/cors.ts'
+import { sanitizeFaqHtml } from '../_shared/sanitize.ts'
 
 // publish_token is the HMAC-signed value stored at draft creation/edit.
 // We don't recompute it here — direct timing-safe compare against the stored
@@ -153,7 +154,7 @@ serve(async (req) => {
         token,
         question: draft.question,
         category: draft.category,
-        answer: draft.answer,
+        answer: sanitizeFaqHtml(draft.answer),
         faqUrl,
       }),
     )
@@ -208,7 +209,7 @@ serve(async (req) => {
       .from('faqs')
       .insert([{
         question: draft.question,
-        answer: draft.answer,
+        answer: sanitizeFaqHtml(draft.answer),
         category: draft.category,
         order_number: nextOrder,
       }])
@@ -265,6 +266,7 @@ serve(async (req) => {
       message: 'FAQ published',
     })
   } catch (error) {
-    return jsonResponse({ error: (error as Error).message }, 500)
+    console.error('publish-faq-draft-api:', error)
+    return jsonResponse({ error: 'No se pudo publicar el borrador' }, 500)
   }
 })
