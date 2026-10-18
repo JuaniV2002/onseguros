@@ -251,7 +251,7 @@ function updatePreview() {
     elements.previewDescription.textContent = description;
 
     if (content) {
-        elements.previewBody.innerHTML = marked.parse(content);
+        elements.previewBody.innerHTML = safeHtml(marked.parse(content));
     } else {
         elements.previewBody.innerHTML = '<p class="placeholder-text">El contenido de tu artículo se mostrará aquí mientras escribís...</p>';
     }

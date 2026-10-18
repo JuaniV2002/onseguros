@@ -142,7 +142,9 @@ class Blog {
 
             const url = new URL(`${this.apiBaseUrl}/get-posts-api`);
             url.searchParams.append('t', Date.now());
-            const response = await fetch(url.toString());
+            // A hung API would leave the skeleton (and the hidden newsletter)
+            // up forever; after 8 s the abort lands on the empty state
+            const response = await fetch(url.toString(), { signal: AbortSignal.timeout?.(8000) });
 
             if (!response.ok) {
                 throw new Error('Failed to load posts');
@@ -355,7 +357,8 @@ class Blog {
             // Load post from API
             const url = new URL(`${this.apiBaseUrl}/get-post-api/${slug}`);
             url.searchParams.append('t', Date.now());
-            const response = await fetch(url.toString());
+            // Same 8 s cap as the list: a hung API lands on "not found"
+            const response = await fetch(url.toString(), { signal: AbortSignal.timeout?.(8000) });
 
             if (!response.ok) {
                 if (response.status === 404) {
@@ -427,9 +430,10 @@ class Blog {
             postDate.setAttribute('datetime', post.publish_date);
         }
 
-        // Render markdown content
-        if (postContent && typeof marked !== 'undefined') {
-            // Configure marked for security
+        // Render markdown content. marked passes raw HTML and javascript:
+        // links through, so its output always goes through DOMPurify; if
+        // DOMPurify didn't load, render nothing rather than unsanitized HTML.
+        if (postContent && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
             marked.setOptions({
                 breaks: true,
                 gfm: true,
@@ -437,7 +441,12 @@ class Blog {
                 mangle: false
             });
 
-            postContent.innerHTML = marked.parse(markdownContent);
+            postContent.innerHTML = DOMPurify.sanitize(marked.parse(markdownContent));
+        } else if (postContent) {
+            // A library was blocked: swap the skeleton lines for a short note
+            const note = document.createElement('p');
+            note.textContent = 'No pudimos mostrar el artículo. Probá recargar la página en unos minutos.';
+            postContent.replaceChildren(note);
         }
 
         // Update canonical URL

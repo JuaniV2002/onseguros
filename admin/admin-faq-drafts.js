@@ -216,9 +216,9 @@ function renderFaqDrafts() {
         const isPending = d.status === 'pending' || d.status === 'edited';
         const safeId = String(d.id).replace(/'/g, "\\'");
         // Strip HTML for the description preview line.
-        const tmpDiv = document.createElement('div');
-        tmpDiv.innerHTML = d.answer || '';
-        const answerPreview = (tmpDiv.textContent || '').replace(/\s+/g, ' ').trim().substring(0, 200);
+        // DOMParser documents are inert: no image loads, no onerror handlers.
+        const answerText = new DOMParser().parseFromString(d.answer || '', 'text/html').body.textContent;
+        const answerPreview = (answerText || '').replace(/\s+/g, ' ').trim().substring(0, 200);
         return `
         <div class="post-item" data-id="${d.id}">
             <div class="post-item-content">
@@ -253,7 +253,7 @@ function updateFaqDraftPreview() {
     elements.faqDraftPreviewCategory.textContent = (typeof getCategoryLabel === 'function' ? getCategoryLabel(cat) : cat);
     elements.faqDraftPreviewCategory.className = `faq-preview-category category-${cat}`;
     if (a) {
-        elements.faqDraftPreviewAnswer.innerHTML = a;
+        elements.faqDraftPreviewAnswer.innerHTML = safeHtml(a);
     } else {
         elements.faqDraftPreviewAnswer.innerHTML = '<p class="placeholder-text">La respuesta aparecerá aquí mientras editás…</p>';
     }

@@ -453,7 +453,7 @@ function updateFAQPreview() {
     elements.faqPreviewCategory.className = `faq-preview-category category-${category}`;
 
     if (answer) {
-        elements.faqPreviewAnswer.innerHTML = answer;
+        elements.faqPreviewAnswer.innerHTML = safeHtml(answer);
     } else {
         elements.faqPreviewAnswer.innerHTML = '<p class="placeholder-text">La respuesta aparecerá aquí mientras escribís...</p>';
     }

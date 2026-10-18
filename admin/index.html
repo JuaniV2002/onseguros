@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="admin.css?v=10">
     <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
     <!-- Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
     <!-- Marked.js for Markdown preview -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" integrity="sha384-948ahk4ZmxYVYOc+rxN1H2gM1EJ2Duhp7uHtZ4WSLkV4Vtx5MUqnV+l7u9B+jFv+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js" integrity="sha384-a7SzOxErzJ3ZpQz0zJ32d67dSitNzPcbfybc/ykU9KJhMgZkwqfSxlhhdJRS+XGL" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -699,17 +700,17 @@ Más contenido aquí..." rows="20"></textarea>
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="../assets/js/env-config.js?v=2"></script>
+    <script src="../assets/js/env-config.js?v=3"></script>
     <!-- Core module: config, auth, DOM, utilities (must load first) -->
-    <script src="admin-core.js?v=3"></script>
+    <script src="admin-core.js?v=4"></script>
     <!-- Blog module: blog CRUD and editor (depends on core) -->
-    <script src="admin-blog.js?v=1"></script>
+    <script src="admin-blog.js?v=3"></script>
     <!-- Drafts module: AI-generated weekly drafts (depends on core, loads after blog) -->
-    <script src="admin-drafts.js?v=4"></script>
+    <script src="admin-drafts.js?v=6"></script>
     <!-- FAQ module: FAQ CRUD and editor (depends on core, loads after blog) -->
-    <script src="admin-faq.js?v=2"></script>
+    <script src="admin-faq.js?v=4"></script>
     <!-- FAQ Drafts module: AI-generated FAQ drafts (depends on core, loads after admin-drafts) -->
-    <script src="admin-faq-drafts.js?v=1"></script>
+    <script src="admin-faq-drafts.js?v=3"></script>
     <!-- Newsletter module: newsletter subscribers management (depends on core) -->
     <script src="admin-newsletter.js?v=2"></script>
 </body>

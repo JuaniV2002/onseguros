@@ -641,6 +641,12 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Sanitize HTML before innerHTML. If the DOMPurify CDN script didn't load,
+// render nothing instead of unsanitized HTML (and don't throw on every keystroke).
+function safeHtml(html) {
+    return typeof DOMPurify === 'undefined' ? '' : DOMPurify.sanitize(html);
+}
+
 function updateCharCount(input, countElement, min, max) {
     const count = input.value.length;
     const parent = countElement.closest('.char-count');

@@ -225,7 +225,7 @@ function updateDraftPreview() {
     elements.draftPreviewDescription.textContent = elements.draftDescription.value.trim() || 'La descripción aparecerá aquí…';
     const content = elements.draftContent.value.trim();
     if (content) {
-        elements.draftPreviewBody.innerHTML = marked.parse(content);
+        elements.draftPreviewBody.innerHTML = safeHtml(marked.parse(content));
     } else {
         elements.draftPreviewBody.innerHTML = '<p class="placeholder-text">El contenido se mostrará aquí mientras editás…</p>';
     }
