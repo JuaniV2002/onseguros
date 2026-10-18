@@ -1,4 +1,4 @@
 Third-party marks of the insurers and partners OnSeguros works with, copied from `assets/logos/`. Never edit or recolor them.
 
-- Insurer logos (Allianz, Cinalli, Experta, Paraná, Sancor) appear in the hero logo row: grayscale at 70% opacity (`filter: grayscale(100%) opacity(0.7)`), inverted in dark, 48px tall (64px for the large ones) from 768px.
+- Insurer logos (Allianz, Cinalli, Experta, Paraná, Sancor) appear in the hero logo row: grayscale at 70% opacity (`filter: grayscale(100%) opacity(0.7)`), inverted in dark, 48px tall (64px for the large ones) from 768px. Files are 3× their largest render so they stay sharp on 3× phones: `experta-logo.webp` 263×195 and `parana-logo.webp` 351×195 (rendered ≤65px tall); don't swap in bigger exports.
 - **Universal Assistance** (travel-assistance partner) is exempt from the grayscale filter per UA's brand manual: `universal-assistance.svg` (blue) on light grounds only; `universal-assistance-negative.svg` (white) on dark mode; `universal-assistance-zurich-negative.svg` (“A company of Zurich” lockup, white) always on `ua-blue` #00528F, clear space ≥ the logo's height. Never the blue logo on a dark surface.
