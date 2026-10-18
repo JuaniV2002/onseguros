@@ -608,6 +608,9 @@ ul, ol { list-style: none; }
 @keyframes skeleton-pulse { from { opacity: 1; } to { opacity: 0.45; } }
 .faq-list[aria-busy="true"] .accordion-question { cursor: default; }
 .faq-list[aria-busy="true"] .accordion-question::before, .faq-list[aria-busy="true"] .accordion-question img { visibility: hidden; }
+/* What sits under a loading list isn't painted until it lands (its position depends on the item count) */
+body:has(#blog-grid[aria-busy]) #newsletter, body:has(#blog-grid[aria-busy]) #footer-placeholder, body:has(#faq-list[aria-busy]) .faq-contact, body:has(#faq-list[aria-busy]) #footer-placeholder { visibility: hidden; animation: busy-reveal 0s 10s forwards; }
+@keyframes busy-reveal { to { visibility: visible; } }
 .admin { --skeleton-fill: var(--admin-skeleton-fill); }
 .admin .is-skeleton { pointer-events: none; }
 .admin .skeleton-line::before { border-radius: 4px; }

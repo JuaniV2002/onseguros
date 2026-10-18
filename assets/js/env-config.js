@@ -22,6 +22,8 @@ class EnvConfig {
             // Add timestamp to force fresh fetch and bypass browser cache
             const response = await fetch(`/config.json?t=${Date.now()}`, {
                 cache: 'no-store',
+                // Don't let a hung request hold every page that waits on it
+                signal: AbortSignal.timeout?.(8000),
                 headers: {
                     'Pragma': 'no-cache',
                     'Cache-Control': 'no-cache'

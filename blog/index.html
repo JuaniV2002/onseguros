@@ -54,7 +54,7 @@
     <link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="../assets/css/style.css?v=17">
-    <link rel="stylesheet" href="blog.css?v=20261015">
+    <link rel="stylesheet" href="blog.css?v=20261017">
 
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -137,6 +137,8 @@
         }
     }
     </script>
+    <!-- Without JS the list never loads: drop the skeleton, show the newsletter (Formspree fallback) -->
+    <noscript><style>#blog-grid[aria-busy] { display: none; } #newsletter { visibility: visible !important; }</style></noscript>
 </head>
 
 <body>
@@ -167,7 +169,7 @@
                 </div>
 
                 <!-- Blog Posts Grid -->
-                <div class="blog-grid" id="blog-grid" aria-label="Lista de artículos" aria-busy="true">
+                <section class="blog-grid" id="blog-grid" aria-label="Lista de artículos" aria-busy="true">
                     <!-- Skeleton: the real .blog-card layout with .skeleton-line bars (blog.js replaces it) -->
                     <div class="blog-card" aria-hidden="true">
                         <span class="blog-card__badge"><span class="skeleton-line" style="--w: 4.8em"></span></span>
@@ -206,7 +208,7 @@
                         <span class="blog-card__description"><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line skeleton-line--m"></span><span class="skeleton-line" style="--w: 70%"></span></span>
                         <span class="blog-card__read-more"><span class="skeleton-line" style="--w: 5.9em"></span></span>
                     </div>
-                </div>
+                </section>
 
                 <!-- Empty State (shown when no posts) -->
                 <div class="blog-empty blog-empty--hidden" id="blog-empty" aria-live="polite">
@@ -258,9 +260,9 @@
 
     <!-- Scripts -->
     <script src="../components/component-loader.js?v=9"></script>
-    <script src="../assets/js/script.js?v=3"></script>
-    <script src="../assets/js/env-config.js?v=2"></script>
-    <script src="blog.js?v=20261017"></script>
+    <script src="../assets/js/script.js?v=4"></script>
+    <script src="../assets/js/env-config.js?v=3"></script>
+    <script src="blog.js?v=20261018"></script>
 </body>
 
 </html>

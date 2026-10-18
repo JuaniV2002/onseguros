@@ -147,6 +147,21 @@
     margin-bottom: 0;
 }
 
+/* While the list loads, what sits under it keeps its box but isn't painted:
+   where it ends up depends on how many posts come back (none → the short
+   empty state), so showing it early makes it jump (CLS). */
+body:has(#blog-grid[aria-busy]) #newsletter,
+body:has(#blog-grid[aria-busy]) #footer-placeholder {
+    visibility: hidden;
+    /* Safety valve: if the script never clears aria-busy (blocked, threw, API
+       hung past its own 8 s abort), show the newsletter anyway after 10 s */
+    animation: busy-reveal 0s 10s forwards;
+}
+
+@keyframes busy-reveal {
+    to { visibility: visible; }
+}
+
 .blog-card {
     display: grid;
     grid-template-columns: auto 1fr;

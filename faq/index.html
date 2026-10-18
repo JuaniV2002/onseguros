@@ -50,7 +50,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/style.css?v=17">
     <link rel="stylesheet" href="../components/accordion.css?v=2">
-    <link rel="stylesheet" href="faq.css?v=6">
+    <link rel="stylesheet" href="faq.css?v=7">
     
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -146,6 +146,8 @@
         ]
     }
     </script>
+    <!-- Without JS the list never loads: drop the skeleton, show the contact rows -->
+    <noscript><style>#faq-list[aria-busy] { display: none; } .faq-contact { visibility: visible !important; }</style></noscript>
 </head>
 <body>
     <!-- Header Component -->
@@ -201,7 +203,15 @@
 
                 <div class="faq-results">
                     <!-- FAQ List -->
-                    <div class="faq-list accordion-list" id="faq-list"></div>
+                    <div class="faq-list accordion-list" id="faq-list" aria-busy="true">
+                        <!-- Skeleton: real accordion rows with .skeleton-line bars (faq.js replaces it) -->
+                        <div class="accordion-item" aria-hidden="true"><div class="accordion-question"><span><span class="skeleton-line" style="--w: 78%"></span><span class="skeleton-line skeleton-line--m" style="--w: 55%"></span></span><img src="../assets/icons/chevron-down.svg" alt=""></div></div>
+                        <div class="accordion-item" aria-hidden="true"><div class="accordion-question"><span><span class="skeleton-line" style="--w: 64%"></span><span class="skeleton-line skeleton-line--m" style="--w: 40%"></span></span><img src="../assets/icons/chevron-down.svg" alt=""></div></div>
+                        <div class="accordion-item" aria-hidden="true"><div class="accordion-question"><span><span class="skeleton-line" style="--w: 70%"></span><span class="skeleton-line skeleton-line--m" style="--w: 48%"></span></span><img src="../assets/icons/chevron-down.svg" alt=""></div></div>
+                        <div class="accordion-item" aria-hidden="true"><div class="accordion-question"><span><span class="skeleton-line" style="--w: 42%"></span></span><img src="../assets/icons/chevron-down.svg" alt=""></div></div>
+                        <div class="accordion-item" aria-hidden="true"><div class="accordion-question"><span><span class="skeleton-line" style="--w: 82%"></span><span class="skeleton-line skeleton-line--m" style="--w: 35%"></span></span><img src="../assets/icons/chevron-down.svg" alt=""></div></div>
+                        <div class="accordion-item" aria-hidden="true"><div class="accordion-question"><span><span class="skeleton-line" style="--w: 60%"></span><span class="skeleton-line skeleton-line--m" style="--w: 52%"></span></span><img src="../assets/icons/chevron-down.svg" alt=""></div></div>
+                    </div>
 
                     <!-- Empty State (shown when no FAQs) -->
                     <div class="faq-empty" id="faq-empty" aria-live="polite"></div>
@@ -243,10 +253,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="../assets/js/env-config.js?v=2"></script>
+    <script src="../assets/js/env-config.js?v=3"></script>
     <script src="../components/component-loader.js?v=9"></script>
     <script src="../components/accordion.js"></script>
-    <script src="../assets/js/script.js?v=3"></script>
-    <script src="faq.js?v=3"></script>
+    <script src="../assets/js/script.js?v=4"></script>
+    <script src="faq.js?v=5"></script>
 </body>
 </html>

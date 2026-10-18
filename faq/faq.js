@@ -58,9 +58,8 @@ function generateFAQStructuredData(faqs) {
  */
 function stripHtmlTags(html) {
     if (!html) return '';
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent || div.innerText || '';
+    // DOMParser documents are inert: no image loads, no onerror handlers.
+    return new DOMParser().parseFromString(html, 'text/html').body.textContent || '';
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -68,20 +67,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     const searchInput = document.getElementById('faq-search');
     const noResults = document.getElementById('no-results');
     const categoryChips = document.querySelectorAll('.faq-category-chip');
-
-    // Load FAQs from Supabase
-    await loadFAQs();
-
-    // Refresh FAQs when page becomes visible (user returns to tab)
-    document.addEventListener('visibilitychange', async function() {
-        if (!document.hidden) {
-            // Page is now visible - refresh FAQs to get latest data
-            // No skeleton here: the list stays up while it refreshes
-            clearFAQCache();
-            await loadFAQs(true);
-            if (allFaqs.length) filterFAQs();
-        }
-    });
 
     // Category filter functionality
     categoryChips.forEach(chip => {
@@ -109,6 +94,20 @@ document.addEventListener('DOMContentLoaded', async function() {
             filterFAQs();
         });
     }
+
+    // Load FAQs from Supabase. The listeners above go first so a chip click or
+    // search typed during the load is kept; renderFAQs() applies it.
+    await loadFAQs();
+
+    // Refresh FAQs when page becomes visible (user returns to tab)
+    document.addEventListener('visibilitychange', async function() {
+        if (!document.hidden) {
+            // Page is now visible - refresh FAQs to get latest data
+            // No skeleton here: the list stays up while it refreshes
+            clearFAQCache();
+            await loadFAQs(true);
+        }
+    });
 });
 
 // Filter FAQs based on search and category
@@ -165,12 +164,13 @@ async function loadFAQs(refresh = false) {
         if (typeof generateFAQStructuredData === 'function') {
             generateFAQStructuredData(cachedFaqs);
         }
+        hideFAQSkeleton();
         renderFAQs();
         return;
     }
 
-    // Show skeletal loading
-    if (!refresh) showFAQSkeleton();
+    // The skeleton rows are already in index.html (#faq-list[aria-busy]), so
+    // the first paint reserves their space
 
     try {
         // Load environment config first
@@ -185,10 +185,13 @@ async function loadFAQs(refresh = false) {
             return;
         }
 
+        // A hung API would leave the skeleton (and the hidden contact box) up
+        // forever; after 8 s the abort lands on the empty state
         const response = await fetch(apiUrl, {
             headers: {
                 'Authorization': `Bearer ${anonKey}`
-            }
+            },
+            signal: AbortSignal.timeout?.(8000)
         });
         
         if (!response.ok) {
@@ -270,27 +273,13 @@ function renderFAQs() {
     if (window.Accordion) {
         new window.Accordion('.accordion-list');
     }
+
+    // Keep the chosen category / search (also one picked while loading)
+    filterFAQs();
 }
 
-// Show skeletal loading: real accordion rows with grey bars (one line on
-// desktop, two on phones, like most questions)
-function showFAQSkeleton() {
-    const faqListContainer = document.getElementById('faq-list');
-    if (!faqListContainer) return;
-
-    const row = ([w, w2]) => `
-        <div class="accordion-item" aria-hidden="true">
-            <div class="accordion-question">
-                <span><span class="skeleton-line" style="--w: ${w}%"></span>${w2 ? `<span class="skeleton-line skeleton-line--m" style="--w: ${w2}%"></span>` : ''}</span>
-                <img src="../assets/icons/chevron-down.svg" alt="">
-            </div>
-        </div>`;
-
-    faqListContainer.setAttribute('aria-busy', 'true');
-    faqListContainer.innerHTML = [[78, 55], [64, 40], [70, 48], [42, 0], [82, 35], [60, 52]].map(row).join('');
-}
-
-// Hide skeletal loading
+// Hide skeletal loading (the rows live in index.html: real accordion rows
+// with grey bars, one line on desktop, two on phones)
 function hideFAQSkeleton() {
     const faqListContainer = document.getElementById('faq-list');
     if (!faqListContainer || !faqListContainer.hasAttribute('aria-busy')) return;
@@ -381,9 +370,6 @@ function setCachedFAQs(faqs) {
         };
         sessionStorage.setItem(FAQ_CACHE_KEY, JSON.stringify(cacheObject));
     } catch (error) {
-        console.error('Error loading FAQs:', error);
-        hideFAQSkeleton();
-        // Show empty state on error
-        renderFAQs();
+        console.error('Error caching FAQs:', error);
     }
 }

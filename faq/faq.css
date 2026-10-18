@@ -348,6 +348,21 @@
     border-top: 2px solid var(--rule-strong);
 }
 
+/* While the list loads, the contact rows and footer keep their box but aren't
+   painted: 40 real questions push them far below the 6 skeleton rows, so
+   showing them early makes them jump (CLS). */
+body:has(#faq-list[aria-busy]) .faq-contact,
+body:has(#faq-list[aria-busy]) #footer-placeholder {
+    visibility: hidden;
+    /* Safety valve: if the script never clears aria-busy (blocked, threw, API
+       hung past its own 8 s abort), show the contact box anyway after 10 s */
+    animation: busy-reveal 0s 10s forwards;
+}
+
+@keyframes busy-reveal {
+    to { visibility: visible; }
+}
+
 .faq-contact-card {
     display: grid;
     grid-template-columns: 1.5rem 1fr;
