@@ -10,3 +10,5 @@ Search + category filter for the FAQ page (/faq/), beside the numbered question 
 - The list numbers each question 01, 02… in `text-secondary` tabular figures, like the hero index; answers indent to line up with the text.
 - Categories: General, Coberturas, Cotización, ART, Siniestros, Vehículos (the same slugs as the admin's category badges, but with no colors on the public page).
 - Page title `faq-title`. Description: “Encontrá respuestas a todas tus dudas…” (vos, like the rest of the site).
+- Empty / error state (`.faq-empty`, in the list column): the search and chips stay where they are but `disabled`, so the page keeps its shape. Title in `text-primary`, one line in `text-secondary` with a `link` to WhatsApp. Copy in vos: error “No pudimos cargar las preguntas frecuentes” / “Probá de nuevo en un rato o escribinos por WhatsApp…”; no FAQs yet “Todavía no hay preguntas publicadas”.
+- While loading, `.faq-search` and `.faq-categories` carry `inert` (skeleton bars are never a Tab stop or read out); faq.js lifts it when the list or the empty state renders.

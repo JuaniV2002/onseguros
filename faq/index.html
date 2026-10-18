@@ -50,7 +50,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/style.css?v=17">
     <link rel="stylesheet" href="../components/accordion.css?v=2">
-    <link rel="stylesheet" href="faq.css?v=7">
+    <link rel="stylesheet" href="faq.css?v=8">
     
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -164,8 +164,8 @@
 
             <div class="faq-layout">
                 <div class="faq-tools">
-                    <!-- Search Bar -->
-                    <div class="faq-search is-loading">
+                    <!-- Search Bar (inert while loading: faq.js lifts it) -->
+                    <div class="faq-search is-loading" inert>
                         <img src="../assets/icons/search.svg" alt="">
                         <input 
                             type="search" 
@@ -176,7 +176,7 @@
                     </div>
 
                     <!-- Category Filter Chips -->
-                    <div class="faq-categories is-loading">
+                    <div class="faq-categories is-loading" inert>
                         <button class="faq-category-chip active" data-category="all">
                             Todas
                         </button>
@@ -219,7 +219,7 @@
                     <!-- No Results Message -->
                     <div class="faq-no-results" id="no-results">
                         <p>No se encontraron preguntas que coincidan con tu búsqueda.</p>
-                        <p>Por favor, intenta con otros términos o contactanos directamente.</p>
+                        <p>Probá con otras palabras, elegí otra categoría o contactanos directamente.</p>
                     </div>
                 </div>
             </div>
@@ -257,6 +257,6 @@
     <script src="../components/component-loader.js?v=9"></script>
     <script src="../components/accordion.js"></script>
     <script src="../assets/js/script.js?v=4"></script>
-    <script src="faq.js?v=5"></script>
+    <script src="faq.js?v=6"></script>
 </body>
 </html>

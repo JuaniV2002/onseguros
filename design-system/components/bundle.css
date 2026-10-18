@@ -306,8 +306,14 @@ ul, ol { list-style: none; }
 .blog-search__input { width: 100%; min-height: 48px; padding: var(--space-sm) var(--space-md) var(--space-sm) calc(var(--space-md) + 20px + var(--space-sm)); font-size: 1rem; border: 1px solid var(--field-border); border-radius: var(--radius-md); background-color: var(--bg-primary); color: var(--text-primary); }
 .blog-search__input::placeholder { color: var(--text-secondary); opacity: 1; }
 .blog-search__input:focus { outline: none; }
+.blog-search__input:disabled { pointer-events: none; }
 .blog-search__input:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-color: var(--focus-ring); }
 .blog-grid { border-top: 2px solid var(--rule-strong); }
+.blog-empty { padding: var(--space-2xl) 0 0; border-top: 2px solid var(--rule-strong); }
+.blog-empty__title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.015em; color: var(--text-primary); margin: 0 0 var(--space-sm); }
+.blog-empty__description { font-size: 1rem; color: var(--text-secondary); max-width: 60ch; margin: 0; line-height: 1.6; }
+.blog-empty__description a { color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
+.blog-empty__description a:hover { color: var(--link-hover); }
 .blog-card { display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: var(--space-md); padding: var(--space-xl) 0; border-bottom: 1px solid var(--rule); color: inherit; }
 .blog-card__date { grid-column: 1; grid-row: 1; font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); font-variant-numeric: tabular-nums; margin-bottom: var(--space-sm); }
 .blog-card__badge { grid-column: 2; grid-row: 1; justify-self: start; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); text-decoration-line: underline; text-decoration-color: var(--accent-dark); text-decoration-thickness: 3px; text-underline-offset: 4px; }
@@ -596,6 +602,13 @@ ul, ol { list-style: none; }
 .faq-list .accordion-question::before { content: counter(faq, decimal-leading-zero); flex: 0 0 2.25rem; font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); font-variant-numeric: tabular-nums; letter-spacing: 0; }
 .faq-list .accordion-question span { flex: 1; }
 .faq-list .accordion-answer__content { padding-left: calc(2.25rem + var(--space-md)); }
+/* No FAQs / API down: search + chips stay in place, disabled; the reason shows where the list goes */
+.faq-search__input:disabled, .faq-category-chip:disabled { pointer-events: none; }
+.faq-empty { padding: var(--space-xl) 0 var(--space-2xl); border-top: 2px solid var(--rule-strong); border-bottom: 1px solid var(--rule); }
+.faq-empty__title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text-primary); margin: 0 0 var(--space-sm); }
+.faq-empty__description { font-size: 1rem; color: var(--text-secondary); max-width: 56ch; margin: 0; line-height: 1.6; }
+.faq-empty__description a { color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
+.faq-empty__description a:hover { color: var(--link-hover); }
 
 /* ---------- Skeleton (assets/css/style.css, faq/faq.css, admin/admin.css) ----------
    Loaders reuse the real item markup and swap text for bars, so the loaded

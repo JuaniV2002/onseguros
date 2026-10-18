@@ -573,7 +573,9 @@
                             <p class="travel__partner">OnSeguros es partner de Universal Assistance</p>
                         </div>
                         <picture class="travel__photo">
-                            <source srcset="assets/images/ivan-de-pineda-ua.webp" type="image/webp">
+                            <!-- Renders 286-352px wide at every breakpoint (100vw - 74px on phones) -->
+                            <source srcset="assets/images/ivan-de-pineda-ua-360.webp 360w, assets/images/ivan-de-pineda-ua.webp 700w"
+                                sizes="(max-width: 425px) calc(100vw - 74px), 352px" type="image/webp">
                             <img src="assets/images/ivan-de-pineda-ua.png"
                                 alt="Iván de Pineda, embajador de Universal Assistance" width="820" height="894"
                                 loading="lazy" decoding="async">

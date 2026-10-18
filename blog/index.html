@@ -54,7 +54,7 @@
     <link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="../assets/css/style.css?v=17">
-    <link rel="stylesheet" href="blog.css?v=20261017">
+    <link rel="stylesheet" href="blog.css?v=20261019">
 
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -156,8 +156,8 @@
                     </p>
                 </header>
 
-                <!-- Blog Search -->
-                <div class="blog-search is-loading" id="blog-search-container">
+                <!-- Blog Search (inert while loading: blog.js lifts it) -->
+                <div class="blog-search is-loading" id="blog-search-container" inert>
                     <img src="/assets/icons/search.svg" alt="" aria-hidden="true">
                     <input type="search" class="blog-search__input" id="blog-search" placeholder="Buscar un artículo..."
                         aria-label="Buscar artículos del blog">
@@ -215,7 +215,8 @@
                     <h2 class="blog-empty__title">No hay publicaciones por el momento</h2>
                     <p class="blog-empty__description">
                         Estamos trabajando en contenido de calidad para vos. ¡Suscribite al newsletter para ser el
-                        primero en enterarte cuando publiquemos nuevos artículos!
+                        primero en enterarte cuando publiquemos nuevos artículos! Si tenés una consulta,
+                        <a href="https://wa.me/543584921111" target="_blank" rel="noopener noreferrer">escribinos por WhatsApp</a>.
                     </p>
                 </div>
 
@@ -262,7 +263,7 @@
     <script src="../components/component-loader.js?v=9"></script>
     <script src="../assets/js/script.js?v=4"></script>
     <script src="../assets/js/env-config.js?v=3"></script>
-    <script src="blog.js?v=20261018"></script>
+    <script src="blog.js?v=20261019"></script>
 </body>
 
 </html>

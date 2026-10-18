@@ -73,11 +73,6 @@
         position: sticky;
         top: calc(80px + var(--space-xl));
     }
-
-    /* No FAQs at all: search + filters are hidden by faq.js, so drop the column */
-    .faq-layout:has(.faq-empty.visible) {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* FAQ Search */
@@ -171,6 +166,13 @@
 .faq-category-chip:focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
+}
+
+/* No FAQs / API down: faq.js disables search + filters but keeps them in
+   place; they just stop reacting (no hover, no caret) */
+.faq-search__input:disabled,
+.faq-category-chip:disabled {
+    pointer-events: none;
 }
 
 .faq-category-chip.active {
@@ -338,6 +340,16 @@
     max-width: 56ch;
     margin: 0;
     line-height: 1.6;
+}
+
+.faq-empty__description a {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.faq-empty__description a:hover {
+    color: var(--link-hover);
 }
 
 /* FAQ Contact: two plain rows under a 2px rule instead of floating cards */

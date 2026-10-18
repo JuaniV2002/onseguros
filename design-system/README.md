@@ -41,7 +41,7 @@ OnSeguros is Mariano Villanueva's insurance brokerage in Río Cuarto, Córdoba �
 - Spacing on a rem scale: `space-md` mobile gutter, `space-lg` tablet, `space-xl` desktop; sections breathe at `space-5xl`. Page column `container-xl` (1280px).
 - Left-aligned, editorial: section headers max ~46rem, descriptions max 56–60ch.
 - **Motion is minimal**: content is visible immediately (no scroll-in animations); only 150ms hover color changes and a 3px arrow nudge. Respect `prefers-reduced-motion`.
-- **Loading states mirror the content** (Skeleton): build them from the real item markup with `skeleton-line` bars in `skeleton-fill`, same count and spacing, `aria-busy` on the container. One slow opacity pulse, no shimmer; still under reduced motion.
+- **Loading states mirror the content** (Skeleton): build them from the real item markup with `skeleton-line` bars in `skeleton-fill`, same count and spacing, `aria-busy` on the container. One slow opacity pulse, no shimmer; still under reduced motion. Controls shown as skeleton bars are `inert` until they work. When a list fails or comes back empty, keep its search and filters in place (disabled) and say why in the list area, in vos, with a WhatsApp link.
 - **Accessibility is a requirement**: 48px buttons/inputs, 44px nav targets, a visible 2px `focus-ring` everywhere (`on-brand` on navy), skip link, ARIA on interactive widgets, high-contrast mode turns borders solid black.
 
 ## Iconography

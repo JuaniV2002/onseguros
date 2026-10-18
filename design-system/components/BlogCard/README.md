@@ -12,3 +12,5 @@ One post as a row in the blog index (/blog/), plus the search field that filters
 - Read-more in `link` 600. Search input: 48px, 1px `field-border` (3:1), `radius-md`.
 - Sample posts in the preview are placeholders; real posts come from Supabase.
 - While loading, `#blog-grid[aria-busy]` holds six `.blog-card` skeleton rows (see Skeleton); the post page does the same for the breadcrumb, date, title and first paragraphs.
+- While loading, `#blog-search-container` is `inert` (not focusable, hidden from AT); JS removes it once posts, the empty state or the error state render.
+- No posts or API error: the search stays in place but `disabled`, and `.blog-empty` replaces the list (2px `rule-strong` top rule, `font-display` 1.5rem title in `text-primary`, `text-secondary` body). Empty: “No hay publicaciones por el momento”; error: “No pudimos cargar los artículos” + “Probá de nuevo en un rato…”. Both end with an “escribinos por WhatsApp” link in `link` (underlined).

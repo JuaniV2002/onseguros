@@ -151,7 +151,10 @@ class Blog {
             }
 
             const data = await response.json();
-            this.posts = data.posts || [];
+            if (!Array.isArray(data.posts)) {
+                throw new Error('Unexpected posts response');
+            }
+            this.posts = data.posts;
 
             // Cache the posts data
             this.setCachedData('blog-posts', this.posts);
@@ -166,7 +169,7 @@ class Blog {
             this.renderPosts(this.posts);
         } catch (error) {
             console.error('Error loading posts:', error);
-            this.showEmptyState();
+            this.showEmptyState(true);
         }
     }
 
@@ -275,8 +278,8 @@ class Blog {
 
         // Show search bar and grid when there are posts
         if (this.blogSearchContainer) {
-            this.blogSearchContainer.style.display = '';
             this.blogSearchContainer.classList.remove('is-loading');
+            this.blogSearchContainer.removeAttribute('inert');
         }
         if (this.blogEmpty) {
             this.blogEmpty.classList.add('blog-empty--hidden');
@@ -315,13 +318,25 @@ class Blog {
     }
 
     /**
-     * Show empty state when no posts are available
+     * Show empty state when no posts are available (failed = the API call
+     * didn't work: the "no posts yet" copy in index.html becomes an error note)
      */
-    showEmptyState() {
-        // Hide search bar and grid
+    showEmptyState(failed = false) {
+        // Keep the search bar in place (disabled) so the page doesn't collapse
         if (this.blogSearchContainer) {
-            this.blogSearchContainer.style.display = 'none';
             this.blogSearchContainer.classList.remove('is-loading');
+            this.blogSearchContainer.removeAttribute('inert');
+        }
+        if (this.blogSearch) {
+            this.blogSearch.disabled = true;
+        }
+        if (failed && this.blogEmpty) {
+            this.blogEmpty.innerHTML = `
+                <h2 class="blog-empty__title">No pudimos cargar los artículos</h2>
+                <p class="blog-empty__description">
+                    Probá de nuevo en un rato o <a href="https://wa.me/543584921111" target="_blank" rel="noopener noreferrer">escribinos por WhatsApp</a> y te respondemos.
+                </p>
+            `;
         }
         if (this.blogGrid) {
             this.blogGrid.innerHTML = '';

@@ -322,6 +322,21 @@ body:has(#blog-grid[aria-busy]) #footer-placeholder {
     line-height: 1.6;
 }
 
+.blog-empty__description a {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.blog-empty__description a:hover {
+    color: var(--link-hover);
+}
+
+/* No posts / API down: blog.js disables the search but keeps it in place */
+.blog-search__input:disabled {
+    pointer-events: none;
+}
+
 /* ==========================================================================
    Newsletter (both blog pages) — flat and ruled, like the landing's
    Overrides the global .newsletter / .newsletter--compact box + gradient.

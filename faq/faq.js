@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
-    // Load FAQs from Supabase. The listeners above go first so a chip click or
-    // search typed during the load is kept; renderFAQs() applies it.
+    // Load FAQs from Supabase. Search and chips stay inert until renderFAQs()
+    // runs, which also re-applies any active filter after a refresh.
     await loadFAQs();
 
     // Refresh FAQs when page becomes visible (user returns to tab)
@@ -181,7 +181,7 @@ async function loadFAQs(refresh = false) {
         if (!apiUrl) {
             console.error('FAQ API URL not configured');
             hideFAQSkeleton();
-            renderFAQs();
+            renderFAQs(true);
             return;
         }
 
@@ -198,8 +198,12 @@ async function loadFAQs(refresh = false) {
             throw new Error('Failed to fetch FAQs');
         }
 
-        allFaqs = await response.json();
-        
+        const data = await response.json();
+        if (!Array.isArray(data)) {
+            throw new Error('Unexpected FAQ response');
+        }
+        allFaqs = data;
+
         // Sort FAQs by order_number
         allFaqs.sort((a, b) => a.order_number - b.order_number);
 
@@ -222,36 +226,36 @@ async function loadFAQs(refresh = false) {
     } catch (error) {
         console.error('Error loading FAQs:', error);
         hideFAQSkeleton();
-        // Show empty state on error
-        renderFAQs();
+        // Keeps the last good list on a failed refresh; error message otherwise
+        renderFAQs(true);
     }
 }
 
-// Render FAQs into the list
-function renderFAQs() {
+// Render FAQs into the list. failed = the API call didn't work (vs. 0 FAQs).
+function renderFAQs(failed = false) {
     const faqListContainer = document.getElementById('faq-list');
-    const faqSearch = document.querySelector('.faq-search');
-    const faqCategories = document.querySelector('.faq-categories');
-    
+    const faqTools = document.querySelectorAll('.faq-search, .faq-categories');
+    const faqControls = document.querySelectorAll('.faq-search__input, .faq-category-chip');
+
     if (!faqListContainer) return;
-    
-    // Check if FAQs are empty
+
+    // Search + filters leave their skeleton look and become reachable
+    faqTools.forEach(el => {
+        el.classList.remove('is-loading');
+        el.removeAttribute('inert');
+    });
+
+    // Nothing to show: keep search + filters in place (disabled) so the page
+    // doesn't collapse, and say why in the list area
     if (allFaqs.length === 0) {
-        // Show empty state
-        showEmptyState();
-        // Hide search and categories
-        if (faqSearch) faqSearch.style.display = 'none';
-        if (faqCategories) faqCategories.style.display = 'none';
-        if (faqSearch) faqSearch.classList.remove('is-loading');
-        if (faqCategories) faqCategories.classList.remove('is-loading');
+        faqListContainer.innerHTML = '';
+        faqControls.forEach(el => { el.disabled = true; });
+        document.getElementById('no-results')?.classList.remove('visible');
+        showEmptyState(failed);
         return;
     }
 
-    // Show search and categories if FAQs are available
-    if (faqSearch) faqSearch.style.display = 'block';
-    if (faqCategories) faqCategories.style.display = 'flex';
-    if (faqSearch) faqSearch.classList.remove('is-loading');
-    if (faqCategories) faqCategories.classList.remove('is-loading');
+    faqControls.forEach(el => { el.disabled = false; });
     // Hide empty state if visible
     hideEmptyState();
 
@@ -288,16 +292,22 @@ function hideFAQSkeleton() {
     faqListContainer.innerHTML = '';
 }
 
-// Show empty state
-function showEmptyState() {
+// Show empty state: the API failed (failed = true) or there are no FAQs yet
+function showEmptyState(failed = false) {
     const faqEmptyContainer = document.getElementById('faq-empty');
     if (!faqEmptyContainer) return;
 
+    const whatsapp = '<a href="https://wa.me/543584921111" target="_blank" rel="noopener noreferrer">escribinos por WhatsApp</a>';
     faqEmptyContainer.classList.add('visible');
-    faqEmptyContainer.innerHTML = `
-        <h2 class="faq-empty__title">No hay preguntas frecuentes disponibles</h2>
+    faqEmptyContainer.innerHTML = failed ? `
+        <h2 class="faq-empty__title">No pudimos cargar las preguntas frecuentes</h2>
         <p class="faq-empty__description">
-            Estamos trabajando en contenido de calidad para vos. Por favor, contactanos directamente si tienes alguna pregunta.
+            Probá de nuevo en un rato o ${whatsapp} y te respondemos.
+        </p>
+    ` : `
+        <h2 class="faq-empty__title">Todavía no hay preguntas publicadas</h2>
+        <p class="faq-empty__description">
+            Estamos preparando respuestas a las dudas más comunes. Mientras tanto, ${whatsapp} y te ayudamos con lo que necesites.
         </p>
     `;
 }
