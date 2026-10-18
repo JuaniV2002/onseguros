@@ -1,5 +1,17 @@
 # Cache Control Headers for OnSeguros Website
 
+# Security headers (on every response, errors included). No CSP/HSTS here:
+# Cloudflare terminates TLS. Nothing on the site uses geolocation/camera/mic.
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
+# Branded 404 page (all its asset paths are absolute, so it works at any depth)
+ErrorDocument 404 /404.html
+
 # NO CACHE for config.json - always fetch fresh
 <FilesMatch "config\.json$">
     Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"

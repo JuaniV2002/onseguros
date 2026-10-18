@@ -69,9 +69,21 @@ jobs:
           echo "${{ secrets.DH_HOST }}" > ~/.ssh/config
           chmod 600 ~/.ssh/config
 
+      # Pinned host keys (no per-run ssh-keyscan, so a spoofed host can't be
+      # trusted on first use). Fingerprints, checked 2026-10-17 via ssh-keyscan
+      # and an ssh handshake to 173.236.142.111:
+      #   ED25519 SHA256:9sWCEFZqAi4Yo0luDY0TlEI2xhJURIdZxyDiR36I9cw
+      #   ECDSA   SHA256:c9YnY69RZXvujqTULEBjkerWaxAN3cwmHULeqLLuixs
+      #   RSA     SHA256:paTop0PhpfVSl2HULxReoq93i7lWgU2/MwRgGsBWswE
+      # If DreamHost rotates its keys the deploy fails with "Host key
+      # verification failed": re-check the new fingerprints and update these.
       - name: Add DreamHost to known_hosts
         run: |
-          ssh-keyscan iad1-shared-e1-32.dreamhost.com >> ~/.ssh/known_hosts
+          cat >> ~/.ssh/known_hosts << 'EOF'
+          iad1-shared-e1-32.dreamhost.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOPQg5HzCWPrRx4FAOBZ/WIaIwXdBuJsdxW6auvID9O1MiZ5OS5kPbx/VPdsuzi9s4UWCyJ4QvTG9D+cQvkgWwc=
+          iad1-shared-e1-32.dreamhost.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdveSv0utaM4Q+okVjMReRZCLwuU6ASIMztHixHmiTj
+          iad1-shared-e1-32.dreamhost.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8EXiTkHkKxQJjSkn1Dbz11jS6Vw7Kv9+aBzs3yDpDpprJB1Zcc6DdH479IzA2s6iinY231Mw/4/J/zE4699d6pIQjoZx8KNoYbu90euItVX8Rt4nGX7ds3cfChvRERtDe+dj9J7+ze9K7UG+nu9+iu5SnTHe3tAzvXI8KSDhpIfHk6Egxxtj/D+GDB+e9z+JTciy6HO0fEJIb2RJU53MZ/W4bsNUHI/ZhoOu9pygC96A5zHsRZOroa3UP7fCwYtMJSXB77yf9nDPdNx6OQL8wozAB82PM21kvajbtUkF95dR/lNvFNvn6SXKZNlDALAXd/zJjKW0JpVL5ggtkkSL8K8cVIWsBUjqLsh7SjI2i7FWrPJV8SLwSKiu/5peeRlisUzJzgtMEZGWG/MZ9ujfOZFH60r+gv8q/4PfP5E3uEWRt/w/JUGAbv6lxFzBNxeF7vJkuu6G8aoRey4djsbrfTAGITxxKThN6B9rMguTkXc0kPJ1b9vcQKgvOkdxJeZk=
+          EOF
 
       - name: Create config.json from secrets
         run: |
@@ -113,10 +125,16 @@ jobs:
           EOF
           echo "config.json created successfully"
 
+      # .htaccess (cache + security headers) ships from the repo with this
+      # rsync; nothing rewrites it on the server, so live == repo.
+      # --delete-excluded also removes excluded paths already on the server
+      # (plain --delete protects them): every exclude below is repo-only
+      # tooling/docs, nothing that must live on DreamHost. config.json and
+      # .htaccess are NOT excluded, so they're always uploaded.
       - name: Deploy via rsync
         run: |
           echo "Starting deployment..."
-          rsync -avz --delete \
+          rsync -avz --delete --delete-excluded \
             --exclude '.git' \
             --exclude '.github' \
             --exclude '.claude' \
@@ -126,75 +144,12 @@ jobs:
             --exclude '/admin/SETUP.md' \
             --exclude '/supabase/' \
             --exclude '/design-system/' \
+            --exclude '/package.json' \
+            --exclude '/package-lock.json' \
+            --exclude '/scripts/' \
             ./ \
             dh_fm2wbe@iad1-shared-e1-32.dreamhost.com:~/onseguros.net/
           echo "Deployment completed successfully!"
-
-      - name: Set cache headers for optimal caching strategy
-        run: |
-          ssh dh_fm2wbe@iad1-shared-e1-32.dreamhost.com << 'SSHEOF'
-          cd ~/onseguros.net
-          
-          # Create .htaccess if it doesn't exist
-          if [ ! -f .htaccess ]; then
-            cat > .htaccess << 'HTACCESS'
-          # Cache busting for dynamic config
-          <FilesMatch "config\.json$">
-            Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
-            Header set Pragma "no-cache"
-            Header set Expires "0"
-          </FilesMatch>
-          
-          # Cache JavaScript files with versioning
-          <FilesMatch "\.(js|css)$">
-            Header set Cache-Control "public, max-age=31536000, immutable"
-          </FilesMatch>
-          
-          # Don't cache HTML files aggressively
-          <FilesMatch "\.(html)$">
-            Header set Cache-Control "public, max-age=3600"
-          </FilesMatch>
-          
-          # Self-hosted fonts never change in place (rename the file to update)
-          <FilesMatch "\.(woff2)$">
-            Header set Cache-Control "public, max-age=31536000, immutable"
-          </FilesMatch>
-          HTACCESS
-          else
-            # Update existing .htaccess
-            # Remove old cache rules if they exist
-            sed -i '/# Cache busting for dynamic config/,/</FilesMatch>/d' .htaccess
-            
-            # Add new cache rules at the beginning
-            {
-              echo '# Cache busting for dynamic config'
-              echo '<FilesMatch "config\.json$">'
-              echo '  Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"'
-              echo '  Header set Pragma "no-cache"'
-              echo '  Header set Expires "0"'
-              echo '</FilesMatch>'
-              echo ''
-              echo '# Cache JavaScript files with versioning'
-              echo '<FilesMatch "\.(js|css)$">'
-              echo '  Header set Cache-Control "public, max-age=31536000, immutable"'
-              echo '</FilesMatch>'
-              echo ''
-              echo '# Don'\''t cache HTML files aggressively'
-              echo '<FilesMatch "\.(html)$">'
-              echo '  Header set Cache-Control "public, max-age=3600"'
-              echo '</FilesMatch>'
-              echo ''
-              echo '# Self-hosted fonts never change in place (rename the file to update)'
-              echo '<FilesMatch "\.(woff2)$">'
-              echo '  Header set Cache-Control "public, max-age=31536000, immutable"'
-              echo '</FilesMatch>'
-              echo ''
-              cat .htaccess
-            } > .htaccess.tmp && mv .htaccess.tmp .htaccess
-          fi
-          
-          echo "Cache headers configured successfully"
-          SSHEOF
 
       - name: Deployment Summary
 
