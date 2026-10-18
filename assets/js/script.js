@@ -496,13 +496,9 @@ class NewsletterFormValidator {
                     'Content-Type': 'application/json',
                     'Prefer': 'return=minimal'
                 },
-                body: JSON.stringify([
-                    {
-                        email: email,
-                        subscribed_at: new Date().toISOString(),
-                        confirmed: true
-                    }
-                ])
+                // Only email: anon may insert just that column (subscribed_at and
+                // confirmed come from column defaults).
+                body: JSON.stringify([{ email: email }])
             });
 
             if (!response.ok) {
