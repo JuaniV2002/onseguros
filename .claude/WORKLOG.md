@@ -101,3 +101,93 @@
 - done: PR #1 mergeado (4e94929), deploy OK; prod verificado (siniestros sin fotos, agente.js v3, admin sin tabs, config.json sin keys viejas). generate-faq-draft/publish-faq-draft-api redeployadas sin JWT (ahora responden la función: 401 propio / 400 HTML). Oni con prompt nuevo (smoke: resumen + "Tocá el botón", no pide datos). Runbook completo: 5 fns borradas, bucket siniestros-fotos borrado, tablas exportadas a JSON (3+3 filas) y dropeadas (migración 20261012173500), 5 GH secrets borrados, config.json local limpio.
 - state: done.
 - next: cron biweekly-faq-draft SÍ estaba agendado (`0 11 */14 * *`) y venía fallando por el 401; ver que el próximo corra bien. Ojo: `*/14` en día-del-mes corre días 1, 15, 29, no cada 14 días exactos.
+
+## 2026-10-13 — hero "Cotizá con Oni" → card de Oni
+- done: b617515 (master, sin push). Botón del hero va a `#oni` (card en Contacto) en vez de /agente/; el botón de la card sigue abriendo el chat. Verificado en mobile 390px.
+- state: done.
+- next: push cuando Juani lo pida.
+
+## 2026-10-15 — cuotas UA + push
+- done: ae96b6a sección UA dice "en 3, 6 y 12 cuotas" (antes "hasta 12 cuotas sin interés"). Pusheado con 6fc3c41 (hero → #oni, rebaseado sobre commits del sitemap). Deploy OK, ambos cambios verificados en onseguros.net.
+- state: done.
+
+## 2026-10-15 — link Dirección en privacidad + watermark del footer
+- done: link de Maps solo sobre la dirección en /legal/privacidad/ (como terminos); watermark "OnSeguros" del footer subido (translate -8%) para que la "g" no se corte; design-system sincronizado (bundle.css, Footer/README, README). Sin push.
+- state: done.
+- next: push cuando Juani lo pida; re-sync del artifact del design system desde Cowork.
+
+## 2026-10-15 — push link privacidad + watermark
+- done: 3ee3a1a + 8c0a60f pusheados, deploy OK, verificados en onseguros.net. Artifact del design system republicado (v11) con el cambio del watermark.
+- state: done.
+
+## 2026-10-15 — "On" azulado en el watermark del footer
+- done: token `--float-watermark-on` (claro hsl(216,92%,96%), oscuro hsl(216,40%,16%)), span `.footer__watermark-on` en footer.html, style.css v15. Design system sincronizado (tokens.json/.css, bundle.css, Footer README/preview, README) + artifact v12. Sin push.
+- state: done.
+- next: push cuando Juani lo pida.
+
+## 2026-10-15 — push "On" azulado
+- done: 7226ccc pusheado, deploy OK, verificado en onseguros.net (style.css v15, span en footer, ambos tokens).
+- state: done. Siguiente tarea en curso: auditar skeletons de carga (blog, post, FAQ, admin) para que coincidan con el contenido real.
+
+## 2026-10-15 — skeletons fieles al contenido
+- done: 6cb145b todos los skeletons (blog, post, FAQ, live info del landing, 5 listas del admin) reusan el markup real con barras; 0px de salto en desktop. Token --skeleton-fill, card Skeleton en design-system. Fixes: búsqueda FAQ no rompe con skeleton, volver a la pestaña no muestra skeleton, config.json caído ya no deja skeleton pegado. 1b: commit aparte escapa título/descr en cards del blog. Reviewer + QA PASS. Sin push; artifact del DS sin re-sync.
+- state: done.
+- next: admin sin layout de celular en .post-item (admin.css:453): botones aplastan el texto a 390px, por eso 3 listas del admin todavía saltan en mobile (decisión de diseño). Prod tiene 0 posts y 0 FAQs publicados (23 borradores de blog sin publicar) — confirmar con Juani si es esperado.
+- (adenda) artifact del DS republicado v13 con el cambio de skeletons; 5487ac4 alias dark explícito para skeleton-fill. Commits 6cb145b, dd0e336, 5487ac4 sin push.
+
+## 2026-10-15 — push skeletons
+- done: 6cb145b, dd0e336, 5487ac4 pusheados, deploy OK, verificados en onseguros.net (skeleton del blog, fix de búsqueda FAQ, token --skeleton-fill, escape en cards).
+- state: done. Admin en celular: no se arregla (Mariano usa solo desktop).
+- next: publicar contenido — prod tiene 0 posts y 0 FAQs (23 borradores de blog sin publicar).
+
+## 2026-10-15 — 40 FAQs como borradores
+- done: investigación (SSN, SRT, leyes 17.418/22.400/24.557/24.449, FAQs de aseguradoras socias) → 40 FAQs en faq_drafts (pending, publish_token 'n/a', generation_metadata.source='manual-research-2026-10-15' con fuentes). Copia en scratchpad/faqs.json.
+- state: done; Juani + Mariano revisan/publican desde admin → Borradores → FAQ.
+- next: sigue el blog (23 borradores sin publicar). Mariano debe confirmar: lista de aseguradoras, "no aseguramos remís/apps", que da constancia por WhatsApp y gestiona la Póliza Digital de ART.
+
+## 2026-10-15 — 40 FAQs publicadas
+- done: a pedido de Juani, los 40 borradores pasaron a `faqs` en una sola sentencia SQL (order_number 1–40 según faqs.json, drafts marcados published con published_faq_id). Sitemap disparado una vez. Verificado en onseguros.net/faq/: 40 ítems, filtro ART = 7, JSON-LD con 40.
+- state: done. Puntos a confirmar por Mariano siguen en pie (aseguradoras, remís/apps, constancia por WhatsApp, Póliza Digital ART); se editan desde admin → FAQ.
+- next: blog (23 borradores sin publicar).
+
+## 2026-10-17 — Lighthouse + agujeros de seguridad en edge functions
+- done: d34c3ed sin supabase-js en landing (newsletter por fetch), fuentes self-hosted, a11y (landing 92→100, faq/agente 95→100); local mobile perf 76→89-90. ed6ddca cierra lectura anónima de emails de subscribers (policy + revoke, ya en prod). 36cf0cb requireUser en 17 edge functions de admin (create/update/delete faq/post, publish-post, drafts/hints, subscribers) — ya desplegadas, anon → 401. Sin push.
+- state: done; admin FAQ edit da 401 en prod hasta pushear admin-faq.js.
+- next: (1) Juani apaga sign-ups en Supabase Auth (High: cualquiera se registra y pasa requireUser). (2) push + Mariano prueba admin logueado. (3) revocar grants anon sobrantes en posts/faqs/drafts; verify_jwt on en 8 fns; CF HTML cache (TTFB 600-900ms) como tarea aparte; deploy.yml duplica bloques .htaccess.
+- (adenda) artifact del DS republicado v15 (README, tokens.json, bundle.css, Footer README/preview, WhatsAppFab README, lastChange).
+
+## 2026-10-17 — pulido Lighthouse + hardening completo (6 commits, sin push)
+- done: ec8ee6d allowlist ADMIN_EMAILS en requireUser + authenticated sin grants + anon solo SELECT posts/faqs e INSERT subscribers (ya en prod); a4c20ce newsletter manda solo {email}; 2ac6576 blog/faq CLS 0 + timeout 8s + válvula CSS 10s; 03699cb DOMPurify + SRI; 9b3cb3a 404/unsubscribe a11y + imágenes; b5f049d .htaccess tal cual (headers, ErrorDocument 404), host keys fijadas, --delete-excluded. Reviewer + QA + security pasaron.
+- state: done local; funciones/migraciones ya desplegadas, frontend al pushear.
+- next: (1) push con OK de Juani; (2) DESPUÉS del deploy verde: aplicar supabase/migrations/20261017223100 (insert solo email) y `curl -sI` para ver headers + 404; (3) Mariano prueba admin logueado; (4) apagar sign-ups igual (ya inofensivo). Pendiente: double opt-in newsletter (decisión de producto), CF HTML cache, srcset imágenes landing, FAQ vacío/500 colapsa layout (faq.js:237).
+- (adenda) artifact del DS republicado v16 (bundle.css, Accordion/BlogCard/Skeleton/Partners README, 2 logos webp, lastChange).
+
+## 2026-10-17 — blog/FAQ estado vacío + inert + srcset (sin push)
+- done: 676fa88 FAQ y blog con API caída/timeout/0 ítems mantienen buscador+chips (disabled) y muestran mensaje vos + WhatsApp; inert mientras carga; foto testimonio 360w para 1x; copy "no results" FAQ a vos. Reviewer + QA (Playwright, 6/6) PASS.
+- state: done local; 7 commits sin push. Artifact DS re-sync en curso.
+- next: push con OK de Juani → migración 20261017223100 → curl headers/404. Copy de error/vacío a confirmar por Mariano.
+- (adenda) artifact del DS republicado v17.
+
+## 2026-10-17 — push hardening + Lighthouse
+- done: rebase sobre 2 commits del bot de sitemap, push 360be82, deploy verde. Migración 20261017223100 aplicada (anon: solo INSERT(email), policy duplicada borrada). Verificado en prod: alta 201, duplicado 409, campos extra 401, lectura anon 42501; headers de seguridad OK; 404 con marca; package.json/scripts 404.
+- state: Lighthouse prod antes/después en curso.
+- next: Mariano prueba admin logueado; Juani apaga sign-ups; Mariano confirma copy de estados vacío/error.
+
+## 2026-10-18 — preconnect Supabase + Lighthouse final
+- done: f4e78ba preconnect a supabase.co en blog/post/faq, pusheado, deploy verde. Lighthouse prod (mediana de 3): mobile landing 97, blog 92, faq 90, agente 100, siniestros 99; desktop 97–100; A11y/BP/SEO 100 en todas las públicas (404 SEO 66 por noindex, intencional). uses-rel-preconnect ya no aparece.
+- state: done.
+- next: lo que queda es TTFB ~500ms de DreamHost (solo CF HTML cache) + CSS render-blocking (no vale la complejidad). Pendiente humano: Mariano prueba admin, apagar sign-ups, confirmar copy vacío/error.
+
+## 2026-10-18 — imágenes viejas en caché de Cloudflare
+- done: 65e3735 ?v=2 en ivan-de-pineda-ua.webp y logos Paraná/Experta (CF servía los originales cacheados 30d tras reemplazarlos con el mismo nombre) + preconnect dolarapi. Pusheado, verificado: prod sirve 40946/18516/12150 B.
+- state: done; Juani apaga en Cloudflare Web Analytics + Email Address Obfuscation (no hay token de CF acá) y corre Lighthouse.
+- next: regla: un asset reemplazado en el mismo path necesita ?v= nuevo o purge de CF.
+- (adenda) Juani apagó Web Analytics (RUM) y Email Obfuscation en CF; verificado: sin beacon ni email-decode en el HTML.
+- (adenda) Juani apagó sign-ups en Supabase Auth; verificado disable_signup=true.
+- (adenda) Juani descartó double opt-in y CF HTML cache. Sitio cerrado; solo queda lo de Mariano (probar admin, confirmar copy vacío/error).
+- (adenda) Juani confirmó que el login del admin funciona.
+
+## 2026-10-18 — cierre Lighthouse/hardening
+- done: CF Web Analytics + Email Obfuscation apagados, sign-ups de Supabase apagados (verificado), admin login OK, copy vacío/error aprobado por Juani.
+- state: done. Nada pendiente.
+- next: blog (23 borradores sin publicar) cuando Mariano quiera.
